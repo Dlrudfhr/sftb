@@ -1,25 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useEffect } from 'react';
+import { Route, Routes } from "react-router-dom";
+
+import Test from './pages/Test';
+
+interface RouteProps {
+  path: string;
+  component: any;
+  standalone?: boolean;
+  anonymous?: boolean;
+}
+
+const routes: Array<RouteProps> = [
+  { path: "/", component: <Test /> },
+]
 
 function App() {
+
+  useEffect(() => {
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        {routes.map((route, idx) => (
+          <Route
+            path={route.path}
+            element={
+              <>{route.component}</>
+            }
+            key={idx}
+          />
+        ))}
+      </Routes>
+    </>
   );
 }
 
