@@ -5,7 +5,7 @@ const Test = () => {
   return (
     <>
       <div>
-        test
+        Test
       </div>
     </>
   );
