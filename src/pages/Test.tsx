@@ -1,14 +1,18 @@
 import React from "react";
+import { useNavigate } from 'react-router-dom';
 
-const Test = () => {
+function Test() {
+  const navigate = useNavigate();
+
+  const handleNavigate = () => {
+    navigate('/Main_board');
+  };
 
   return (
-    <>
-      <div>
-        Test
-      </div>
-    </>
+    <div>
+      <h1>Test</h1>
+      <button onClick={handleNavigate}>Go to Main Board</button>
+    </div>
   );
-};
-
+}
 export default Test;
