@@ -1,0 +1,32 @@
+.container-top {
+  border: 1px solid #000000;
+  display: flex;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between; /* 좌측 상단과 우측 상단으로 위치 */
+  align-items: center;
+  width: 100%;
+}
+
+.leftside {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 100px;
+  height: auto;
+}
+
+.rightside {
+  margin-left: auto;
+  display: flex;
+  align-items: flex-end;
+  height: 100%; /* 하단으로 내리기 위해 높이를 직접 지정 */
+}
+
+.rightside a {
+  margin-right: 20px;
+}
