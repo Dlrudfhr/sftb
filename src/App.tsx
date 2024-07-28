@@ -1,7 +1,6 @@
-import { useEffect } from 'react';
+import { Children, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-
-import Test from './pages/Test';
+import LoginPage from "./pages/loginPage";
 
 interface RouteProps {
   path: string;
@@ -11,25 +10,20 @@ interface RouteProps {
 }
 
 const routes: Array<RouteProps> = [
-  { path: "/", component: <Test /> },
-]
+  {
+    path: "/",
+    component: <LoginPage />,
+  },
+];
 
-function App() {
-
-  useEffect(() => {
-  }, []);
+function App(p0: unknown, p1: HTMLElement | null) {
+  useEffect(() => {}, []);
 
   return (
     <>
       <Routes>
         {routes.map((route, idx) => (
-          <Route
-            path={route.path}
-            element={
-              <>{route.component}</>
-            }
-            key={idx}
-          />
+          <Route path={route.path} element={<>{route.component}</>} key={idx} />
         ))}
       </Routes>
     </>
