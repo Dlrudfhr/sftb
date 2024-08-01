@@ -16,7 +16,7 @@ const routes: Array<RouteProps> = [
     component: <LoginPage />,
   },
   {
-    path: "/",
+    path: "/main",
     component: <DefaultLayout children={undefined} />,
   },
 ];

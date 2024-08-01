@@ -6,13 +6,13 @@ import Row from "react-bootstrap/Row";
 import logo from "../assets/images/rogo.png";
 
 interface SignUpPageProps {
-  onSubmit: () => void;
+  onSubmit: (e: React.FormEvent) => Promise<void>;
 }
 
 const SignUpPage: React.FC<SignUpPageProps> = ({ onSubmit }) => {
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onSubmit();
+    onSubmit(event);
   };
 
   return (
