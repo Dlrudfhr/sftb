@@ -1,5 +1,5 @@
-import React from 'react';
-import './ButtonGroup.css'; // 버튼 스타일을 위한 CSS 파일을 임포트합니다.
+import React from "react";
+import "../assets/css/ButtonGroup.css"; // 버튼 스타일을 위한 CSS 파일을 임포트합니다.
 
 const ButtonGroup = () => {
   return (

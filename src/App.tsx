@@ -2,7 +2,12 @@ import { Children, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/loginPage";
 import DefaultLayout from "./pages/DefaultLayout";
-
+import SiteIntroduce from "./pages/SiteIntroduce";
+import RanKing from "./pages/RanKing";
+import Announcement from "./pages/Announcement";
+import Organization from "./pages/Organization";
+import Inquiry from "./pages/Inquiry";
+import PostPage from './pages/PostPage';
 
 
 interface RouteProps {
@@ -20,6 +25,32 @@ const routes: Array<RouteProps> = [   //RouteProps 배열을 정의 const:변수
   {
     path: "/main",
     component: <DefaultLayout children={undefined} />,
+  },
+
+
+  {
+    path: "/SiteIntroduce",
+    component: <SiteIntroduce />,
+  },
+
+  {
+    path: "/RanKing",
+    component: <RanKing />,
+  },
+
+  {
+    path: "/Announcement",
+    component: <Announcement />,
+  },
+
+  {
+    path: "/Organization",
+    component: <Organization />,
+  },
+
+  {
+    path: "/Inquiry",
+    component: <Inquiry />,
   },
 ];
 

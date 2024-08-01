@@ -1,33 +1,32 @@
-.container{
-   display:flex;
-   height:50%;
-   margin:30px;
-   justify-content: space-between;
+.container {
+  display: flex;
+  height: 50%;
+  margin: 30px;
+  justify-content: space-between;
 }
-.container2{
-    display:flex;
-    height:50%;
-    margin: 30px;
-    justify-content: space-between;
+.container2 {
+  display: flex;
+  height: 50%;
+  margin: 30px;
+  justify-content: space-between;
 }
-.rptlvks, .rptlvks2{
-    background-color: #fff;
-    width:250px;
-    height:300px;  
-    border-radius: 10%;
-    align-content: center;
-    text-align: center;
-    margin:5px;
-    cursor: pointer;
-    box-shadow: 0 0 5px;
-    
+.rptlvks,
+.rptlvks2 {
+  background-color: #fff;
+  width: 250px;
+  height: 300px;
+  border-radius: 10%;
+  align-content: center;
+  text-align: center;
+  margin: 5px;
+  cursor: pointer;
+  box-shadow: 0 0 5px;
 }
-h1{
-    height:100px;
-    text-align: center;
-    align-content: center;
+h1 {
+  height: 100px;
+  text-align: center;
+  align-content: center;
 }
-
 
 /* 게시판 가운데 정렬 위해 게시판 area, 왼쪽 오른쪽 빈 공간, aside2게시판 가운데 정렬*/
 article{
@@ -35,17 +34,20 @@ article{
     display: flex;
     background-image: '../src/assets/images/back3.jpg';
 }
-.aside1{ /* 왼쪽 여백 */
-    width: 15%;
+.aside1 {
+  /* 왼쪽 여백 */
+  width: 15%;
 }
-.aside2{ /* 게시판 중앙 정렬*/  
-    width:70%;
-    height: auto;
-    background:transparent;
-    box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-    border-radius:5%;
-    margin:30px;
+.aside2 {
+  /* 게시판 중앙 정렬*/
+  width: 70%;
+  height: auto;
+  background: transparent;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 5%;
+  margin: 30px;
 }
-.aside3{ /* 오른쪽 여백*/
-    width:15%;
+.aside3 {
+  /* 오른쪽 여백*/
+  width: 15%;
 }
