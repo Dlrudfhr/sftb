@@ -1,0 +1,90 @@
+@import url("https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300..900&display=swap");
+
+.container-top {
+  border: 2px solid #000000;
+  display: flex;
+  justify-content: space-between;
+  background-color: #639ef7;
+  margin-left: 0;
+  padding: 0;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.leftside {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  width: 100px;
+  height: auto;
+}
+
+.sitename {
+  position: absolute;
+  left: 50%;
+  top: 8%;
+  transform: translate(-50%, -50%);
+}
+
+.sitename h1,
+a {
+  font-family: "Frank Ruhl Libre", serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+
+  margin-right: 20px;
+  text-decoration: none; /* 링크의 기본 밑줄 제거 */
+  color: black;
+}
+.rightside {
+  margin-left: auto;
+  display: flex;
+  align-items: flex-end;
+  height: 100%; /* 하단으로 내리기 위해 높이를 직접 지정 */
+}
+
+.rightside h3,
+a {
+  font-family: "Frank Ruhl Libre", serif;
+  font-optical-sizing: auto;
+  font-weight: weight;
+  font-style: normal;
+
+  margin-right: 20px;
+  text-decoration: none; /* 링크의 기본 밑줄 제거 */
+  color: white;
+}
+
+/* 마우스 이벤트 부분*/
+.link-with-dropdown {
+  display: flex;
+  position: relative;
+}
+
+/* 문의 박스 */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  background: white;
+  border: 1px solid gray;
+  padding: 10px;
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* e학사, e클래스, 학교홈페이지 부분 */
+.dropdown-menu li a {
+  white-space: nowrap; /* 텍스트가 한 줄에 나오도록 설정 */
+  color: black;
+}

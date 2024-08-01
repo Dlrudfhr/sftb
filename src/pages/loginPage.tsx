@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 import { ReactNode } from "react";
-import "./loginPage.css";
+import "../assets/css/loginPage.css";
 import SignUpModal from "./SignUpModal";
 import SignUpPage from "./SignUpPage";
 import cccImage from "../assets/images/ccc.jpg";
