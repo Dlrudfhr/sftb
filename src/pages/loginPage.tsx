@@ -2,7 +2,6 @@ import React, { Children } from "react";
 import ReactDOM from "react-dom";
 import { useState } from "react";
 import { ReactNode } from "react";
-import { motion } from "framer-motion";
 import "./loginPage.css";
 import SignUpModal from "./SignUpModal";
 import SignUpPage from "./SignUpPage";
