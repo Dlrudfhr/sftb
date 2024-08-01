@@ -1,6 +1,6 @@
-import { useEffect } from "react";
+import { Children, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-
+import LoginPage from "./pages/loginPage";
 import DefaultLayout from "./pages/DefaultLayout";
 
 interface RouteProps {
@@ -13,15 +13,15 @@ interface RouteProps {
 const routes: Array<RouteProps> = [
   {
     path: "/",
-    component: (
-      <DefaultLayout>
-        <div></div>
-      </DefaultLayout>
-    ),
+    component: <LoginPage />,
+  },
+  {
+    path: "/",
+    component: <DefaultLayout children={undefined} />,
   },
 ];
 
-function App() {
+function App(p0: unknown, p1: HTMLElement | null) {
   useEffect(() => {}, []);
 
   return (
@@ -36,3 +36,4 @@ function App() {
 }
 
 export default App;
+//
