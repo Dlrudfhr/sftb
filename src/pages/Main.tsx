@@ -1,8 +1,8 @@
-import {useState} from "react";
-import { Routes, Route, Link } from 'react-router-dom';
-import './Main.css';
-import './card';
-import './PostPage';
+import { useState } from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import "./Main.css";
+import "./card";
+import "./PostPage";
 import React, { Children } from "react";
 
 // interface LoginPage {
@@ -13,57 +13,45 @@ function toLink() {
 }
 
 function Main() {
-  
   return (
     <main>
       <h1>main</h1>
-      
+
       <article>
-        <aside className="aside1">
-          
-        </aside>
+        <aside className="aside1"></aside>
         <aside className="aside2">
           <div className="container">
-             <div className='rptlvks' onClick={() => toLink()}> 
-              <Link to= 'https://www.google.com/'> 질문과 답 </Link>
+            <div className="rptlvks" onClick={() => toLink()}>
+              <Link to="https://www.google.com/"> 질문과 답 </Link>
             </div>
-            <div className='rptlvks' onClick={() => toLink()}>
+            <div className="rptlvks" onClick={() => toLink()}>
               자격증 정보
             </div>
-            <div className='rptlvks' onClick={() => toLink()}>
+            <div className="rptlvks" onClick={() => toLink()}>
               과목별 정보공유
             </div>
-            <div className='rptlvks' onClick={() => toLink()}>
+            <div className="rptlvks" onClick={() => toLink()}>
               멘토멘티
             </div>
           </div>
-          
+
           <div className="container2">
-            <div className='rptlvks2' onClick={() => toLink()}>
+            <div className="rptlvks2" onClick={() => toLink()}>
               프로젝트 개발
             </div>
-            <div className='rptlvks2' onClick={() => toLink()}>
+            <div className="rptlvks2" onClick={() => toLink()}>
               코딩 문제
             </div>
-            <div className='rptlvks2' onClick={() => toLink()}>
+            <div className="rptlvks2" onClick={() => toLink()}>
               전공책 장터
             </div>
-            <div className='rptlvks2' onClick={() => toLink()}>
+            <div className="rptlvks2" onClick={() => toLink()}>
               장부 기록 공개
-            </div> 
+            </div>
           </div>
         </aside>
-        <aside className="aside3">
-          
-        </aside>
-        
+        <aside className="aside3"></aside>
       </article>
-      
-      
-      
-      <div>
-        <h1>Main 부분</h1>
-      </div>
     </main>
   );
 }
