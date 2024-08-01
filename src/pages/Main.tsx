@@ -16,6 +16,7 @@ function Main() {
   
   return (
     <main>
+<<<<<<< HEAD
       <h1>main</h1>
       
       <article>
@@ -61,6 +62,11 @@ function Main() {
       
       
       
+=======
+      <div>
+        <h1>Main 부분</h1>
+      </div>
+>>>>>>> cc86dbff898936c7ac5402f6f691445652ff3a0a
     </main>
   );
 }

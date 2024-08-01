@@ -1,5 +1,6 @@
-import { useEffect } from "react";
-import {BrowserRouter, Route, Routes } from "react-router-dom";
+import { Children, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
+import LoginPage from "./pages/loginPage";
 import DefaultLayout from "./pages/DefaultLayout";
 import PostPage from './pages/PostPage';
 
@@ -13,17 +14,17 @@ interface RouteProps {
 
 const routes: Array<RouteProps> = [   //RouteProps 배열을 정의 const:변수를 상수화 시키는 키워드, 상수란 변하지 않는 값 처음 선언할 때만 값을 할당할 수 있으며 그 다음부터는 값을 바꿀 수 없다.
   {
-    path: "/",  //경로가 "/"인 경우
-    component: (  //해당 컴포넌트를 렌더링 한다
-      <DefaultLayout> {/*DefaultLayout 컴포넌트를 감싸고 */}
-        <div></div> {/*빈 div를 렌더링 한다 */}
-      </DefaultLayout>
-    ),
+    path: "/",
+    component: <LoginPage />,
+  },
+  {
+    path: "/",
+    component: <DefaultLayout children={undefined} />,
   },
 ];
 
-function App() {  //App 컴포넌트를 정의
-  useEffect(() => {}, []);  //빈 배열을 의존성 배열로 사용하는 useEffect 훅이다.
+function App(p0: unknown, p1: HTMLElement | null) {
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -43,3 +44,4 @@ function App() {  //App 컴포넌트를 정의
 }
 
 export default App;
+//
