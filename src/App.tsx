@@ -2,6 +2,12 @@ import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 
 import DefaultLayout from "./pages/DefaultLayout";
+import Test from "./pages/Test";
+import SiteIntroduce from "./pages/SiteIntroduce";
+import RanKing from "./pages/RanKing";
+import Announcement from "./pages/Announcement";
+import Organization from "./pages/Organization";
+import Inquiry from "./pages/Inquiry";
 
 interface RouteProps {
   path: string;
@@ -18,6 +24,36 @@ const routes: Array<RouteProps> = [
         <div></div>
       </DefaultLayout>
     ),
+  },
+
+  {
+    path: "/Test",
+    component: <Test />,
+  },
+
+  {
+    path: "/SiteIntroduce",
+    component: <SiteIntroduce />,
+  },
+
+  {
+    path: "/RanKing",
+    component: <RanKing />,
+  },
+
+  {
+    path: "/Announcement",
+    component: <Announcement />,
+  },
+
+  {
+    path: "/Organization",
+    component: <Organization />,
+  },
+
+  {
+    path: "/Inquiry",
+    component: <Inquiry />,
   },
 ];
 
