@@ -1,12 +1,23 @@
 import React from "react";
+import "../assets/css/Footer.css";
+import ProgressBarComponent from "./ProgressBarComponent"; // ProgressBarComponent를 임포트합니다.
+import ButtonGroup from "./ButtonGroup";
 
-function Footer() {
+const Footer: React.FC = () => {
+  const percentage = 70; // 퍼센트 일단 70으로 잡음
+
   return (
-    <main>
-      <div>
-        <h1>Footer 부분</h1>
+    <div className="footer-banner">
+      <div className="footer-banner__section">티어 사진/레벨/이름</div>
+      <div className="footer-banner__section">
+        <ProgressBarComponent now={percentage} />
       </div>
-    </main>
+      <div className="footer-banner__section">
+        {" "}
+        <ButtonGroup /> {/* 버튼 그룹을 포함합니다. */}
+      </div>
+    </div>
   );
-}
+};
+
 export default Footer;

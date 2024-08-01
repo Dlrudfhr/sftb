@@ -1,0 +1,11 @@
+/* src/components/ProgressBarComponent.css */
+.gradient-progress-bar {
+    height: 30px;
+    border-radius: 5px;
+    position: relative;
+  }
+  
+  .gradient-progress-bar .progress-bar { 
+    background: linear-gradient(to right, #ffee56, #ff8427); /* 그라데이션 색상 */
+    color: #000000; /* 텍스트 색상 */
+  }

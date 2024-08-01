@@ -1,0 +1,81 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.imageSection {
+  flex: 7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f0f0f0;
+}
+
+.imageSection img {
+  max-width: 100%;
+  height: auto;
+}
+
+.loginSection {
+  flex: 3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 300px;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input {
+  margin-bottom: 5px;
+  padding: 10px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  flex: 1;
+  margin: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.signUpSection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.modal {
+  z-index: 1050;
+}
+.modal-dialog {
+  flex: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* 화면 전체 높이 */
+}
