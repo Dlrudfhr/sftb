@@ -2,7 +2,7 @@ import { Children, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/loginPage";
 import DefaultLayout from "./pages/DefaultLayout";
-import PostPage from './pages/PostPage';
+
 
 
 interface RouteProps {
@@ -18,7 +18,7 @@ const routes: Array<RouteProps> = [   //RouteProps 배열을 정의 const:변수
     component: <LoginPage />,
   },
   {
-    path: "/",
+    path: "/main",
     component: <DefaultLayout children={undefined} />,
   },
 ];

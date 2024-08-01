@@ -33,7 +33,7 @@ h1{
 article{
     height: 900px;
     display: flex;
-    background-image: url('C:\Users\eje93\sftb\sftb\src\assets\images\back3.jpg');
+    background-image: '../src/assets/images/back3.jpg';
 }
 .aside1{ /* 왼쪽 여백 */
     width: 15%;
