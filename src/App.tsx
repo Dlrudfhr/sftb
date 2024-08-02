@@ -7,7 +7,14 @@ import RanKing from "./pages/RanKing";
 import Announcement from "./pages/Announcement";
 import Organization from "./pages/Organization";
 import Inquiry from "./pages/Inquiry";
-import PostPage from './pages/PostPage';
+import Certificate from './pages/PostPage/Certificate';
+import QnA from './pages/PostPage/QnA';
+import Share from './pages/PostPage/Share';
+import Mentor_mentee from './pages/PostPage/Mentor_mentee';
+import Project from './pages/PostPage/Project';
+import Coding from './pages/PostPage/Coding';
+import Marketplace from './pages/PostPage/Marketplace';
+import Ledger from './pages/PostPage/Ledger';
 
 
 interface RouteProps {
@@ -51,6 +58,38 @@ const routes: Array<RouteProps> = [   //RouteProps 배열을 정의 const:변수
   {
     path: "/Inquiry",
     component: <Inquiry />,
+  },
+  {
+    path: "/Certificate",
+    component: <Certificate />
+  },
+  {
+    path: "/QnA",
+    component: <QnA />
+  },
+  {
+    path: "/Share",
+    component: <Share />
+  },
+  {
+    path: "/Mentor_mentee",
+    component: <Mentor_mentee />
+  },
+  {
+    path:"/Project",
+    component: <Project />
+  },
+  {
+    path:"/Coding",
+    component: <Coding />
+  },
+  {
+    path:"/Marketplace",
+    component: <Marketplace />
+  },
+  {
+    path:"/Ledger",
+    component: <Ledger />
   },
 ];
 
