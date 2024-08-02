@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import "./Main.css";
+import "../assets/css/Main.css";
 import "./card";
 import "./PostPage";
 import React, { Children } from "react";
@@ -20,7 +20,7 @@ function Main() {
       <article>
         <aside className="aside1"></aside>
         <aside className="aside2">
-          <div className="container">
+          <div className="container2">
             <div className="rptlvks" onClick={() => toLink()}>
               <Link to="https://www.google.com/"> 질문과 답 </Link>
             </div>

@@ -1,5 +1,5 @@
 import { Children, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/loginPage";
 import DefaultLayout from "./pages/DefaultLayout";
 import SiteIntroduce from "./pages/SiteIntroduce";
@@ -8,7 +8,7 @@ import Announcement from "./pages/Announcement";
 import Organization from "./pages/Organization";
 import Inquiry from "./pages/Inquiry";
 import PostPage from "./pages/PostPage";
-
+import SignUpPage from "./pages/SignUpPage";
 interface RouteProps {
   path: string; //경로를 나타내는 문자열
   component: any; //컴포넌트를 나타내는 문자열
@@ -24,7 +24,18 @@ const routes: Array<RouteProps> = [
   },
 
   {
-    path: "/main",
+    path: "/SignUp",
+    component: (
+      <SignUpPage
+        onSubmit={function (): void {
+          throw new Error("Function not implemented.");
+        }}
+      />
+    ),
+  },
+
+  {
+    path: "/Main",
     component: <DefaultLayout children={undefined} />,
   },
 
