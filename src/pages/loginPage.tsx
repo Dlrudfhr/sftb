@@ -37,6 +37,13 @@ function LoginPage() {
     navigate("/SignUp");
   };
 
+  const handleSearchIDClick = () => {
+    navigate("/SearchIdPage");
+  };
+  const handleSearchPwClick = () => {
+    navigate("/SearchPwPage");
+  };
+
   return (
     <>
       <div className="loginPage__container">
@@ -84,6 +91,22 @@ function LoginPage() {
             <button type="button" onClick={handleSignUpClick}>
               회원가입
             </button>
+            <div className="LoginPage__SearchId">
+              <span
+                style={{ cursor: "pointer", color: "#007bff" }}
+                onClick={handleSearchIDClick}
+              >
+                아이디 찾기
+              </span>
+            </div>
+            <div className="LoginPage__SearchPw">
+              <span
+                style={{ cursor: "pointer", color: "#007bff" }}
+                onClick={handleSearchPwClick}
+              >
+                비밀번호 찾기
+              </span>
+            </div>
           </form>
         </div>
       </div>

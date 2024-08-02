@@ -9,6 +9,9 @@ import Organization from "./pages/Organization";
 import Inquiry from "./pages/Inquiry";
 import PostPage from "./pages/PostPage";
 import SignUpPage from "./pages/SignUpPage";
+import SearchIdPage from "./pages/SearchIdPage";
+import SearchPwPage from "./pages/SearchPwPage";
+
 interface RouteProps {
   path: string; //경로를 나타내는 문자열
   component: any; //컴포넌트를 나타내는 문자열
@@ -37,6 +40,15 @@ const routes: Array<RouteProps> = [
   {
     path: "/Main",
     component: <DefaultLayout children={undefined} />,
+  },
+  {
+    path: "/SearchIdPage",
+    component: <SearchIdPage />,
+  },
+
+  {
+    path: "/SearchPwPage",
+    component: <SearchPwPage />,
   },
 
   {
