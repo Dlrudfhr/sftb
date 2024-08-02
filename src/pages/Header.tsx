@@ -37,7 +37,7 @@ const Header = () => {
               onMouseLeave={handleMouseLeave}
             >
               <Link to="#">
-                <h3>홈페이지</h3>
+                <h4>홈페이지</h4>
               </Link>
               {isSubMenuVisible && (
                 <ul className="dropdown-menu">
@@ -55,24 +55,24 @@ const Header = () => {
                 </ul>
               )}
             </div>
-            <Link to="/SiteIntroduce">
-              <h3>사이트소개</h3>
+            <Link to="/main/SiteIntroduce">
+              <h4>사이트소개</h4>
             </Link>
 
-            <Link to="/RanKing">
-              <h3>랭킹</h3>
+            <Link to="/main/RanKing">
+              <h4>랭킹</h4>
             </Link>
 
-            <Link to="/Announcement">
-              <h3>공지사항</h3>
+            <Link to="/main/Announcement">
+              <h4>공지사항</h4>
             </Link>
 
-            <Link to="Organization">
-              <h3>조직도</h3>
+            <Link to="/main/Organization">
+              <h4>조직도</h4>
             </Link>
 
-            <Link to="Inquiry">
-              <h3>문의</h3>
+            <Link to="/main/Inquiry">
+              <h4>문의</h4>
             </Link>
           </div>
         </div>

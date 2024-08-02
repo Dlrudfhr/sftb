@@ -51,15 +51,15 @@ a {
   height: 100%; /* 하단으로 내리기 위해 높이를 직접 지정 */
 }
 
-.rightside h3,
+.rightside h4,
 a {
   font-family: "Frank Ruhl Libre", serif;
   font-optical-sizing: auto;
   font-weight: weight;
   font-style: normal;
 
-  margin-right: 20px;
-  text-decoration: none; /* 링크의 기본 밑줄 제거 */
+  margin-right: 10px;
+  text-decoration: none;
   color: white;
 }
 

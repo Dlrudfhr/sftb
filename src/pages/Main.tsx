@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import "./Main.css";
+import "../assets/css/Main.css";
 import "./card";
 import "./PostPage";
 import React, { Children } from "react";
