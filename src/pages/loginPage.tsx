@@ -9,8 +9,8 @@ import SignUpPage from "./SignUpPage";
 import PTU from "../assets/images/PTU.png";
 import logo from "../assets/images/rogo.png";
 import DefaultLayout from "./DefaultLayout";
-import axios from "axios";
-import mysql, { Connection } from "mysql2";
+
+
 import { Link, useNavigate } from "react-router-dom";
 
 interface LoginPage {

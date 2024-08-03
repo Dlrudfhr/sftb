@@ -2,55 +2,49 @@ import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import "../assets/css/Main.css";
 import "./card";
-import "./PostPage";
 import React, { Children } from "react";
 
-// interface LoginPage {
-//   children: any;
-// }
-function toLink() {
-  alert("질문과 답 게시판으로 이동하시겠습니까?");
-}
+
 
 function Main() {
   return (
     <main>
-      <h1>main</h1>
+      <h1 className="Main_title">main</h1>
 
-      <article>
-        <aside className="aside1"></aside>
-        <aside className="aside2">
-          <div className="container2">
-            <div className="rptlvks" onClick={() => toLink()}>
-              <Link to="https://www.google.com/"> 질문과 답 </Link>
+      <article className="Main_article">
+        <aside className="Main_aside1"></aside>
+        <aside className="Main_aside2">
+          <div className="Main_container">
+            <div className="Main_rptlvks" onClick={() => window.location.href='/QnA'}>
+              질문과 답
             </div>
-            <div className="rptlvks" onClick={() => toLink()}>
+            <div className="Main_rptlvks" onClick={() => window.location.href='/Certificate'}>
               자격증 정보
             </div>
-            <div className="rptlvks" onClick={() => toLink()}>
+            <div className="Main_rptlvks" onClick={() => window.location.href='/Share'}>
               과목별 정보공유
             </div>
-            <div className="rptlvks" onClick={() => toLink()}>
+            <div className="Main_rptlvks" onClick={() => window.location.href='/Mentor_mentee'}>
               멘토멘티
             </div>
           </div>
 
-          <div className="container2">
-            <div className="rptlvks2" onClick={() => toLink()}>
+          <div className="Main_container2">
+            <div className="Main_rptlvks2" onClick={() => window.location.href='/Project'}>
               프로젝트 개발
             </div>
-            <div className="rptlvks2" onClick={() => toLink()}>
+            <div className="Main_rptlvks2" onClick={() => window.location.href='/Coding'}>
               코딩 문제
             </div>
-            <div className="rptlvks2" onClick={() => toLink()}>
+            <div className="Main_rptlvks2" onClick={() => window.location.href='/Marketplace'}>
               전공책 장터
             </div>
-            <div className="rptlvks2" onClick={() => toLink()}>
+            <div className="Main_rptlvks2" onClick={() => window.location.href='/Ledger'}>
               장부 기록 공개
             </div>
           </div>
         </aside>
-        <aside className="aside3"></aside>
+        <aside className="Main_aside3"></aside>
       </article>
     </main>
   );

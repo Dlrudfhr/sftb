@@ -7,7 +7,14 @@ import RanKing from "./pages/RanKing";
 import Announcement from "./pages/Announcement";
 import Organization from "./pages/Organization";
 import Inquiry from "./pages/Inquiry";
-import PostPage from "./pages/PostPage";
+import Certificate from './pages/PostPage/Certificate';
+import QnA from './pages/PostPage/QnA';
+import Share from './pages/PostPage/Share';
+import Mentor_mentee from './pages/PostPage/Mentor_mentee';
+import Project from './pages/PostPage/Project';
+import Coding from './pages/PostPage/Coding';
+import Marketplace from './pages/PostPage/Marketplace';
+import Ledger from './pages/PostPage/Ledger';
 import SignUpPage from "./pages/SignUpPage";
 import SearchIdPage from "./pages/SearchIdPage";
 import SearchPwPage from "./pages/SearchPwPage";
@@ -74,6 +81,38 @@ const routes: Array<RouteProps> = [
   {
     path: "/main/Inquiry",
     component: <Inquiry />,
+  },
+  {
+    path: "/Certificate",
+    component: <Certificate />
+  },
+  {
+    path: "/QnA",
+    component: <QnA />
+  },
+  {
+    path: "/Share",
+    component: <Share />
+  },
+  {
+    path: "/Mentor_mentee",
+    component: <Mentor_mentee />
+  },
+  {
+    path:"/Project",
+    component: <Project />
+  },
+  {
+    path:"/Coding",
+    component: <Coding />
+  },
+  {
+    path:"/Marketplace",
+    component: <Marketplace />
+  },
+  {
+    path:"/Ledger",
+    component: <Ledger />
   },
 ];
 
