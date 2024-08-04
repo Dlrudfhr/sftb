@@ -60,27 +60,27 @@ const routes: Array<RouteProps> = [
   },
 
   {
-    path: "/SiteIntroduce",
+    path: "/main/SiteIntroduce",
     component: <SiteIntroduce />,
   },
 
   {
-    path: "/RanKing",
+    path: "/main/RanKing",
     component: <RanKing />,
   },
 
   {
-    path: "/Announcement",
+    path: "/main/Announcement",
     component: <Announcement />,
   },
 
   {
-    path: "/Organization",
+    path: "/main/Organization",
     component: <Organization />,
   },
 
   {
-    path: "/Inquiry",
+    path: "/main/Inquiry",
     component: <Inquiry />,
   },
   {
