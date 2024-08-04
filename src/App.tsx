@@ -15,6 +15,7 @@ import Project from './pages/PostPage/Project';
 import Coding from './pages/PostPage/Coding';
 import Marketplace from './pages/PostPage/Marketplace';
 import Ledger from './pages/PostPage/Ledger';
+import FreePost from './pages/PostPage/FreePost';
 import SignUpPage from "./pages/SignUpPage";
 import SearchIdPage from "./pages/SearchIdPage";
 import SearchPwPage from "./pages/SearchPwPage";
@@ -113,6 +114,10 @@ const routes: Array<RouteProps> = [
   {
     path:"/Ledger",
     component: <Ledger />
+  },
+  {
+    path:"/FreePost",
+    component: <FreePost />
   },
 ];
 

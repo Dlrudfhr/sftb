@@ -1,53 +1,92 @@
-.Main_container {
+/*********배너 스타일*********/
+
+.Main_banner{
+  height: 400px;
+  background-color: navy;
+  padding: 0px 64px 0;
+}
+.box_tab{
   display: flex;
-  height: 50%;
-  margin: 30px;
-  justify-content: space-between;
 }
-.Main_container2 {
+.Main_communication, .Main_study, .Main_else{
+  font-size: 15px;
+  /* background-color: black; */
+}
+.box_tab button{
+  border-radius:100px;
+  padding: 10px 33px;
+  font-size: 18px;
+  letter-spacing:-.6px;
+}
+button{
+  cursor:pointer;
+  border:0;
+  font-size: 14px;
+  line-height:1.5;
+  font-family: notosans, Malgun Gothic, 맑은 고딕, sans-serif;
+  color: #333;
+}
+.box_tab ul{
+  margin: 0;
+  padding-left: 67px;
+  padding-right: 89px;
   display: flex;
-  height: 50%;
-  margin: 30px;
-  justify-content: space-between;
+  padding:19px 0;
+  box-sizing: border-box;
 }
-.Main_rptlvks,
-.Main_rptlvks2 {
-  background-color: #fff;
-  width: 250px;
-  height: 300px;
-  border-radius: 10%;
-  align-content: center;
-  text-align: center;
-  margin: 5px;
-  cursor: pointer;
-  box-shadow: 0 0 5px;
-}
-.Main_title {
-  height: 100px;
-  text-align: center;
-  align-content: center;
+.Main_title_visual{
+  display: block;
+  font-size: 40px;
+  line-height: 1.4;
+  letter-spacing: -1.6px;
+  color:white;
+  padding-top: 96px;
 }
 
-/* 게시판 가운데 정렬 위해 게시판 area, 왼쪽 오른쪽 빈 공간, aside2게시판 가운데 정렬*/
-.Main_article{
-    height: 900px;
-    display: flex;
-    background-image: '../src/assets/images/back3.jpg';
+/************게시판 카드 스타일*************/
+/*게시판 블럭들 스타일*/
+.Main_info_cate{
+  max-width: 1230px;
+  padding-top: 120px;
+  margin: 0 auto;
+  /* background-color: lightblue; */
+  
 }
-.Main_aside1 {
-  /* 왼쪽 여백 */
-  width: 15%;
+/*게시판 카테고리 설명*/
+.Main_title_cate{
+  font-size: 32px;
+  /* background-color: lightcyan; */
+  padding-left: 30px;
 }
-.Main_aside2 {
-  /* 게시판 중앙 정렬*/
-  width: 70%;
-  height: auto;
-  background: transparent;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  border-radius: 5%;
-  margin: 30px;
+/*게시판 블럭들*/
+.Main_content_about ul{
+  list-style:none;
+  padding-top: 21px;
+  display: flex;
+  
 }
-.Main_aside3 {
-  /* 오른쪽 여백*/
-  width: 15%;
+
+/*게시판 블럭 스타일*/
+.Main_card{
+  
+  width: 233px;
+  min-height: 233px;
+  padding: 32px;
+  cursor: pointer;
+  
+}
+.Main_content_about .Main_info_cate li{
+  margin-right: 14px;
+  border-radius: 12px;
+  background: #f2f3f6;
+  
+  
+}
+.Main_card .Main_card_title{
+  display: block;
+  position: relative;
+  /* background-color: lightgoldenrodyellow; */
+  padding-bottom: 20px;
+  font-weight: bold;
+  font-size:18px;
 }
