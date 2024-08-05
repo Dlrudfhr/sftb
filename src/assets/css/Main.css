@@ -7,6 +7,7 @@
 }
 .box_tab{
   display: flex;
+  
 }
 .Main_communication, .Main_study, .Main_else{
   font-size: 15px;
@@ -22,9 +23,10 @@ button{
   cursor:pointer;
   border:0;
   font-size: 14px;
+  font-weight: bold;
   line-height:1.5;
   font-family: notosans, Malgun Gothic, 맑은 고딕, sans-serif;
-  color: #333;
+  color: #464646;
 }
 .box_tab ul{
   margin: 0;
@@ -49,6 +51,7 @@ button{
   max-width: 1230px;
   padding-top: 120px;
   margin: 0 auto;
+  
   /* background-color: lightblue; */
   
 }
@@ -57,6 +60,8 @@ button{
   font-size: 32px;
   /* background-color: lightcyan; */
   padding-left: 30px;
+  letter-spacing: -2px;
+  
 }
 /*게시판 블럭들*/
 .Main_content_about ul{
@@ -69,12 +74,44 @@ button{
 /*게시판 블럭 스타일*/
 .Main_card{
   
-  width: 233px;
-  min-height: 233px;
-  padding: 32px;
+  width: 250px;
+  min-height: 250px;
+  padding: 8px;
   cursor: pointer;
   
 }
+/*게시판 안에 제목, 설명, 아이콘 포함 스타일*/
+.Main_card_content{
+  /* background-color: lightgreen; */
+  width: 233px;
+  min-height: 233px;
+  padding: 32px;
+}
+/*게시판 카드 제목*/
+.Main_card .Main_card_title{
+  display: block;
+  position: relative;
+  /* background-color: lightgoldenrodyellow; */
+  padding-bottom: 20px;
+  font-weight: bold;
+  font-size:20px;
+  letter-spacing: -3px;
+}
+/*게시판 카드 제목 설명*/
+.Main_card_info{
+  /* background-color: lightgoldenrodyellow; */
+  font-size: 14px;
+  color:grey;
+}
+/*게시판 카드에 들어가는 아이콘 스타일*/
+.Main_card_icons{
+  background-color: lightseagreen;
+  /* position : fixed; */
+  float:right;
+  width: 120px;
+  height: 80px;
+}
+
 .Main_content_about .Main_info_cate li{
   margin-right: 14px;
   border-radius: 12px;
@@ -82,11 +119,10 @@ button{
   
   
 }
-.Main_card .Main_card_title{
-  display: block;
-  position: relative;
-  /* background-color: lightgoldenrodyellow; */
-  padding-bottom: 20px;
-  font-weight: bold;
-  font-size:18px;
+
+.body{
+  font-family: notosans, Malgun Gothic, 맑은 고딕, sans-serif;
+}
+.Main_last_div{
+  height: 500px;
 }
