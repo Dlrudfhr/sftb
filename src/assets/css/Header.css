@@ -4,7 +4,7 @@
   border: 2px solid #000000;
   display: flex;
   justify-content: space-between;
-  background-color: #639ef7;
+  background-color: #ffffff;
   margin-left: 0;
   padding: 0;
   height: 150px;
@@ -24,6 +24,7 @@
 .Header__logo img {
   width: 100px;
   height: auto;
+  margin: 15%;
 }
 
 .Header__sitename {
@@ -54,7 +55,7 @@
   font-family: "Frank Ruhl Libre", serif;
   font-weight: 400;
   margin-right: 15px;
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .Header__rightside a {
