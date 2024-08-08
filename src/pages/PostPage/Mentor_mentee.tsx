@@ -9,7 +9,7 @@ const Mentor_mentee = () => {
   return(
     <>
     <Header />
-      <h1>멘토 멘티 게시판</h1>
+      <h1 className="postpage_title">멘토 멘티 게시판</h1>
     </>
 
 

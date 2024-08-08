@@ -9,7 +9,7 @@ const Certificate = () => {
   return(
     <>
     <Header />
-      <h1>자격증 게시판</h1>
+      <h1 className="postpage_title">자격증 게시판</h1>
     </>
 
 

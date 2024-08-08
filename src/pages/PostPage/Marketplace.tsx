@@ -9,7 +9,7 @@ const Market = () => {
   return(
     <>
     <Header />
-      <h1>전공책 장터 게시판</h1>
+      <h1 className="postpage_title">전공책 장터 게시판</h1>
     </>
 
 

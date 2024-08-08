@@ -9,7 +9,7 @@ const Share = () => {
   return(
     <>
     <Header />
-      <h1>과목 정보 공유 게시판</h1>
+      <h1 className="postpage_title">과목 정보 공유 게시판</h1>
     </>
 
 

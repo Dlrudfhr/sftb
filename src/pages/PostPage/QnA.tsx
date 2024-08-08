@@ -9,7 +9,7 @@ const QnA = () => {
   return(
     <>
     <Header />
-      <h1>질문과 답 게시판</h1>
+      <h1 className="postpage_title">질문과 답 게시판</h1>
     </>
 
 

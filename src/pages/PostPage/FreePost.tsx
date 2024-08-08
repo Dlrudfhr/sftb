@@ -9,7 +9,7 @@ const FreePost = () => {
   return(
     <>
     <Header />
-      <h1>자유 게시판</h1>
+      <h1 className="postpage_title">자유 게시판</h1>
     </>
 
 

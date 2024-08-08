@@ -9,7 +9,7 @@ const Project = () => {
   return(
     <>
     <Header />
-      <h1>프로젝트 개발 게시판</h1>
+      <h1 className="postpage_title">프로젝트 개발 게시판</h1>
     </>
 
 
