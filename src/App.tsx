@@ -2,6 +2,8 @@ import { Children, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/loginPage";
 import DefaultLayout from "./pages/DefaultLayout";
+import Store from './pages/Store';
+import Information from "./pages/Information";
 
 interface RouteProps {
   path: string;
@@ -16,8 +18,18 @@ const routes: Array<RouteProps> = [
     component: <LoginPage />,
   },
   {
-    path: "/",
+    path: "/main",
     component: <DefaultLayout children={undefined} />,
+  },
+  {
+    path: "/store",
+    component: <Store children={undefined} />,
+    
+  },
+  {
+    path: "/information",
+    component: <Information children={undefined} />,
+    
   },
 ];
 
