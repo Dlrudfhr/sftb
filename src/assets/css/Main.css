@@ -23,7 +23,7 @@
   padding-left: 67px;
   padding-right: 89px;
   display: flex;
-  padding:19px 0;
+  padding: 19px 0;
   box-sizing: border-box;
   position: absolute;
     
@@ -59,13 +59,13 @@
   font-size: 40px;
   line-height: 1.4;
   letter-spacing: -1.6px;
-  color:white;
+  color: white;
   padding-top: 96px;
 }
 
 /************게시판 카드 스타일*************/
 /*게시판 블럭들 스타일*/
-.Main_info_cate{
+.Main_info_cate {
   max-width: 1230px;
   padding-top: 120px;
   margin: 0 auto;
@@ -105,18 +105,18 @@
 	transform: scale(1.1);
 }
 /*게시판 카드 제목*/
-.Main_card .Main_card_title{
+.Main_card .Main_card_title {
   display: block;
   position: relative;
   padding-bottom: 20px;
   font-weight: bold;
-  font-size:20px;
+  font-size: 20px;
   letter-spacing: -3px;
 }
 /*게시판 카드 제목 설명*/
 .Main_card_info{
   font-size: 14px;
-  color:grey;
+  color: grey;
 }
 /*게시판 카드에 들어가는 아이콘 스타일*/
 .Main_card_icons{
@@ -137,6 +137,6 @@
 .body{
   font-family: notosans, Malgun Gothic, 맑은 고딕, sans-serif;
 }
-.Main_last_div{
+.Main_last_div {
   height: 500px;
 }
