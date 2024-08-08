@@ -1,92 +1,142 @@
 /*********배너 스타일*********/
-
-.Main_banner{
+.Main_content{
+  background-color: #f6f6f6;
+}
+/*메인화면 배너*/
+.Main_content .Main_banner{
   height: 400px;
   background-color: navy;
   padding: 0px 64px 0;
+  overflow-x: hidden; 
+  box-shadow: 10px 10px 20px #babecc;
 }
-.box_tab{
-  display: flex;
+.Main_box_visual{
+  height:300px;
 }
-.Main_communication, .Main_study, .Main_else{
-  font-size: 15px;
-  /* background-color: black; */
+.Main_box_tab{
+  height:100px;
 }
-.box_tab button{
-  border-radius:100px;
-  padding: 10px 33px;
-  font-size: 18px;
-  letter-spacing:-.6px;
-}
-button{
-  cursor:pointer;
-  border:0;
-  font-size: 14px;
-  line-height:1.5;
-  font-family: notosans, Malgun Gothic, 맑은 고딕, sans-serif;
-  color: #333;
-}
-.box_tab ul{
+/*********카테고리 이동 버튼**********/
+/*box_tab의 ul(카테고리 이동버튼 3개가 포함된 줄)*/
+.Main_box_tab ul{
   margin: 0;
   padding-left: 67px;
   padding-right: 89px;
   display: flex;
-  padding:19px 0;
+  padding: 19px 0;
   box-sizing: border-box;
+  position: absolute;
+    
 }
+
+/*box_tab안에 카테고리 이동 버튼*/
+.Main_box_tab .Main_button{
+  border-radius:100px;
+  padding: 10px 33px;
+  font-size: 18px;
+  letter-spacing:-.6px;
+  /* background-color: white; */
+  background-color: rgba(255,255,192,0.1);
+  backdrop-filter: blur(10px);  
+}
+/*카테고리 이동 버튼*/
+.Main_button{
+  cursor:pointer;
+  border:0;
+  font-size: 14px;
+  font-weight: bold;
+  line-height:1.5;
+  font-family: notosans, Malgun Gothic, 맑은 고딕, sans-serif;
+  /* color: #464646; */
+  margin-right: 5px;
+  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;  
+}
+
+/**/
 .Main_title_visual{
   display: block;
   font-size: 40px;
   line-height: 1.4;
   letter-spacing: -1.6px;
-  color:white;
+  color: white;
   padding-top: 96px;
 }
 
 /************게시판 카드 스타일*************/
 /*게시판 블럭들 스타일*/
-.Main_info_cate{
+.Main_info_cate {
   max-width: 1230px;
   padding-top: 120px;
   margin: 0 auto;
-  /* background-color: lightblue; */
-  
 }
 /*게시판 카테고리 설명*/
-.Main_title_cate{
+.Main_category_title{
   font-size: 32px;
-  /* background-color: lightcyan; */
   padding-left: 30px;
+  letter-spacing: -2px;
+  margin:0 auto;
 }
 /*게시판 블럭들*/
-.Main_content_about ul{
+.Main_content ul{
   list-style:none;
   padding-top: 21px;
-  display: flex;
-  
+  display: flex;  
 }
-
 /*게시판 블럭 스타일*/
 .Main_card{
-  
+  width: 250px;
+  min-height: 250px;
+  padding: 8px;
+  cursor: pointer;
+}
+/*게시판 안에 제목, 설명, 아이콘 포함 스타일*/
+.Main_card_content{
   width: 233px;
   min-height: 233px;
   padding: 32px;
-  cursor: pointer;
-  
+  -webkit-transform: scale(1);
+	transform: scale(1);
+	-webkit-transition: .5s ease-in-out;
+	transition: .5s ease-in-out;
 }
-.Main_content_about .Main_info_cate li{
-  margin-right: 14px;
-  border-radius: 12px;
-  background: #f2f3f6;
-  
-  
+.Main_card_content:hover{
+  -webkit-transform: scale(1.1);
+	transform: scale(1.1);
 }
-.Main_card .Main_card_title{
+/*게시판 카드 제목*/
+.Main_card .Main_card_title {
   display: block;
   position: relative;
-  /* background-color: lightgoldenrodyellow; */
   padding-bottom: 20px;
   font-weight: bold;
-  font-size:18px;
+  font-size: 20px;
+  letter-spacing: -3px;
+}
+/*게시판 카드 제목 설명*/
+.Main_card_info{
+  font-size: 14px;
+  color: grey;
+}
+/*게시판 카드에 들어가는 아이콘 스타일*/
+.Main_card_icons{
+  float:right;
+  width: 120px;
+  height: 80px;
+  position: absolute;
+  top:70%;
+}
+.Main_content .Main_info_cate li{
+  margin-right: 30px;
+  border-radius: 12px;
+  background: white;
+  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
+  
+}
+.body{
+  font-family: notosans, Malgun Gothic, 맑은 고딕, sans-serif;
+}
+.Main_last_div {
+  height: 500px;
 }

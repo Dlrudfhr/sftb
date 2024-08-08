@@ -2,6 +2,8 @@ import { Children, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import LoginPage from "./pages/loginPage";
 import DefaultLayout from "./pages/DefaultLayout";
+import Store from './pages/Store';
+import Information from "./pages/Information";
 import SiteIntroduce from "./pages/SiteIntroduce";
 import RanKing from "./pages/RanKing";
 import Announcement from "./pages/Announcement";
@@ -35,6 +37,16 @@ const routes: Array<RouteProps> = [
   },
 
   {
+    path: "/store",
+    component: <Store children={undefined} />,
+    
+  },
+  {
+    path: "/information",
+    component: <Information children={undefined} />,
+  },
+    
+  { 
     path: "/SignUp",
     component: (
       <SignUpPage
