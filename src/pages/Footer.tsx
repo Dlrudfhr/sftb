@@ -46,7 +46,6 @@ const Footer: React.FC = () => {
       <div className="footer-banner__section"> <ButtonGroup /> {/* 버튼 그룹을 포함합니다. */}
       </div>
     </div>
-      
   );
 };
 

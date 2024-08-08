@@ -7,7 +7,7 @@ interface ProgressBarComponentProps {
   now: number; // 현재 퍼센트바 값
   }
 
-  const ProgressBarComponent: React.FC<ProgressBarComponentProps> = ({ now }) => {
+const ProgressBarComponent: React.FC<ProgressBarComponentProps> = ({ now }) => {
   return (
     <div style={{ width: '100%', textAlign: 'center' }}>
       <ProgressBar 
@@ -18,4 +18,4 @@ interface ProgressBarComponentProps {
     </div>
   );
 };
-export default  ProgressBarComponent;
+export default ProgressBarComponent;
