@@ -4,17 +4,18 @@
 }
 /*메인화면 배너*/
 .Main_content .Main_banner{
-  height: 400px;
+  height: 300px;
+  width: 100%;
   background-color: navy;
   padding: 0px 64px 0;
   overflow-x: hidden; 
   box-shadow: 10px 10px 20px #babecc;
 }
 .Main_box_visual{
-  height:300px;
+  height:200px;
 }
 .Main_box_tab{
-  height:100px;
+  height:50px;
 }
 /*********카테고리 이동 버튼**********/
 /*box_tab의 ul(카테고리 이동버튼 3개가 포함된 줄)*/

@@ -2,9 +2,12 @@ import { useState , useRef, useEffect } from "react"; //useRef 버튼 클릭 시
 import { Routes, Route, Link } from "react-router-dom";
 import "../assets/css/Main.css";
 import React, { Children } from "react";
-// import { Swiper, SwiperSlide } from 'swiper/react';
-// import { Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from 'swiper/react';
+import '../assets/css/Swiper.css';
+import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 // import { FaBeer } from "react-icons/fa";
+
+
 import question from "../assets/images/question.png";
 import slide01 from '../assets/images/slide01.jpg';
 import slide02 from '../assets/images/slide02.png';
@@ -27,7 +30,7 @@ function Main() {
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-
+  
   return (
     <article className="Main_content">
       {/*배너 전체 박스*/}
@@ -50,6 +53,25 @@ function Main() {
       </div>
       
       
+      <div>
+      <Swiper
+        className="banner"
+        modules={[Navigation, Pagination, Scrollbar, A11y]}
+        spaceBetween={50}
+        slidesPerView={1}
+        navigation
+        pagination={{ clickable: true }}
+        scrollbar={{ draggable: true }}
+        onSwiper={(swiper) => console.log(swiper)}
+        onSlideChange={() => console.log('slide change')}
+      >
+          <SwiperSlide>Slide 1</SwiperSlide>
+          <SwiperSlide>Slide 2</SwiperSlide>
+          <SwiperSlide>Slide 3</SwiperSlide>
+          <SwiperSlide>Slide 4</SwiperSlide>
+        </Swiper>
+      </div>
+    
       
 
       {/*소통 카테고리 카드 */}
