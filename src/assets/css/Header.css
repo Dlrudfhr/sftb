@@ -11,13 +11,11 @@
   height: 150px;
   display: flex;
   justify-content: space-between;
-  height: 150px;
   width: 100%;
   align-items: center;
 }
 
 .Header__leftside {
-  display: flex;
   height: 100%;
 }
 
@@ -32,6 +30,10 @@
   left: 50%;
   top: 60%;
   transform: translate(-50%, -50%);
+  white-space: nowrap; /* 텍스트가 한 줄에 나오도록 설정 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 넘치는 텍스트를 '...'로 표시 */
+  max-width: 100%; /* 최대 너비를 100%로 설정 */
 }
 
 .Header__sitename a {
@@ -47,8 +49,6 @@
   align-self: flex-end;
   margin: 0;
   padding: 0;
-  align-items: center;
-  justify-items: center;
 }
 
 .Header__rightside h4 {

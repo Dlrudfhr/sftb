@@ -1,100 +1,16 @@
 .footer-banner {
-<<<<<<< HEAD
-    background-color: #2f8e84d5; /* 배너 배경색 */
-    color: black; /* 글자 색상 */
-    text-align: left; /* 텍스트 정렬 */
-    padding: 10px;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    border-radius: 10px; /* 하단 배너 모서리 둥글게 */
-    border-style: solid; /* 배너 테두리 */
-    border-color: black; /* 테두리 색상 */
-    display: grid;
-    grid-template-columns: 0.75fr 3fr 1fr; /* 칸 나눔 비율 */
-    gap: 10px;
-    z-index: 1000; /* 다른 요소 위에 표시되도록 합니다. */
-  }
-
-
-.footer-banner__section {
-    flex: 1; /* 각 섹션이 균등하게 배치되도록 합니다. */
-    text-align: center;
-    padding: 0 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .footer-banner__tier-info {
-    flex: 5; /* 5 비율 */
-    display: flex; /* 자식 요소들을 Flexbox로 배치합니다. */
-    align-items: center; /* 수직 중앙 정렬 */
-  }
-  
-  .footer-banner__tier-info > div {
-    flex: 1; /* 자식 요소들이 균등하게 배치됩니다. */
-  }
-  
-  .footer-banner__progress {
-    flex: 2; /* 2 비율 */
-    display: flex;
-    flex-direction: column; /* 퍼센트바를 세로로 나열 */
-    gap: 10px; /* 퍼센트바 사이의 간격 */
-    align-items: center; /* 중앙 정렬 */
-  }
-
-
-.footer-banner__tier-info img {
-  width: 80px; /* 이미지의 너비를 설정합니다. */
-  height: 80px; /* 이미지의 높이를 설정합니다. */
-  object-fit: cover; /* 이미지 비율을 유지하면서 지정된 크기로 자릅니다. */
-  margin-right: 10px; /* 이미지와 텍스트 간의 간격을 설정합니다. */
- }
-
- .footer-banner__tier-info .image-container .image-name {
-  font-size: 15px; /* 이름의 폰트 크기 설정 */
-  color: #000000; /* 텍스트 색상 */
-  font-weight: bold; /* 텍스트를 굵게 표시 */
-}
-
- .footer-banner__tier-info .text {
-  display: flex;
-  flex-direction: column; /* 세로 방향으로 배치 */
-  justify-content: center; /* 중앙 정렬 */
-  flex: 1; /* 나머지 영역을 채우도록 설정 */
- } 
-
-.footer-banner__tier-info .text .level {
-  font-size: 18px; /* 레벻 텍스트의 폰트 크기 설정 */
- }
-
- .footer-banner__tier-info .text .name {
-  font-size: 20px; /* 이름 텍스트의 폰트 크기 설정 */
-  color: #000000; /* 이름 텍스트의 색상 설정 */
-  font-weight: bold; /* 텍스트를 굵게 표시 */
- }
-
-  .footer-banner__section:first-child {
-    border-right: 1px solid #555; /* 구분선을 추가하여 각 섹션을 구분합니다. */
-  }
-
-  .footer-banner__section:last-child {
-    border-left: 1px solid #555;
-  }
-=======
   background-color: #2f8e84d5; /* 배너 배경색 */
   color: black; /* 글자 색상 */
   text-align: left; /* 텍스트 정렬 */
   padding: 10px;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   width: 100%;
   border-radius: 10px; /* 하단 배너 모서리 둥글게 */
   border-style: solid; /* 배너 테두리 */
   border-color: black; /* 테두리 색상 */
   display: grid;
-  grid-template-columns: 1fr 3fr 0.75fr; /* 칸 나눔 비율 */
+  grid-template-columns: 0.75fr 3fr 1fr; /* 칸 나눔 비율 */
   gap: 10px;
   z-index: 1000; /* 다른 요소 위에 표시되도록 합니다. */
 }
@@ -108,6 +24,54 @@
   justify-content: center;
 }
 
+.footer-banner__tier-info {
+  flex: 5; /* 5 비율 */
+  display: flex; /* 자식 요소들을 Flexbox로 배치합니다. */
+  align-items: center; /* 수직 중앙 정렬 */
+}
+
+.footer-banner__tier-info > div {
+  flex: 1; /* 자식 요소들이 균등하게 배치됩니다. */
+}
+
+.footer-banner__progress {
+  flex: 2; /* 2 비율 */
+  display: flex;
+  flex-direction: column; /* 퍼센트바를 세로로 나열 */
+  gap: 10px; /* 퍼센트바 사이의 간격 */
+  align-items: center; /* 중앙 정렬 */
+}
+
+.footer-banner__tier-info img {
+  width: 80px; /* 이미지의 너비를 설정합니다. */
+  height: 80px; /* 이미지의 높이를 설정합니다. */
+  object-fit: cover; /* 이미지 비율을 유지하면서 지정된 크기로 자릅니다. */
+  margin-right: 10px; /* 이미지와 텍스트 간의 간격을 설정합니다. */
+}
+
+.footer-banner__tier-info .image-container .image-name {
+  font-size: 15px; /* 이름의 폰트 크기 설정 */
+  color: #000000; /* 텍스트 색상 */
+  font-weight: bold; /* 텍스트를 굵게 표시 */
+}
+
+.footer-banner__tier-info .text {
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 배치 */
+  justify-content: center; /* 중앙 정렬 */
+  flex: 1; /* 나머지 영역을 채우도록 설정 */
+}
+
+.footer-banner__tier-info .text .level {
+  font-size: 18px; /* 레벻 텍스트의 폰트 크기 설정 */
+}
+
+.footer-banner__tier-info .text .name {
+  font-size: 20px; /* 이름 텍스트의 폰트 크기 설정 */
+  color: #000000; /* 이름 텍스트의 색상 설정 */
+  font-weight: bold; /* 텍스트를 굵게 표시 */
+}
+
 .footer-banner__section:first-child {
   border-right: 1px solid #555; /* 구분선을 추가하여 각 섹션을 구분합니다. */
 }
@@ -115,4 +79,3 @@
 .footer-banner__section:last-child {
   border-left: 1px solid #555;
 }
->>>>>>> 868d04df234e97fb6d7e418e7c65a963a7879741
