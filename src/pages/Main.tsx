@@ -17,6 +17,7 @@ function Main() {
   const secondElement = useRef<null | HTMLDivElement>(null); //스크롤 될 두번째 위치요소
   const thirdElement = useRef<null | HTMLDivElement>(null); //스크롤 될 세번째 위치요소
   const fourthElement = useRef<null | HTMLDivElement>(null); //스크롤 될 네번째 위치요소
+  const highElement = useRef<HTMLElement>(null);
 
   //버튼 클릭시 ref를 받아와 요소로 이동하는 스크롤 이벤트
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
