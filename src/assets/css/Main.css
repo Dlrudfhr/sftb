@@ -1,8 +1,13 @@
 /*********배너 스타일*********/
+
 .Main_content{
-  background-color: #f6f6f6;
-  font-family: 'DungGeunMo';
-}
+    background-color: #f6f6f6;
+    font-family: 'DungGeunMo';
+    height: 100%;
+    width: 100%;
+  }  
+
+
 /*메인화면 배너*/
 .Main_content .Main_banner{
   height: 300px;
@@ -137,6 +142,11 @@
 }
 .body{
   font-family: notosans, Malgun Gothic, 맑은 고딕, sans-serif;
+  background-color: #f6f6f6;
+  min-width: 1280px;
+  min-height: 600px;
+  max-width: 1024px;
+
 }
 .Main_last_div {
   height: 500px;

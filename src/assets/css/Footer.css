@@ -13,6 +13,7 @@
     grid-template-columns: 0.75fr 3fr 1fr; /* 칸 나눔 비율 */
     gap: 10px;
     z-index: 1000; /* 다른 요소 위에 표시되도록 합니다. */
+    font-family: 'DungGeunMo';
   }
 
 
