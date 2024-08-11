@@ -24,7 +24,7 @@ function Main() {
   const secondElement = useRef<null|HTMLDivElement>(null);//스크롤 될 두번째 위치요소
   const thirdElement = useRef<null|HTMLDivElement>(null);//스크롤 될 세번째 위치요소
   const fourthElement = useRef<null|HTMLDivElement>(null);//스크롤 될 네번째 위치요소
-  
+  const highElement = useRef<null|HTMLDivElement>(null);//상단으로 돌아가기 버튼
   
   //버튼 클릭시 ref를 받아와 요소로 이동하는 스크롤 이벤트
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
@@ -32,28 +32,27 @@ function Main() {
   };
   
   return (
-    <article className="Main_content">
+    <article className="Main_content" ref={highElement}>
       {/*배너 전체 박스*/}
       <div className="Main_banner">
         <div className="Main_box_visual">
-          <strong className="Main_title_visual">
-            Department of<br></br>
-            Information&Communication
-          </strong>
+          Department of<br></br>
+          Information&Communication
+          
         </div>
         {/*카테고리 이동 버튼 */}
         <div className="Main_box_tab">
           <ul>
-            <li className="on"><button className="Main_button" title="소통 카테고리로 이동" type="button" onClick={() => onMoveBox(firstElement)}>💬 소통해요!</button></li>
-            <li className=""><button  className="Main_button" title="공부 카테고리로 이동" type="button" onClick={() => onMoveBox(secondElement)}>같이 공부해요!</button></li>
-            <li className=""><button  className="Main_button" title="else카테고리로 이동" type="button" onClick={() => onMoveBox(thirdElement)}>장터</button></li>
-            <li className=""><button  className="Main_button" title="else카테고리로 이동" type="button" onClick={() => onMoveBox(fourthElement)}>기록열람</button></li>
+            <li className="on"><button className="Main_button" title="소통 카테고리로 이동" type="button" onClick={() => onMoveBox(firstElement)}><div className="Main_button_space">💬 소통해요!</div></button></li>
+            <li className=""><button  className="Main_button" title="공부 카테고리로 이동" type="button" onClick={() => onMoveBox(secondElement)}><div className="Main_button_space">같이 공부해요!</div></button></li>
+            <li className=""><button  className="Main_button" title="else카테고리로 이동" type="button" onClick={() => onMoveBox(thirdElement)}><div className="Main_button_space">장터</div></button></li>
+            <li className=""><button  className="Main_button" title="else카테고리로 이동" type="button" onClick={() => onMoveBox(fourthElement)}><div className="Main_button_space">기록열람</div></button></li>
           </ul>
         </div>
       </div>
       
       
-      <div>
+      {/* <div>
       <Swiper
         className="banner"
         modules={[Navigation, Pagination, Scrollbar, A11y]}
@@ -70,10 +69,12 @@ function Main() {
           <SwiperSlide>Slide 3</SwiperSlide>
           <SwiperSlide>Slide 4</SwiperSlide>
         </Swiper>
-      </div>
+      </div> */}
     
       
-
+      <div className="Main_high">
+        <button type="button" onClick={() => onMoveBox(highElement)}>위로 가기 버튼</button>
+      </div>
       {/*소통 카테고리 카드 */}
       <div className="Main_info_cate" id="Main_communication_card" >
         <div className="Main_category_title" ref={firstElement}>💬 소통해요!</div>
@@ -196,6 +197,7 @@ function Main() {
         
       
     </article>
+    
   );
 }
 export default Main;
