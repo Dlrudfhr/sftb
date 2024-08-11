@@ -24,14 +24,12 @@ function Main() {
   };
 
   return (
-    <article className="Main_content">
+    <article className="Main_content" ref={highElement}>
       {/*배너 전체 박스*/}
       <div className="Main_banner">
         <div className="Main_box_visual">
-          <strong className="Main_title_visual">
-            Department of<br></br>
-            Information&Communication
-          </strong>
+          Department of<br></br>
+          Information&Communication
         </div>
         {/*카테고리 이동 버튼 */}
         <div className="Main_box_tab">

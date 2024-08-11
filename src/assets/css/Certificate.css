@@ -1,6 +1,32 @@
 .postpage_title{
     text-align: center;
-    
-    background-color: lightblue;
+    padding:20px 0;
     height: 100px;
+    font-family: 'DungGeunMo';
+}
+.Certificate_outline{
+   
+    margin-left:30px;
+    margin-right:30px;
+    margin-top: 10px;
+    border:solid 1px;
+    border-radius:40px;
+
+    
+}
+.Certificate_main{
+    
+    padding:20px;
+    border: solid 1px;
+    border-radius:38px;
+    margin: 20px;
+}
+.Certificate_list{
+    padding:5%;
+}
+.Certificate_post{
+    padding:10px;
+    height: 70px;
+    border: solid 1px;
+    margin: 5px;
 }

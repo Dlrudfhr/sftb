@@ -1,21 +1,27 @@
 /*********배너 스타일*********/
 .Main_content{
   background-color: #f6f6f6;
+  font-family: 'DungGeunMo';
 }
 /*메인화면 배너*/
 .Main_content .Main_banner{
   height: 300px;
   width: 100%;
-  background-color: navy;
+  background-color: rgb(34, 34, 34);
   padding: 0px 64px 0;
   overflow-x: hidden; 
   box-shadow: 10px 10px 20px #babecc;
 }
 .Main_box_visual{
-  height:200px;
+  height:70%;
+  width: 100%;
+  color:white;
+  font-size: 40px;
+  font-weight: bold;
+  padding-top:30px;
 }
 .Main_box_tab{
-  height:50px;
+  height:30%;
 }
 /*********카테고리 이동 버튼**********/
 /*box_tab의 ul(카테고리 이동버튼 3개가 포함된 줄)*/
@@ -27,18 +33,19 @@
   padding: 19px 0;
   box-sizing: border-box;
   position: absolute;
-    
+  
 }
 
 /*box_tab안에 카테고리 이동 버튼*/
 .Main_box_tab .Main_button{
   border-radius:100px;
   padding: 10px 33px;
-  font-size: 18px;
-  letter-spacing:-.6px;
+  font-size: 16px;
+  /* letter-spacing:-.6px; */
   /* background-color: white; */
   background-color: rgba(255,255,192,0.1);
   backdrop-filter: blur(10px);  
+  font-family: 'DungGeunMo';
 }
 /*카테고리 이동 버튼*/
 .Main_button{
@@ -53,15 +60,8 @@
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
   transition: box-shadow 0.25s ease, transform 0.25s ease;  
 }
-
-/**/
-.Main_title_visual{
-  display: block;
-  font-size: 40px;
-  line-height: 1.4;
-  letter-spacing: -1.6px;
-  color: white;
-  padding-top: 96px;
+.Main_button_space{
+  min-width: 120px;
 }
 
 /************게시판 카드 스타일*************/
@@ -112,7 +112,7 @@
   padding-bottom: 20px;
   font-weight: bold;
   font-size: 20px;
-  letter-spacing: -3px;
+  letter-spacing: -.5px;
 }
 /*게시판 카드 제목 설명*/
 .Main_card_info{
@@ -140,4 +140,13 @@
 }
 .Main_last_div {
   height: 500px;
+}
+/*상단으로 돌아가는 버튼 스타일*/
+.Main_high button{
+  position: fixed;
+  right:1%;
+  top:75%;
+  /* transform: translateX(560%); */
+  z-index: 1000;
+  
 }
