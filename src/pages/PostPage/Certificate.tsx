@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import Header from "../Header";
+import "../../assets/css/Certificate.css";
 
 const Certificate = () => {
   
@@ -10,6 +11,7 @@ const Certificate = () => {
     <>
     <Header />
       <h1 className="postpage_title">자격증 게시판</h1>
+
     </>
 
 
