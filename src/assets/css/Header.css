@@ -42,7 +42,9 @@
 }
 
 .Header__sitename a {
-  font-family: "Frank Ruhl Libre", serif;
+  /* font-family: "Frank Ruhl Libre", serif; */
+  font-family: "DungGeunMo";
+  letter-spacing: -2px;
   font-weight: 400;
   margin-right: 20px;
   text-decoration: none; /* 링크의 기본 밑줄 제거 */
@@ -57,7 +59,8 @@
 }
 
 .Header__rightside h4 {
-  font-family: "Frank Ruhl Libre", serif;
+  /* font-family: "Frank Ruhl Libre", serif; */
+  font-family: "DungGeunMo";
   font-weight: 400;
   margin-right: 15px;
   color: rgb(0, 0, 0);
@@ -73,6 +76,7 @@
 .Header__link-with-dropdown {
   display: flex;
   position: relative;
+  font-family: "DungGeunMo";
 }
 
 /* 문의 박스 */
