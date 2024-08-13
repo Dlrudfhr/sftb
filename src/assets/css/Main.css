@@ -1,10 +1,5 @@
 /*********배너 스타일*********/
-@font-face {
-  font-family: "DungGeunMo";
-  src: url("../fonts/DungGeunMo.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
+@import url('Font.css');
 
 .Main_content {
   background-color: #f6f6f6;
