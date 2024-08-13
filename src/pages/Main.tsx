@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "../assets/css/Swiper.css";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 // import { FaBeer } from "react-icons/fa";
-
+import "../assets/css/Font.css";
 import question from "../assets/images/question.png";
 import slide01 from "../assets/images/slide01.jpg";
 import slide02 from "../assets/images/slide02.png";

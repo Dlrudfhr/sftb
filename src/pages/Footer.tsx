@@ -44,11 +44,11 @@ const Footer: React.FC = () => {
       <div className="Footer__midSection">
         <div className="Footer__levelprogress">
           <div className="Footer__levelName">레벨</div>
-          <ProgressBarComponent now={percentage1} />
+          <progress max="100" value="25"></progress>
         </div>
         <div className="Footer__tierprogress">
           <div className="Footer__tierName">티어</div>
-          <ProgressBarComponent now={percentage2} />
+          <progress max="100" value="25"></progress>
         </div>
       </div>
 

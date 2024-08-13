@@ -21,6 +21,7 @@ import FreePost from "./pages/PostPage/FreePost";
 import SignUpPage from "./pages/SignUpPage";
 import SearchIdPage from "./pages/SearchIdPage";
 import SearchPwPage from "./pages/SearchPwPage";
+import "./App.css";
 
 interface RouteProps {
   path: string; //경로를 나타내는 문자열

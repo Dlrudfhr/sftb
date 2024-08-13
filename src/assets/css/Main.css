@@ -1,10 +1,4 @@
 /*********배너 스타일*********/
-@font-face {
-  font-family: "DungGeunMo";
-  src: url("../fonts/DungGeunMo.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
 
 .Main_content {
   background-color: #f6f6f6;
@@ -149,6 +143,7 @@
   min-width: 1280px;
   min-height: 600px;
   max-width: 1024px;
+  margin: 0;
 }
 .Main_last_div {
   height: 500px;
