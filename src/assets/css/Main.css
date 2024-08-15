@@ -1,10 +1,5 @@
 /*********배너 스타일*********/
-@font-face {
-  font-family: "DungGeunMo";
-  src: url("../fonts/DungGeunMo.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
+@import url("Font.css");
 
 .Main_content {
   background-color: #f6f6f6;
@@ -19,11 +14,11 @@
   width: 100%;
   background-color: rgb(34, 34, 34);
   padding: 0px 64px 0;
-  overflow-x: hidden;
+  overflow: hidden;
   box-shadow: 10px 10px 20px #babecc;
 }
 .Main_box_visual {
-  height: 70%;
+  height: 180px;
   width: 100%;
   color: white;
   font-size: 40px;
@@ -31,18 +26,16 @@
   padding-top: 30px;
 }
 .Main_box_tab {
-  height: 30%;
+  height: 90px;
 }
 /*********카테고리 이동 버튼**********/
 /*box_tab의 ul(카테고리 이동버튼 3개가 포함된 줄)*/
 .Main_box_tab ul {
   margin: 0;
-  padding-left: 67px;
-  padding-right: 89px;
   display: flex;
-  padding: 19px 0;
   box-sizing: border-box;
   position: absolute;
+  padding: 0;
 }
 
 /*box_tab안에 카테고리 이동 버튼*/
@@ -90,20 +83,19 @@
 /*게시판 블럭들*/
 .Main_content ul {
   list-style: none;
-  padding-top: 21px;
   display: flex;
 }
 /*게시판 블럭 스타일*/
 .Main_card {
   width: 250px;
-  min-height: 250px;
+  height: 250px;
   padding: 8px;
   cursor: pointer;
 }
 /*게시판 안에 제목, 설명, 아이콘 포함 스타일*/
 .Main_card_content {
   width: 233px;
-  min-height: 233px;
+  height: 233px;
   padding: 32px;
   -webkit-transform: scale(1);
   transform: scale(1);
