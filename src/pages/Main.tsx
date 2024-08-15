@@ -17,7 +17,7 @@ function Main() {
   const secondElement = useRef<null | HTMLDivElement>(null); //스크롤 될 두번째 위치요소
   const thirdElement = useRef<null | HTMLDivElement>(null); //스크롤 될 세번째 위치요소
   const fourthElement = useRef<null | HTMLDivElement>(null); //스크롤 될 네번째 위치요소
-  const highElement = useRef<HTMLElement>(null);
+  const highElement = useRef<null|HTMLDivElement>(null);//상단으로 돌아가기 버튼
 
   //버튼 클릭시 ref를 받아와 요소로 이동하는 스크롤 이벤트
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
@@ -79,7 +79,7 @@ function Main() {
         </div>
       </div>
 
-      <div>
+      {/* <div>
         <Swiper
           className="banner"
           modules={[Navigation, Pagination, Scrollbar, A11y]}
@@ -96,6 +96,9 @@ function Main() {
           <SwiperSlide>Slide 3</SwiperSlide>
           <SwiperSlide>Slide 4</SwiperSlide>
         </Swiper>
+      </div> */}
+      <div className="Main_high">
+        <button type="button" onClick={() => onMoveBox(highElement)}>위로 가기 버튼</button>
       </div>
 
       {/*소통 카테고리 카드 */}

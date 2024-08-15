@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../assets/css/Footer.css";
 import ProgressBarComponent from "./ProgressBarComponent"; // ProgressBarComponent를 임포트합니다.
 import ButtonGroup from "./ButtonGroup";
@@ -17,13 +17,12 @@ const levelImages: LevelImages = {
 };
 
 const Footer: React.FC = () => {
-  const [level, setLevel] = useState("티어1"); // 초기 레벨 설정
-  const percentage1 = 70; // 첫 번째 퍼센트바의 값
-  const total1 = 100; // 첫 번째 퍼센트바의 총값
-  const percentage2 = 40; // 두 번째 퍼센트바의 값
-  const total2 = 100; // 두 번째 퍼센트바의 총값
-
+  const [level, setLevel] = useState("1레벨"); // 초기 레벨 설정
+  const [tier, settier] = useState("신입사원");
   const tierPhoto = levelImages[level] || tierPhoto1;
+  const [value, setvalue] = useState<number>(70);
+  const max = 100;
+  const percentage = (value / max) * 100;
 
   return (
     <div className="Footer__banner">
@@ -31,12 +30,12 @@ const Footer: React.FC = () => {
         <div className="Footer__image">
           <img src={tierPhoto} alt="티어 사진" />{" "}
           {/* 현재 레벨에 맞는 이미지 */}
-          <div className="image-name">{level} </div>{" "}
+          <div className="image-name">{tier} </div>{" "}
           {/* 현재 레벨에 맞는 이름 */}
         </div>
         <div className="Footer__text">
+          <div className="Footer__textlevel">{level}</div> <br />
           <div className="Footer__textname">이름</div> {/* 이름 텍스트 */}
-          <div className="Footer__textlevel">{level}</div>{" "}
           {/* 현재 레벨 텍스트 */}
         </div>
       </div>
@@ -44,11 +43,33 @@ const Footer: React.FC = () => {
       <div className="Footer__midSection">
         <div className="Footer__levelprogress">
           <div className="Footer__levelName">레벨</div>
-          <progress max="100" value="25"></progress>
+          <progress max={max} value={value}></progress>
+          <span
+            style={{
+              position: "absolute",
+              left: `${percentage}%`,
+              top: "70%",
+              transform: "translateY(-50%)",
+              color: "black",
+            }}
+          >
+            {percentage.toFixed(0)}%
+          </span>
         </div>
         <div className="Footer__tierprogress">
           <div className="Footer__tierName">티어</div>
-          <progress max="100" value="25"></progress>
+          <progress max={max} value={value}></progress>
+          <span
+            style={{
+              position: "absolute",
+              left: `${percentage}%`,
+              top: "70%",
+              transform: "translateY(-50%)",
+              color: "black",
+            }}
+          >
+            {percentage.toFixed(0)}%
+          </span>
         </div>
       </div>
 

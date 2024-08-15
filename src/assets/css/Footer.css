@@ -1,9 +1,4 @@
-@font-face {
-  font-family: "DungGeunMo";
-  src: url("../fonts/DungGeunMo.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
+@import url("Font.css");
 
 .Footer__banner {
   background-color: gray; /* 배너 배경색 */
@@ -42,9 +37,12 @@
 
 .Footer__levelprogress {
   flex: 1;
+  position: relative;
+  width: 400px;
 }
 .Footer__tierprogress {
   flex: 1;
+  position: relative;
 }
 
 .Footer__rightSection {
@@ -56,7 +54,7 @@
 
 progress {
   display: block; /* default: inline-block */
-  width: 300px;
+  width: 100%;
   margin-top: 5px;
   padding: 4px;
   border: 0 none;
