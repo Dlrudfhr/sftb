@@ -86,12 +86,7 @@ function App(p0: unknown, p1: HTMLElement | null) {
         )}
       </Routes>
     </>
-    // <BrowserRouter>
-    //   <Switch>
-    //     <Route exact path="/" component={Main}/>
-    //     <Route path="/post" component={PostPage}/>
-    //   </Switch>
-    // </BrowserRouter>
+    
   );
 }
 
