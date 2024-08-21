@@ -1,0 +1,19 @@
+.button-group {
+    display: flex;
+    justify-content: space-between; /* 버튼 사이에 간격을 만듭니다. */
+    width: 100%;
+  }
+  
+  .button-group__button {
+    background-color: #007bff; /* 버튼 배경색 */
+    color: white; /* 버튼 텍스트 색상 */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  
+  .button-group__button:hover {
+    background-color: #0056b3; /* 버튼 호버 색상 */
+  }

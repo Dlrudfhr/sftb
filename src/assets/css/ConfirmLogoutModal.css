@@ -1,0 +1,44 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* 모달 콘텐츠 스타일 */
+  .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px; /* 모서리 둥글게 하기 */
+    text-align: center;
+    width: 400px; /* 너비 설정 */
+    max-width: 90%; /* 화면 크기에 따라 조정 */
+  }
+  
+  /* 버튼 스타일 */
+  .modal-buttons {
+    margin-top: 20px;
+  }
+  
+  .modal-buttons button {
+    margin: 0 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .modal-buttons button:first-child {
+    background: #4caf50;
+    color: white;
+  }
+  
+  .modal-buttons button:last-child {
+    background: #f44336;
+    color: white;
+  }
