@@ -32,8 +32,7 @@ function Main() {
   };
 
   return (
-    <article className="Main_content" ref={highElement}>
-      {showIntro && <IntroScreen onClose={handleCloseIntro} />}
+    <article className="Main_layout" ref={highElement}>
       {/*배너 전체 박스*/}
       <div className="Main_banner">
         <div className="Main_box_visual">
@@ -87,27 +86,10 @@ function Main() {
         </div>
       </div>
 
-      {/* <div>
-        <Swiper
-          className="banner"
-          modules={[Navigation, Pagination, Scrollbar, A11y]}
-          spaceBetween={50}
-          slidesPerView={1}
-          navigation
-          pagination={{ clickable: true }}
-          scrollbar={{ draggable: true }}
-          onSwiper={(swiper) => console.log(swiper)}
-          onSlideChange={() => console.log("slide change")}
-        >
-          <SwiperSlide>Slide 1</SwiperSlide>
-          <SwiperSlide>Slide 2</SwiperSlide>
-          <SwiperSlide>Slide 3</SwiperSlide>
-          <SwiperSlide>Slide 4</SwiperSlide>
-        </Swiper>
-      </div> */}
+      {/*위로가기 버튼 */}
       <div className="Main_high">
         <button type="button" onClick={() => onMoveBox(highElement)}>
-          위로 가기 버튼
+          위
         </button>
       </div>
 
@@ -118,7 +100,7 @@ function Main() {
         </div>
         <ul>
           {/*질문과 답 게시판 카드 */}
-          <li className="Main_c">
+          <li>
             <div
               className="Main_card"
               onClick={() => (window.location.href = "/QnA")}
@@ -126,12 +108,7 @@ function Main() {
               <div className="Main_card_content">
                 <div className="Main_card_title">질문과 답</div>
                 <div className="Main_card_info">자유롭게 질문하고 답하기</div>
-                <div
-                  className="Main_card_icons"
-                  style={{ backgroundImage: `url(${question})` }}
-                >
-                  icons
-                </div>
+                <div className="Main_card_icons">icons</div>
               </div>
             </div>
           </li>

@@ -36,14 +36,23 @@ const routes: Array<RouteProps> = [
   { path: "/store", component: <Store children={undefined} /> },
   { path: "/information", component: <Information children={undefined} /> },
   {
-    path: "/SignUp",
-    component: (
-      <SignUpPage
-        onSubmit={function (): void {
-          new Error("Function not implemented.");
-        }}
-      />
-    ),
+    path: "/",
+    component: <LoginPage />,
+  },
+
+  {
+    path: "/store",
+    component: <Store children={undefined} />,
+    
+  },
+  {
+    path: "/information",
+    component: <Information children={undefined} />,
+  },
+    
+  {
+    path: "/signup",
+    component: <SignUpPage/>,
   },
   { path: "/Main", component: <DefaultLayout children={undefined} /> },
   { path: "/SearchIdPage", component: <SearchIdPage /> },
@@ -86,12 +95,7 @@ function App(p0: unknown, p1: HTMLElement | null) {
         )}
       </Routes>
     </>
-    // <BrowserRouter>
-    //   <Switch>
-    //     <Route exact path="/" component={Main}/>
-    //     <Route path="/post" component={PostPage}/>
-    //   </Switch>
-    // </BrowserRouter>
+    
   );
 }
 
