@@ -1,142 +1,158 @@
-/*********배너 스타일*********/
-.Main_content{
+@import url("Font.css");
+
+
+/*메인 전체 부분*/
+.Main_layout {
   background-color: #f6f6f6;
+  font-family: "DungGeunMo";
+  overflow: hidden;
+  min-width: 1280px;
+  
 }
-/*메인화면 배너*/
-.Main_content .Main_banner{
-  height: 400px;
-  background-color: navy;
-  padding: 0px 64px 0;
-  overflow-x: hidden; 
-  box-shadow: 10px 10px 20px #babecc;
-}
-.Main_box_visual{
-  height:300px;
-}
-.Main_box_tab{
-  height:100px;
-}
-/*********카테고리 이동 버튼**********/
-/*box_tab의 ul(카테고리 이동버튼 3개가 포함된 줄)*/
-.Main_box_tab ul{
-  margin: 0;
-  padding-left: 67px;
-  padding-right: 89px;
-  display: flex;
-  padding: 19px 0;
-  box-sizing: border-box;
-  position: absolute;
-    
+/*게시판 블럭들 - 모든 ul flex설정과 list스타일 해제*/
+.Main_layout ul {
+  display: flex; /**/
+  list-style: none;
 }
 
-/*box_tab안에 카테고리 이동 버튼*/
-.Main_box_tab .Main_button{
-  border-radius:100px;
-  padding: 10px 33px;
-  font-size: 18px;
-  letter-spacing:-.6px;
-  /* background-color: white; */
-  background-color: rgba(255,255,192,0.1);
-  backdrop-filter: blur(10px);  
-}
-/*카테고리 이동 버튼*/
-.Main_button{
-  cursor:pointer;
-  border:0;
-  font-size: 14px;
-  font-weight: bold;
-  line-height:1.5;
-  font-family: notosans, Malgun Gothic, 맑은 고딕, sans-serif;
-  /* color: #464646; */
-  margin-right: 5px;
-  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
-  transition: box-shadow 0.25s ease, transform 0.25s ease;  
+/**************************배너 스타일******************************/
+
+/*메인화면 배너(visual+button)*/
+.Main_layout .Main_banner {
+
 }
 
-/**/
-.Main_title_visual{
-  display: block;
+/*메인 배너 글자 있는 부분*/
+.Main_box_visual {
+  height: 70%;
+  background-color: #f1f1f1;
   font-size: 40px;
-  line-height: 1.4;
-  letter-spacing: -1.6px;
-  color: white;
-  padding-top: 96px;
+  font-weight: bold;
+  padding: 40px;
+  
+}
+
+/*********카테고리 이동 버튼**********/
+
+
+/*카테고리 이동 버튼*/
+.Main_button {
+  cursor: pointer;
+  font-size: 14px;
+  color: #464646;
+  font-weight: bold;
+  background-color: rgba(255, 255, 192, 0.1);
+  backdrop-filter: blur(10px);
+  letter-spacing:-.6px;
+  padding: 10px 33px;
+  border-radius: 100px;
+  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  /*transition: box-shadow 0.25s ease, transform 0.25s ease; */
+}
+.Main_button:hover {
+  background-color: white;
 }
 
 /************게시판 카드 스타일*************/
 /*게시판 블럭들 스타일*/
 .Main_info_cate {
-  max-width: 1230px;
-  padding-top: 120px;
-  margin: 0 auto;
+  padding-top: 100px;
+  height: 100%;
+  justify-content: center;
+  margin-left:10%;
+  margin-right:10%;
 }
-/*게시판 카테고리 설명*/
-.Main_category_title{
+.Main_info_cate li{
+  margin-bottom: 32px;
+}
+
+/*게시판 카테고리 설명 ex)소통해요!*/
+.Main_category_title {
   font-size: 32px;
   padding-left: 30px;
+  margin-bottom: 30px ;
   letter-spacing: -2px;
-  margin:0 auto;
+  /* margin: 0 auto; */
 }
-/*게시판 블럭들*/
-.Main_content ul{
-  list-style:none;
-  padding-top: 21px;
-  display: flex;  
-}
+
+
+
+
+
+
 /*게시판 블럭 스타일*/
-.Main_card{
+.Main_card {
   width: 250px;
-  min-height: 250px;
-  padding: 8px;
-  cursor: pointer;
+  height: 250px;
+  cursor: pointer; 
+  margin-right:50px;
+  align-content: center; /*카드 안에 콘텐츠 세로 중앙 정렬*/
+  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  -webkit-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  border-radius: 5%;
+}
+.Main_card:hover {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
 }
 /*게시판 안에 제목, 설명, 아이콘 포함 스타일*/
-.Main_card_content{
-  width: 233px;
-  min-height: 233px;
-  padding: 32px;
-  -webkit-transform: scale(1);
-	transform: scale(1);
-	-webkit-transition: .5s ease-in-out;
-	transition: .5s ease-in-out;
-}
-.Main_card_content:hover{
-  -webkit-transform: scale(1.1);
-	transform: scale(1.1);
+.Main_card_content {
+  margin:auto; /* 카드 안에 콘텐츠 가로 중앙 정렬*/
+  height: 80%;
+  width: 80%;
+  /* -webkit-transform: scale(1);
+  transform: scale(1); */
 }
 /*게시판 카드 제목*/
 .Main_card .Main_card_title {
-  display: block;
-  position: relative;
-  padding-bottom: 20px;
-  font-weight: bold;
   font-size: 20px;
-  letter-spacing: -3px;
+  font-weight: bold;
+  letter-spacing: -0.5px;
+  padding-bottom: 20px;
+  /*position: relative;*/
 }
 /*게시판 카드 제목 설명*/
-.Main_card_info{
+.Main_card_info {
   font-size: 14px;
   color: grey;
+  padding-bottom: 100px;
 }
 /*게시판 카드에 들어가는 아이콘 스타일*/
-.Main_card_icons{
-  float:right;
-  width: 120px;
-  height: 80px;
+.Main_card_icons {
+  float: right;
   position: absolute;
-  top:70%;
+  
 }
-.Main_content .Main_info_cate li{
-  margin-right: 30px;
+.Main_content .Main_info_cate li {
+  /* margin-right: 30px;
   border-radius: 12px;
   background: white;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
-  
+  transition: box-shadow 0.25s ease, transform 0.25s ease; */
 }
-.body{
-  font-family: notosans, Malgun Gothic, 맑은 고딕, sans-serif;
+.body {
+  /* font-family: notosans, Malgun Gothic, 맑은 고딕, sans-serif;
+  background-color: #f6f6f6;
+  min-width: 1280px;
+  min-height: 600px;
+  max-width: 1024px; */
 }
+/*페이지 밑 부분 연장으로 footer로 가려지는 부분 해결*/
 .Main_last_div {
   height: 500px;
+}
+
+
+/******상단으로 돌아가는 버튼 스타일******/
+.Main_high button {
+  position: fixed; /*요소 페이지에서 고정*/
+  right: 0; /*오른쪽 배치*/
+  bottom: 80px; /*하단에서 부터 80px 떨어진 곳에 위치*/
+  z-index: 1000; /*다른 요소위에 노출*/
+  color:black;
+  border-radius: 100%;
+  width: 50px;
+  height: 50px;
+  background-color: lightgray;
 }

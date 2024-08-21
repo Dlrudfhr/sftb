@@ -1,0 +1,82 @@
+.postpage_title{
+    text-align: center;
+    padding:20px 0;
+    height: 100px;
+    font-family: 'DungGeunMo';
+}
+.Certificate_outline{
+   
+    /* margin-left:150px;
+    margin-right:150px;
+    margin-top: 10px; */
+    /* border:solid 1px; */
+    border-radius:40px;
+
+    
+}
+.Certificate_main{
+    
+    /* padding:20px; */
+    /* border: solid 1px; */
+    border-radius:38px;
+    margin: 20px;
+}
+.Certificate_list{
+    border: solid 1px;
+    width:100%;
+    text-align: center;
+}
+.Certificate_list thead{
+    border-bottom: 1px solid #ccc;
+}
+.Certificate_post{
+    padding:10px;
+    height: 70px;
+    border: solid 1px;
+    margin: 5px;
+}
+
+.Certificate_search_box{
+    /* height:30px; */
+    width:auto;
+    padding: 0.75em 1em;
+    margin-bottom: 1em;
+    background-color: #f4f4f4;
+    position: relative;
+    text-align: center;
+    display: flex;
+    justify-content: space-between;
+}
+
+.Certificate_form_group{
+    
+    color:#797979;
+    font-size:16px;
+    
+    
+    
+}
+.Certificate_form_group select{
+    
+    width:150px;
+    height: 48px;
+    padding: 6px 20px 6px 10px;
+    
+    
+}
+.Certificate_form_group input{
+    width:500px;
+    
+}
+.Certificate_button_list{
+    width:200px;
+    height: 100%;
+    /* border-radius: 50%; */
+    /* background: grey; */
+    font-size:16px;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    float:right;
+
+}

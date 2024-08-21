@@ -1,23 +1,26 @@
-@import url("https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300..900&display=swap");
+@import url("Font.css");
 
 .Header__container-top {
   border: 2px solid #000000;
   background-color: #ffffff;
   position: relative;
+  width: 100%;
+  min-width: 100%;
+  resize: none;
+  margin: 0;
 }
 
 .Header__navbar {
   width: 100%;
+  min-width: 100%;
   height: 150px;
   display: flex;
   justify-content: space-between;
-  height: 150px;
-  width: 100%;
   align-items: center;
+  resize: none;
 }
 
 .Header__leftside {
-  display: flex;
   height: 100%;
 }
 
@@ -32,10 +35,16 @@
   left: 50%;
   top: 60%;
   transform: translate(-50%, -50%);
+  white-space: nowrap; /* 텍스트가 한 줄에 나오도록 설정 */
+  overflow: hidden; /* 넘치는 텍스트를 숨김 */
+  text-overflow: ellipsis; /* 넘치는 텍스트를 '...'로 표시 */
+  max-width: 100%; /* 최대 너비를 100%로 설정 */
 }
 
 .Header__sitename a {
-  font-family: "Frank Ruhl Libre", serif;
+  /* font-family: "Frank Ruhl Libre", serif; */
+  font-family: "DungGeunMo";
+  letter-spacing: -2px;
   font-weight: 400;
   margin-right: 20px;
   text-decoration: none; /* 링크의 기본 밑줄 제거 */
@@ -47,12 +56,11 @@
   align-self: flex-end;
   margin: 0;
   padding: 0;
-  align-items: center;
-  justify-items: center;
 }
 
 .Header__rightside h4 {
-  font-family: "Frank Ruhl Libre", serif;
+  /* font-family: "Frank Ruhl Libre", serif; */
+  font-family: "DungGeunMo";
   font-weight: 400;
   margin-right: 15px;
   color: rgb(0, 0, 0);
@@ -68,6 +76,7 @@
 .Header__link-with-dropdown {
   display: flex;
   position: relative;
+  font-family: "DungGeunMo";
 }
 
 /* 문의 박스 */
