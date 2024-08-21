@@ -23,14 +23,14 @@ const ButtonGroup: React.FC = () => {
     setIsModalOpen(false); // 모달 닫기
   };
   return (
-    <div className="button-group">
+    <div className="buttonGroup__container">
       <Link to="/store">
-        <button className="button-group__button">상점</button>
+        <button className="buttonGroup__button">상점</button>
       </Link>
       <Link to="/information">
-        <button className="button-group__button">내정보</button>
+        <button className="buttonGroup__button">내정보</button>
       </Link>
-      <button className="button-group__button" onClick={handleLogout}>
+      <button className="buttonGroup__button" onClick={handleLogout}>
         로그아웃
       </button>
       <ConfirmLogoutModal

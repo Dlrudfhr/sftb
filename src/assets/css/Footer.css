@@ -1,5 +1,9 @@
 @import url("Font.css");
 
+.Footer__container {
+  position: relative;
+}
+
 .Footer__banner {
   background-color: gray; /* 배너 배경색 */
   color: black; /* 글자 색상 */
@@ -11,6 +15,7 @@
   z-index: 1000; /* 다른 요소 위에 표시되도록 합니다. */
   gap: 10px;
   font-family: "DungGeunMo";
+  transition: transform 0.3s ease-in-out; /* 애니메이션 효과 추가 */
 }
 
 .Footer__leftSection {
@@ -50,6 +55,18 @@
   align-items: center;
   justify-items: center;
   justify-content: center;
+}
+
+.Footer__banner.hidden {
+  transform: translateX(-100%);
+}
+
+.Footer__toggleButton {
+  position: fixed;
+  bottom: 0px;
+  z-index: 1001; /* 배너보다 위에 표시되도록 합니다. */
+  height: 80px;
+  width: 50px;
 }
 
 progress {

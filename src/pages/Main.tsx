@@ -7,17 +7,24 @@ import "../assets/css/Swiper.css";
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 // import { FaBeer } from "react-icons/fa";
 import "../assets/css/Font.css";
+import "./ModalSwiper";
 import question from "../assets/images/question.png";
 import slide01 from "../assets/images/slide01.jpg";
 import slide02 from "../assets/images/slide02.png";
 import slide03 from "../assets/images/slide03.png";
+import IntroScreen from "./ModalSwiper";
 
 function Main() {
   const firstElement = useRef<null | HTMLDivElement>(null); //스크롤 될 첫번째 위치요소
   const secondElement = useRef<null | HTMLDivElement>(null); //스크롤 될 두번째 위치요소
   const thirdElement = useRef<null | HTMLDivElement>(null); //스크롤 될 세번째 위치요소
   const fourthElement = useRef<null | HTMLDivElement>(null); //스크롤 될 네번째 위치요소
-  const highElement = useRef<null|HTMLDivElement>(null);//상단으로 돌아가기 버튼
+  const highElement = useRef<null | HTMLDivElement>(null); //상단으로 돌아가기 버튼
+
+  const [showIntro, setShowIntro] = useState(true);
+  const handleCloseIntro = () => {
+    setShowIntro(false);
+  };
 
   //버튼 클릭시 ref를 받아와 요소로 이동하는 스크롤 이벤트
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
@@ -26,6 +33,7 @@ function Main() {
 
   return (
     <article className="Main_content" ref={highElement}>
+      {showIntro && <IntroScreen onClose={handleCloseIntro} />}
       {/*배너 전체 박스*/}
       <div className="Main_banner">
         <div className="Main_box_visual">
@@ -98,7 +106,9 @@ function Main() {
         </Swiper>
       </div> */}
       <div className="Main_high">
-        <button type="button" onClick={() => onMoveBox(highElement)}>위로 가기 버튼</button>
+        <button type="button" onClick={() => onMoveBox(highElement)}>
+          위로 가기 버튼
+        </button>
       </div>
 
       {/*소통 카테고리 카드 */}

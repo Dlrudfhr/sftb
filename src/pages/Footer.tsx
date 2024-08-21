@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "../assets/css/Footer.css";
 import ProgressBarComponent from "./ProgressBarComponent"; // ProgressBarComponent를 임포트합니다.
 import ButtonGroup from "./ButtonGroup";
@@ -23,58 +23,68 @@ const Footer: React.FC = () => {
   const [value, setvalue] = useState<number>(70);
   const max = 100;
   const percentage = (value / max) * 100;
+  const [isBannerVisible, setIsBannerVisible] = useState(true); // 배너 가시성 상태
+
+  const toggleBanner = () => {
+    setIsBannerVisible(!isBannerVisible);
+  };
 
   return (
-    <div className="Footer__banner">
-      <div className="Footer__leftSection">
-        <div className="Footer__image">
-          <img src={tierPhoto} alt="티어 사진" />{" "}
-          {/* 현재 레벨에 맞는 이미지 */}
-          <div className="image-name">{tier} </div>{" "}
-          {/* 현재 레벨에 맞는 이름 */}
+    <div className="Footer__container">
+      <button
+        className={`Footer__toggleButton ${isBannerVisible ? "" : "hidden"}`}
+        onClick={toggleBanner}
+      >
+        {isBannerVisible ? "◀" : "▶"}
+      </button>
+      <div className={`Footer__banner ${isBannerVisible ? "" : "hidden"}`}>
+        <div className="Footer__leftSection">
+          <div className="Footer__image">
+            <img src={tierPhoto} alt="티어 사진" />
+            <div className="image-name">{tier}</div>
+          </div>
+          <div className="Footer__text">
+            <div className="Footer__textlevel">{level}</div> <br />
+            <div className="Footer__textname">이름</div>
+          </div>
         </div>
-        <div className="Footer__text">
-          <div className="Footer__textlevel">{level}</div> <br />
-          <div className="Footer__textname">이름</div> {/* 이름 텍스트 */}
-          {/* 현재 레벨 텍스트 */}
-        </div>
-      </div>
 
-      <div className="Footer__midSection">
-        <div className="Footer__levelprogress">
-          <div className="Footer__levelName">레벨</div>
-          <progress max={max} value={value}></progress>
-          <span
-            style={{
-              position: "absolute",
-              left: `${percentage}%`,
-              top: "70%",
-              transform: "translateY(-50%)",
-              color: "black",
-            }}
-          >
-            {percentage.toFixed(0)}%
-          </span>
+        <div className="Footer__midSection">
+          <div className="Footer__levelprogress">
+            <div className="Footer__levelName">레벨</div>
+            <progress max={max} value={value}></progress>
+            <span
+              style={{
+                position: "absolute",
+                left: `${percentage}%`,
+                top: "70%",
+                transform: "translateY(-50%)",
+                color: "black",
+              }}
+            >
+              {percentage.toFixed(0)}%
+            </span>
+          </div>
+          <div className="Footer__tierprogress">
+            <div className="Footer__tierName">티어</div>
+            <progress max={max} value={value}></progress>
+            <span
+              style={{
+                position: "absolute",
+                left: `${percentage}%`,
+                top: "70%",
+                transform: "translateY(-50%)",
+                color: "black",
+              }}
+            >
+              {percentage.toFixed(0)}%
+            </span>
+          </div>
         </div>
-        <div className="Footer__tierprogress">
-          <div className="Footer__tierName">티어</div>
-          <progress max={max} value={value}></progress>
-          <span
-            style={{
-              position: "absolute",
-              left: `${percentage}%`,
-              top: "70%",
-              transform: "translateY(-50%)",
-              color: "black",
-            }}
-          >
-            {percentage.toFixed(0)}%
-          </span>
-        </div>
-      </div>
 
-      <div className="Footer__rightSection">
-        <ButtonGroup />
+        <div className="Footer__rightSection">
+          <ButtonGroup />
+        </div>
       </div>
     </div>
   );

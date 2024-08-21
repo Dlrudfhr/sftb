@@ -10,7 +10,6 @@ import PTU from "../assets/images/PTU.png";
 import logo from "../assets/images/rogo.png";
 import DefaultLayout from "./DefaultLayout";
 
-
 import { Link, useNavigate } from "react-router-dom";
 
 interface LoginPage {
@@ -51,7 +50,7 @@ function LoginPage() {
           <img src={PTU} alt="image" />
         </div>
         <div className="loginPage__loginSection">
-          <form>
+          <form className="loginPage__form">
             <div
               style={{
                 display: "flex",
@@ -66,29 +65,43 @@ function LoginPage() {
                 style={{ width: "50%", height: "auto" }}
               />
             </div>
-            <h4>Started From The Bottom</h4>
-            <label htmlFor="username">아이디</label>
+            <h3 className="loginPage__h3">Started From The Bottom</h3>
+            <label className="loginPage__label" htmlFor="username">
+              아이디
+            </label>
             <input
+              className="loginPage__input"
               type="text"
               id="input_id"
-              name="{inputId}"
+              name={inputId}
               onChange={(e) => setInputId(e.target.value)}
               required
             ></input>
             <br />
-            <label htmlFor="password">비밀번호</label>
+            <label className="loginPage__label" htmlFor="password">
+              비밀번호
+            </label>
             <input
+              className="loginPage__input"
               type="password"
               id="input_pw"
-              name="{inputPw}"
+              name={inputPw}
               onChange={(e) => setInputPw(e.target.value)}
               required
             ></input>
             <br />
-            <button type="submit" onClick={handleMainClick}>
+            <button
+              className="loginPage__button"
+              type="submit"
+              onClick={handleMainClick}
+            >
               로그인
             </button>
-            <button type="button" onClick={handleSignUpClick}>
+            <button
+              className="loginPage__button"
+              type="button"
+              onClick={handleSignUpClick}
+            >
               회원가입
             </button>
             <div className="LoginPage__SearchId">

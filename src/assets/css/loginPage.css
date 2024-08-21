@@ -26,24 +26,28 @@
   box-shadow: inset -10px 0 15px -10px rgba(0, 0, 0, 0.5);
 }
 
-form {
+.loginPage__h3 {
+  text-align: center;
+}
+
+.loginPage__form {
   display: flex;
   flex-direction: column;
   width: 100%;
   max-width: 300px;
 }
 
-label {
+.loginPage__label {
   margin-bottom: 5px;
 }
 
-input {
+.loginPage__input {
   margin-bottom: 5px;
   padding: 10px;
   font-size: 16px;
 }
 
-button {
+.loginPage__button {
   padding: 10px;
   font-size: 16px;
   background-color: #007bff;
@@ -54,7 +58,7 @@ button {
   margin: 5px;
 }
 
-button:hover {
+.loginPage__button:hover {
   background-color: #0056b3;
 }
 

@@ -1,10 +1,10 @@
-.button-group {
+.buttonGroup__container {
   display: flex;
   align-items: center;
   height: 100%;
 }
 
-.button-group__button {
+.buttonGroup__button {
   background-color: #4d4d4d; /* 버튼 배경색 */
   color: white; /* 버튼 텍스트 색상 */
   border: none;
@@ -13,8 +13,9 @@
   font-size: 16px;
   margin: 5px;
   width: 100px;
+  height: 35px;
 }
 
-.button-group__button:hover {
+.buttonGroup__button:hover {
   background-color: #181818; /* 버튼 호버 색상 */
 }

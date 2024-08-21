@@ -17,6 +17,12 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onSubmit }) => {
   const [showAlert, setShowAlert] = useState(false);
   const navigate = useNavigate();
 
+  const [inputName, setInputName] = useState("");
+  const [inputStudentNumber, setInputStudentNumber] = useState("");
+  const [inputId, setInputId] = useState("");
+  const [inputPw, setInputPw] = useState("");
+  const [inputEmail, setInputEmail] = useState("");
+
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     onSubmit();
@@ -37,7 +43,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onSubmit }) => {
         <img src={PTU} alt="image" />
       </div>
       <div className="SignUpPage__SignUpSection">
-        <Form onSubmit={handleFormSubmit}>
+        <form className="SignUpPage__form" onSubmit={handleFormSubmit}>
           <div
             style={{
               display: "flex",
@@ -51,85 +57,71 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onSubmit }) => {
               style={{ width: "50%", height: "auto" }}
             />
           </div>
-          <h4>Started From The Bottom</h4>
-          <Row className="mb-3">
-            <Form.Group
-              as={Col}
-              controlId="formGridName"
-              style={{
-                marginBottom: "0.5rem",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Form.Label>이름</Form.Label>
-              <Form.Control type="text" />
-            </Form.Group>
+          <h3 className="SignUpPage__h3">Started From The Bottom</h3>
 
-            <Form.Group
-              as={Col}
-              controlId="formGridStudentId"
-              style={{
-                marginBottom: "0.5rem",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Form.Label>학번</Form.Label>
-              <Form.Control type="text" />
-            </Form.Group>
-          </Row>
-
-          <Row className="mb-3">
-            <Form.Group
-              as={Col}
-              controlId="formGridUsername"
-              style={{
-                marginBottom: "0.5rem",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Form.Label>아이디</Form.Label>
-              <Form.Control type="text" />
-            </Form.Group>
-
-            <Form.Group
-              as={Col}
-              controlId="formGridPassword"
-              style={{
-                marginBottom: "0.5rem",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Form.Label>비밀번호</Form.Label>
-              <Form.Control type="password" />
-            </Form.Group>
-          </Row>
-
-          <Row className="mb-3">
-            <Form.Group
-              as={Col}
-              controlId="formGridEmail"
-              style={{
-                marginBottom: "0.5rem",
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <Form.Label>이메일</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-            </Form.Group>
-          </Row>
-
-          <Button
-            variant="primary"
+          <label className="SignUpPage__label" htmlFor="username">
+            이름
+          </label>
+          <input
+            className="SignUpPage__input"
+            type="text"
+            id="input_name"
+            name={inputName}
+            onChange={(e) => setInputName(e.target.value)}
+            required
+          ></input>
+          <label className="SignUpPage__label" htmlFor="studentNumber">
+            학번
+          </label>
+          <input
+            className="SignUpPage__input"
+            type="text"
+            id="input_studentNumber"
+            name={inputStudentNumber}
+            onChange={(e) => setInputStudentNumber(e.target.value)}
+            required
+          ></input>
+          <label className="SignUpPage__label" htmlFor="username">
+            아이디
+          </label>
+          <input
+            className="SignUpPage__input"
+            type="text"
+            id="input_id"
+            name={inputId}
+            onChange={(e) => setInputId(e.target.value)}
+            required
+          ></input>
+          <label className="SignUpPage__label" htmlFor="password">
+            비밀번호
+          </label>
+          <input
+            className="SignUpPage__input"
+            type="password"
+            id="input_pw"
+            name={inputPw}
+            onChange={(e) => setInputPw(e.target.value)}
+            required
+          ></input>
+          <label className="SignUpPage__label" htmlFor="useremail">
+            이메일
+          </label>
+          <input
+            className="SignUpPage__input"
+            type="email"
+            id="input_email"
+            name={inputEmail}
+            placeholder="Enter email"
+            onChange={(e) => setInputEmail(e.target.value)}
+            required
+          ></input>
+          <button
+            className="SignUpPage__button"
             type="submit"
             onClick={handleLoginPageClick}
           >
             회원가입
-          </Button>
+          </button>
           <div className="SignUpPage__returnLoginPage">
             <span
               style={{ cursor: "pointer", color: "#007bff" }}
@@ -138,7 +130,7 @@ const SignUpPage: React.FC<SignUpPageProps> = ({ onSubmit }) => {
               이미 회원이신가요?
             </span>
           </div>
-        </Form>
+        </form>
       </div>
       <SignUpModal
         show={showAlert}
