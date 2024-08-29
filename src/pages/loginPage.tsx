@@ -1,46 +1,54 @@
-import React, { Children } from "react";
-import ReactDOM from "react-dom";
-import { useState } from "react";
-import { useEffect } from "react";
-import { ReactNode } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import "../assets/css/loginPage.css";
-import SignUpModal from "./SignUpModal";
-import SignUpPage from "./SignUpPage";
 import PTU from "../assets/images/PTU.png";
 import logo from "../assets/images/rogo.png";
-import DefaultLayout from "./DefaultLayout";
-
-import { Link, useNavigate } from "react-router-dom";
-
-interface LoginPage {
-  children: any;
-}
 
 function LoginPage() {
-  const [showSignUp, setShowSignUp] = useState(true);
-
-  const [loggedIn, setloggedIn] = useState(true);
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
-
+  const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  const correctUsername = "yourUsername";
-  const correctPassword = "yourpassword";
+  const handleMainClick = async (event: React.FormEvent) => {
+    event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
 
-  const handleMainClick = () => {
-    navigate("/Main");
+    try {
+      const response = await axios.post(
+        "http://localhost:8080/api/auth/login",
+        {
+          userID: inputId,
+          password: inputPw,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.userID) {
+        navigate("/Main"); // 로그인 성공 시 메인 페이지로 이동
+      } else {
+        setErrorMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
+      }
+    } catch (error) {
+     
+      setErrorMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
+    }
   };
 
   const handleSignUpClick = () => {
-    navigate("/SignUp");
+    navigate("/SignUp"); // 회원가입 페이지로 이동
   };
 
   const handleSearchIDClick = () => {
-    navigate("/SearchIdPage");
+    navigate("/SearchIdPage"); // 아이디 찾기 페이지로 이동
   };
+
   const handleSearchPwClick = () => {
-    navigate("/SearchPwPage");
+    navigate("/SearchPwPage"); // 비밀번호 찾기 페이지로 이동
   };
 
   return (
@@ -50,7 +58,7 @@ function LoginPage() {
           <img src={PTU} alt="image" />
         </div>
         <div className="loginPage__loginSection">
-          <form className="loginPage__form">
+          <form className="loginPage__form" onSubmit={handleMainClick}>
             <div
               style={{
                 display: "flex",
@@ -73,7 +81,7 @@ function LoginPage() {
               className="loginPage__input"
               type="text"
               id="input_id"
-              name={inputId}
+              value={inputId}
               onChange={(e) => setInputId(e.target.value)}
               required
             ></input>
@@ -85,16 +93,17 @@ function LoginPage() {
               className="loginPage__input"
               type="password"
               id="input_pw"
-              name={inputPw}
+              value={inputPw}
               onChange={(e) => setInputPw(e.target.value)}
               required
             ></input>
             <br />
-            <button
-              className="loginPage__button"
-              type="submit"
-              onClick={handleMainClick}
-            >
+            {errorMessage && (
+              <div style={{ color: "red", marginBottom: "10px" }}>
+                {errorMessage}
+              </div>
+            )}
+            <button className="loginPage__button" type="submit">
               로그인
             </button>
             <button
