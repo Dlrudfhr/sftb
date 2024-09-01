@@ -2,6 +2,7 @@
   "name": "sftb",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -32,7 +33,7 @@
     "react-router-dom": "^6.25.1",
     "react-scripts": "5.0.1",
     "stream-browserify": "^3.0.0",
-    "swiper": "^6.8.4",
+    "swiper": "^11.1.10",
     "timers-browserify": "^2.0.12",
     "util": "^0.12.5",
     "web-vitals": "^2.1.4"
