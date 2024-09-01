@@ -2,17 +2,24 @@ import { useState, useRef, useEffect } from "react"; //useRef 버튼 클릭 시 
 import { Routes, Route, Link } from "react-router-dom";
 import "../assets/css/Main.css";
 import React, { Children } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "../assets/css/Swiper.css";
-import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
+
+//import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 // import { FaBeer } from "react-icons/fa";
-import "../assets/css/Font.css";
-import "./ModalSwiper";
+
 import question from "../assets/images/question.png";
 import slide01 from "../assets/images/slide01.jpg";
 import slide02 from "../assets/images/slide02.png";
 import slide03 from "../assets/images/slide03.png";
-import IntroScreen from "./ModalSwiper";
+
+//Swiper 관련 컴포넌트
+//import IntroScreen from "./ModalSwiper";
+/*import "../assets/css/Font.css";
+import "./ModalSwiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "../assets/css/Swiper.css";
+import "swiper/swiper-bundle.min.css";
+import "swiper/modules/pagination/pagination.min.css";
+*/
 
 function Main() {
   const firstElement = useRef<null | HTMLDivElement>(null); //스크롤 될 첫번째 위치요소

@@ -2,7 +2,6 @@
   "name": "sftb",
   "version": "0.1.0",
   "private": true,
-  "proxy":"http://localhost:8080",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -33,7 +32,7 @@
     "react-router-dom": "^6.25.1",
     "react-scripts": "5.0.1",
     "stream-browserify": "^3.0.0",
-    "swiper": "^11.1.9",
+    "swiper": "^6.8.4",
     "timers-browserify": "^2.0.12",
     "util": "^0.12.5",
     "web-vitals": "^2.1.4"
@@ -66,5 +65,9 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "typescript": "^5.5.4"
+  },
+  "exports": {
+    "./css": "./swiper.min.css",
+    "./css/bundle": "./swiper-bundle.min.css"
   }
 }

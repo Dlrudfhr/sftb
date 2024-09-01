@@ -39,6 +39,7 @@ function LoginPage() {
   const handleSearchIDClick = () => {
     navigate("/SearchIdPage");
   };
+
   const handleSearchPwClick = () => {
     navigate("/SearchPwPage");
   };
