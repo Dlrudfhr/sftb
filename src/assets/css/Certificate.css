@@ -1,74 +1,40 @@
+/*자격증 게시판 글자*/
 .postpage_title{
     text-align: center;
     padding:20px 0;
-    height: 100px;
     font-family: 'DungGeunMo';
 }
-.Certificate_outline{
-   
-    /* margin-left:150px;
-    margin-right:150px;
-    margin-top: 10px; */
-    /* border:solid 1px; */
-    border-radius:40px;
-
-    
+.fixed_layout{
+  width: 1000px;
+  background-color: #d2d2d2;
+  margin:auto;
+  padding:10px;
 }
-.Certificate_main{
-    
-    /* padding:20px; */
-    /* border: solid 1px; */
-    border-radius:38px;
-    margin: 20px;
+.form{
+  display: flex;
 }
-.Certificate_list{
-    border: solid 1px;
-    width:100%;
-    text-align: center;
+.search_txt_Certificate{
+  height: 34px;
+  margin-left:10px;
+  width: 70%;
 }
-.Certificate_list thead{
-    border-bottom: 1px solid #ccc;
-}
-.Certificate_post{
-    padding:10px;
-    height: 70px;
-    border: solid 1px;
-    margin: 5px;
+.search_button_Certificate{
+  height: 40px;
+  margin-left:5px;
+  width: 100%;
 }
 
-.Certificate_search_box{
-    /* height:30px; */
-    width:auto;
-    padding: 0.75em 1em;
-    margin-bottom: 1em;
-    background-color: #f4f4f4;
-    position: relative;
-    text-align: center;
-    display: flex;
-    justify-content: space-between;
-}
-
-.Certificate_form_group{
-    
-    color:#797979;
-    font-size:16px;
-    
-    
-    
-}
-.Certificate_form_group select{
-    
+.form_group_Certificate select{
     width:150px;
-    height: 48px;
+    height: 40px;
     padding: 6px 20px 6px 10px;
-    
-    
 }
-.Certificate_form_group input{
+
+.form_group_Certificate input{
     width:500px;
-    
 }
-.Certificate_button_list{
+
+.button_list_Certificate{
     width:200px;
     height: 100%;
     /* border-radius: 50%; */
@@ -78,5 +44,83 @@
     justify-content: center;
     align-items: center;
     float:right;
-
 }
+
+
+/********************************게시글 카드**********************************/
+
+/*게시판 블럭들 스타일*/
+.info_cate_Certificate {
+    padding-top: 100px;
+    height: 100%;
+    justify-content: center;
+}
+
+.info_cate_Certificate li{
+  margin-bottom: 32px;
+}
+  
+/*게시판 카테고리 설명 ex)소통해요!*/
+.category_title_Certificate {
+  font-size: 32px;
+  padding-left: 30px;
+  margin-bottom: 30px ;
+  letter-spacing: -2px;
+}
+  
+/*게시판 블럭 스타일*/
+.card_Certificate {
+  width: 200px;
+  height: 200px;
+  cursor: pointer; 
+  margin-right:50px;
+  align-content: center; /*카드 안에 콘텐츠 세로 중앙 정렬*/
+  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  -webkit-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  border-radius: 5%;
+}
+
+.card_Certificate:hover {
+  -webkit-transform: scale(1.1);
+  transform: scale(1.1);
+}
+
+/*게시판 안에 제목, 설명, 아이콘 포함 스타일*/
+.card_content_Certificate {
+  margin:auto; /* 카드 안에 콘텐츠 가로 중앙 정렬*/
+  height: 80%;
+  width: 80%;
+  /* -webkit-transform: scale(1);
+  transform: scale(1); */
+}
+
+  /*게시판 카드 제목*/
+.card .Main_card_title_Certificate {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: -0.5px;
+  padding-bottom: 20px;
+}
+
+/*게시판 카드 제목 설명*/
+.card_info_Certificate {
+  font-size: 14px;
+  color: grey;
+  padding-bottom: 100px;
+}
+
+/*게시판 카드에 들어가는 아이콘 스타일*/
+.card_icons_Certificate {
+  float: right;
+  position: absolute;
+}
+
+li{
+  list-style: none;;
+}
+
+.fixed_layout ul{
+  display: flex;
+}
+  

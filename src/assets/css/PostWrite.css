@@ -1,0 +1,25 @@
+/*페이지 양식 가운데 정렬(건드리지 말 것)*/
+.postwrite_input{
+    width: 800px;
+    height:700px;
+    background-color: #d2d2d2;
+    margin:auto;
+    padding:10px;
+}
+
+.post_title{
+    width: 100%;
+    height: 30px;
+    margin-top:20px;
+    border:none;
+}
+.post_textarea{
+    width: 100%;
+    height: 300px;
+    margin-top:20px;
+    border:none;
+}
+.post_button{
+    margin-top:20px;
+    float: right;
+}

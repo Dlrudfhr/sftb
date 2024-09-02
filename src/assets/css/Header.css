@@ -4,6 +4,7 @@
   border: 1px solid #000000;
   background-color: #ffffff;
   position: relative;
+  min-width: 1280px;
 }
 
 .Header__navbar {

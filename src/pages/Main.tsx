@@ -85,7 +85,7 @@ function Main() {
       {/*위로가기 버튼 */}
       <div className="Main_high">
         <button type="button" onClick={() => onMoveBox(highElement)}>
-          위
+          top
         </button>
       </div>
 
