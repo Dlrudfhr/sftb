@@ -9,6 +9,15 @@ import slide01 from "../assets/images/slide01.jpg";
 import slide02 from "../assets/images/slide02.png";
 import slide03 from "../assets/images/slide03.png";
 
+//Swiper 관련 컴포넌트
+//import IntroScreen from "./ModalSwiper";
+/*import "../assets/css/Font.css";
+import "./ModalSwiper";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "../assets/css/Swiper.css";
+import "swiper/swiper-bundle.min.css";
+import "swiper/modules/pagination/pagination.min.css";
+*/
 
 function Main() {
   const firstElement = useRef<null | HTMLDivElement>(null); //스크롤 될 첫번째 위치요소
