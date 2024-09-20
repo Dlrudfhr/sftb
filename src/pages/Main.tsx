@@ -9,6 +9,8 @@ import question from "../assets/images/question.png";
 import slide01 from "../assets/images/slide01.jpg";
 import slide02 from "../assets/images/slide02.png";
 import slide03 from "../assets/images/slide03.png";
+import { FaRegComment } from "react-icons/fa";
+import { PiCertificate } from "react-icons/pi";
 
 function Main() {
   const firstElement = useRef<null | HTMLDivElement>(null); //스크롤 될 첫번째 위치요소
@@ -105,7 +107,7 @@ function Main() {
                 <div className="Main_card_content">
                   <div className="Main_card_title">질문과 답</div>
                   <div className="Main_card_info">자유롭게 질문하고 답하기</div>
-                  <div className="Main_card_icons">icons</div>
+                  <div className="Main_card_icons"><FaRegComment /></div>
                 </div>
               </div>
             </li>
@@ -118,7 +120,7 @@ function Main() {
                 <div className="Main_card_content">
                   <div className="Main_card_title">자격증 정보</div>
                   <div className="Main_card_info">자격증 정보</div>
-                  <div className="Main_card_icons">icons</div>
+                  <div className="Main_card_icons"><PiCertificate /></div>
                 </div>
               </div>
             </li>

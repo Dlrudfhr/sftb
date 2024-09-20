@@ -25,13 +25,13 @@ function LoginPage() {
           headers: {
             "Content-Type": "application/json",
           },
+          withCredentials: true,
         }
       );
 
-      if (response.data.userID) {
-        navigate("/Main"); // 로그인 성공 시 메인 페이지로 이동
-      } else {
-        setErrorMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
+      if (response.status === 200 && response.data.userID) {
+        sessionStorage.setItem("authenticated", "true");
+        navigate("/Main");
       }
     } catch (error) {
       setErrorMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
