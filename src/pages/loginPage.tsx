@@ -31,6 +31,8 @@ function LoginPage() {
 
       if (response.status === 200 && response.data.userID) {
         sessionStorage.setItem("authenticated", "true");
+        localStorage.setItem("memberId", response.data.userID); // userID를 localStorage에 저장
+        localStorage.setItem("userName", response.data.userName); // userName을 localStorage에 저장
         navigate("/Main");
       }
     } catch (error) {
