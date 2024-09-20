@@ -1,0 +1,176 @@
+/*************************************게시판 이름*********************************/
+
+/*페이지 레이아웃*/
+.PostDetail_layout{
+    width:1000px;
+    margin: auto;
+}
+
+/*게시판 이름*/
+.postpage_title{
+    margin-top: 40px;
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+/*********************************게시물 출력 박스********************************/
+
+.PostDetail_layout .PostDetail_box, .postpage_title{
+    width:100%;
+    padding: 15px 30px;
+    border:solid 0.667px lightgray;
+}
+
+/******************* 게시글 작성자, 제목, 내용, 좋아요, 스크랩 ********************/
+
+/*작성자 프로필 영역*/
+.PostDetail_profile{
+    margin-bottom: 20px;
+    display: flex;
+}
+
+/*게시글 작성자 사진*/
+.PostDetail_proImage{
+    width: 60px;
+    height: 60px;
+    background-color: lightgray;
+    border-radius: 15%;
+    text-align: center;
+    align-content: center;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+/**/
+.PostDetail_time{
+    color:gray
+}
+
+/*게시글 제목 영역*/
+.PostDetail_postTitle{
+    font-weight: bold;
+    font-size:30px;
+    margin-bottom: 15px;
+}
+
+/*게시글 내용 영역*/
+.PostDetail_content{
+    font-size:20px;
+    margin-bottom: 15px;
+}
+
+/*게시글 좋아요수, 댓글수, 스크랩수*/
+.PostDetail_total{
+    display: flex;
+    margin-bottom: 15px;
+}
+
+/*게시글 좋아요 수, 게시글 댓글 수, 게시글 스크랩 수*/
+.PostDetail_totallike, .PostDetail_totalcomm, .PostDetail_totalscrap, .PostDetail_likebutton{
+    margin-right:5px;
+}
+
+/*게시글 좋아요 버튼, 게시글 스크랩 버튼*/
+.PostDetail_likebutton, .PostDetail_scrapbutton{
+    width: 80px;
+    height: 30px;
+    border:  0.667px lightgray;
+    border-radius: 10%;
+}
+
+/************************************ 게시글 댓글 *********************************/
+/**/
+.PostDetail_layout .PostDetail_commentbox{
+    width:100%;
+    padding: 15px 30px;
+    border:solid 0.667px lightgray;
+    border-top:none;
+}
+
+/**/
+.PostDetail_writer{
+    display: flex;
+    margin-bottom: 6px;
+}
+
+/*댓글 작성자 이미지*/
+.PostDetail_commproImage{
+    background-color: lightgrey;
+    width: 30px;
+    height: 30px;
+    border-radius: 10%;
+    margin-right:5px;
+    cursor: pointer;
+}
+
+/**/
+img{
+    width: 100%;
+    height: 100%;
+}
+
+/*댓글 작성자*/
+.PostDetail_commwriter{
+    align-content: center;
+    width: 87%;
+}
+
+/*게시글 대댓글*/
+.PostDetail_recomm{
+    margin-right:15px;
+}
+
+/*게시글 댓글, 댓글 좋아요*/
+.PostDetail_recomm, .PostDetail_recommlike{
+    align-content: center;
+    color:grey;
+    cursor: pointer;
+}
+
+/*게시글 대댓글*/
+.PostDetail_rerecomm{
+    border: solid 1.333px lightgray;
+    width: 90%;
+    padding: 20px;
+    background-color: #f4f4f4;
+    margin:35px -5px 4px 4px;
+    
+}
+
+/******************************* 게시글 댓글 작성 **********************************/
+
+/*게시글 댓글 작성박스*/
+.PostDetail_commWritebox{
+    display:flex;
+    width:100%;
+    margin-bottom:15px;
+}
+
+/*게시글 댓글 작성 영역*/
+.PostDetail_commWrite{
+    width:100%;
+    padding: 15px 30px;
+    border:solid 0.667px lightgray; 
+    background-color: #f4f4f4;
+}
+
+/**/
+.PostDetail_commWrite:focus{
+    outline: none;
+}
+
+/*게시글 댓글 작성 완료 버튼*/
+.PostDetail_button{
+    padding: 15px 30px;
+    border:none;
+}
+
+/**/
+.PostDetail_postlistbtn{
+    margin:auto;
+    border: solid 0.667px red;
+    border-radius:10%;
+    position:absolute;
+    padding:10px 15px;
+    color: red;
+    font-weight:bold;
+}

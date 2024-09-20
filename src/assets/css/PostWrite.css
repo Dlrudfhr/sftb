@@ -1,25 +1,61 @@
 /*페이지 양식 가운데 정렬(건드리지 말 것)*/
-.postwrite_input{
-    width: 800px;
-    height:700px;
-    background-color: #d2d2d2;
+.PostWrite_layout{
+    width: 1000px;
     margin:auto;
-    padding:10px;
+    margin-top:30px;
+    padding:15px 30px;
+    /* border: solid 0.667px lightgray; */
 }
 
-.post_title{
-    width: 100%;
-    height: 30px;
-    margin-top:20px;
-    border:none;
+/*게시판 표시*/
+.postpage_title{
+    width: 1000px;
 }
-.post_textarea{
-    width: 100%;
+
+/***********************************************************/
+
+/*게시글 작성자 출력영역*/
+.PostDetail_profile{
+
+}
+
+/***********************************************************/
+/*게시글 제목, 게시글 내용 폼*/
+.post_title, .post_textarea{
+    width: 97%;
+    border:solid 0.667px lightgray;
+    padding:15px;
+}
+
+/*게시글 제목 포커스 지움*/
+.post_title:focus{
+    outline:none;
+}
+
+/*게시글 내용 input*/
+.post_textarea{ 
     height: 300px;
-    margin-top:20px;
-    border:none;
+    resize: none;
+    border-top: none;
 }
+
+/*게시글 내용 포커스 지움*/
+.post_textarea:focus{
+    outline:none;
+}
+
+/**************************** 버튼 **************************/
+
+/*목록, 제출 버튼*/
+.PostWrite_golist, .post_button{
+    border: solid 0.667px lightgray;
+    width: 80px;
+    height: 40px;
+    font-size:14px;
+    font-weight: bold;
+}
+
+/*제출버튼*/
 .post_button{
-    margin-top:20px;
     float: right;
 }
