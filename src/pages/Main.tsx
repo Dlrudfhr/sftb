@@ -2,22 +2,13 @@ import { useState, useRef, useEffect } from "react"; //useRef 버튼 클릭 시 
 import { Routes, Route, Link } from "react-router-dom";
 import "../assets/css/Main.css";
 import React, { Children } from "react";
+//import { Navigation, Pagination, Scrollbar, A11y } from "swiper/modules";
 // import { FaBeer } from "react-icons/fa";
 import "../assets/css/Font.css";
 import question from "../assets/images/question.png";
 import slide01 from "../assets/images/slide01.jpg";
 import slide02 from "../assets/images/slide02.png";
 import slide03 from "../assets/images/slide03.png";
-
-//Swiper 관련 컴포넌트
-//import IntroScreen from "./ModalSwiper";
-/*import "../assets/css/Font.css";
-import "./ModalSwiper";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "../assets/css/Swiper.css";
-import "swiper/swiper-bundle.min.css";
-import "swiper/modules/pagination/pagination.min.css";
-*/
 
 function Main() {
   const firstElement = useRef<null | HTMLDivElement>(null); //스크롤 될 첫번째 위치요소
@@ -94,159 +85,253 @@ function Main() {
       {/*위로가기 버튼 */}
       <div className="Main_high">
         <button type="button" onClick={() => onMoveBox(highElement)}>
-          위
+          top
         </button>
       </div>
 
-      {/*소통 카테고리 카드 */}
-      <div className="Main_info_cate" id="Main_communication_card">
-        <div className="Main_category_title" ref={firstElement}>
-          💬 소통해요!
+      <div className="Main_categoryLayout">
+        {/*소통 카테고리 카드 */}
+        <div className="Main_info_cate" id="Main_communication_card">
+          <div className="Main_category_title" ref={firstElement}>
+            💬 소통해요!
+          </div>
+          <ul>
+            {/*질문과 답 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/QnA")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title">질문과 답</div>
+                  <div className="Main_card_info">자유롭게 질문하고 답하기</div>
+                  <div className="Main_card_icons">icons</div>
+                </div>
+              </div>
+            </li>
+            {/*자격증 정보 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/Certificate")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title">자격증 정보</div>
+                  <div className="Main_card_info">자격증 정보</div>
+                  <div className="Main_card_icons">icons</div>
+                </div>
+              </div>
+            </li>
+            {/*과목별 정보공유 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/Share")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title">과목별 정보공유</div>
+                  <div className="Main_card_info">과목별 정보공유</div>
+                  <div className="Main_card_icons">icons</div>
+                </div>
+              </div>
+            </li>
+            {/*자유게시판 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/FreePost")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title">자유게시판</div>
+                  <div className="Main_card_info">자유게시판</div>
+                  <div className="Main_card_icons">icons</div>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
-        <ul>
-          {/*질문과 답 게시판 카드 */}
-          <li>
-            <div
-              className="Main_card"
-              onClick={() => (window.location.href = "/QnA")}
-            >
-              <div className="Main_card_content">
-                <div className="Main_card_title">질문과 답</div>
-                <div className="Main_card_info">자유롭게 질문하고 답하기</div>
-                <div className="Main_card_icons">icons</div>
+        {/*공부 카테고리 카드 */}
+        <div className="Main_info_cate" id="Main_study_card">
+          <div className="Main_category_title" ref={secondElement}>
+            공부해요!
+          </div>
+          <ul>
+            {/*멘토멘티 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/Mentor_mentee")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title">멘토멘티</div>
+                  <div className="Main_card_info">멘토멘티</div>
+                  <div className="Main_card_icons">icons</div>
+                </div>
               </div>
-            </div>
-          </li>
-          {/*자격증 정보 게시판 카드 */}
-          <li>
-            <div
-              className="Main_card"
-              onClick={() => (window.location.href = "/Certificate")}
-            >
-              <div className="Main_card_content">
-                <div className="Main_card_title">자격증 정보</div>
-                <div className="Main_card_info">자격증 정보</div>
-                <div className="Main_card_icons">icons</div>
+            </li>
+            {/*프로젝트 개발 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/Project")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title">프로젝트 개발</div>
+                  <div className="Main_card_info">프로젝트 개발</div>
+                  <div className="Main_card_icons">icons</div>
+                </div>
               </div>
-            </div>
-          </li>
-          {/*과목별 정보공유 게시판 카드 */}
-          <li>
-            <div
-              className="Main_card"
-              onClick={() => (window.location.href = "/Share")}
-            >
-              <div className="Main_card_content">
-                <div className="Main_card_title">과목별 정보공유</div>
-                <div className="Main_card_info">과목별 정보공유</div>
-                <div className="Main_card_icons">icons</div>
+            </li>
+            {/*코딩문제 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/Coding")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title">코딩 문제</div>
+                  <div className="Main_card_info">코딩 문제</div>
+                  <div className="Main_card_icons">icons</div>
+                </div>
               </div>
-            </div>
-          </li>
-          {/*자유게시판 게시판 카드 */}
-          <li>
-            <div
-              className="Main_card"
-              onClick={() => (window.location.href = "/FreePost")}
-            >
-              <div className="Main_card_content">
-                <div className="Main_card_title">자유게시판</div>
-                <div className="Main_card_info">자유게시판</div>
-                <div className="Main_card_icons">icons</div>
+            </li>
+            {/*비어있는 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/Coding")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title"></div>
+                  <div className="Main_card_info"></div>
+                  <div className="Main_card_icons"></div>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      {/*공부 카테고리 카드 */}
-      <div className="Main_info_cate" id="Main_study_card">
-        <div className="Main_category_title" ref={secondElement}>
-          공부해요!
+            </li>
+          </ul>
         </div>
-        <ul>
-          {/*멘토멘티 게시판 카드 */}
-          <li>
-            <div
-              className="Main_card"
-              onClick={() => (window.location.href = "/Mentor_mentee")}
-            >
-              <div className="Main_card_content">
-                <div className="Main_card_title">멘토멘티</div>
-                <div className="Main_card_info">멘토멘티</div>
-                <div className="Main_card_icons">icons</div>
+        {/*나머지 카테고리 카드 */}
+        <div className="Main_info_cate" id="Main_else_card">
+          <div className="Main_category_title" ref={thirdElement}>
+            장터
+          </div>
+          <ul>
+            {/*전공책 장터 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/Marketplace")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title">전공책 장터</div>
+                  <div className="Main_card_info">전공책 장터</div>
+                  <div className="Main_card_icons">icons</div>
+                </div>
               </div>
-            </div>
-          </li>
-          {/*프로젝트 개발 게시판 카드 */}
-          <li>
-            <div
-              className="Main_card"
-              onClick={() => (window.location.href = "/Project")}
-            >
-              <div className="Main_card_content">
-                <div className="Main_card_title">프로젝트 개발</div>
-                <div className="Main_card_info">프로젝트 개발</div>
-                <div className="Main_card_icons">icons</div>
+            </li>
+            {/*비어있는 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/Coding")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title"></div>
+                  <div className="Main_card_info"></div>
+                  <div className="Main_card_icons"></div>
+                </div>
               </div>
-            </div>
-          </li>
-          {/*코딩문제 게시판 카드 */}
-          <li>
-            <div
-              className="Main_card"
-              onClick={() => (window.location.href = "/Coding")}
-            >
-              <div className="Main_card_content">
-                <div className="Main_card_title">코딩 문제</div>
-                <div className="Main_card_info">코딩 문제</div>
-                <div className="Main_card_icons">icons</div>
+            </li>
+            {/*비어있는 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/Coding")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title"></div>
+                  <div className="Main_card_info"></div>
+                  <div className="Main_card_icons"></div>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      {/*나머지 카테고리 카드 */}
-      <div className="Main_info_cate" id="Main_else_card">
-        <div className="Main_category_title" ref={thirdElement}>
-          장터
+            </li>
+            {/*비어있는 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/Coding")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title"></div>
+                  <div className="Main_card_info"></div>
+                  <div className="Main_card_icons"></div>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
-        <ul>
-          {/*전공책 장터 게시판 카드 */}
-          <li>
-            <div
-              className="Main_card"
-              onClick={() => (window.location.href = "/Marketplace")}
-            >
-              <div className="Main_card_content">
-                <div className="Main_card_title">전공책 장터</div>
-                <div className="Main_card_info">전공책 장터</div>
-                <div className="Main_card_icons">icons</div>
+        {/*나머지 카테고리 카드 */}
+        <div className="Main_info_cate" id="Main_else_card">
+          <div className="Main_category_title" ref={fourthElement}>
+            기록열람
+          </div>
+          <ul>
+            {/*장부기록 공개 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/Ledger")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title">장부 기록 공개</div>
+                  <div className="Main_card_info">장부 기록 공개</div>
+                  <div className="Main_card_icons">icons</div>
+                </div>
               </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-      {/*나머지 카테고리 카드 */}
-      <div className="Main_info_cate" id="Main_else_card">
-        <div className="Main_category_title" ref={fourthElement}>
-          기록열람
+            </li>
+            {/*비어있는 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/Coding")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title"></div>
+                  <div className="Main_card_info"></div>
+                  <div className="Main_card_icons"></div>
+                </div>
+              </div>
+            </li>
+            {/*비어있는 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/Coding")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title"></div>
+                  <div className="Main_card_info"></div>
+                  <div className="Main_card_icons"></div>
+                </div>
+              </div>
+            </li>
+            {/*비어있는 게시판 카드 */}
+            <li>
+              <div
+                className="Main_card"
+                onClick={() => (window.location.href = "/Coding")}
+              >
+                <div className="Main_card_content">
+                  <div className="Main_card_title"></div>
+                  <div className="Main_card_info"></div>
+                  <div className="Main_card_icons"></div>
+                </div>
+              </div>
+            </li>
+          </ul>
         </div>
-        <ul>
-          {/*장부기록 공개 게시판 카드 */}
-          <li>
-            <div
-              className="Main_card"
-              onClick={() => (window.location.href = "/Ledger")}
-            >
-              <div className="Main_card_content">
-                <div className="Main_card_title">장부 기록 공개</div>
-                <div className="Main_card_info">장부 기록 공개</div>
-                <div className="Main_card_icons">icons</div>
-              </div>
-            </div>
-          </li>
-        </ul>
       </div>
+
       {/*스크롤 시 필요한 footer공간 */}
       <div className="Main_last_div"></div>
     </article>

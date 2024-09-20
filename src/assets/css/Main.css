@@ -5,10 +5,12 @@
 .Main_layout {
   background-color: #f6f6f6;
   font-family: "DungGeunMo";
-  overflow: hidden;
-  min-width: 1280px;
-  
+  /* overflow: hidden; */
+  /* min-width: 1280px; */
+  margin:auto;
+
 }
+
 /*게시판 블럭들 - 모든 ul flex설정과 list스타일 해제*/
 .Main_layout ul {
   display: flex; /**/
@@ -29,7 +31,6 @@
   font-size: 40px;
   font-weight: bold;
   padding: 40px;
-  
 }
 
 /*********카테고리 이동 버튼**********/
@@ -47,23 +48,36 @@
   padding: 10px 33px;
   border-radius: 100px;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
-  /*transition: box-shadow 0.25s ease, transform 0.25s ease; */
+  border:none;
+  /* transition: box-shadow 0.25s ease, transform 0.25s ease; */
 }
+
+/**/
 .Main_button:hover {
   background-color: white;
 }
 
 /************게시판 카드 스타일*************/
+
+/**/
+.Main_categoryLayout{
+  margin:auto;
+  width: 1300px;
+}
+
 /*게시판 블럭들 스타일*/
 .Main_info_cate {
   padding-top: 100px;
   height: 100%;
   justify-content: center;
-  margin-left:10%;
-  margin-right:10%;
+  /* background-color: lightblue; */
 }
+
+/**/
 .Main_info_cate li{
   margin-bottom: 32px;
+  /* background-color: lightcoral; */
+  margin:auto;
 }
 
 /*게시판 카테고리 설명 ex)소통해요!*/
@@ -72,13 +86,7 @@
   padding-left: 30px;
   margin-bottom: 30px ;
   letter-spacing: -2px;
-  /* margin: 0 auto; */
 }
-
-
-
-
-
 
 /*게시판 블럭 스타일*/
 .Main_card {
@@ -92,10 +100,13 @@
   transition: 0.5s ease-in-out;
   border-radius: 5%;
 }
+
+/**/
 .Main_card:hover {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
+
 /*게시판 안에 제목, 설명, 아이콘 포함 스타일*/
 .Main_card_content {
   margin:auto; /* 카드 안에 콘텐츠 가로 중앙 정렬*/
@@ -104,6 +115,7 @@
   /* -webkit-transform: scale(1);
   transform: scale(1); */
 }
+
 /*게시판 카드 제목*/
 .Main_card .Main_card_title {
   font-size: 20px;
@@ -112,18 +124,21 @@
   padding-bottom: 20px;
   /*position: relative;*/
 }
+
 /*게시판 카드 제목 설명*/
 .Main_card_info {
   font-size: 14px;
   color: grey;
   padding-bottom: 100px;
 }
+
 /*게시판 카드에 들어가는 아이콘 스타일*/
 .Main_card_icons {
   float: right;
   position: absolute;
   
 }
+
 .Main_content .Main_info_cate li {
   /* margin-right: 30px;
   border-radius: 12px;
@@ -131,6 +146,7 @@
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
   transition: box-shadow 0.25s ease, transform 0.25s ease; */
 }
+
 .body {
   /* font-family: notosans, Malgun Gothic, 맑은 고딕, sans-serif;
   background-color: #f6f6f6;
@@ -138,11 +154,11 @@
   min-height: 600px;
   max-width: 1024px; */
 }
+
 /*페이지 밑 부분 연장으로 footer로 가려지는 부분 해결*/
 .Main_last_div {
   height: 500px;
 }
-
 
 /******상단으로 돌아가는 버튼 스타일******/
 .Main_high button {
@@ -151,8 +167,8 @@
   bottom: 80px; /*하단에서 부터 80px 떨어진 곳에 위치*/
   z-index: 1000; /*다른 요소위에 노출*/
   color:black;
-  border-radius: 100%;
   width: 50px;
   height: 50px;
   background-color: lightgray;
+  border:none;
 }

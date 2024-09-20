@@ -21,6 +21,8 @@ import FreePost from "./pages/PostPage/FreePost";
 import SignUpPage from "./pages/SignUpPage";
 import SearchIdPage from "./pages/SearchIdPage";
 import SearchPwPage from "./pages/SearchPwPage";
+import PostWrite from "./pages/PostPage/PostWrite";
+import PostDetail from "./pages/PostPage/PostDetail";
 import "./App.css";
 
 interface RouteProps {
@@ -71,6 +73,8 @@ const routes: Array<RouteProps> = [
   { path: "/Marketplace", component: <Marketplace /> },
   { path: "/Ledger", component: <Ledger /> },
   { path: "/FreePost", component: <FreePost /> },
+  { path: "/PostWrite", component: <PostWrite /> },
+  { path: "/PostDetail", component: <PostDetail /> },
 ];
 
 function App(p0: unknown, p1: HTMLElement | null) {
