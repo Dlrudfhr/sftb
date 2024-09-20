@@ -5,7 +5,7 @@ import Header from "../Header";
 import "../../assets/css/PostDetail.css";
 import myImage from "../../assets/images/manggu.jpg";
 // import catImage from "../../assets/images/cat2.jpg";
-
+import { FaRegHeart, FaRegBookmark  } from "react-icons/fa";
 
 const PostDetail = () => {
   
@@ -40,8 +40,8 @@ const PostDetail = () => {
 
             {/*게시글 좋아요, 스크랩 버튼 */}
             <div>
-                <button className="PostDetail_likebutton">좋아요</button>
-                <button className="PostDetail_scrapbutton">스크랩</button>
+                <button className="PostDetail_likebutton"><FaRegHeart /></button>
+                <button className="PostDetail_scrapbutton"><FaRegBookmark /></button>
             </div>
         </div>
 
@@ -70,19 +70,7 @@ const PostDetail = () => {
                 </div>
             </div>
         </div>
-        <div className="PostDetail_commentbox">
-            <div className="PostDetail_comment">
-
-                <div className="PostDetail_writer">
-                    <div className="PostDetail_commproImage"><img src={myImage}/></div>
-                    <div className="PostDetail_commwriter">작성자</div>
-                    <div className="PostDetail_recomm">대댓글</div>
-                    <div className="PostDetail_recommlike">공감</div>
-                </div>
-                <div className="PostDetail_content PostDetail_comm_cont">댓글 내용</div>
-                <div className="PostDetail_time">12분전</div>
-            </div>
-        </div>
+        
 
         {/*게시글 댓글 작성 영역 */}
         <div className="PostDetail_commWritebox">
