@@ -4,6 +4,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import Header from "../Header"; /* Header 참조 */
 import Footer from "../Footer"; /* footer 참조 */
 import "../../assets/css/Certificate.css"; /* 스타일 참조 */
+import { FaRegStar } from "react-icons/fa";
 
 const Certificate = () => {
   const highElement = useRef<null | HTMLDivElement>(null); //상단으로 돌아가기 버튼
@@ -22,7 +23,7 @@ const Certificate = () => {
     {/* <div className="search_box_Certificate"> */}
     <div className="Certificate_layout">
 
-      <h4 className="postpage_title">자격증 게시판</h4>
+      <h4 className="postpage_title" onClick={() => (window.location.href = "/Certificate")}>자격증 게시판</h4>
 
       {/*위로가기 버튼 */}
       <div className="Certificate_high">
@@ -31,7 +32,7 @@ const Certificate = () => {
         </button>
       </div>
 
-      {/* */}
+      {/*게시글 찾기 폼 */}
       <div className="Certificate_Search">
         <div className="Certificate_Search_form">       
         
@@ -59,7 +60,7 @@ const Certificate = () => {
         </div>
       </div>
 
-      {/*  */}
+      {/*게시판 게시글 갯수와 페이지 수  */}
       <div className="Certificate_Number">
         <div className="Certificate_postNumber">
           <span>총 게시물 <strong>16262</strong></span>
@@ -83,8 +84,8 @@ const Certificate = () => {
                 onClick={() => (window.location.href = "/PostDetail")}>
                 <div className="Certificate_card_innerbox">
                 <div className="Certificate_card_title">정보처리기사 언제부터</div>
-                <div className="Certificate_card_info">정보처리기사는 보통 언제부터 준비하나요?</div>
-                <div className="Certificate_card_icons">icons</div>
+                <div className="Certificate_card_info">정보처리기사는 보통 언제부터 준비하나요? </div>
+                <div className="Certificate_card_icons"><FaRegStar /></div>
               </div>
             </div>
           </li>
@@ -94,7 +95,7 @@ const Certificate = () => {
                 <div className="Certificate_card_innerbox">
                 <div className="Certificate_card_title">정보처리기사 언제부터</div>
                 <div className="Certificate_card_info">정보처리기사는 보통 언제부터 준비하나요?</div>
-                <div className="Certificate_card_icons">icons</div>
+                <div className="Certificate_card_icons"><FaRegStar /></div>
               </div>
             </div>
           </li>
@@ -104,7 +105,7 @@ const Certificate = () => {
                 <div className="Certificate_card_innerbox">
                 <div className="Certificate_card_title">정보처리기사 언제부터</div>
                 <div className="Certificate_card_info">정보처리기사는 보통 언제부터 준비하나요?</div>
-                <div className="Certificate_card_icons">icons</div>
+                <div className="Certificate_card_icons"><FaRegStar /></div>
               </div>
             </div>
           </li>
@@ -114,7 +115,7 @@ const Certificate = () => {
                 <div className="Certificate_card_innerbox">
                 <div className="Certificate_card_title">정보처리기사 언제부터</div>
                 <div className="Certificate_card_info">정보처리기사는 보통 언제부터 준비하나요?</div>
-                <div className="Certificate_card_icons">icons</div>
+                <div className="Certificate_card_icons"><FaRegStar /></div>
               </div>
             </div>
           </li>
@@ -128,7 +129,7 @@ const Certificate = () => {
                 <div className="Certificate_card_innerbox">
                 <div className="Certificate_card_title">정보처리기사 언제부터</div>
                 <div className="Certificate_card_info">정보처리기사는 보통 언제부터 준비하나요?</div>
-                <div className="Certificate_card_icons">icons</div>
+                <div className="Certificate_card_icons"><FaRegStar /></div>
               </div>
             </div>
           </li>
@@ -138,7 +139,7 @@ const Certificate = () => {
                 <div className="Certificate_card_innerbox">
                 <div className="Certificate_card_title">정보처리기사 언제부터</div>
                 <div className="Certificate_card_info">정보처리기사는 보통 언제부터 준비하나요?</div>
-                <div className="Certificate_card_icons">icons</div>
+                <div className="Certificate_card_icons"><FaRegStar /></div>
               </div>
             </div>
           </li>

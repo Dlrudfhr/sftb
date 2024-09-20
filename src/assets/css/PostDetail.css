@@ -2,14 +2,15 @@
 
 /*페이지 레이아웃*/
 .PostDetail_layout{
-    width:1000px;
+    width:900px;
     margin: auto;
+    padding: 15px 30px;
 }
 
 /*게시판 이름*/
 .postpage_title{
-    margin-top: 40px;
-    margin-bottom: 5px;
+    margin-top: 10px;
+    margin-bottom: 30px;
     cursor: pointer;
 }
 /*********************************게시물 출력 박스********************************/
@@ -40,21 +41,22 @@
     cursor: pointer;
 }
 
-/**/
+/*작성시간 출력*/
 .PostDetail_time{
-    color:gray
+    color:gray;
+    font-size:12px;
 }
 
 /*게시글 제목 영역*/
 .PostDetail_postTitle{
     font-weight: bold;
-    font-size:30px;
+    font-size:25px;
     margin-bottom: 15px;
 }
 
 /*게시글 내용 영역*/
 .PostDetail_content{
-    font-size:20px;
+    font-size:17px;
     margin-bottom: 15px;
 }
 
@@ -84,6 +86,7 @@
     padding: 15px 30px;
     border:solid 0.667px lightgray;
     border-top:none;
+    font-size:16px;
 }
 
 /**/
@@ -116,7 +119,7 @@ img{
 
 /*게시글 대댓글*/
 .PostDetail_recomm{
-    margin-right:15px;
+    margin-right:10px;
 }
 
 /*게시글 댓글, 댓글 좋아요*/
@@ -124,6 +127,7 @@ img{
     align-content: center;
     color:grey;
     cursor: pointer;
+    min-width: 50px;
 }
 
 /*게시글 대댓글*/
@@ -133,6 +137,7 @@ img{
     padding: 20px;
     background-color: #f4f4f4;
     margin:35px -5px 4px 4px;
+    float: right;
     
 }
 
@@ -166,11 +171,11 @@ img{
 
 /**/
 .PostDetail_postlistbtn{
-    margin:auto;
     border: solid 0.667px red;
     border-radius:10%;
-    position:absolute;
-    padding:10px 15px;
+    width: 55px;
+    padding:10px;
     color: red;
     font-weight:bold;
+    margin-bottom: 50px;
 }

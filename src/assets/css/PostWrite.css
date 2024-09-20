@@ -9,53 +9,65 @@
 
 /*게시판 표시*/
 .postpage_title{
-    width: 1000px;
+    width: 100%;
 }
 
 /***********************************************************/
 
 /*게시글 작성자 출력영역*/
 .PostDetail_profile{
+    width:100%;
+}
 
+/**/
+.PostDetail_writer{
+    
 }
 
 /***********************************************************/
 /*게시글 제목, 게시글 내용 폼*/
 .post_title, .post_textarea{
-    width: 97%;
+    width: 100%;
     border:solid 0.667px lightgray;
-    padding:15px;
+    padding:15px 30px;
+    font-size: 18px;
 }
 
-/*게시글 제목 포커스 지움*/
-.post_title:focus{
+/**/
+.post_title{
+    height: 40px;
+}
+
+/*게시글 제목, 내용 포커스 지움*/
+.post_title:focus, .post_textarea:focus{
     outline:none;
 }
 
 /*게시글 내용 input*/
 .post_textarea{ 
-    height: 300px;
+    height: 500px;
     resize: none;
     border-top: none;
 }
 
-/*게시글 내용 포커스 지움*/
-.post_textarea:focus{
-    outline:none;
-}
-
 /**************************** 버튼 **************************/
+
+/**/
+.PostWrite_btns{
+    width: 100%;
+    margin: 15px 60px;
+    /* border:solid; */
+}
 
 /*목록, 제출 버튼*/
 .PostWrite_golist, .post_button{
-    border: solid 0.667px lightgray;
-    width: 80px;
+    min-width: 80px;
     height: 40px;
-    font-size:14px;
-    font-weight: bold;
-}
-
-/*제출버튼*/
-.post_button{
     float: right;
+    font-size:14px;
+    margin-bottom:80px;
+    margin-left:5px;
+    border: solid 0.667px lightgray;
+    background-color: #004fa8;
+    color:white;
 }

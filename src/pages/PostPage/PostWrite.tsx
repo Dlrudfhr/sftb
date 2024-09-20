@@ -12,9 +12,9 @@ const PostWrite = () => {
       <>
         <Header />
         {/*게시판 타이틀 */}
-        <div className="postpage_title" onClick={() => (window.location.href = "/Certificate")}>자격증게시판</div>
         
         <div className="PostWrite_layout">
+          <h3 className="postpage_title" onClick={() => (window.location.href = "/Certificate")}>자격증게시판</h3>
         
 
           
@@ -30,8 +30,10 @@ const PostWrite = () => {
           {/*게시글 작성 폼 */}
           <input className="post_title" placeholder="제목을 작성해 주세요"></input>
           <div><textarea className="post_textarea" placeholder="게시글을 작성해주세요"></textarea></div>
-          <div><Link to="/Certificate"><button className="post_button">제출하기</button></Link></div>
-          <div><button className="PostWrite_golist" onClick={() => (window.location.href = "/Certificate")}>목록</button></div>
+          <div className="PostWrite_btns">
+            <Link to="/Certificate"><button className="post_button">제출하기</button></Link>
+            <button className="PostWrite_golist" onClick={() => (window.location.href = "/Certificate")}>목록</button>
+          </div>
         </div>
 
       
