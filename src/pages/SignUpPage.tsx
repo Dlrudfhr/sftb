@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -12,7 +12,7 @@ import axios from "axios";
 
 const SignUpPage: React.FC = () => {
   const [showAlert, setShowAlert] = useState(false);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [userID, setUserID] = useState("");
   const [studentID, setStudentID] = useState("");
   const [password, setPassword] = useState("");
@@ -22,10 +22,9 @@ const SignUpPage: React.FC = () => {
 
   const handleFormSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    
+
     try {
       const response = await axios.post(
-        
         "http://localhost:8080/api/auth/SignUp",
         {
           userID: userID,
@@ -53,6 +52,10 @@ const SignUpPage: React.FC = () => {
 
   const handleLoginPageClick = () => {
     navigate("/");
+  };
+
+  const handleSignUp = async () => {
+    setIsModalOpen(true);
   };
 
   return (
@@ -137,7 +140,9 @@ const SignUpPage: React.FC = () => {
             placeholder="Enter Email"
             required
           ></input>
-          <button className="SignUpPage__button">회원가입</button>
+          <button className="SignUpPage__button" onClick={handleSignUp}>
+            회원가입
+          </button>
           <div className="SignUpPage__returnLoginPage">
             <span
               style={{ cursor: "pointer", color: "#007bff" }}
@@ -148,11 +153,7 @@ const SignUpPage: React.FC = () => {
           </div>
         </form>
       </div>
-      <SignUpModal
-        show={showAlert}
-        handleClose={handleCloseAlert}
-        message="회원가입이 완료되었습니다."
-      />
+      <SignUpModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </div>
   );
 };

@@ -34,7 +34,6 @@ function LoginPage() {
         setErrorMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
       }
     } catch (error) {
-     
       setErrorMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
     }
   };
@@ -126,7 +125,7 @@ function LoginPage() {
                 style={{ cursor: "pointer", color: "#007bff" }}
                 onClick={handleSearchPwClick}
               >
-                비밀번호 찾기
+                비밀번호 찾기 및 변경
               </span>
             </div>
           </form>

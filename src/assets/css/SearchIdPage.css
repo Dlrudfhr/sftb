@@ -1,0 +1,109 @@
+.SearchIdPage__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-image: url("../images/SearchIdPage.jpg");
+  background-size: cover;
+  background-position: center;
+  padding: 0%;
+  margin: 0%;
+}
+
+.SearchIdPage__inputForm {
+  display: flex;
+  flex-direction: column; /* 요소들을 세로로 배치 */
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.8); /* 불투명한 박스 */
+
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  height: 75%;
+  width: 25%;
+  margin: 0%;
+  padding: 0%;
+}
+
+.SearchIdPage__Title {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin: 20px 0 10px;
+}
+
+/* From Uiverse.io by liyaxu123 */
+.form-control {
+  position: relative;
+  margin: 20px 0 20px;
+  width: 190px;
+  display: flex;
+  flex-direction: column; /* 요소들을 세로로 배치 */
+  align-items: center; /* 요소들을 가운데 정렬 */
+}
+
+.form-control input {
+  background-color: transparent; /* 투명한 배경 */
+  border: 0;
+  border-bottom: 2px #000000 solid;
+  display: block;
+  width: 100%;
+  padding: 15px 0;
+  font-size: 18px;
+  color: #000; /* 텍스트 색상 */
+}
+
+.form-control input:focus,
+.form-control input:valid {
+  outline: 0;
+  border-bottom-color: rgb(0, 0, 0);
+}
+
+.form-control label {
+  position: absolute;
+  top: 15px;
+  left: 0;
+  pointer-events: none;
+}
+
+.form-control label span {
+  display: inline-block;
+  font-size: 18px;
+  min-width: 5px;
+  color: #000000;
+  transition: 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.form-control input:focus + label span,
+.form-control input:valid + label span {
+  color: rgb(0, 0, 0);
+  transform: translateY(-30px);
+}
+
+.SearchIdPage__IdButton {
+  padding: 12.5px 30px;
+  border: 0;
+  border-radius: 10px;
+  background-color: #111111;
+  color: #ffffff;
+  font-weight: Bold;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+}
+
+.SearchIdPage__IdButton:hover {
+  background-color: #000000;
+  box-shadow: 0 0 20px #6fc5ff50;
+  transform: scale(1.1);
+}
+
+.SearchIdPage__IdButton:active {
+  background-color: #000000;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  box-shadow: none;
+  transform: scale(0.98);
+}
+.SearchIdPage__goToPassword {
+  margin-bottom: 10px;
+}

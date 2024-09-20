@@ -1,31 +1,29 @@
 import React from "react";
-import { Modal, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import "../assets/css/SignUpModal.css";
 
-interface SignUpModalProps {
-  show: boolean;
-  handleClose: () => void;
-  message: string;
+interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const SignUpModal: React.FC<SignUpModalProps> = ({
-  show,
-  handleClose,
-  message,
-}) => {
+const SignUpModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+  const navigate = useNavigate();
+  if (!isOpen) return null;
+
+  const handleNavigate = () => {
+    onClose();
+    navigate("/");
+  };
   return (
-    <>
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>알림</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>{message}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            닫기
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </>
+    <div className="SignUpModal__overlay">
+      <div className="SignUpModal__modal">
+        <p>회원가입 성공!</p>
+        <button className="SignUpModal__button" onClick={handleNavigate}>
+          로그인하러가기
+        </button>
+      </div>
+    </div>
   );
 };
 

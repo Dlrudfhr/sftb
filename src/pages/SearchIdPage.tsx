@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../assets/css/SearchIdPage.css";
+import logo from "../assets/images/rogo.png";
 
 function SearchIdPage() {
   const [name, setName] = useState("");
@@ -50,28 +52,77 @@ function SearchIdPage() {
   const handleBackToLogin = () => {
     navigate("/");
   };
+  const handleGotoPassword = () => {
+    navigate("/SearchPwPage");
+  };
 
   return (
-    <div>
-      <h1>아이디 찾기</h1>
-      <div>
-        <label htmlFor="name">이름:</label>
-        <input type="text" id="name" value={name} onChange={handleNameChange} />
+    <div className="SearchIdPage__container">
+      <div className="SearchIdPage__inputForm">
+        <img src={logo} alt="image" style={{ width: "25%", height: "auto" }} />
+        <div className="SearchIdPage__Title">아이디 찾기</div>
+
+        <div className="form-control">
+          <input
+            type="text"
+            id="name"
+            value={name}
+            onChange={handleNameChange}
+            required
+          />
+          <label>
+            <span style={{ transitionDelay: "0ms" }}>U</span>
+            <span style={{ transitionDelay: "50ms" }}>s</span>
+            <span style={{ transitionDelay: "100ms" }}>e</span>
+            <span style={{ transitionDelay: "150ms" }}>r</span>
+            <span style={{ transitionDelay: "200ms" }}>n</span>
+            <span style={{ transitionDelay: "250ms" }}>a</span>
+            <span style={{ transitionDelay: "300ms" }}>m</span>
+            <span style={{ transitionDelay: "350ms" }}>e</span>
+          </label>
+        </div>
+
+        <div className="form-control">
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={handleEmailChange}
+            required
+          />
+          <label>
+            <span style={{ transitionDelay: "0ms" }}>E</span>
+            <span style={{ transitionDelay: "50ms" }}>m</span>
+            <span style={{ transitionDelay: "100ms" }}>a</span>
+            <span style={{ transitionDelay: "150ms" }}>i</span>
+            <span style={{ transitionDelay: "200ms" }}>l</span>
+          </label>
+        </div>
+
+        <button className="SearchIdPage__IdButton" onClick={handleSearchId}>
+          아이디 찾기
+        </button>
+        {loading && <div>Loading...</div>}
+        {error && <div>Error: {error}</div>}
+        {userId && <div>사용자 ID: {userId}</div>}
+        <br />
+        <div className="SearchIdPage__goToPassword">
+          <span
+            style={{ cursor: "pointer", color: "#007bff" }}
+            onClick={handleGotoPassword}
+          >
+            비밀번호 찾으러 가기
+          </span>
+        </div>
+        <div className="SeachIdPage__backToLogin">
+          <span
+            style={{ cursor: "pointer", color: "#007bff" }}
+            onClick={handleBackToLogin}
+          >
+            로그인 페이지로 돌아가기
+          </span>
+        </div>
       </div>
-      <div>
-        <label htmlFor="email">이메일:</label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={handleEmailChange}
-        />
-      </div>
-      <button onClick={handleSearchId}>아이디 찾기</button>
-      {loading && <div>Loading...</div>}
-      {error && <div>Error: {error}</div>}
-      {userId && <div>사용자 ID: {userId}</div>}
-      <button onClick={handleBackToLogin}>로그인 페이지로 돌아가기</button>
     </div>
   );
 }
