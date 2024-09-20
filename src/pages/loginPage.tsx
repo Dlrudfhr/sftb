@@ -15,29 +15,24 @@ function LoginPage() {
     event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
 
     try {
-      const response = await axios.post(
-        "http://localhost:8080/api/auth/login",
-        {
+      const response = await axios.post("http://localhost:8080/api/auth/login", {
           userID: inputId,
           password: inputPw,
-        },
-        {
+      }, {
           headers: {
-            "Content-Type": "application/json",
+              "Content-Type": "application/json",
           },
-        }
-      );
-
-      if (response.data.userID) {
-        navigate("/Main"); // 로그인 성공 시 메인 페이지로 이동
-      } else {
-        setErrorMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
+          withCredentials: true,
+      });
+  
+      if (response.status === 200 && response.data.userID) {
+          sessionStorage.setItem("authenticated", "true");
+          navigate("/Main");
       }
-    } catch (error) {
-     
+  } catch (error) {
       setErrorMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
-    }
-  };
+  }
+};
 
   const handleSignUpClick = () => {
     navigate("/SignUp"); // 회원가입 페이지로 이동
