@@ -4,7 +4,7 @@
 /*메인 전체 부분*/
 .Main_layout {
   background-color: #f6f6f6;
-  font-family: "DungGeunMo";
+  /* font-family: "DungGeunMo"; */
   /* overflow: hidden; */
   /* min-width: 1280px; */
   margin:auto;
@@ -62,7 +62,7 @@
 /**/
 .Main_categoryLayout{
   margin:auto;
-  width: 1300px;
+  width: 75%;
 }
 
 /*게시판 블럭들 스타일*/
@@ -135,8 +135,6 @@
 /*게시판 카드에 들어가는 아이콘 스타일*/
 .Main_card_icons {
   float: right;
-  position: absolute;
-  
 }
 
 .Main_content .Main_info_cate li {
