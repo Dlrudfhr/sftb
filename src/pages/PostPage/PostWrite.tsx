@@ -45,7 +45,7 @@ function PostWrite() {
 
       // 서버에서 성공 응답을 받으면 메인 페이지로 이동
       if (response.status === 200) {
-        navigate("/Main");
+        navigate("/Certificate");
       } else {
         setErrorMessage("게시물 작성에 실패했습니다.");
       }
