@@ -35,7 +35,7 @@ function Main() {
       <div className="Main_banner">
         <div className="Main_box_visual">
           Department of<br></br>
-          Information&Communication
+          Information & Communication
         </div>
         {/*카테고리 이동 버튼 */}
         <div className="Main_box_tab">

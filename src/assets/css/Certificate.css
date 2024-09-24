@@ -17,7 +17,6 @@
   height: 40px;
   display: flex;
   padding: 15px 30px;
-  border: solid 0.667px #d2d2d2;
 }
 
 /**/
@@ -28,7 +27,7 @@
 
 /**/
 .Certificate_input{
-  width: 80%;
+  width: 100%;
   margin-right:25px;
 }
 
@@ -39,12 +38,12 @@
 }
 
 /*게시물 검색 필터*/
-.Certificate_search_key{
+/* .Certificate_search_key{
   border: 0.667px solid lightgray;
   width: 100%;
   height: 40px;
   float: right;
-}
+} */
 
 /*게시물 검색어 input bar*/
 .Certificate_search_txt{
@@ -53,7 +52,8 @@
   height: 36.5px;
   margin-left:10px;
   margin-right:50px;
-  
+  border-radius: 30px;
+  padding: 10px;
 }
 
 /*input bar선택시 테두리 없애기*/
@@ -176,7 +176,24 @@
 
 /*게시글 카드 안 좋아요, 즐겨찾기 아이콘*/
 .Certificate_card_icons {
-  float:right;
+  font-size: 12px;
+  display: flex;
+}
+
+/**/
+.Certificate_writer{
+  width: 70%;
+}
+
+/**/
+.Certificate_icons_right{
+  width:30%;
+  display: flex;
+}
+
+/**/
+.Certificate_heart, .Certificate_scrap{
+  margin-left: auto;
 }
 
 /*맨위로 button*/

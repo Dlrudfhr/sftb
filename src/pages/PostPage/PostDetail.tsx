@@ -4,11 +4,20 @@ import { Routes, Route, Link } from "react-router-dom";
 import Header from "../Header";
 import "../../assets/css/PostDetail.css";
 import myImage from "../../assets/images/manggu.jpg";
-// import catImage from "../../assets/images/cat2.jpg";
-import { FaRegHeart, FaRegBookmark  } from "react-icons/fa";
+import { FaRegHeart, FaRegBookmark, FaHeart ,FaBookmark } from "react-icons/fa";
 
 const PostDetail = () => {
-  
+    {/*하트 클릭 이벤트 */}
+    const [heart, setHeart] = useState(false);
+    const handleHeart = () => {
+      setHeart(!heart);
+    }
+
+    {/*북마크 클릭 이벤트 */}
+    const [bookmark, setBoomark] = useState(false);
+    const handleBookmark = () => {
+        setBoomark(!bookmark);
+    }
 
   return(
     <>
@@ -40,15 +49,17 @@ const PostDetail = () => {
 
             {/*게시글 좋아요, 스크랩 버튼 */}
             <div>
-                <button className="PostDetail_likebutton"><FaRegHeart /></button>
-                <button className="PostDetail_scrapbutton"><FaRegBookmark /></button>
+                <button className="PostDetail_likebutton"  
+                    onClick={handleHeart}>{heart ? (<FaHeart />) : (<FaRegHeart />)}</button>
+                <button className="PostDetail_scrapbutton" 
+                    onClick={handleBookmark}>{bookmark ? (<FaBookmark  />) : (<FaRegBookmark />)}    </button>
             </div>
         </div>
 
         {/*게시글 댓글 출력 영역 */}
         <div className="PostDetail_commentbox">
             <div className="PostDetail_comment">
-
+                {/*게시글 댓글 */}
                 <div className="PostDetail_writer">
                     <div className="PostDetail_commproImage"><img src={myImage}/></div>
                     <div className="PostDetail_commwriter">작성자</div>
@@ -57,18 +68,18 @@ const PostDetail = () => {
                 </div>
                 <div className="PostDetail_content PostDetail_comm_cont">댓글 내용</div>
                 <div className="PostDetail_time">12분전</div>
-
-                {/*게시글 대댓글 */}
-                <div className="PostDetail_rerecomm">
-                    <div className="PostDetail_writer">
-                        <div className="PostDetail_commproImage"><img src={myImage}/></div>
-                        <div className="PostDetail_commwriter">작성자</div>
-                        <div className="PostDetail_recommlike">공감</div>
-                    </div>
-                    <div className="PostDetail_content PostDetail_comm_cont">댓글 내용</div>
-                    <div className="PostDetail_time">12분전</div>
-                </div>
             </div>
+
+        </div>
+        {/*게시글 대댓글 */}
+        <div className="PostDetail_rerecomm">
+            <div className="PostDetail_writer">
+                <div className="PostDetail_commproImage"><img src={myImage}/></div>
+                <div className="PostDetail_commwriter">작성자</div>
+                <div className="PostDetail_recommlike">공감</div>
+            </div>
+            <div className="PostDetail_content PostDetail_comm_cont">댓글 내용</div>
+            <div className="PostDetail_time">12분전</div>
         </div>
         
 
