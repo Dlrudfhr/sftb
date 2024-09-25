@@ -1,101 +1,171 @@
-import React from "react";
-import { useState } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import Header from "../Header";
 import "../../assets/css/PostDetail.css";
 import myImage from "../../assets/images/manggu.jpg";
-import { FaRegHeart, FaRegBookmark, FaHeart ,FaBookmark } from "react-icons/fa";
+import { FaRegHeart, FaRegBookmark, FaHeart, FaBookmark } from "react-icons/fa";
+import axios from "axios";
 
-const PostDetail = () => {
-    {/*하트 클릭 이벤트 */}
+interface Comment {
+    commentId: number;
+    content: string;
+    memberId: string;
+    createdAt: string;
+    replies?: Comment[];
+}
+
+interface PostDetails {
+    title: string;
+    content: string;
+    writer: string;
+    createdAt: string;
+    heartCount: number;
+    bookmarkCount: number;
+}
+
+const PostDetail: React.FC = () => {
+    const { postId } = useParams<{ postId: string }>();
     const [heart, setHeart] = useState(false);
+    const [bookmark, setBookmark] = useState(false);
+    const [comments, setComments] = useState<Comment[]>([]);
+    const [commentInput, setCommentInput] = useState("");
+    const [replyInput, setReplyInput] = useState<{ [key: number]: string }>({});
+    const [postDetails, setPostDetails] = useState<PostDetails | null>(null);
+
     const handleHeart = () => {
-      setHeart(!heart);
+        setHeart(!heart);
     }
 
-    {/*북마크 클릭 이벤트 */}
-    const [bookmark, setBoomark] = useState(false);
     const handleBookmark = () => {
-        setBoomark(!bookmark);
+        setBookmark(!bookmark);
     }
 
-  return(
-    <>
-    <Header />
-    <div className="PostDetail_layout">
-        {/*게시판 타이틀 */}
-        <h3 className="postpage_title" onClick={() => (window.location.href = "/Certificate")}>자격증게시판</h3>
-        {/*게시글 출력 박스 */}
-        <div className="PostDetail_box">
-            {/*게시글 작성자 */}
-            <div className="PostDetail_profile">
-                <div className="PostDetail_proImage">{/*<img src={catImage}/>*/}</div>
-                <div className="">
-                    <div className="PostDetail_writer">작성자</div>
-                    <div className="PostDetail_time">몇 분전</div>
+    const fetchComments = async () => {
+        try {
+            const response = await axios.get(`/api/comments/${postId}`);
+            setComments(response.data);
+        } catch (error) {
+            console.error("댓글 가져오기 실패:", error);
+        }
+    };
+
+    const fetchPostDetails = async () => {
+        try {
+            const response = await axios.get(`/api/posts/${postId}`);
+            setPostDetails(response.data);
+        } catch (error) {
+            console.error("게시글 가져오기 실패:", error);
+        }
+    };
+
+    // 매개변수 타입을 MouseEvent로 변경
+    const handleCommentSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+        e.preventDefault();
+        if (!commentInput) return;
+        try {
+            await axios.post('/api/comments', { postId, content: commentInput });
+            setCommentInput("");
+            fetchComments();
+        } catch (error) {
+            console.error("댓글 추가 실패:", error);
+        }
+    };
+
+    const handleReplySubmit = async (e: React.MouseEvent<HTMLButtonElement>, parentId: number) => {
+        e.preventDefault();
+        if (!replyInput[parentId]) return;
+        try {
+            await axios.post('/api/comments', { postId, parentId, content: replyInput[parentId] });
+            setReplyInput({ ...replyInput, [parentId]: "" });
+            fetchComments();
+        } catch (error) {
+            console.error("대댓글 추가 실패:", error);
+        }
+    };
+
+    useEffect(() => {
+        fetchPostDetails();
+        fetchComments();
+    }, [postId]);
+
+    return (
+        <>
+            <Header />
+            <div className="PostDetail_layout">
+                <h3 className="postpage_title" onClick={() => (window.location.href = "/Certificate")}>자격증게시판</h3>
+                <div className="PostDetail_box">
+                    <div className="PostDetail_profile">
+                        <div className="PostDetail_proImage"></div>
+                        <div>
+                            <div className="PostDetail_writer">{postDetails?.writer}</div>
+                            <div className="PostDetail_time">{postDetails?.createdAt}</div>
+                        </div>
+                    </div>
+                    <div className="PostDetail_postTitle">{postDetails?.title}</div>
+                    <div className="PostDetail_content">{postDetails?.content}</div>
+                    <div className="PostDetail_total">
+                        <div className="PostDetail_totallike">좋아요 수: {postDetails?.heartCount}</div>
+                        <div className="PostDetail_totalcomm">댓글 수: {comments.length}</div>
+                        <div className="PostDetail_totalscrap">스크랩 수: {postDetails?.bookmarkCount}</div>
+                    </div>
+                    <div>
+                        <button className="PostDetail_likebutton" onClick={handleHeart}>{heart ? (<FaHeart />) : (<FaRegHeart />)}</button>
+                        <button className="PostDetail_scrapbutton" onClick={handleBookmark}>{bookmark ? (<FaBookmark />) : (<FaRegBookmark />)}</button>
+                    </div>
                 </div>
-            </div>
-            
-            <div className="PostDetail_postTitle">제목</div>
-            <div className="PostDetail_content">내용
-            </div>
 
-            {/*게시글 좋아요, 스크랩 수 */}
-            <div className="PostDetail_total">
-                <div className="PostDetail_totallike">좋아요 수</div>
-                <div className="PostDetail_totalcomm">댓글 수 </div>
-                <div className="PostDetail_totalscrap">스크랩 수</div>
-            </div>
-
-            {/*게시글 좋아요, 스크랩 버튼 */}
-            <div>
-                <button className="PostDetail_likebutton"  
-                    onClick={handleHeart}>{heart ? (<FaHeart />) : (<FaRegHeart />)}</button>
-                <button className="PostDetail_scrapbutton" 
-                    onClick={handleBookmark}>{bookmark ? (<FaBookmark  />) : (<FaRegBookmark />)}    </button>
-            </div>
-        </div>
-
-        {/*게시글 댓글 출력 영역 */}
-        <div className="PostDetail_commentbox">
-            <div className="PostDetail_comment">
-                {/*게시글 댓글 */}
-                <div className="PostDetail_writer">
-                    <div className="PostDetail_commproImage"><img src={myImage}/></div>
-                    <div className="PostDetail_commwriter">작성자</div>
-                    <div className="PostDetail_recomm">대댓글</div>
-                    <div className="PostDetail_recommlike">공감</div>
+                <div className="PostDetail_commWritebox">
+                    <input
+                        className="PostDetail_commWrite"
+                        placeholder="댓글을 입력하세요."
+                        value={commentInput}
+                        onChange={(e) => setCommentInput(e.target.value)}
+                    />
+                    <button className="PostDetail_button" onClick={handleCommentSubmit}>작성</button>
                 </div>
-                <div className="PostDetail_content PostDetail_comm_cont">댓글 내용</div>
-                <div className="PostDetail_time">12분전</div>
+
+                <div className="PostDetail_commentbox">
+                    {comments.map(comment => (
+                        <div className="PostDetail_comment" key={comment.commentId}>
+                            <div className="PostDetail_writer">
+                                <div className="PostDetail_commproImage"><img src={myImage} /></div>
+                                <div className="PostDetail_commwriter">{comment.memberId}</div>
+                            </div>
+                            <div className="PostDetail_content PostDetail_comm_cont">{comment.content}</div>
+                            <div className="PostDetail_time">{comment.createdAt}</div>
+
+                            {comment.replies && comment.replies.length > 0 && (
+                                <div className="PostDetail_replies">
+                                    {comment.replies.map(reply => (
+                                        <div className="PostDetail_rerecomm" key={reply.commentId}>
+                                            <div className="PostDetail_writer">
+                                                <div className="PostDetail_commproImage"><img src={myImage} /></div>
+                                                <div className="PostDetail_commwriter">{reply.memberId}</div>
+                                            </div>
+                                            <div className="PostDetail_content PostDetail_comm_cont">{reply.content}</div>
+                                            <div className="PostDetail_time">{reply.createdAt}</div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            <div className="PostDetail_rerecomm">
+                                <input
+                                    className="PostDetail_commWrite"
+                                    placeholder="대댓글을 입력하세요."
+                                    value={replyInput[comment.commentId] || ""}
+                                    onChange={(e) => setReplyInput({ ...replyInput, [comment.commentId]: e.target.value })}
+                                />
+                                <button onClick={(e) => handleReplySubmit(e, comment.commentId)}>작성</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                <div className="PostDetail_postlistbtn" onClick={() => (window.location.href = "/Certificate")}>글 목록</div>
             </div>
-
-        </div>
-        {/*게시글 대댓글 */}
-        <div className="PostDetail_rerecomm">
-            <div className="PostDetail_writer">
-                <div className="PostDetail_commproImage"><img src={myImage}/></div>
-                <div className="PostDetail_commwriter">작성자</div>
-                <div className="PostDetail_recommlike">공감</div>
-            </div>
-            <div className="PostDetail_content PostDetail_comm_cont">댓글 내용</div>
-            <div className="PostDetail_time">12분전</div>
-        </div>
-        
-
-        {/*게시글 댓글 작성 영역 */}
-        <div className="PostDetail_commWritebox">
-            <input className="PostDetail_commWrite" placeholder="댓글을 입력하세요."></input>
-            <button className="PostDetail_button">작성</button>
-        </div>
-
-        {/*게시판 목록 버튼 */}
-        <div className="PostDetail_postlistbtn"  onClick={() => (window.location.href = "/Certificate")}>글 목록</div>
-    </div>
-
-    </>
-
-
-  );
+        </>
+    );
 };
+
 export default PostDetail;
