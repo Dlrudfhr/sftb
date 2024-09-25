@@ -23,6 +23,7 @@ import SearchIdPage from "./pages/SearchIdPage";
 import SearchPwPage from "./pages/SearchPwPage";
 import PostWrite from "./pages/PostPage/PostWrite";
 import PrivateRoute from "./PrivateRoute";
+import PostDetail from "./pages/PostPage/PostDetail";
 import "./App.css";
 
 interface RouteProps {
@@ -55,6 +56,7 @@ const routes: Array<RouteProps> = [
   { path: "/Ledger", component: Ledger },
   { path: "/FreePost", component: FreePost },
   { path: "/PostWrite", component: PostWrite },
+  { path: "/PostDetail", component: PostDetail },
 ];
 
 function App() {

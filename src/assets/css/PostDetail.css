@@ -79,6 +79,11 @@
     border-radius: 10%;
 }
 
+/**/
+.PostDetail_likebutton:hover, .PostDetail_scrapbutton:hover{
+    background-color: #f4f4f4;
+}
+
 /************************************ 게시글 댓글 *********************************/
 /**/
 .PostDetail_layout .PostDetail_commentbox{
@@ -119,7 +124,7 @@ img{
 
 /*게시글 대댓글*/
 .PostDetail_recomm{
-    margin-right:10px;
+    /* margin-right:10px; */
 }
 
 /*게시글 댓글, 댓글 좋아요*/
@@ -133,12 +138,11 @@ img{
 /*게시글 대댓글*/
 .PostDetail_rerecomm{
     border: solid 1.333px lightgray;
-    width: 90%;
-    padding: 20px;
+    border-bottom : none;
+    border-top: none;
+    width: 100%;
+    padding: 15px 30px;
     background-color: #f4f4f4;
-    margin:35px -5px 4px 4px;
-    float: right;
-    
 }
 
 /******************************* 게시글 댓글 작성 **********************************/

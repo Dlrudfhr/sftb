@@ -8,7 +8,7 @@
   /* overflow: hidden; */
   /* min-width: 1280px; */
   margin:auto;
-
+  width: 1280px;
 }
 
 /*게시판 블럭들 - 모든 ul flex설정과 list스타일 해제*/
@@ -21,16 +21,17 @@
 
 /*메인화면 배너(visual+button)*/
 .Main_layout .Main_banner {
-
+  
 }
 
 /*메인 배너 글자 있는 부분*/
 .Main_box_visual {
   height: 70%;
-  background-color: #f1f1f1;
+  background-color: #004fa8;
   font-size: 40px;
   font-weight: bold;
   padding: 40px;
+  color:#ffd700;
 }
 
 /*********카테고리 이동 버튼**********/
@@ -62,7 +63,7 @@
 /**/
 .Main_categoryLayout{
   margin:auto;
-  width: 75%;
+  width: 1280px;
 }
 
 /*게시판 블럭들 스타일*/
