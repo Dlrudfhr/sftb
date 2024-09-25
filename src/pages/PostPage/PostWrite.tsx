@@ -1,6 +1,7 @@
-import React from "react";
-import { useState } from "react";
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
+// PostWrite.js
+
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../Header";
 import Footer from "../Footer";
 import "../../assets/css/PostWrite.css";
@@ -17,7 +18,7 @@ function PostWrite() {
   console.log("userName from localStorage:", userName); // userName 로그 출력
 
   // 게시물 제출 함수
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
 
     try {
@@ -34,7 +35,8 @@ function PostWrite() {
         {
           title: title,
           content: content,
-          userName: userName, // userName을 memberId로 사용
+          userName: userName, // userName을 Member_ID로 사용
+          boardId: 2, // 자격증 정보 게시판의 ID를 추가
         },
         {
           headers: {
@@ -45,7 +47,7 @@ function PostWrite() {
 
       // 서버에서 성공 응답을 받으면 메인 페이지로 이동
       if (response.status === 200) {
-        navigate("/Main");
+        navigate("/Certificate");
       } else {
         setErrorMessage("게시물 작성에 실패했습니다.");
       }
@@ -61,8 +63,7 @@ function PostWrite() {
         <form className="postWrite__form" onSubmit={handleSubmit}>
           <h3 className="postpage_title" onClick={() => (window.location.href = "/Certificate")}>게시물 작성</h3>
 
-          <label className="postWrite__label" htmlFor="post_title">
-          </label>
+          <label className="postWrite__label" htmlFor="post_title"></label>
           <input
             className="post_title"
             type="text"
@@ -74,8 +75,7 @@ function PostWrite() {
           />
           <br />
 
-          <label className="postWrite__label" htmlFor="post_content">
-          </label>
+          <label className="postWrite__label" htmlFor="post_content"></label>
           <textarea
             className="post_textarea"
             id="post_content"

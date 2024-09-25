@@ -4,7 +4,7 @@
 /*메인 전체 부분*/
 .Main_layout {
   background-color: #f6f6f6;
-  font-family: "DungGeunMo";
+  /* font-family: "DungGeunMo"; */
   /* overflow: hidden; */
   /* min-width: 1280px; */
   margin:auto;
