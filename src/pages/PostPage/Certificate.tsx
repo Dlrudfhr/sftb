@@ -71,34 +71,34 @@ const Certificate = () => {
 
     <div className="Certificate_layout">
 
-      <h4 className="postpage_title" onClick={() => (window.location.href = "/Certificate")}>자격증 게시판</h4>
-
-      {/*위로가기 버튼 */}
-      <div className="Certificate_high">
-        <button type="button" onClick={() => onMoveBox(highElement)}>
-          top
-        </button>
-      </div>
-
-      {/*게시글 찾기 폼 */}
-      <div className="Certificate_Search">
-        <div className="Certificate_Search_form">       
-        
-          
-          
-          {/*검색창 */}
-          <div className="Certificate_input">
-            <input className="Certificate_search_txt" type="text" placeholder=" 검색어를 입력하세요."></input>
-          </div>
-          
-          {/*검색폼 버튼-검색, 초기화 */}
-          <div className="Certificate_button_list">
-            <button className="Certificate_search_button"  type="submit">검색</button>
-            <button className="Certificate_search_button"  type="button">초기화</button>
-          </div>
-          
+        <div className="Certificate_high">
+          <button type="button" onClick={() => onMoveBox(highElement)}>
+            top
+          </button>
         </div>
-      </div>
+
+        <div className="Certificate_Search">
+          <div className="Certificate_Search_form">
+            <div className="Certificate_filter">
+              <select className="Certificate_search_key">
+                <option>--검색선택--</option>
+                <option>제목</option>
+                <option>내용</option>
+                <option>등록자명</option>
+              </select>
+            </div>
+            
+            <div className="Certificate_input">
+              <input className="Certificate_search_txt" type="text" placeholder="검색어를 입력하세요." />
+            </div>
+            
+            <div className="Certificate_button_list">
+              <button className="Certificate_search_button" type="submit">검색</button>
+              <button className="Certificate_search_button" type="button">초기화</button>
+            </div>
+          </div>
+        </div>
+
 
       {/*게시판 게시글 갯수와 페이지 수  */}
       <div className="Certificate_Number">
@@ -138,7 +138,7 @@ const Certificate = () => {
                       </div>
                     </div>
                   </div>
-                </div>
+              </div>
 
             </li>
             ))}
@@ -165,8 +165,7 @@ const Certificate = () => {
       
       <Footer />
     </>
-
-
   );
 };
+
 export default Certificate;
