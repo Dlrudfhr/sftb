@@ -1,28 +1,74 @@
-import React from "react";
-import { useState, useRef } from "react"; /* 바로가기 참조 */
+import React, {useEffect, useState, useRef } from "react"; /* 바로가기 참조 */
 import { Routes, Route, Link } from "react-router-dom";
 import Header from "../Header"; /* Header 참조 */
 import Footer from "../Footer"; /* footer 참조 */
 import "../../assets/css/Certificate.css"; /* 스타일 참조 */
-import { FaRegStar } from "react-icons/fa";
-import { FaSearch } from "react-icons/fa";
+import { FaRegStar, FaSearch, FaRegBookmark ,FaBookmark } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa6";
+import axios from "axios"; 
+
+// 게시물 타입 정의
+interface Post {
+  creSeq: number; // 게시물 ID
+  title: string; // 제목
+  userName: string; // 사용자명
+  content: string; // 내용
+}
 
 const Certificate = () => {
   const highElement = useRef<null | HTMLDivElement>(null); //상단으로 돌아가기 버튼
+  const [posts, setPosts] = useState<Post[]>([]); // 게시물 목록 상태
+  const [loading, setLoading] = useState(true); // 로딩 상태
+  
 
+  // 백엔드에서 게시물 데이터 가져오기
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/posts");
+        setPosts(response.data); // 게시물 데이터 상태에 저장
+        setLoading(false); // 로딩 완료
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  {/* 이동버튼 컴포넌트 */}
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
+  {/*글자수 제한 */}
+  interface PostProps {
+    content: string;
+    
+  }
+  
+  {/*게시글 내용 글자수 제한 컴포넌트 */}
+  const Post: React.FC<PostProps> = ({ content }) => {
+    const truncatedContent = content.length > 33 ? content.substring(0, 33) + "..." : content;
+
+    return <p>{truncatedContent}</p>;
+  };
+
+  {/*게시글 제목 글자수 제한 컴포넌트 */}
+  const PostTitle: React.FC<PostProps> = ({ content }) => {
+    const truncatedContent = content.length > 11 ? content.substring(0, 11) + "..." : content;
+
+    return <p>{truncatedContent}</p>;
+  };
+
+
+  const longText="안녕하세요";
   return(
     <>
     <Header />
       
-    
 
-    {/* 검색창 폼*/}
-    {/* <div className="search_box_Certificate"> */}
     <div className="Certificate_layout">
 
       <h4 className="postpage_title" onClick={() => (window.location.href = "/Certificate")}>자격증 게시판</h4>
@@ -57,8 +103,7 @@ const Certificate = () => {
       {/*게시판 게시글 갯수와 페이지 수  */}
       <div className="Certificate_Number">
         <div className="Certificate_postNumber">
-          <span>총 게시물 <strong>16262</strong></span>
-          <span>현재 페이지 <strong>1/1627</strong></span>
+          <span>총 게시물 <strong>{posts.length}</strong></span>
         </div>
 
         {/*게시글 작성 페이지로 이동 */}
@@ -70,120 +115,37 @@ const Certificate = () => {
       </div>
 
       <div className="Certificate_postline">
+        {loading ? (<div>Loading...</div>) : (
+          
+          <ul className="Certificate_postline1">
+            {posts.map((post) => (
+            <li key={post.creSeq}>
 
-        {/*첫번째 줄 게시글 */}
-        <ul className="Certificate_postline1">
-          <li>
-            <div className="Certificate_card"
-                onClick={() => (window.location.href = "/PostDetail")}>
-                <div className="Certificate_card_innerbox">
-                <div className="Certificate_card_title">정보처리기사 언제부터</div>
-                <div className="Certificate_card_info">정보처리기사는 보통 언제부터 준비하나요? </div>
-                {/*게시글 카드 작성자 & 아이콘 */}
-                <div className="Certificate_card_icons">
-                  <div className="Certificate_writer">작성자</div>
-                  <div className="Certificate_icons_right">
-                    <div className="Certificate_heart"><FaRegHeart /> 23</div>
-                    <div className="Certificate_scrap"><FaRegStar /></div>
+              
+              <div className="Certificate_card"
+                  onClick={() => (window.location.href = "/PostDetail")}>
+                  <div className="Certificate_card_innerbox">
+                    <div className="Certificate_card_title"><PostTitle content={post.title}/></div>
+                    <div className="Certificate_card_info"><Post content={post.content}/></div>
+                    
+                    {/*작성자, 조회수, 좋아요수, 스크랩여부 */}
+                    <div className="Certificate_card_icons">
+                      <div className="Certificate_writer">{post.userName}</div>
+                      <div className="Certificate_icons_right">
+                        <div className="">조회수</div>
+                        <div className="Certificate_heart"><FaRegHeart /></div>
+                        <div className="Certificate_scrap"><FaRegBookmark /></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                
-              </div>
-            </div>
-          </li>
-          <li>
-            <div className="Certificate_card"
-                onClick={() => (window.location.href = "/PostDetail")}>
-                <div className="Certificate_card_innerbox">
-                <div className="Certificate_card_title">정보처리기사 언제부터</div>
-                <div className="Certificate_card_info">정보처리기사는 보통 언제부터 준비하나요?</div>
-                {/*게시글 카드 작성자 & 아이콘 */}
-                <div className="Certificate_card_icons">
-                  <div className="Certificate_writer">작성자</div>
-                  <div className="Certificate_icons_right">
-                    <div className="Certificate_heart"><FaRegHeart /> 23</div>
-                    <div className="Certificate_scrap"><FaRegStar /></div>
-                  </div>
-                </div>
-                
-              </div>
-            </div>
-          </li>
-          <li>
-            <div className="Certificate_card"
-                onClick={() => (window.location.href = "/PostDetail")}>
-                <div className="Certificate_card_innerbox">
-                <div className="Certificate_card_title">정보처리기사 언제부터</div>
-                <div className="Certificate_card_info">정보처리기사는 보통 언제부터 준비하나요?</div>
-                {/*게시글 카드 작성자 & 아이콘 */}
-                <div className="Certificate_card_icons">
-                  <div className="Certificate_writer">작성자</div>
-                  <div className="Certificate_icons_right">
-                    <div className="Certificate_heart"><FaRegHeart /> 23</div>
-                    <div className="Certificate_scrap"><FaRegStar /></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div className="Certificate_card"
-                onClick={() => (window.location.href = "/PostDetail")}>
-                <div className="Certificate_card_innerbox">
-                <div className="Certificate_card_title">정보처리기사 언제부터</div>
-                <div className="Certificate_card_info">정보처리기사는 보통 언제부터 준비하나요?</div>
-                {/*게시글 카드 작성자 & 아이콘 */}
-                <div className="Certificate_card_icons">
-                  <div className="Certificate_writer">작성자</div>
-                  <div className="Certificate_icons_right">
-                    <div className="Certificate_heart"><FaRegHeart /> 23</div>
-                    <div className="Certificate_scrap"><FaRegStar /></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-        
-        {/*두번째 줄 게시글 */}
-        <ul>
-          <li>
-            <div className="Certificate_card"
-                onClick={() => (window.location.href = "/PostDetail")}>
-                <div className="Certificate_card_innerbox">
-                <div className="Certificate_card_title">정보처리기사 언제부터</div>
-                <div className="Certificate_card_info">정보처리기사는 보통 언제부터 준비하나요?</div>
-                {/*게시글 카드 작성자 & 아이콘 */}
-                <div className="Certificate_card_icons">
-                  <div className="Certificate_writer">작성자</div>
-                  <div className="Certificate_icons_right">
-                    <div className="Certificate_heart"><FaRegHeart /> 23</div>
-                    <div className="Certificate_scrap"><FaRegStar /></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div className="Certificate_card"
-                onClick={() => (window.location.href = "/PostDetail")}>
-                <div className="Certificate_card_innerbox">
-                <div className="Certificate_card_title">정보처리기사 언제부터</div>
-                <div className="Certificate_card_info">정보처리기사는 보통 언제부터 준비하나요?</div>
-                {/*게시글 카드 작성자 & 아이콘 */}
-                <div className="Certificate_card_icons">
-                  <div className="Certificate_writer">작성자</div>
-                  <div className="Certificate_icons_right">
-                    <div className="Certificate_heart"><FaRegHeart /> 23</div>
-                    <div className="Certificate_scrap"><FaRegStar /></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
 
+            </li>
+            ))}
+          </ul>
+        )}
       </div>
+
     </div>
     
     {/*게시판 페이지네이션 */}

@@ -4,7 +4,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import Header from "../Header";
 import "../../assets/css/PostDetail.css";
 import myImage from "../../assets/images/manggu.jpg";
-import { FaRegHeart, FaRegBookmark, FaHeart ,FaBookmark } from "react-icons/fa";
+import { FaRegComment, FaRegHeart, FaRegBookmark, FaHeart ,FaBookmark } from "react-icons/fa";
 
 const PostDetail = () => {
     {/*하트 클릭 이벤트 */}
@@ -35,25 +35,18 @@ const PostDetail = () => {
                     <div className="PostDetail_time">몇 분전</div>
                 </div>
             </div>
-            
+            {/*게시글 제목&내용 */}
             <div className="PostDetail_postTitle">제목</div>
             <div className="PostDetail_content">내용
             </div>
 
-            {/*게시글 좋아요, 스크랩 수 */}
+            {/*게시글 좋아요,댓글 수, 스크랩 수 */}
             <div className="PostDetail_total">
-                <div className="PostDetail_totallike">좋아요 수</div>
-                <div className="PostDetail_totalcomm">댓글 수 </div>
-                <div className="PostDetail_totalscrap">스크랩 수</div>
+                <div className="PostDetail_totallike" onClick={handleHeart}>{heart ? (<FaHeart color="red"/>) : (<FaRegHeart />)}</div>
+                <div className="PostDetail_totalcomm"><FaRegComment /></div>
+                <div className="PostDetail_totalscrap" onClick={handleBookmark}>{bookmark ? (<FaBookmark color="gold" />) : (<FaRegBookmark />)}</div>
             </div>
 
-            {/*게시글 좋아요, 스크랩 버튼 */}
-            <div>
-                <button className="PostDetail_likebutton"  
-                    onClick={handleHeart}>{heart ? (<FaHeart />) : (<FaRegHeart />)}</button>
-                <button className="PostDetail_scrapbutton" 
-                    onClick={handleBookmark}>{bookmark ? (<FaBookmark  />) : (<FaRegBookmark />)}    </button>
-            </div>
         </div>
 
         {/*게시글 댓글 출력 영역 */}
@@ -64,7 +57,7 @@ const PostDetail = () => {
                     <div className="PostDetail_commproImage"><img src={myImage}/></div>
                     <div className="PostDetail_commwriter">작성자</div>
                     <div className="PostDetail_recomm">대댓글</div>
-                    <div className="PostDetail_recommlike">공감</div>
+                    <div className="PostDetail_recommlike" /*onClick={}*/><FaRegHeart /></div>
                 </div>
                 <div className="PostDetail_content PostDetail_comm_cont">댓글 내용</div>
                 <div className="PostDetail_time">12분전</div>
@@ -76,7 +69,7 @@ const PostDetail = () => {
             <div className="PostDetail_writer">
                 <div className="PostDetail_commproImage"><img src={myImage}/></div>
                 <div className="PostDetail_commwriter">작성자</div>
-                <div className="PostDetail_recommlike">공감</div>
+                <div className="PostDetail_recommlike" /*onClick={}*/><FaRegHeart /></div>
             </div>
             <div className="PostDetail_content PostDetail_comm_cont">댓글 내용</div>
             <div className="PostDetail_time">12분전</div>

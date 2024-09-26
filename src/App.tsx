@@ -24,7 +24,6 @@ import SearchPwPage from "./pages/SearchPwPage";
 import PostWrite from "./pages/PostPage/PostWrite";
 import PostDetail from "./pages/PostPage/PostDetail";
 import PrivateRoute from "./PrivateRoute";
-import PostDetail from "./pages/PostPage/PostDetail";
 import "./App.css";
 
 interface RouteProps {

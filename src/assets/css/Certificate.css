@@ -1,6 +1,6 @@
 /*레이아웃*/
 .Certificate_layout{
-  width:1280px;
+  width:1350px;
   margin: auto;
   padding:15px 30px;
   /* border:solid; */
@@ -142,6 +142,8 @@
   transition: 0.5s ease-in-out;
   border-radius: 5%;
   border:  solid 0.667px #e8e8e8;
+  margin-bottom:30px;
+  overflow: hidden;
 }
 /*기본 카드 hover*/
 .Certificate_card:hover {
@@ -152,7 +154,7 @@
 /*게시글 카드 안에 inner box*/
 .Certificate_card_innerbox {
   margin:auto; /* 카드 안에 콘텐츠 가로 중앙 정렬*/
-  height: 80%;
+  min-height: 150px;
   width: 80%;
   -webkit-transform: scale(1);
   transform: scale(1);
@@ -162,22 +164,30 @@
 .Certificate_card .Certificate_card_title {
   font-size: 20px;
   font-weight: bold;
+  max-height: 30px;
   letter-spacing: -0.5px;
   margin-bottom: 15px;
   position: relative;
+  
 }
 
 /*게시글 상세 내용*/
 .Certificate_card_info {
   font-size: 14px;
   color: grey;
-  margin-bottom: 65px;
+  
+  /* height: 2.8em; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  min-height: 50px;
+  margin-bottom:35px;
 }
 
 /*게시글 카드 안 좋아요, 즐겨찾기 아이콘*/
-.Certificate_card_icons {
+.Certificate_card_innerbox .Certificate_card_icons {
   font-size: 12px;
   display: flex;
+  min-height: 30%;
 }
 
 /**/
@@ -223,6 +233,7 @@ li{
 /*리스트 정렬*/
 .Certificate_layout ul{
   display: flex;
+  flex-wrap: wrap;
 }
   
 /**/
