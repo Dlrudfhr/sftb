@@ -62,8 +62,14 @@ const PostDetail: React.FC = () => {
     const handleCommentSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if (!commentInput) return;
+        const userName = localStorage.getItem("userName"); // 로컬 스토리지에서 userName 가져오기
+        console.log("Post ID:", postId); // postId 로그 확인
         try {
-            await axios.post('/api/comments', { postId, content: commentInput });
+            await axios.post('/api/comments', { 
+                postId : postId, 
+                content: commentInput,
+                memberId: userName
+            });
             setCommentInput("");
             fetchComments();
         } catch (error) {
@@ -75,7 +81,10 @@ const PostDetail: React.FC = () => {
         e.preventDefault();
         if (!replyInput[parentId]) return;
         try {
-            await axios.post('/api/comments', { postId, parentId, content: replyInput[parentId] });
+            await axios.post('/api/comments', { 
+                postId, 
+                parentId, 
+                content: replyInput[parentId] });
             setReplyInput({ ...replyInput, [parentId]: "" });
             fetchComments();
         } catch (error) {
