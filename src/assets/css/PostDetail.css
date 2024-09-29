@@ -68,20 +68,21 @@
 
 /*게시글 좋아요 수, 게시글 댓글 수, 게시글 스크랩 수*/
 .PostDetail_totallike, .PostDetail_totalcomm, .PostDetail_totalscrap, .PostDetail_likebutton{
-    margin-right:5px;
+    margin-right:15px;
 }
 
 /*게시글 좋아요 버튼, 게시글 스크랩 버튼*/
 .PostDetail_likebutton, .PostDetail_scrapbutton{
-    width: 80px;
-    height: 30px;
-    border:  0.667px lightgray;
+    width: 50px;
+    height: 50px;
+    border:none;
+    background-color: transparent;
     border-radius: 10%;
 }
 
 /**/
 .PostDetail_likebutton:hover, .PostDetail_scrapbutton:hover{
-    background-color: #f4f4f4;
+    
 }
 
 /************************************ 게시글 댓글 *********************************/

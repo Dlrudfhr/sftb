@@ -35,7 +35,7 @@ function PostWrite() {
         {
           title: title,
           content: content,
-          userName: userName, // userName을 Member_ID로 사용
+          userName: userName, // userName을 memberId로 사용
           boardId: 2, // 자격증 정보 게시판의 ID를 추가
         },
         {
