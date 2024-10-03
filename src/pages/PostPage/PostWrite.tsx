@@ -1,7 +1,5 @@
-// PostWrite.js
-
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../Header";
 import Footer from "../Footer";
 import "../../assets/css/PostWrite.css";
@@ -10,46 +8,96 @@ import axios from "axios";
 function PostWrite() {
   const [title, setTitle] = useState(""); // 제목
   const [content, setContent] = useState(""); // 내용
+  const [postId, setPostID] = useState(""); // 게시물 고유 번호
   const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지
   const navigate = useNavigate();
+  const { state } = useLocation(); // 이전 페이지에서 전달된 상태
 
   // 로그인된 사용자 UserName을 localStorage에서 가져옴
   const userName = localStorage.getItem("userName");
   console.log("userName from localStorage:", userName); // userName 로그 출력
 
+  // 컴포넌트가 처음 렌더링될 때 상태를 설정
+  useEffect(() => {
+    if (state) {
+      console.log("PostWrite state:", state); // state 전체 출력
+      const { title, content, postId } = state; // 이전 페이지에서 받은 데이터
+      setTitle(title); // 제목 설정
+      setContent(content); // 내용 설정
+      setPostID(postId); // 게시물 고유 번호 설정
+    } else {
+      console.log("No state received"); // state가 없을 경우 로그 출력
+    }
+  }, [state]);
+
   // 게시물 제출 함수
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
+    console.log("handleSubmit called"); // 함수 호출 확인
 
     try {
-      // userName이 없는 경우 에러 메시지 설정
       if (!userName) {
         setErrorMessage("로그인 정보가 없습니다. 다시 로그인해주세요.");
         return;
       }
 
-      console.log("Submitting post with userName:", userName); // userName 로그 출력
-
-      const response = await axios.post(
-        "http://localhost:8080/api/posts", // 백엔드 URL
-        {
-          title: title,
-          content: content,
-          userName: userName, // userName을 memberId로 사용
-          boardId: 2, // 자격증 정보 게시판의 ID를 추가
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
+      // 수정하는 경우 ID가 있을 때 PUT 요청
+      if (state && state.postId) {
+        console.log("Updating post with ID:", state.postId); // ID 확인
+        const response = await axios.put(
+          `http://localhost:8080/api/posts/${state.postId}`, // 수정할 게시물의 ID를 포함한 URL
+          {
+            title: title,
+            content: content,
+            boardId: 2,
+            postId: state.postId,
           },
-        }
-      );
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${localStorage.getItem("token")}`, // 토큰 추가
+            },
+          }
+        );
+        console.log("Response from server:", response.data);
 
-      // 서버에서 성공 응답을 받으면 메인 페이지로 이동
-      if (response.status === 200) {
-        navigate("/Certificate");
+        if (response.status === 200) {
+          // 수정 후 해당 게시물 상세 페이지로 이동, 상태 전달 추가
+          navigate(`/PostDetail/${state.postId}`, {
+            state: {
+              title: title,
+              content: content,
+              userName: userName,
+              time: new Date().toISOString(), // 수정 시간을 현재 시간으로 설정
+              postId: state.postId, // 게시물 ID 추가
+            },
+          });
+        } else {
+          setErrorMessage("게시물 수정에 실패했습니다.");
+        }
       } else {
-        setErrorMessage("게시물 작성에 실패했습니다.");
+        // 새로 작성하는 경우 POST 요청
+        const response = await axios.post(
+          "http://localhost:8080/api/posts", // 백엔드 URL
+          {
+            title: title,
+            content: content,
+            userName: userName,
+            boardId: 2,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        if (response.status === 200) {
+          navigate("/Main");
+          navigate("/Certificate");
+        } else {
+          setErrorMessage("게시물 작성에 실패했습니다.");
+        }
       }
     } catch (error) {
       setErrorMessage("서버 오류가 발생했습니다. 다시 시도해주세요.");
@@ -61,7 +109,12 @@ function PostWrite() {
       <Header />
       <div className="PostWrite_layout">
         <form className="postWrite__form" onSubmit={handleSubmit}>
-          <h3 className="postpage_title" onClick={() => (window.location.href = "/Certificate")}>게시물 작성</h3>
+          <h3
+            className="postpage_title"
+            onClick={() => (window.location.href = "/Certificate")}
+          >
+            게시물 작성
+          </h3>
 
           <label className="postWrite__label" htmlFor="post_title"></label>
           <input
@@ -86,16 +139,20 @@ function PostWrite() {
           />
           <br />
 
-          {/* 에러 메시지 출력 */}
           {errorMessage && (
             <div style={{ color: "red", marginBottom: "10px" }}>
               {errorMessage}
             </div>
           )}
           <div className="PostWrite_btns">
-            <button className="PostWrite_golist" onClick={() => (window.location.href = "/Certificate")}>목록</button>
+            <button
+              className="PostWrite_golist"
+              onClick={() => (window.location.href = "/Certificate")}
+            >
+              목록
+            </button>
             <button className="post_button" type="submit">
-              작성하기
+              {state && state.postId ? "수정하기" : "작성하기"}
             </button>
           </div>
         </form>
