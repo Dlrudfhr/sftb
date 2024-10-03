@@ -56,7 +56,7 @@ const routes: Array<RouteProps> = [
   { path: "/Ledger", component: Ledger },
   { path: "/FreePost", component: FreePost },
   { path: "/PostWrite", component: PostWrite },
-  { path: "/PostDetail", component: PostDetail },
+  { path: "/PostDetail/:postId", component: PostDetail }, // 수정된 경로
 ];
 
 function App() {
