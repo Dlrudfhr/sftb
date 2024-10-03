@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../Header";
 import Footer from "../Footer";
-import "../../assets/css/PostWrite.css";
+import "../../assets/css/PostPage/PostWrite.css";
 import axios from "axios";
 
 function PostWrite() {
@@ -61,7 +61,7 @@ function PostWrite() {
       <Header />
       <div className="PostWrite_layout">
         <form className="postWrite__form" onSubmit={handleSubmit}>
-          <h3 className="postpage_title" onClick={() => (window.location.href = "/Certificate")}>게시물 작성</h3>
+          <h3 className="PostWrite_title" onClick={() => (window.location.href = "/Certificate")}>게시물 작성</h3>
 
           <label className="postWrite__label" htmlFor="post_title"></label>
           <input

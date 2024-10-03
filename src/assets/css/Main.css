@@ -1,14 +1,16 @@
 @import url("Font.css");
-
+body{
+  background-color: #f6f6f6;
+}
 
 /*메인 전체 부분*/
 .Main_layout {
   background-color: #f6f6f6;
   /* font-family: "DungGeunMo"; */
-  /* overflow: hidden; */
-  /* min-width: 1280px; */
+  overflow: hidden;
   margin:auto;
   width: 1280px;
+  margin-top:100px;
 }
 
 /*게시판 블럭들 - 모든 ul flex설정과 list스타일 해제*/
@@ -136,6 +138,19 @@
 /*게시판 카드에 들어가는 아이콘 스타일*/
 .Main_card_icons {
   float: right;
+}
+
+.Main_card_hidden{
+  visibility: hidden;
+  width: 250px;
+  height: 250px;
+  cursor: pointer; 
+  margin-right:50px;
+  align-content: center; /*카드 안에 콘텐츠 세로 중앙 정렬*/
+  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  -webkit-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+  border-radius: 5%;
 }
 
 .Main_content .Main_info_cate li {
