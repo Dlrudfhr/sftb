@@ -1,14 +1,12 @@
 @import url("Font.css");
 
-
 /*메인 전체 부분*/
 .Main_layout {
   background-color: #f6f6f6;
   /* font-family: "DungGeunMo"; */
   /* overflow: hidden; */
   /* min-width: 1280px; */
-  margin:auto;
-
+  margin: auto;
 }
 
 /*게시판 블럭들 - 모든 ul flex설정과 list스타일 해제*/
@@ -21,20 +19,20 @@
 
 /*메인화면 배너(visual+button)*/
 .Main_layout .Main_banner {
-
+  background-color: #ffffff;
 }
 
 /*메인 배너 글자 있는 부분*/
 .Main_box_visual {
   height: 70%;
-  background-color: #f1f1f1;
+  background-color: #004fa8;
   font-size: 40px;
   font-weight: bold;
   padding: 40px;
+  color: #d2a517;
 }
 
 /*********카테고리 이동 버튼**********/
-
 
 /*카테고리 이동 버튼*/
 .Main_button {
@@ -44,11 +42,11 @@
   font-weight: bold;
   background-color: rgba(255, 255, 192, 0.1);
   backdrop-filter: blur(10px);
-  letter-spacing:-.6px;
+  letter-spacing: -0.6px;
   padding: 10px 33px;
   border-radius: 100px;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
-  border:none;
+  border: none;
   /* transition: box-shadow 0.25s ease, transform 0.25s ease; */
 }
 
@@ -60,8 +58,8 @@
 /************게시판 카드 스타일*************/
 
 /**/
-.Main_categoryLayout{
-  margin:auto;
+.Main_categoryLayout {
+  margin: auto;
   width: 75%;
 }
 
@@ -74,17 +72,17 @@
 }
 
 /**/
-.Main_info_cate li{
+.Main_info_cate li {
   margin-bottom: 32px;
   /* background-color: lightcoral; */
-  margin:auto;
+  margin: auto;
 }
 
 /*게시판 카테고리 설명 ex)소통해요!*/
 .Main_category_title {
   font-size: 32px;
   padding-left: 30px;
-  margin-bottom: 30px ;
+  margin-bottom: 30px;
   letter-spacing: -2px;
 }
 
@@ -92,8 +90,8 @@
 .Main_card {
   width: 250px;
   height: 250px;
-  cursor: pointer; 
-  margin-right:50px;
+  cursor: pointer;
+  margin-right: 50px;
   align-content: center; /*카드 안에 콘텐츠 세로 중앙 정렬*/
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
   -webkit-transition: 0.5s ease-in-out;
@@ -109,7 +107,7 @@
 
 /*게시판 안에 제목, 설명, 아이콘 포함 스타일*/
 .Main_card_content {
-  margin:auto; /* 카드 안에 콘텐츠 가로 중앙 정렬*/
+  margin: auto; /* 카드 안에 콘텐츠 가로 중앙 정렬*/
   height: 80%;
   width: 80%;
   /* -webkit-transform: scale(1);
@@ -164,9 +162,9 @@
   right: 0; /*오른쪽 배치*/
   bottom: 80px; /*하단에서 부터 80px 떨어진 곳에 위치*/
   z-index: 1000; /*다른 요소위에 노출*/
-  color:black;
+  color: black;
   width: 50px;
   height: 50px;
   background-color: lightgray;
-  border:none;
+  border: none;
 }

@@ -59,10 +59,14 @@ function PostWrite() {
       <Header />
       <div className="PostWrite_layout">
         <form className="postWrite__form" onSubmit={handleSubmit}>
-          <h3 className="postpage_title" onClick={() => (window.location.href = "/Certificate")}>게시물 작성</h3>
+          <h3
+            className="postpage_title"
+            onClick={() => (window.location.href = "/Certificate")}
+          >
+            게시물 작성
+          </h3>
 
-          <label className="postWrite__label" htmlFor="post_title">
-          </label>
+          <label className="postWrite__label" htmlFor="post_title"></label>
           <input
             className="post_title"
             type="text"
@@ -74,8 +78,7 @@ function PostWrite() {
           />
           <br />
 
-          <label className="postWrite__label" htmlFor="post_content">
-          </label>
+          <label className="postWrite__label" htmlFor="post_content"></label>
           <textarea
             className="post_textarea"
             id="post_content"
@@ -93,7 +96,12 @@ function PostWrite() {
             </div>
           )}
           <div className="PostWrite_btns">
-            <button className="PostWrite_golist" onClick={() => (window.location.href = "/Certificate")}>목록</button>
+            <button
+              className="PostWrite_golist"
+              onClick={() => (window.location.href = "/Certificate")}
+            >
+              목록
+            </button>
             <button className="post_button" type="submit">
               작성하기
             </button>
