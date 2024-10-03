@@ -22,8 +22,8 @@ import SignUpPage from "./pages/SignUpPage";
 import SearchIdPage from "./pages/SearchIdPage";
 import SearchPwPage from "./pages/SearchPwPage";
 import PostWrite from "./pages/PostPage/PostWrite";
-import PostDetail from "./pages/PostPage/PostDetail";
 import PrivateRoute from "./PrivateRoute";
+import PostDetail from "./pages/PostPage/PostDetail";
 import "./App.css";
 
 interface RouteProps {
@@ -56,7 +56,7 @@ const routes: Array<RouteProps> = [
   { path: "/Ledger", component: Ledger },
   { path: "/FreePost", component: FreePost },
   { path: "/PostWrite", component: PostWrite },
-  { path: "/PostDetail", component: PostDetail },
+  { path: "/PostDetail/:postId", component: PostDetail }, // 수정된 경로
 ];
 
 function App() {
