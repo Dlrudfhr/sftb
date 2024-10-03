@@ -1,14 +1,24 @@
 @import url("Font.css");
 
+.Header{
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 40px;
+  width: 100%;
+  z-index: 9999; /* 다른 요소보다 더 위에 쌓이도록 높은 z-index 값 설정 */
+}
+
 .Header__container-top {
-  border: 1px solid #000000;
+  /* border: 1px solid #000000; */
   background-color: #ffffff;
   position: relative;
   min-width: 1280px;
+  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
 }
 
 .Header__navbar {
-  height: 150px;
+  height: 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,9 +28,15 @@
   height: 100%;
 }
 
+.Header__logo{
+  width: 100px;
+  height: 100px;
+  align-content: center;
+}
+
 .Header__logo img {
   width: auto;
-  height: 140px;
+  height: 70px;
   margin-left: 15px;
 }
 

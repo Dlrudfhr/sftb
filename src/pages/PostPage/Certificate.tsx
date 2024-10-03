@@ -1,10 +1,12 @@
-import React, { useEffect, useState, useRef } from "react";
-import { useNavigate, Link } from "react-router-dom"; // Link 추가
-import Header from "../Header";
-import Footer from "../Footer";
-import "../../assets/css/Certificate.css";
-import { FaRegHeart, FaRegBookmark } from "react-icons/fa"; // 사용하지 않는 아이콘 제거
-import axios from "axios";
+import React, {useEffect, useState, useRef } from "react"; /* 바로가기 참조 */
+import { Routes, Route, Link, useNavigate } from "react-router-dom";
+import Header from "../Header"; /* Header 참조 */
+import Footer from "../Footer"; /* footer 참조 */
+import "../../assets/css/PostPage/Certificate.css"; /* 스타일 참조 */
+import { FaRegStar, FaSearch, FaRegBookmark ,FaBookmark  } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa6";
+import axios from "axios"; 
+import { CiCircleRemove } from "react-icons/ci";
 
 // 게시물 타입 정의
 interface Post {
@@ -20,6 +22,11 @@ const Certificate = () => {
   const [posts, setPosts] = useState<Post[]>([]); // 게시물 목록 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
+
+  const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
+    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
 
   // 백엔드에서 게시물 데이터 가져오기
   useEffect(() => {
@@ -54,23 +61,25 @@ const Certificate = () => {
     return <p>{truncatedContent}</p>;
   };
 
-  // 상단으로 이동하는 함수
-  const onMoveBox = (element: React.RefObject<HTMLDivElement>) => {
-    if (element.current) {
-      element.current.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  return (
+  return(
     <>
-      <Header />
-      <div className="Certificate_layout">
-        <div className="Certificate_high">
-          <button type="button" onClick={() => onMoveBox(highElement)}>top</button>
-        </div>
+    <Header />
+      
 
-        <div className="Certificate_Search">
-          <div className="Certificate_Search_form">
+    <div className="post_layout">
+      
+      <h1 className="post_title">자격증 게시판</h1>
+
+      {/* 위로이동 버튼 */}
+      <div className="Certificate_high">
+        <button type="button" onClick={() => onMoveBox(highElement)}>
+          top
+        </button>
+      </div>
+
+      {/*검색창 */}
+      <div className="Certificate_Search">
+        <div className="Certificate_Search_form">
             <div className="Certificate_filter">
               <select className="Certificate_search_key">
                 <option>--검색선택--</option>
@@ -83,11 +92,11 @@ const Certificate = () => {
               <input className="Certificate_search_txt" type="text" placeholder="검색어를 입력하세요." />
             </div>
             <div className="Certificate_button_list">
-              <button className="Certificate_search_button" type="submit">검색</button>
-              <button className="Certificate_search_button" type="button">초기화</button>
+              <button className="Certificate_search_button" type="submit"><FaSearch /> </button>
+              <div className="Certificate_search_button" ><CiCircleRemove /></div>
             </div>
-          </div>
         </div>
+      </div>
 
         {/* 게시판 게시글 갯수와 페이지 수 */}
         <div className="Certificate_Number">
@@ -113,6 +122,7 @@ const Certificate = () => {
                     onClick={() =>
                       navigate(`/PostDetail/${post.postId}`, {
                         state: {
+                          postId: post.postId,
                           title: post.title,
                           content: post.content,
                           userName: post.userName,
@@ -147,17 +157,6 @@ const Certificate = () => {
         </div>
       </div>
 
-      {/* 게시판 페이지네이션 */}
-      <div className="Certificate_pages">
-        <ul className="Certificate_pageNumber">
-          <li><div className="Certificate_pagebtn"><Link to="#" style={{ textDecoration: "none" }} onClick={() => (window.location.href = "/Certificate")}>1</Link></div></li>
-          <li><div className="Certificate_pagebtn"><Link to="#" style={{ textDecoration: "none" }} onClick={() => (window.location.href = "/Certificate")}>2</Link></div></li>
-          <li><div className="Certificate_pagebtn"><Link to="#" style={{ textDecoration: "none" }} onClick={() => (window.location.href = "/Certificate")}>3</Link></div></li>
-          <li><div className="Certificate_pagebtn"><Link to="#" style={{ textDecoration: "none" }} onClick={() => (window.location.href = "/Certificate")}>4</Link></div></li>
-          <li><div className="Certificate_pagebtn"><Link to="#" style={{ textDecoration: "none" }} onClick={() => (window.location.href = "/Certificate")}>5</Link></div></li>
-          <li><div className="Certificate_pagebtn"><Link to="#" style={{ textDecoration: "none" }} onClick={() => (window.location.href = "/Certificate")}>6</Link></div></li>
-        </ul>
-      </div>
 
       <Footer />
     </>

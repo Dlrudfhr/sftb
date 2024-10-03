@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../Header";
 import Footer from "../Footer";
-import "../../assets/css/PostWrite.css";
+import "../../assets/css/PostPage/PostWrite.css";
 import axios from "axios";
 
 function PostWrite() {
@@ -110,7 +110,7 @@ function PostWrite() {
       <div className="PostWrite_layout">
         <form className="postWrite__form" onSubmit={handleSubmit}>
           <h3
-            className="postpage_title"
+            className="PostWrite_title"
             onClick={() => (window.location.href = "/Certificate")}
           >
             게시물 작성

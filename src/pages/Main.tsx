@@ -200,7 +200,7 @@ function Main() {
             {/*비어있는 게시판 카드 */}
             <li>
               <div
-                className="Main_card"
+                className="Main_card_hidden"
                 onClick={() => (window.location.href = "/Coding")}
               >
                 <div className="Main_card_content">
@@ -234,7 +234,7 @@ function Main() {
             {/*비어있는 게시판 카드 */}
             <li>
               <div
-                className="Main_card"
+                className="Main_card_hidden"
                 onClick={() => (window.location.href = "/Coding")}
               >
                 <div className="Main_card_content">
@@ -247,7 +247,7 @@ function Main() {
             {/*비어있는 게시판 카드 */}
             <li>
               <div
-                className="Main_card"
+                className="Main_card_hidden"
                 onClick={() => (window.location.href = "/Coding")}
               >
                 <div className="Main_card_content">
@@ -260,7 +260,7 @@ function Main() {
             {/*비어있는 게시판 카드 */}
             <li>
               <div
-                className="Main_card"
+                className="Main_card_hidden"
                 onClick={() => (window.location.href = "/Coding")}
               >
                 <div className="Main_card_content">
@@ -294,7 +294,7 @@ function Main() {
             {/*비어있는 게시판 카드 */}
             <li>
               <div
-                className="Main_card"
+                className="Main_card_hidden"
                 onClick={() => (window.location.href = "/Coding")}
               >
                 <div className="Main_card_content">
@@ -307,7 +307,7 @@ function Main() {
             {/*비어있는 게시판 카드 */}
             <li>
               <div
-                className="Main_card"
+                className="Main_card_hidden"
                 onClick={() => (window.location.href = "/Coding")}
               >
                 <div className="Main_card_content">
@@ -320,7 +320,7 @@ function Main() {
             {/*비어있는 게시판 카드 */}
             <li>
               <div
-                className="Main_card"
+                className="Main_card_hidden"
                 onClick={() => (window.location.href = "/Coding")}
               >
                 <div className="Main_card_content">
