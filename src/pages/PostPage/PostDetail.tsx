@@ -6,15 +6,13 @@ import "../../assets/css/PostPage/PostDetail.css";
 import myImage from "../../assets/images/manggu.jpg";
 import { FaRegComment, FaRegHeart, FaRegBookmark, FaHeart ,FaBookmark } from "react-icons/fa";
 import { FaPaperPlane } from "react-icons/fa";
+import { AiOutlineLike } from "react-icons/ai";
 import axios from "axios";
 
 
-    
-    
-    
-    interface Comment {
-        commentId: number;
-        content: string;
+interface Comment {
+    commentId: number;
+    content: string;
     memberId: string;
     createdAt: string;
     replies?: Comment[];
@@ -42,6 +40,12 @@ const PostDetail: React.FC = () => {
         setHeart(!heart);
     };
     
+    {/*댓글 하트 클릭 이벤트 */}
+    const [comheart, setcomHeart] = useState(false);
+    const handlecomHeart = () => {
+        setcomHeart(!comheart);
+    }
+
     // 북마크 클릭 이벤트
     const [bookmark, setBookmark] = useState(false);
     const handleBookmark = () => {
@@ -57,13 +61,6 @@ const PostDetail: React.FC = () => {
             console.error("댓글 가져오기 실패:", error);
         }
     };
-
-    {/*댓글 하트 클릭 이벤트 */}
-    const [comheart, setcomHeart] = useState(false);
-    const handlecomHeart = () => {
-        setcomHeart(!comheart);
-    }
-    
     
     // 댓글 추가하는 함수
     const handleCommentSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -86,33 +83,38 @@ const PostDetail: React.FC = () => {
         }
     };
 
-                // 대댓글 추가하는 함수
-                const handleReplySubmit = async (e: React.MouseEvent<HTMLButtonElement>, parentId: number) => {
-                    e.preventDefault();
-                    if (!replyInput[parentId]) return;
+    // 대댓글 추가하는 함수
+    const handleReplySubmit = async (e: React.MouseEvent<HTMLButtonElement>, parentId: number) => {
+        e.preventDefault();
+        if (!replyInput[parentId]) return;
                 
-                    const userName = localStorage.getItem("userName"); // 사용자 이름 가져오기
-                    if (!userName) {
-                        console.error("User Name is null");
-                        return; // 사용자 이름이 없으면 함수 종료
-                    }
-                    try {
-                        await axios.post('/api/comments', { 
-                            postId, 
-                            parentId, 
-                            content: replyInput[parentId],
-                            memberId: userName // memberId에 사용자 이름 추가
-                        });
-                        setReplyInput({ ...replyInput, [parentId]: "" });
-                        fetchComments(); // 댓글 목록 갱신
-                    } catch (error) {
-                        console.error("대댓글 추가 실패:", error);
-                    }
-                };
+        const userName = localStorage.getItem("userName"); // 사용자 이름 가져오기
+        if (!userName) {
+            console.error("User Name is null");
+            return; // 사용자 이름이 없으면 함수 종료
+        }
+        try {
+            await axios.post('/api/comments', { 
+                postId, 
+                parentId, 
+                content: replyInput[parentId],
+                memberId: userName // memberId에 사용자 이름 추가
+            });
+            setReplyInput({ ...replyInput, [parentId]: "" });
+            fetchComments(); // 댓글 목록 갱신
+        } catch (error) {
+            console.error("대댓글 추가 실패:", error);
+        }
+    };
+
+    const [isReplyVisible, setIsReplyVisible] = useState(false);
+    const toggleReplyVisibility = () => {
+        setIsReplyVisible(!isReplyVisible);
+    };
             
-                useEffect(() => {
-                    fetchComments();
-                }, [postId]);
+    useEffect(() => {
+        fetchComments();
+    }, [postId]);
 
   return(
     <>
@@ -122,6 +124,7 @@ const PostDetail: React.FC = () => {
         <h3 className="postpage_title" onClick={() => (window.location.href = "/Certificate")}>
             <div className="PostDetail_titleinnerbox">자격증게시판</div>
         </h3>
+
         {/*게시글 출력 박스 */}
         <div className="PostDetail_box">
             <div className="PostDetail_innerbox">
@@ -135,8 +138,7 @@ const PostDetail: React.FC = () => {
                 </div>
                 {/*게시글 제목&내용 */}
                 <div className="PostDetail_postTitle">{title || "제목"}</div>
-                <div className="PostDetail_content">{content || "내용"}
-                </div>
+                <div className="PostDetail_content">{content || "내용"}</div>
 
                 {/*게시글 좋아요,댓글 수, 스크랩 수 */}
                 <div className="PostDetail_total">
@@ -147,53 +149,75 @@ const PostDetail: React.FC = () => {
             </div>
         </div>
 
-        {/*게시글 댓글 출력 영역 */}
+        {/*댓글 출력 영역 */}
         <div className="PostDetail_commentbox">
-                    {comments.map(comment => (
-                        <div className="PostDetail_comment" key={comment.commentId}>
-                            <div className="PostDetail_writer">
-                                <div className="PostDetail_commproImage">
-                                    <img src={myImage} alt="프로필" />
-                                </div>
-                                <div className="PostDetail_commwriter">{comment.memberId}</div>
-                            </div>
-                            <div className="PostDetail_content PostDetail_comm_cont">{comment.content}</div>
-                            <div className="PostDetail_time">{comment.createdAt}</div>
-
-                {/* 대댓글 출력 영역 */}
-                <div className="PostDetail_rerecomm">
+            {comments.map(comment => (
+                <div className="PostDetail_comment" key={comment.commentId}>
                     <div className="PostDetail_writer">
                         <div className="PostDetail_commproImage">
                             <img src={myImage} alt="프로필" />
                         </div>
-                        {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
-                        <div className="PostDetail_commwriter">{localStorage.getItem("userName") || "작성자"}</div>
+                        <div className="PostDetail_commwriter">{comment.memberId}</div>
+                        <div className="PostDetail_viewwrite" onClick={toggleReplyVisibility} ><FaRegComment /></div>
+                        <div className="PostDetail_heart"><FaRegHeart /></div>
+                        <div className="PostDetail_adopt"><AiOutlineLike /></div> 
                     </div>
-                    <input
-                        className="PostDetail_commWrite"
-                        placeholder="대댓글을 입력하세요."
-                        value={replyInput[comment.commentId] || ""}
-                        onChange={(e) => setReplyInput({ ...replyInput, [comment.commentId]: e.target.value })}
-                    />
-                    <button onClick={(e) => handleReplySubmit(e, comment.commentId)}>작성</button>
+                    
+                    <div className="PostDetail_content PostDetail_comm_cont">{comment.content}</div>
+                    <div className="PostDetail_time">{comment.createdAt}</div>
+                    {/* 대댓글 출력 영역 */}
+                    <div className="PostDetail_recomment">
+                        <div className="PostDetail_writer">
+                            <div className="PostDetail_commproImage">
+                                <img src={myImage} alt="프로필" />
+                            </div>
+                            {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
+                            <div className="PostDetail_commwriter">{localStorage.getItem("userName") || "작성자"}</div> 
+                        </div>
+                    </div>
+
+                    {/*대댓글 숨기기/보여지기 */}
+                    {isReplyVisible && (
+                        <div className="reply">
+                            {/* 대댓글 작성 영역 */}
+                            <div className="PostDetail_rerecomm">
+                                <div className="PostDetail_writer">
+                                    <div className="PostDetail_commproImage">
+                                        <img src={myImage} alt="프로필" />
+                                    </div>
+                                    {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
+                                    <div className="PostDetail_commwriter">{localStorage.getItem("userName") || "작성자"}</div> 
+                                </div>
+                                                    
+                                <input
+                                        className="PostDetail_commWrite"
+                                        placeholder="대댓글을 입력하세요."
+                                        value={replyInput[comment.commentId] || ""}
+                                        onChange={(e) => setReplyInput({ ...replyInput, [comment.commentId]: e.target.value })}
+                                />
+                                <button onClick={(e) => handleReplySubmit(e, comment.commentId)}>작성</button>
+                            </div>       
+                        </div>
+                    )}
                 </div>
-                    </div>
             ))}
-                </div>
-                {/* 댓글 작성 영역 */}
-                <div className="PostDetail_commWritebox">
-                    <input
-                        className="PostDetail_commWrite"
-                        placeholder="댓글을 입력하세요."
-                        value={commentInput}
-                        onChange={(e) => setCommentInput(e.target.value)}
-                    />
-                    <button className="PostDetail_button" onClick={handleCommentSubmit}>작성</button>
-                </div>
-                {/* 게시판 목록 버튼 */}
-                <div className="PostDetail_postlistbtn" onClick={() => navigate("/Certificate")}>글 목록</div>
-            </div>
-        </>
+        </div>
+        
+        
+        {/* 댓글 작성 영역 */}
+        <div className="PostDetail_commWritebox">
+            <input
+                className="PostDetail_commWrite"
+                placeholder="댓글을 입력하세요."
+                value={commentInput}
+                onChange={(e) => setCommentInput(e.target.value)}
+            />
+            <button className="PostDetail_button" onClick={handleCommentSubmit}><FaPaperPlane /></button>
+        </div>
+        {/* 게시판 목록 버튼 */}
+        <div className="PostDetail_postlistbtn" onClick={() => navigate("/Certificate")}>글 목록</div>
+    </div>
+    </>
     );
 };
 
