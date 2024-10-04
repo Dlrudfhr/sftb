@@ -4,13 +4,7 @@ import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Header from "../Header";
 import "../../assets/css/PostPage/PostDetail.css";
 import myImage from "../../assets/images/manggu.jpg";
-import {
-  FaRegComment,
-  FaRegHeart,
-  FaRegBookmark,
-  FaHeart,
-  FaBookmark,
-} from "react-icons/fa";
+import {FaRegComment, FaRegHeart, FaRegBookmark, FaHeart,FaBookmark,} from "react-icons/fa";
 import { FaPaperPlane } from "react-icons/fa";
 import axios from "axios";
 
@@ -40,6 +34,7 @@ const PostDetail: React.FC = () => {
     const day = String(date.getDate()).padStart(2, "0");
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
   //버튼 클릭시 ref를 받아와 요소로 이동하는 스크롤 이벤트
   const onMoveBox = (ref: React.RefObject<HTMLInputElement>) => {
@@ -78,6 +73,7 @@ const PostDetail: React.FC = () => {
   const handlecomHeart = () => {
     setcomHeart(!comheart);
   };
+
   const handleEdit = () => {
     console.log("Editing post with ID:", postId); // ID 로그 확인
     if (!postId) {
@@ -87,7 +83,6 @@ const PostDetail: React.FC = () => {
 
     // 수정된 시간은 현재 시간으로 설정
     const updatedTime = new Date().toISOString(); // 현재 시간을 ISO 형식으로 가져오기
-
     navigate("/PostWrite", {
       state: {
         title,
@@ -149,6 +144,7 @@ const PostDetail: React.FC = () => {
     }
   };
 
+  
   useEffect(() => {
     fetchComments();
   }, [postId]);
@@ -212,12 +208,12 @@ const PostDetail: React.FC = () => {
                 <div className="PostDetail_commproImage">
                   <img src={myImage} alt="프로필" />
                 </div>
-                <div className="PostDetail_commwriter">{comment.memberId}</div>
+                <div className="PostDetail_commwriter">{comment.memberId || "작성자"}</div>
               </div>
               <div className="PostDetail_content PostDetail_comm_cont">
                 {comment.content}
               </div>
-              <div className="PostDetail_time">{comment.createdAt}</div>
+              <div className="PostDetail_time">{formatDate(comment.createdAt)}</div>
 
               {/* 대댓글 출력 영역 */}
               <div className="PostDetail_rerecomm">
