@@ -105,6 +105,7 @@ function SearchPwPage() {
         setUserId("");
         setNewPassword("");
         setConfirmPassword("");
+        navigate("/");
       } else {
         setError("비밀번호 변경에 실패했습니다.");
       }

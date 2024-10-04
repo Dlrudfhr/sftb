@@ -1,11 +1,11 @@
-import React, {useEffect, useState, useRef } from "react"; /* 바로가기 참조 */
+import React, { useEffect, useState, useRef } from "react"; /* 바로가기 참조 */
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import Header from "../Header"; /* Header 참조 */
 import Footer from "../Footer"; /* footer 참조 */
 import "../../assets/css/PostPage/Certificate.css"; /* 스타일 참조 */
-import { FaRegStar, FaSearch, FaRegBookmark ,FaBookmark  } from "react-icons/fa";
+import { FaRegStar, FaSearch, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa6";
-import axios from "axios"; 
+import axios from "axios";
 import { CiCircleRemove } from "react-icons/ci";
 
 // 게시물 타입 정의
@@ -26,7 +26,6 @@ const Certificate = () => {
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-
 
   // 백엔드에서 게시물 데이터 가져오기
   useEffect(() => {
@@ -51,35 +50,35 @@ const Certificate = () => {
 
   // 게시글 내용 글자수 제한 컴포넌트
   const Post: React.FC<PostProps> = ({ content }) => {
-    const truncatedContent = content.length > 33 ? content.substring(0, 33) + "..." : content;
+    const truncatedContent =
+      content.length > 33 ? content.substring(0, 33) + "..." : content;
     return <p>{truncatedContent}</p>;
   };
 
   // 게시글 제목 글자수 제한 컴포넌트
   const PostTitle: React.FC<PostProps> = ({ content }) => {
-    const truncatedContent = content.length > 11 ? content.substring(0, 11) + "..." : content;
+    const truncatedContent =
+      content.length > 11 ? content.substring(0, 11) + "..." : content;
     return <p>{truncatedContent}</p>;
   };
 
-  return(
+  return (
     <>
-    <Header />
-      
+      <Header />
 
-    <div className="post_layout">
-      
-      <h1 className="post_title">자격증 게시판</h1>
+      <div className="post_layout">
+        <h1 className="post_title">자격증 게시판</h1>
 
-      {/* 위로이동 버튼 */}
-      <div className="Certificate_high">
-        <button type="button" onClick={() => onMoveBox(highElement)}>
-          top
-        </button>
-      </div>
+        {/* 위로이동 버튼 */}
+        <div className="Certificate_high">
+          <button type="button" onClick={() => onMoveBox(highElement)}>
+            top
+          </button>
+        </div>
 
-      {/*검색창 */}
-      <div className="Certificate_Search">
-        <div className="Certificate_Search_form">
+        {/*검색창 */}
+        <div className="Certificate_Search">
+          <div className="Certificate_Search_form">
             <div className="Certificate_filter">
               <select className="Certificate_search_key">
                 <option>--검색선택--</option>
@@ -89,31 +88,47 @@ const Certificate = () => {
               </select>
             </div>
             <div className="Certificate_input">
-              <input className="Certificate_search_txt" type="text" placeholder="검색어를 입력하세요." />
+              <input
+                className="Certificate_search_txt"
+                type="text"
+                placeholder="검색어를 입력하세요."
+              />
             </div>
             <div className="Certificate_button_list">
-              <button className="Certificate_search_button" type="submit"><FaSearch /> </button>
-              <div className="Certificate_search_button" ><CiCircleRemove /></div>
+              <button className="Certificate_search_button" type="submit">
+                <FaSearch />{" "}
+              </button>
+              <div className="Certificate_search_button">
+                <CiCircleRemove />
+              </div>
             </div>
+          </div>
         </div>
-      </div>
 
         {/* 게시판 게시글 갯수와 페이지 수 */}
         <div className="Certificate_Number">
           <div className="Certificate_postNumber">
-            <span>총 게시물 <strong>{posts.length}</strong></span>
+            <span>
+              총 게시물 <strong>{posts.length}</strong>
+            </span>
           </div>
 
           {/* 게시글 작성 페이지로 이동 */}
           <div className="Certificate_write">
-            <button type="submit" className="Certificate_toWrite" onClick={() => navigate("/PostWrite")}>
+            <button
+              type="submit"
+              className="Certificate_toWrite"
+              onClick={() => navigate("/PostWrite")}
+            >
               작성하기
             </button>
           </div>
         </div>
 
         <div className="Certificate_postline">
-          {loading ? (<div>Loading...</div>) : (
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
             <ul className="Certificate_postline1">
               {posts.map((post) => (
                 <li key={post.postId}>
@@ -141,11 +156,17 @@ const Certificate = () => {
 
                       {/* 작성자, 조회수, 좋아요수, 스크랩여부 */}
                       <div className="Certificate_card_icons">
-                        <div className="Certificate_writer">{post.userName}</div>
+                        <div className="Certificate_writer">
+                          {post.userName}
+                        </div>
                         <div className="Certificate_icons_right">
                           <div className="">조회수</div>
-                          <div className="Certificate_heart"><FaRegHeart /></div>
-                          <div className="Certificate_scrap"><FaRegBookmark /></div>
+                          <div className="Certificate_heart">
+                            <FaRegHeart />
+                          </div>
+                          <div className="Certificate_scrap">
+                            <FaRegBookmark />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -157,10 +178,8 @@ const Certificate = () => {
         </div>
       </div>
 
-
       <Footer />
     </>
   );
 };
-
 export default Certificate;

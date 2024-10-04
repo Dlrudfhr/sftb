@@ -1,10 +1,16 @@
-import React, { useState, useRef, useEffect} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
 import Header from "../Header";
 import "../../assets/css/PostPage/PostDetail.css";
 import myImage from "../../assets/images/manggu.jpg";
-import { FaRegComment, FaRegHeart, FaRegBookmark, FaHeart ,FaBookmark } from "react-icons/fa";
+import {
+  FaRegComment,
+  FaRegHeart,
+  FaRegBookmark,
+  FaHeart,
+  FaBookmark,
+} from "react-icons/fa";
 import { FaPaperPlane } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import axios from "axios";
@@ -28,6 +34,15 @@ const PostDetail: React.FC = () => {
     const { postId } = useParams<{ postId: string }>();
     const commentElement = useRef<null | HTMLInputElement>(null); //스크롤 될 첫번째 위치요소
 
+    // 시간을 포맷하는 함수
+    const formatDate = (dateString: string) => {
+        const date = new Date(dateString);
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1
+        const day = String(date.getDate()).padStart(2, "0");
+        const hours = String(date.getHours()).padStart(2, "0");
+        const minutes = String(date.getMinutes()).padStart(2, "0");
+    };
     //버튼 클릭시 ref를 받아와 요소로 이동하는 스크롤 이벤트
     const onMoveBox = (ref: React.RefObject<HTMLInputElement>) => {
         ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -111,18 +126,41 @@ const PostDetail: React.FC = () => {
     const toggleReplyVisibility = () => {
         setIsReplyVisible(!isReplyVisible);
     };
-            
-    useEffect(() => {
-        fetchComments();
-    }, [postId]);
 
-  return(
+    const handleEdit = () => {
+        console.log("Editing post with ID:", postId); // ID 로그 확인
+        if (!postId) {
+            console.error("Post ID is undefined!");
+            return; // postId가 없으면 함수 종료
+        }
+            // 수정된 시간은 현재 시간으로 설정
+        const updatedTime = new Date().toISOString(); // 현재 시간을 ISO 형식으로 가져오기
+        navigate("/PostWrite", {
+            state: {
+                title,
+                content,
+                userName,
+                time: updatedTime, // 수정된 시간을 현재 시간으로 설정
+                postId, // 게시물 ID 추가
+            },
+        });
+    };
+
+
+  useEffect(() => {
+    fetchComments();
+  }, [postId]);
+
+  return (
     <>
-    <Header />
-    <div className="PostDetail_layout">
+      <Header />
+      <div className="PostDetail_layout">
         {/*게시판 타이틀 */}
-        <h3 className="postpage_title" onClick={() => (window.location.href = "/Certificate")}>
-            <div className="PostDetail_titleinnerbox">자격증게시판</div>
+        <h3
+          className="postpage_title"
+          onClick={() => (window.location.href = "/Certificate")}
+        >
+          <div className="PostDetail_titleinnerbox">자격증게시판</div>
         </h3>
 
         {/*게시글 출력 박스 */}
@@ -136,6 +174,7 @@ const PostDetail: React.FC = () => {
                         <div className="PostDetail_time">{time || "몇 분전"}</div>
                     </div>
                 </div>
+
                 {/*게시글 제목&내용 */}
                 <div className="PostDetail_postTitle">{title || "제목"}</div>
                 <div className="PostDetail_content">{content || "내용"}</div>
@@ -147,6 +186,12 @@ const PostDetail: React.FC = () => {
                     <div className="PostDetail_totalscrap" onClick={handleBookmark}>{bookmark ? (<FaBookmark color="gold" />) : (<FaRegBookmark />)}</div>
                 </div>
             </div>
+
+            {/* 수정하기 버튼 추가 */}
+            <button className="PostDetail_editButton" onClick={handleEdit}>
+              수정하기
+            </button>
+          
         </div>
 
         {/*댓글 출력 영역 */}
@@ -214,8 +259,10 @@ const PostDetail: React.FC = () => {
             />
             <button className="PostDetail_button" onClick={handleCommentSubmit}><FaPaperPlane /></button>
         </div>
+
         {/* 게시판 목록 버튼 */}
         <div className="PostDetail_postlistbtn" onClick={() => navigate("/Certificate")}>글 목록</div>
+        
     </div>
     </>
     );

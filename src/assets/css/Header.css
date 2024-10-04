@@ -1,6 +1,6 @@
 @import url("Font.css");
 
-.Header{
+.Header {
   position: fixed;
   left: 0;
   top: 0;
@@ -28,7 +28,7 @@
   height: 100%;
 }
 
-.Header__logo{
+.Header__logo {
   width: 100px;
   height: 100px;
   align-content: center;

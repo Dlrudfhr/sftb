@@ -61,27 +61,23 @@ const routes: Array<RouteProps> = [
 
 function App() {
   return (
-      <Routes>
-        {routes.map((route, idx) => {
-          if (route.anonymous) {
-            return (
-              <Route
-                path={route.path}
-                element={<route.component />}
-                key={idx}
-              />
-            );
-          } else {
-            return (
-              <Route
-                path={route.path}
-                element={<PrivateRoute component={route.component} />}
-                key={idx}
-              />
-            );
-          }
-        })}
-      </Routes>
+    <Routes>
+      {routes.map((route, idx) => {
+        if (route.anonymous) {
+          return (
+            <Route path={route.path} element={<route.component />} key={idx} />
+          );
+        } else {
+          return (
+            <Route
+              path={route.path}
+              element={<PrivateRoute component={route.component} />}
+              key={idx}
+            />
+          );
+        }
+      })}
+    </Routes>
   );
 }
 
