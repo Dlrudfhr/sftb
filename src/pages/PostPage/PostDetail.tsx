@@ -66,6 +66,7 @@ const PostDetail: React.FC = () => {
     const fetchComments = async () => {
         try {
             const response = await axios.get(`/api/comments/${postId}`);
+            console.log(response.data); // 데이터 확인
             setComments(response.data);
         } catch (error) {
             console.error("댓글 가져오기 실패:", error);
@@ -117,9 +118,13 @@ const PostDetail: React.FC = () => {
         }
     };
 
-    const [isReplyVisible, setIsReplyVisible] = useState(false);
-    const toggleReplyVisibility = () => {
-        setIsReplyVisible(!isReplyVisible);
+    //대댓글 토글 함수
+    const [isReplyVisible, setIsReplyVisible] = useState<{ [key: number]: boolean }>({});
+    const toggleReplyVisibility = (commentId: number) => {
+        setIsReplyVisible((prev) => ({
+            ...prev,
+            [commentId]: !prev[commentId], // 해당 댓글의 ID를 사용하여 토글
+        }));
     };
 
     const handleEdit = () => {
@@ -167,7 +172,7 @@ const PostDetail: React.FC = () => {
                     <div className="PostDetail_proImage">{/*<img src={catImage}/>*/}</div>
                     <div className="">
                         <div className="PostDetail_writer">{userName || "작성자"}</div>
-                        <div className="PostDetail_time">{time || "몇 분전"}</div>
+                        <div className="PostDetail_time">{formatDate(time) || "몇 분전"}</div>
                     </div>
                 </div>
 
@@ -199,26 +204,29 @@ const PostDetail: React.FC = () => {
                             <img src={myImage} alt="프로필" />
                         </div>
                         <div className="PostDetail_commwriter">{comment.memberId}</div>
-                        <div className="PostDetail_viewwrite" onClick={toggleReplyVisibility} ><FaRegComment /></div>
+                        <div className="PostDetail_viewwrite" onClick={() => toggleReplyVisibility(comment.commentId)} >
+                            <FaRegComment />
+                        </div>
                         <div className="PostDetail_heart"><FaRegHeart /></div>
                         <div className="PostDetail_adopt"><AiOutlineLike /></div> 
                     </div>
                     
                     <div className="PostDetail_content PostDetail_comm_cont">{comment.content}</div>
-                    <div className="PostDetail_time">{comment.createdAt}</div>
-                    {/* 대댓글 출력 영역 */}
-                    <div className="PostDetail_recomment">
-                        <div className="PostDetail_writer">
-                            <div className="PostDetail_commproImage">
-                                <img src={myImage} alt="프로필" />
+                    <div className="PostDetail_time">{formatDate(comment.createdAt)}</div>
+                    {/*대댓글 출력 영역*/}
+                    {comment.replies && comment.replies.map(reply => (
+                        <div className="PostDetail_recomment" key={reply.commentId}>
+                            <div className="PostDetail_writer">
+                                <div className="PostDetail_commproImage"> <img src={myImage} alt="프로필" /> </div>
+                                <div className="PostDetail_commwriter">{reply.memberId}</div>
                             </div>
-                            {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
-                            <div className="PostDetail_commwriter">{localStorage.getItem("userName") || "작성자"}</div> 
+                             <div className="PostDetail_content PostDetail_comm_cont">{reply.content}</div>
+                                <div className="PostDetail_time">{formatDate(reply.createdAt)}</div>
                         </div>
-                    </div>
+        ))}
 
                     {/*대댓글 숨기기/보여지기 */}
-                    {isReplyVisible && (
+                    {isReplyVisible[comment.commentId] && (
                         <div className="reply">
                             {/* 대댓글 작성 영역 */}
                             <div className="PostDetail_rerecomm">
