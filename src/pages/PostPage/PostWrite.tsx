@@ -1,7 +1,5 @@
-// PostWrite.js
-
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom"; // useLocation 추가
 import Header from "../Header";
 import Footer from "../Footer";
 import "../../assets/css/PostWrite.css";
@@ -12,6 +10,8 @@ function PostWrite() {
   const [content, setContent] = useState(""); // 내용
   const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지
   const navigate = useNavigate();
+  const location = useLocation(); // location 훅 사용하여 전달된 상태 가져오기
+  const boardId = location.state?.boardId || 2; // boardId를 location 상태에서 가져오고 기본값은 2로 설정
 
   // 로그인된 사용자 UserName을 localStorage에서 가져옴
   const userName = localStorage.getItem("userName");
@@ -36,7 +36,7 @@ function PostWrite() {
           title: title,
           content: content,
           userName: userName, // userName을 memberId로 사용
-          boardId: 2, // 자격증 정보 게시판의 ID를 추가
+          boardId: boardId, // 동적으로 boardId 설정
         },
         {
           headers: {
@@ -47,7 +47,7 @@ function PostWrite() {
 
       // 서버에서 성공 응답을 받으면 메인 페이지로 이동
       if (response.status === 200) {
-        navigate("/Certificate");
+        navigate("/Main");
       } else {
         setErrorMessage("게시물 작성에 실패했습니다.");
       }
@@ -93,7 +93,7 @@ function PostWrite() {
             </div>
           )}
           <div className="PostWrite_btns">
-            <button className="PostWrite_golist" onClick={() => (window.location.href = "/Certificate")}>목록</button>
+            <button className="PostWrite_golist" onClick={() => navigate("/Certificate")}>목록</button>
             <button className="post_button" type="submit">
               작성하기
             </button>
