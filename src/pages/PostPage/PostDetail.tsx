@@ -40,6 +40,8 @@ const PostDetail: React.FC = () => {
     const day = String(date.getDate()).padStart(2, "0");
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
   //버튼 클릭시 ref를 받아와 요소로 이동하는 스크롤 이벤트
   const onMoveBox = (ref: React.RefObject<HTMLInputElement>) => {
@@ -85,8 +87,16 @@ const PostDetail: React.FC = () => {
       return; // postId가 없으면 함수 종료
     }
 
-    // 수정된 시간은 현재 시간으로 설정
-    const updatedTime = new Date().toISOString(); // 현재 시간을 ISO 형식으로 가져오기
+    // 현재 시간을 한국 시간대로 변환
+    const updatedTime = new Date().toLocaleString("ko-KR", {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      hour12: false,
+    });
 
     navigate("/PostWrite", {
       state: {
@@ -97,6 +107,40 @@ const PostDetail: React.FC = () => {
         postId, // 게시물 ID 추가
       },
     });
+  };
+
+  // 게시물 삭제 함수
+  const handleDelete = async () => {
+    try {
+      const confirmDelete = window.confirm(
+        "정말로 이 게시물을 삭제하시겠습니까?"
+      );
+      if (!confirmDelete) return; // 사용자가 삭제를 취소하면 함수 종료
+
+      // 토큰 확인
+      const token = localStorage.getItem("token");
+      console.log("현재 토큰:", token);
+
+      // 게시물 삭제 요청
+      const response = await axios.delete(
+        `http://localhost:8080/api/posts/${state.postId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // 필요한 경우 Authorization 헤더 추가
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        alert("게시물이 삭제되었습니다.");
+        navigate("/Certificate"); // 삭제 후 목록으로 이동
+      } else {
+        alert("게시물 삭제에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("게시물 삭제 중 오류 발생:", error);
+      alert("게시물 삭제에 실패했습니다.");
+    }
   };
 
   // 댓글 추가하는 함수
@@ -174,7 +218,9 @@ const PostDetail: React.FC = () => {
               </div>
               <div className="">
                 <div className="PostDetail_writer">{userName || "작성자"}</div>
-                <div className="PostDetail_time">{time || "몇 분전"}</div>
+                <div className="PostDetail_time">
+                  {time ? formatDate(time) : "몇 분전"}
+                </div>
               </div>
             </div>
             {/*게시글 제목&내용 */}
@@ -184,6 +230,11 @@ const PostDetail: React.FC = () => {
             {/* 수정하기 버튼 추가 */}
             <button className="PostDetail_editButton" onClick={handleEdit}>
               수정하기
+            </button>
+
+            {/* 게시글 삭제 버튼 추가 */}
+            <button className="PostDetail_deleteButton" onClick={handleDelete}>
+              삭제하기
             </button>
 
             {/*게시글 좋아요,댓글 수, 스크랩 수 */}

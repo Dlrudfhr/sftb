@@ -15,6 +15,7 @@ interface Post {
   userName: string; // 사용자명
   content: string; // 내용
   createAt: string; // 생성 시간 (ISO 8601 형식)
+  updateAt: string;
 }
 
 const Certificate = () => {
