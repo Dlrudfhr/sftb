@@ -14,7 +14,9 @@ interface Comment {
     commentId: number;
     content: string;
     memberId: string;
+    userId: string;
     createdAt: string;
+    updatedAt : string;
     replies?: Comment[];
 }
 
@@ -27,6 +29,11 @@ const PostDetail: React.FC = () => {
     const [replyInput, setReplyInput] = useState<{ [key: number]: string }>({});
     const { postId } = useParams<{ postId: string }>();
     const commentElement = useRef<null | HTMLInputElement>(null); //스크롤 될 첫번째 위치요소
+
+    // 현재 로그인한 사용자 ID 가져오기
+    const getCurrentUserId = () => {
+        return localStorage.getItem("memberId"); // 로컬 스토리지에서 사용자 ID 가져오기
+    };
 
     // 시간을 포맷하는 함수
     const formatDate = (dateString: string) => {
@@ -78,13 +85,16 @@ const PostDetail: React.FC = () => {
         e.preventDefault();
         if (!commentInput) return;
         const userName = localStorage.getItem("userName"); // 로컬 스토리지에서 userName 가져오기
+        const userId = getCurrentUserId(); // 사용자 ID 가져오기
         console.log("Comment Input:", commentInput);
         console.log("Post ID:", postId);
         console.log("User Name:", userName);
+        console.log("UserID:", userId);
         try {
             await axios.post('/api/comments', { 
                 postId: postId, 
                 content: commentInput,
+                userId : userId,
                 memberId: userName
             });
             setCommentInput("");
@@ -100,6 +110,7 @@ const PostDetail: React.FC = () => {
         if (!replyInput[parentId]) return;
                 
         const userName = localStorage.getItem("userName"); // 사용자 이름 가져오기
+        const userId = getCurrentUserId(); // 사용자 ID 가져오기
         if (!userName) {
             console.error("User Name is null");
             return; // 사용자 이름이 없으면 함수 종료
@@ -109,6 +120,7 @@ const PostDetail: React.FC = () => {
                 postId, 
                 parentId, 
                 content: replyInput[parentId],
+                userId : userId, // 실제 사용자 ID 전송
                 memberId: userName // memberId에 사용자 이름 추가
             });
             setReplyInput({ ...replyInput, [parentId]: "" });
@@ -127,6 +139,7 @@ const PostDetail: React.FC = () => {
         }));
     };
 
+    //게시글 수정하는함수
     const handleEdit = () => {
         console.log("Editing post with ID:", postId); // ID 로그 확인
         if (!postId) {
@@ -145,7 +158,102 @@ const PostDetail: React.FC = () => {
             },
         });
     };
+    
+    // 댓글 수정하는 함수
+    const handleEditComment = async (commentId: number) => {
+        const newContent = prompt("수정할 댓글 내용을 입력하세요:");
+        if (newContent) {
+            try {
+             // 댓글 수정 API 호출
+                const response = await axios.put(`/api/comments/${commentId}`, 
+                { content: newContent }, 
+                { headers: { 'Content-Type': 'application/json' } } // 헤더 추가
+                );
 
+            // 수정된 댓글 객체를 가져오기
+                const updatedComment = response.data; // 서버에서 수정된 댓글 객체를 받아오는 경우
+                console.log(updatedComment);
+                setComments((prevComments) =>
+                prevComments.map((comment) =>
+                    comment.commentId === commentId
+                        ? { ...comment, 
+                            content: newContent,
+                            createdAt: updatedComment.createdAt,
+                            updatedAt: updatedComment.updatedAt } // 수정된 시간으로 업데이트
+                        : comment
+                )
+                );
+            fetchComments(); // 댓글 목록 갱신
+            } catch (error) {
+                console.error("댓글 수정 실패:", error);
+              }
+        }
+    };
+
+    // 댓글 삭제하는 함수
+    const handleDeleteComment = async (commentId: number) => {
+        const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
+        if (confirmDelete) {
+            try {
+                await axios.delete(`/api/comments/${commentId}`, 
+                    { headers: { 'Content-Type': 'application/json' } } // 헤더 추가
+                );
+            fetchComments(); // 댓글 목록 갱신
+            } catch (error) {
+                console.error("댓글 삭제 실패:", error);
+              }
+        }
+    };
+
+    // 대댓글 수정하는 함수
+    const handleEditReply = async (replyId: number) => {
+        const newContent = prompt("수정할 대댓글 내용을 입력하세요:");
+        if (newContent) {
+            try {
+                const response = await axios.put(`/api/comments/replies/${replyId}`, 
+                    { content: newContent }, 
+                    { headers: { 'Content-Type': 'application/json' } }
+                );
+    
+                const updatedReply = response.data; // 수정된 대댓글을 받아옴
+                setComments((prevComments) =>
+                    prevComments.map((comment) => ({
+                        ...comment,
+                        replies: comment.replies ? comment.replies.map((reply) =>
+                            reply.commentId === replyId
+                                ? { 
+                                    ...reply, 
+                                    content: updatedReply.content, 
+                                    createdAt: updatedReply.createdAt, 
+                                    updatedAt: updatedReply.updatedAt // 수정된 시간 반영
+                                  }
+                                : reply
+                        ) : [] // replies가 없을 경우 빈 배열로 대체
+                    }))
+                );
+    
+                fetchComments(); // 댓글 목록 갱신
+            } catch (error) {
+                console.error("대댓글 수정 실패:", error);
+            }
+        }
+    };
+    
+
+    // 대댓글 삭제하는 함수
+    const handleDeleteReply = async (replyId: number) => {
+        const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
+        if (confirmDelete) {
+            try {
+                await axios.delete(`/api/comments/replies/${replyId}`, 
+                    { headers: { 'Content-Type': 'application/json' } } // 헤더 추가
+                );
+            fetchComments(); // 댓글 목록 갱신
+            } catch (error) {
+                console.error("대댓글 삭제 실패:", error);
+              }
+        }
+    };
 
   
   useEffect(() => {
@@ -212,7 +320,13 @@ const PostDetail: React.FC = () => {
                     </div>
                     
                     <div className="PostDetail_content PostDetail_comm_cont">{comment.content}</div>
-                    <div className="PostDetail_time">{formatDate(comment.createdAt)}</div>
+                    <div className="PostDetail_time">{formatDate(comment.updatedAt || comment.createdAt)}</div>
+                    {comment.userId === getCurrentUserId() && ( // 사용자 ID로 비교
+                                <>
+                                    <button onClick={() => handleEditComment(comment.commentId)}>수정</button>
+                                    <button onClick={() => handleDeleteComment(comment.commentId)}>삭제</button>
+                                </>
+                            )}
                     {/*대댓글 출력 영역*/}
                     {comment.replies && comment.replies.map(reply => (
                         <div className="PostDetail_recomment" key={reply.commentId}>
@@ -221,7 +335,13 @@ const PostDetail: React.FC = () => {
                                 <div className="PostDetail_commwriter">{reply.memberId}</div>
                             </div>
                              <div className="PostDetail_content PostDetail_comm_cont">{reply.content}</div>
-                                <div className="PostDetail_time">{formatDate(reply.createdAt)}</div>
+                                <div className="PostDetail_time">{formatDate(reply.updatedAt || reply.createdAt)}</div>
+                                {reply.userId === getCurrentUserId() && ( // 사용자 ID로 비교
+                                        <>
+                                            <button onClick={() => handleEditReply(reply.commentId)}>수정</button>
+                                            <button onClick={() => handleDeleteReply(reply.commentId)}>삭제</button>
+                                        </>
+                                    )}
                         </div>
         ))}
 
