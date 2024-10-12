@@ -11,6 +11,8 @@ function PostWrite() {
   const [postId, setPostID] = useState(""); // 게시물 고유 번호
   const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지
   const navigate = useNavigate();
+  const location = useLocation(); // location 훅 사용하여 전달된 상태 가져오기
+  const boardId = location.state?.boardId || 2; // boardId를 location 상태에서 가져오고 기본값은 2로 설정
   const { state } = useLocation(); // 이전 페이지에서 전달된 상태
 
   // 로그인된 사용자 UserName을 localStorage에서 가져옴
@@ -49,7 +51,7 @@ function PostWrite() {
           {
             title: title,
             content: content,
-            boardId: 2,
+            boardId: boardId, // 동적으로 boardId 설정
             postId: state.postId,
           },
           {
@@ -83,7 +85,7 @@ function PostWrite() {
             title: title,
             content: content,
             userName: userName,
-            boardId: 2,
+            boardId: boardId, // 동적으로 boardId 설정
           },
           {
             headers: {

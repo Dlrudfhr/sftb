@@ -1,14 +1,12 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import Header from "../Header";
 import "../../assets/css/PostPage/PostDetail.css";
 import myImage from "../../assets/images/manggu.jpg";
-import {FaRegComment, FaRegHeart, FaRegBookmark, FaHeart,FaBookmark,} from "react-icons/fa";
+import { FaRegComment, FaRegHeart, FaRegBookmark, FaHeart, FaBookmark } from "react-icons/fa";
 import { FaPaperPlane } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import axios from "axios";
-
 
 interface Comment {
     commentId: number;
@@ -22,13 +20,14 @@ interface Comment {
 
 const PostDetail: React.FC = () => {
     const navigate = useNavigate();
-    const { state } = useLocation(); // Certificate에서 전달된 state를 받음
-    const { title, content, userName, time } = state || {}; // state가 없을 경우를 대비해 기본값 처리
+    const { state } = useLocation();
+    const { title, content, userName, time } = state || {};
+    const { postId } = useParams<{ postId: string }>();
+    
     const [comments, setComments] = useState<Comment[]>([]);
     const [commentInput, setCommentInput] = useState("");
     const [replyInput, setReplyInput] = useState<{ [key: number]: string }>({});
-    const { postId } = useParams<{ postId: string }>();
-    const commentElement = useRef<null | HTMLInputElement>(null); //스크롤 될 첫번째 위치요소
+    const commentElement = useRef<null | HTMLInputElement>(null);
 
     // 현재 로그인한 사용자 ID 가져오기
     const getCurrentUserId = () => {
@@ -39,48 +38,67 @@ const PostDetail: React.FC = () => {
     const formatDate = (dateString: string) => {
         const date = new Date(dateString);
         const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 +1
+        const month = String(date.getMonth() + 1).padStart(2, "0");
         const day = String(date.getDate()).padStart(2, "0");
         const hours = String(date.getHours()).padStart(2, "0");
         const minutes = String(date.getMinutes()).padStart(2, "0");
         return `${year}-${month}-${day} ${hours}:${minutes}`;
     };
+
     //버튼 클릭시 ref를 받아와 요소로 이동하는 스크롤 이벤트
     const onMoveBox = (ref: React.RefObject<HTMLInputElement>) => {
         ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
         ref.current?.focus();
     };
 
-    {/*하트 클릭 이벤트 */}
+    // 하트 상태 및 하트 수 상태 추가
     const [heart, setHeart] = useState(false);
-    const handleHeart = () => {
-        setHeart(!heart);
-    };
-    
-    {/*댓글 하트 클릭 이벤트 */}
-    const [comheart, setcomHeart] = useState(false);
-    const handlecomHeart = () => {
-        setcomHeart(!comheart);
-    }
+    const [heartCount, setHeartCount] = useState(0);
 
-    // 북마크 클릭 이벤트
+    useEffect(() => {
+        // 컴포넌트가 마운트될 때 하트 수를 가져옵니다.
+        const fetchHeartCount = async () => {
+            try {
+                const response = await axios.get(`/api/posts/${postId}/hearts`); // 하트 수를 가져오는 API 호출
+                setHeartCount(response.data.heartCount); // 응답에서 하트 수 설정
+            } catch (error) {
+                console.error("하트 수를 가져오는 데 실패했습니다.", error);
+            }
+        };
+
+        fetchHeartCount();
+    }, [postId]);
+
+    // 하트 클릭 이벤트
+    const handleHeart = async () => {
+        setHeart(!heart);
+        const newHeartCount = heart ? heartCount - 1 : heartCount + 1; // 하트 클릭 시 하트 수 업데이트
+
+        try {
+            await axios.post(`/api/posts/${postId}/hearts`, { heart: !heart }); // 하트 상태 업데이트 API 호출
+            setHeartCount(newHeartCount); // 상태 업데이트
+        } catch (error) {
+            console.error("하트 수를 업데이트하는 데 실패했습니다.", error);
+        }
+    };
+
+    // 북마크 상태
     const [bookmark, setBookmark] = useState(false);
     const handleBookmark = () => {
         setBookmark(!bookmark);
     };
-    
+
     // 댓글 가져오는 함수
     const fetchComments = async () => {
         try {
             const response = await axios.get(`/api/comments/${postId}`);
-            console.log(response.data); // 데이터 확인
             setComments(response.data);
         } catch (error) {
             console.error("댓글 가져오기 실패:", error);
         }
     };
-    
-    // 댓글 추가하는 함수
+
+    // 댓글 추가 함수
     const handleCommentSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         if (!commentInput) return;
@@ -104,7 +122,7 @@ const PostDetail: React.FC = () => {
         }
     };
 
-    // 대댓글 추가하는 함수
+    // 대댓글 추가 함수
     const handleReplySubmit = async (e: React.MouseEvent<HTMLButtonElement>, parentId: number) => {
         e.preventDefault();
         if (!replyInput[parentId]) return;
@@ -124,19 +142,16 @@ const PostDetail: React.FC = () => {
                 memberId: userName // memberId에 사용자 이름 추가
             });
             setReplyInput({ ...replyInput, [parentId]: "" });
-            fetchComments(); // 댓글 목록 갱신
+            fetchComments();
         } catch (error) {
             console.error("대댓글 추가 실패:", error);
         }
     };
 
-    //대댓글 토글 함수
+    // 대댓글 토글 함수
     const [isReplyVisible, setIsReplyVisible] = useState<{ [key: number]: boolean }>({});
     const toggleReplyVisibility = (commentId: number) => {
-        setIsReplyVisible((prev) => ({
-            ...prev,
-            [commentId]: !prev[commentId], // 해당 댓글의 ID를 사용하여 토글
-        }));
+        setIsReplyVisible((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
     };
 
     //게시글 수정하는함수
@@ -303,8 +318,8 @@ const PostDetail: React.FC = () => {
           
         </div>
 
-        {/*댓글 출력 영역 */}
-        <div className="PostDetail_commentbox">
+         {/*댓글 출력 영역 */}
+         <div className="PostDetail_commentbox">
             {comments.map(comment => (
                 <div className="PostDetail_comment" key={comment.commentId}>
                     <div className="PostDetail_writer">
@@ -372,7 +387,6 @@ const PostDetail: React.FC = () => {
             ))}
         </div>
         
-        
         {/* 댓글 작성 영역 */}
         <div className="PostDetail_commWritebox">
             <input
@@ -386,9 +400,8 @@ const PostDetail: React.FC = () => {
 
         {/* 게시판 목록 버튼 */}
         <div className="PostDetail_postlistbtn" onClick={() => navigate("/Certificate")}>글 목록</div>
-        
-    </div>
-    </>
+        </div>
+        </>
     );
 };
 
