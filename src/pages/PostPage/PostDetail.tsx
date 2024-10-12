@@ -383,6 +383,7 @@ const PostDetail: React.FC = () => {
               </div>
               <div className="PostDetail_totalscrap" onClick={handleBookmark}>
                 {bookmark ? <FaBookmark color="gold" /> : <FaRegBookmark />}
+                <span>{heartCount}</span> {/* 하트 수 표시 */}
               </div>
             </div>
           </div>
