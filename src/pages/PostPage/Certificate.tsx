@@ -15,6 +15,7 @@ interface Post {
   userName: string; // 사용자명
   content: string; // 내용
   createAt: string; // 생성 시간 (ISO 8601 형식)
+  updateAt: string;
 }
 
 const Certificate = () => {
@@ -31,7 +32,10 @@ const Certificate = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/posts");
+        // Board_ID가 2인 게시물만 가져오기
+        const response = await axios.get("http://localhost:8080/api/posts", {
+          params: { boardId: 2 } // 여기서 Board_ID를 쿼리 파라미터로 전달
+        });
         setPosts(response.data); // 게시물 데이터 상태에 저장
         setLoading(false); // 로딩 완료
       } catch (error) {
@@ -39,7 +43,6 @@ const Certificate = () => {
         setLoading(false);
       }
     };
-
     fetchPosts();
   }, []);
 
@@ -113,15 +116,13 @@ const Certificate = () => {
             </span>
           </div>
 
-          {/* 게시글 작성 페이지로 이동 */}
-          <div className="Certificate_write">
-            <button
-              type="submit"
-              className="Certificate_toWrite"
-              onClick={() => navigate("/PostWrite")}
-            >
-              작성하기
-            </button>
+           {/*게시글 작성 페이지로 이동 */}
+           <div className="Coding_write">
+          <Link to="/PostWrite" state={{ boardId: 2 }}>
+              <button type="submit" className="Coding_toWrite"
+               
+               >작성하기</button>
+            </Link>
           </div>
         </div>
 
@@ -142,6 +143,7 @@ const Certificate = () => {
                           content: post.content,
                           userName: post.userName,
                           time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
+                        
                         },
                       })
                     }

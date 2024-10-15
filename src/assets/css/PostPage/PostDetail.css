@@ -8,11 +8,6 @@
     margin-top:100px;
 }
 
-/*게시판 이름*/
-.post_title{
-    /* margin-top: 10px;
-    margin-bottom: 30px; */
-}
 
 /*게시판 이름 innerbox*/
 .PostDetail_titleinnerbox{
@@ -26,9 +21,11 @@
     display:flex;
     margin-bottom:15px;
     border-top:none;
+    border: solid 0.667px lightgray;
 }
+
 /**/
-.PostDetail_box, .postpage_title, .PostDetail_commentbox, .PostDetail_rerecomm, .PostDetail_commWritebox{
+.PostDetail_box, .postpage_title, .PostDetail_commentbox{
     border:solid 0.667px lightgray;
     
     /* background-color: lightblue; */
@@ -45,6 +42,11 @@
     border:solid 0.667px lightgray;
     border-top:none;
     font-size:16px;
+}
+
+/**/
+.PostDetail_comment{
+    padding:15px 30px;
 }
 
 /******************* 게시글 작성자, 제목, 내용, 좋아요, 스크랩 ********************/
@@ -136,24 +138,21 @@ img{
     align-content: center;
     width: 87%;
 }
+/*대댓글 작성칸 보기 버튼*/
+.PostDetail_viewwrite, .PostDetail_heart, .PostDetail_adopt{
+    cursor: pointer;
+    margin-right:10px;
+}
+/*댓글 좋아요 버튼*/
+.PostDetail_heart{
 
-/*게시글 댓글 작성 영역*/
-.PostDetail_commWrite{
-    width:100%;
-    padding: 15px 30px;
-    border:none; 
-    background-color: #f4f4f4;
+}
+/*채택 버튼*/
+.PostDetail_adopt{
+    
 }
 
-/**/
-.PostDetail_commWrite:focus{
-    outline: none;
-}
 
-
-/*게시글 대댓글*/
-.PostDetail_recomm{
-}
 
 /*게시글 댓글, 댓글 좋아요*/
 .PostDetail_recomm, .PostDetail_recommlike{
@@ -163,14 +162,36 @@ img{
     min-width: 50px;
     margin-left:30px;
 }
+/******************대댓글*******************/
 
+/*대댓글 출력 영역*/
+.PostDetail_recomment{
+    border:solid 0.667px lightgray;
+    height: 200px;
+    padding: 15px 30px;
+}
 /*게시글 대댓글*/
 .PostDetail_rerecomm{
-    border: solid 1.333px lightgray;
     border-top: none;
     background-color: #f4f4f4;
+    padding:15px 30px;
+    display: flex;
 }
 
+
+/*****************댓글 작성 영역*****************/
+
+/*게시글 댓글 작성 영역*/
+.PostDetail_commWrite{
+    width:100%;
+    padding: 15px 30px;
+    border:none; 
+    background-color: #f4f4f4;
+}
+/**/
+.PostDetail_commWrite:focus{
+    outline: none;
+}
 /************************************ button ***********************************/
 
 /*게시글 좋아요 버튼, 게시글 스크랩 버튼*/
@@ -210,3 +231,4 @@ img{
     font-weight:bold;
     margin-bottom: 50px;
 }
+

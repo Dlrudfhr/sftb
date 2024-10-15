@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Routes, Route, Link } from "react-router-dom";
-import { useParams, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, useParams } from "react-router-dom";
 import Header from "../Header";
 import "../../assets/css/PostPage/PostDetail.css";
 import myImage from "../../assets/images/manggu.jpg";
@@ -12,25 +11,29 @@ import {
   FaBookmark,
 } from "react-icons/fa";
 import { FaPaperPlane } from "react-icons/fa";
+import { AiOutlineLike } from "react-icons/ai";
 import axios from "axios";
 
 interface Comment {
   commentId: number;
   content: string;
   memberId: string;
+  userId: string;
   createdAt: string;
+  updatedAt: string;
   replies?: Comment[];
 }
 
 const PostDetail: React.FC = () => {
   const navigate = useNavigate();
-  const { state } = useLocation(); // Certificate에서 전달된 state를 받음
-  const { title, content, userName, time } = state || {}; // state가 없을 경우를 대비해 기본값 처리
+  const { state } = useLocation();
+  const { title, content, userName, time } = state || {};
+  const { postId } = useParams<{ postId: string }>();
+
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentInput, setCommentInput] = useState("");
   const [replyInput, setReplyInput] = useState<{ [key: number]: string }>({});
-  const { postId } = useParams<{ postId: string }>();
-  const commentElement = useRef<null | HTMLInputElement>(null); //스크롤 될 첫번째 위치요소
+  const commentElement = useRef<null | HTMLInputElement>(null);
 
   // 시간을 포맷하는 함수
   const formatDate = (dateString: string) => {
@@ -40,22 +43,96 @@ const PostDetail: React.FC = () => {
     const day = String(date.getDate()).padStart(2, "0");
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
   };
   //버튼 클릭시 ref를 받아와 요소로 이동하는 스크롤 이벤트
   const onMoveBox = (ref: React.RefObject<HTMLInputElement>) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     ref.current?.focus();
   };
-
-  {
-    /*하트 클릭 이벤트 */
-  }
-  const [heart, setHeart] = useState(false);
-  const handleHeart = () => {
-    setHeart(!heart);
+  // 현재 로그인한 사용자 ID 가져오기
+  const getCurrentUserId = () => {
+    return localStorage.getItem("memberId"); // 로컬 스토리지에서 사용자 ID 가져오기
   };
 
-  // 북마크 클릭 이벤트
+  // 하트 상태 및 하트 수 상태 추가
+  const [heart, setHeart] = useState(false);
+  const [heartCount, setHeartCount] = useState(0);
+
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 하트 수를 가져옵니다.
+    const fetchHeartCount = async () => {
+      try {
+        const response = await axios.get(`/api/posts/${postId}/hearts`); // 하트 수를 가져오는 API 호출
+        setHeartCount(response.data.heartCount); // 응답에서 하트 수 설정
+      } catch (error) {
+        console.error("하트 수를 가져오는 데 실패했습니다.", error);
+      }
+    };
+
+    fetchHeartCount();
+  }, [postId]);
+
+  // 현재 시간을 한국 시간대로 변환
+  const updatedTime = new Date().toLocaleString("ko-KR", {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit",
+    hour12: false,
+  });
+
+  // 하트 클릭 이벤트
+  const handleHeart = async () => {
+    setHeart(!heart);
+    const newHeartCount = heart ? heartCount - 1 : heartCount + 1; // 하트 클릭 시 하트 수 업데이트
+
+    try {
+      await axios.post(`/api/posts/${postId}/hearts`, { heart: !heart }); // 하트 상태 업데이트 API 호출
+      setHeartCount(newHeartCount); // 상태 업데이트
+    } catch (error) {
+      console.error("하트 수를 업데이트하는 데 실패했습니다.", error);
+    }
+  };
+
+  // 게시물 삭제 함수
+  const handleDelete = async () => {
+    try {
+      const confirmDelete = window.confirm(
+        "정말로 이 게시물을 삭제하시겠습니까?"
+      );
+      if (!confirmDelete) return; // 사용자가 삭제를 취소하면 함수 종료
+
+      // 토큰 확인
+      const token = localStorage.getItem("token");
+      console.log("현재 토큰:", token);
+
+      // 게시물 삭제 요청
+      const response = await axios.delete(
+        `http://localhost:8080/api/posts/${state.postId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`, // 필요한 경우 Authorization 헤더 추가
+          },
+        }
+      );
+
+      if (response.status === 200) {
+        alert("게시물이 삭제되었습니다.");
+        navigate("/Certificate"); // 삭제 후 목록으로 이동
+      } else {
+        alert("게시물 삭제에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("게시물 삭제 중 오류 발생:", error);
+      alert("게시물 삭제에 실패했습니다.");
+    }
+  };
+
+  // 북마크 상태
   const [bookmark, setBookmark] = useState(false);
   const handleBookmark = () => {
     setBookmark(!bookmark);
@@ -71,23 +148,78 @@ const PostDetail: React.FC = () => {
     }
   };
 
-  {
-    /*댓글 하트 클릭 이벤트 */
-  }
-  const [comheart, setcomHeart] = useState(false);
-  const handlecomHeart = () => {
-    setcomHeart(!comheart);
+  // 댓글 추가 함수
+  const handleCommentSubmit = async (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault();
+    if (!commentInput) return;
+    const userName = localStorage.getItem("userName"); // 로컬 스토리지에서 userName 가져오기
+    const userId = getCurrentUserId(); // 사용자 ID 가져오기
+    console.log("Comment Input:", commentInput);
+    console.log("Post ID:", postId);
+    console.log("User Name:", userName);
+    console.log("UserID:", userId);
+    try {
+      await axios.post("/api/comments", {
+        postId: postId,
+        content: commentInput,
+        userId: userId,
+        memberId: userName,
+      });
+      setCommentInput("");
+      fetchComments();
+    } catch (error) {
+      console.error("댓글 추가 실패:", error);
+    }
   };
+
+  // 대댓글 추가 함수
+  const handleReplySubmit = async (
+    e: React.MouseEvent<HTMLButtonElement>,
+    parentId: number
+  ) => {
+    e.preventDefault();
+    if (!replyInput[parentId]) return;
+
+    const userName = localStorage.getItem("userName"); // 사용자 이름 가져오기
+    const userId = getCurrentUserId(); // 사용자 ID 가져오기
+    if (!userName) {
+      console.error("User Name is null");
+      return; // 사용자 이름이 없으면 함수 종료
+    }
+    try {
+      await axios.post("/api/comments", {
+        postId,
+        parentId,
+        content: replyInput[parentId],
+        userId: userId, // 실제 사용자 ID 전송
+        memberId: userName, // memberId에 사용자 이름 추가
+      });
+      setReplyInput({ ...replyInput, [parentId]: "" });
+      fetchComments();
+    } catch (error) {
+      console.error("대댓글 추가 실패:", error);
+    }
+  };
+
+  // 대댓글 토글 함수
+  const [isReplyVisible, setIsReplyVisible] = useState<{
+    [key: number]: boolean;
+  }>({});
+  const toggleReplyVisibility = (commentId: number) => {
+    setIsReplyVisible((prev) => ({ ...prev, [commentId]: !prev[commentId] }));
+  };
+
+  //게시글 수정하는함수
   const handleEdit = () => {
     console.log("Editing post with ID:", postId); // ID 로그 확인
     if (!postId) {
       console.error("Post ID is undefined!");
       return; // postId가 없으면 함수 종료
     }
-
     // 수정된 시간은 현재 시간으로 설정
     const updatedTime = new Date().toISOString(); // 현재 시간을 ISO 형식으로 가져오기
-
     navigate("/PostWrite", {
       state: {
         title,
@@ -99,53 +231,106 @@ const PostDetail: React.FC = () => {
     });
   };
 
-  // 댓글 추가하는 함수
-  const handleCommentSubmit = async (
-    e: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    e.preventDefault();
-    if (!commentInput) return;
-    const userName = localStorage.getItem("userName"); // 로컬 스토리지에서 userName 가져오기
-    console.log("Comment Input:", commentInput);
-    console.log("Post ID:", postId);
-    console.log("User Name:", userName);
-    try {
-      await axios.post("/api/comments", {
-        postId: postId,
-        content: commentInput,
-        memberId: userName,
-      });
-      setCommentInput("");
-      fetchComments();
-    } catch (error) {
-      console.error("댓글 추가 실패:", error);
+  // 댓글 수정하는 함수
+  const handleEditComment = async (commentId: number) => {
+    const newContent = prompt("수정할 댓글 내용을 입력하세요:");
+    if (newContent) {
+      try {
+        // 댓글 수정 API 호출
+        const response = await axios.put(
+          `/api/comments/${commentId}`,
+          { content: newContent },
+          { headers: { "Content-Type": "application/json" } } // 헤더 추가
+        );
+
+        // 수정된 댓글 객체를 가져오기
+        const updatedComment = response.data; // 서버에서 수정된 댓글 객체를 받아오는 경우
+        console.log(updatedComment);
+        setComments((prevComments) =>
+          prevComments.map((comment) =>
+            comment.commentId === commentId
+              ? {
+                  ...comment,
+                  content: newContent,
+                  createdAt: updatedComment.createdAt,
+                  updatedAt: updatedComment.updatedAt,
+                } // 수정된 시간으로 업데이트
+              : comment
+          )
+        );
+        fetchComments(); // 댓글 목록 갱신
+      } catch (error) {
+        console.error("댓글 수정 실패:", error);
+      }
     }
   };
 
-  // 대댓글 추가하는 함수
-  const handleReplySubmit = async (
-    e: React.MouseEvent<HTMLButtonElement>,
-    parentId: number
-  ) => {
-    e.preventDefault();
-    if (!replyInput[parentId]) return;
-
-    const userName = localStorage.getItem("userName"); // 사용자 이름 가져오기
-    if (!userName) {
-      console.error("User Name is null");
-      return; // 사용자 이름이 없으면 함수 종료
+  // 댓글 삭제하는 함수
+  const handleDeleteComment = async (commentId: number) => {
+    const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
+    if (confirmDelete) {
+      try {
+        await axios.delete(
+          `/api/comments/${commentId}`,
+          { headers: { "Content-Type": "application/json" } } // 헤더 추가
+        );
+        fetchComments(); // 댓글 목록 갱신
+      } catch (error) {
+        console.error("댓글 삭제 실패:", error);
+      }
     }
-    try {
-      await axios.post("/api/comments", {
-        postId,
-        parentId,
-        content: replyInput[parentId],
-        memberId: userName, // memberId에 사용자 이름 추가
-      });
-      setReplyInput({ ...replyInput, [parentId]: "" });
-      fetchComments(); // 댓글 목록 갱신
-    } catch (error) {
-      console.error("대댓글 추가 실패:", error);
+  };
+
+  // 대댓글 수정하는 함수
+  const handleEditReply = async (replyId: number) => {
+    const newContent = prompt("수정할 대댓글 내용을 입력하세요:");
+    if (newContent) {
+      try {
+        const response = await axios.put(
+          `/api/comments/replies/${replyId}`,
+          { content: newContent },
+          { headers: { "Content-Type": "application/json" } }
+        );
+
+        const updatedReply = response.data; // 수정된 대댓글을 받아옴
+        setComments((prevComments) =>
+          prevComments.map((comment) => ({
+            ...comment,
+            replies: comment.replies
+              ? comment.replies.map((reply) =>
+                  reply.commentId === replyId
+                    ? {
+                        ...reply,
+                        content: updatedReply.content,
+                        createdAt: updatedReply.createdAt,
+                        updatedAt: updatedReply.updatedAt, // 수정된 시간 반영
+                      }
+                    : reply
+                )
+              : [], // replies가 없을 경우 빈 배열로 대체
+          }))
+        );
+
+        fetchComments(); // 댓글 목록 갱신
+      } catch (error) {
+        console.error("대댓글 수정 실패:", error);
+      }
+    }
+  };
+
+  // 대댓글 삭제하는 함수
+  const handleDeleteReply = async (replyId: number) => {
+    const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
+    if (confirmDelete) {
+      try {
+        await axios.delete(
+          `/api/comments/replies/${replyId}`,
+          { headers: { "Content-Type": "application/json" } } // 헤더 추가
+        );
+        fetchComments(); // 댓글 목록 갱신
+      } catch (error) {
+        console.error("대댓글 삭제 실패:", error);
+      }
     }
   };
 
@@ -164,6 +349,7 @@ const PostDetail: React.FC = () => {
         >
           <div className="PostDetail_titleinnerbox">자격증게시판</div>
         </h3>
+
         {/*게시글 출력 박스 */}
         <div className="PostDetail_box">
           <div className="PostDetail_innerbox">
@@ -174,17 +360,15 @@ const PostDetail: React.FC = () => {
               </div>
               <div className="">
                 <div className="PostDetail_writer">{userName || "작성자"}</div>
-                <div className="PostDetail_time">{time || "몇 분전"}</div>
+                <div className="PostDetail_time">
+                  {time ? formatDate(time) : "몇 분전"}
+                </div>
               </div>
             </div>
+
             {/*게시글 제목&내용 */}
             <div className="PostDetail_postTitle">{title || "제목"}</div>
             <div className="PostDetail_content">{content || "내용"}</div>
-
-            {/* 수정하기 버튼 추가 */}
-            <button className="PostDetail_editButton" onClick={handleEdit}>
-              수정하기
-            </button>
 
             {/*게시글 좋아요,댓글 수, 스크랩 수 */}
             <div className="PostDetail_total">
@@ -199,12 +383,23 @@ const PostDetail: React.FC = () => {
               </div>
               <div className="PostDetail_totalscrap" onClick={handleBookmark}>
                 {bookmark ? <FaBookmark color="gold" /> : <FaRegBookmark />}
+                <span>{heartCount}</span> {/* 하트 수 표시 */}
               </div>
             </div>
           </div>
+
+          {/* 수정하기 버튼 추가 */}
+          <button className="PostDetail_editButton" onClick={handleEdit}>
+            수정하기
+          </button>
+
+          {/* 게시글 삭제 버튼 추가 */}
+          <button className="PostDetail_deleteButton" onClick={handleDelete}>
+            삭제하기
+          </button>
         </div>
 
-        {/*게시글 댓글 출력 영역 */}
+        {/*댓글 출력 영역 */}
         <div className="PostDetail_commentbox">
           {comments.map((comment) => (
             <div className="PostDetail_comment" key={comment.commentId}>
@@ -213,43 +408,112 @@ const PostDetail: React.FC = () => {
                   <img src={myImage} alt="프로필" />
                 </div>
                 <div className="PostDetail_commwriter">{comment.memberId}</div>
+                <div
+                  className="PostDetail_viewwrite"
+                  onClick={() => toggleReplyVisibility(comment.commentId)}
+                >
+                  <FaRegComment />
+                </div>
+                <div className="PostDetail_heart">
+                  <FaRegHeart />
+                </div>
+                <div className="PostDetail_adopt">
+                  <AiOutlineLike />
+                </div>
               </div>
+
               <div className="PostDetail_content PostDetail_comm_cont">
                 {comment.content}
               </div>
-              <div className="PostDetail_time">{comment.createdAt}</div>
-
-              {/* 대댓글 출력 영역 */}
-              <div className="PostDetail_rerecomm">
-                <div className="PostDetail_writer">
-                  <div className="PostDetail_commproImage">
-                    <img src={myImage} alt="프로필" />
+              <div className="PostDetail_time">
+                {formatDate(comment.updatedAt || comment.createdAt)}
+              </div>
+              {comment.userId === getCurrentUserId() && ( // 사용자 ID로 비교
+                <>
+                  <button onClick={() => handleEditComment(comment.commentId)}>
+                    수정
+                  </button>
+                  <button
+                    onClick={() => handleDeleteComment(comment.commentId)}
+                  >
+                    삭제
+                  </button>
+                </>
+              )}
+              {/*대댓글 출력 영역*/}
+              {comment.replies &&
+                comment.replies.map((reply) => (
+                  <div className="PostDetail_recomment" key={reply.commentId}>
+                    <div className="PostDetail_writer">
+                      <div className="PostDetail_commproImage">
+                        {" "}
+                        <img src={myImage} alt="프로필" />{" "}
+                      </div>
+                      <div className="PostDetail_commwriter">
+                        {reply.memberId}
+                      </div>
+                    </div>
+                    <div className="PostDetail_content PostDetail_comm_cont">
+                      {reply.content}
+                    </div>
+                    <div className="PostDetail_time">
+                      {formatDate(reply.updatedAt || reply.createdAt)}
+                    </div>
+                    {reply.userId === getCurrentUserId() && ( // 사용자 ID로 비교
+                      <>
+                        <button
+                          onClick={() => handleEditReply(reply.commentId)}
+                        >
+                          수정
+                        </button>
+                        <button
+                          onClick={() => handleDeleteReply(reply.commentId)}
+                        >
+                          삭제
+                        </button>
+                      </>
+                    )}
                   </div>
-                  {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
-                  <div className="PostDetail_commwriter">
-                    {localStorage.getItem("userName") || "작성자"}
+                ))}
+
+              {/*대댓글 숨기기/보여지기 */}
+              {isReplyVisible[comment.commentId] && (
+                <div className="reply">
+                  {/* 대댓글 작성 영역 */}
+                  <div className="PostDetail_rerecomm">
+                    <div className="PostDetail_writer">
+                      <div className="PostDetail_commproImage">
+                        <img src={myImage} alt="프로필" />
+                      </div>
+                      {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
+                      <div className="PostDetail_commwriter">
+                        {localStorage.getItem("userName") || "작성자"}
+                      </div>
+                    </div>
+
+                    <input
+                      className="PostDetail_commWrite"
+                      placeholder="대댓글을 입력하세요."
+                      value={replyInput[comment.commentId] || ""}
+                      onChange={(e) =>
+                        setReplyInput({
+                          ...replyInput,
+                          [comment.commentId]: e.target.value,
+                        })
+                      }
+                    />
+                    <button
+                      onClick={(e) => handleReplySubmit(e, comment.commentId)}
+                    >
+                      작성
+                    </button>
                   </div>
                 </div>
-                <input
-                  className="PostDetail_commWrite"
-                  placeholder="대댓글을 입력하세요."
-                  value={replyInput[comment.commentId] || ""}
-                  onChange={(e) =>
-                    setReplyInput({
-                      ...replyInput,
-                      [comment.commentId]: e.target.value,
-                    })
-                  }
-                />
-                <button
-                  onClick={(e) => handleReplySubmit(e, comment.commentId)}
-                >
-                  작성
-                </button>
-              </div>
+              )}
             </div>
           ))}
         </div>
+
         {/* 댓글 작성 영역 */}
         <div className="PostDetail_commWritebox">
           <input
@@ -259,9 +523,10 @@ const PostDetail: React.FC = () => {
             onChange={(e) => setCommentInput(e.target.value)}
           />
           <button className="PostDetail_button" onClick={handleCommentSubmit}>
-            작성
+            <FaPaperPlane />
           </button>
         </div>
+
         {/* 게시판 목록 버튼 */}
         <div
           className="PostDetail_postlistbtn"
