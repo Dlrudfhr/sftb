@@ -21,6 +21,7 @@ interface Comment {
   userId: string;
   createdAt: string;
   updatedAt: string;
+  adopt: boolean; // 채택 여부를 나타내는 속성
   replies?: Comment[];
 }
 
@@ -29,7 +30,7 @@ const PostDetail: React.FC = () => {
   const { state } = useLocation();
   const { title, content, userName, time } = state || {};
   const { postId } = useParams<{ postId: string }>();
-
+  const [hasAdoptedComment, setHasAdoptedComment] = useState(false); // 상태 추가
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentInput, setCommentInput] = useState("");
   const [replyInput, setReplyInput] = useState<{ [key: number]: string }>({});
@@ -141,8 +142,16 @@ const PostDetail: React.FC = () => {
   // 댓글 가져오는 함수
   const fetchComments = async () => {
     try {
-      const response = await axios.get(`/api/comments/${postId}`);
-      setComments(response.data);
+      const response = await axios.get<Comment[]>(`/api/comments/${postId}`);
+  
+      // 댓글 데이터에서 Adopt 값을 초기화
+      const commentsWithAdoptedStatus = response.data.map((comment) => ({
+        ...comment,
+        adopt: comment.adopt || false, // 기본값 설정
+      }));
+  
+      setComments(commentsWithAdoptedStatus);
+      setHasAdoptedComment(commentsWithAdoptedStatus.some(comment => comment.adopt)); // 채택된 댓글 존재 여부 설정
     } catch (error) {
       console.error("댓글 가져오기 실패:", error);
     }
@@ -334,6 +343,45 @@ const PostDetail: React.FC = () => {
     }
   };
 
+  //댓글 채택 함수
+  const handleAdoptComment = async (commentId: number) => {
+    // 댓글 목록에서 해당 댓글 찾기
+    const adoptedComment = comments.find(comment => comment.commentId === commentId);
+    const tierExperience = 10; // 부여할 티어 경험치 값
+    if (!adoptedComment) {
+      alert("사용자 ID를 찾을 수 없습니다."); // 사용자 ID가 비어있는 경우 경고
+      return; // 함수 종료
+    }
+    const commentAuthorId = adoptedComment.userId;
+    try {
+      // 댓글 채택 API 호출
+      const response = await axios.post(`/api/comments/${commentId}/adopt`, {
+        userId : commentAuthorId,
+        tierExperience,
+        postId,
+      });
+
+      if (response.status === 200) {
+        console.log(comments); // comments 배열 확인
+        alert("댓글이 채택되었습니다!");
+        const updatedComment = response.data; // 업데이트된 댓글 정보를 가져옴
+        //댓글목록 상태 업데이트
+        setComments((prevComments) =>
+          prevComments.map(comment =>
+              comment.commentId === updatedComment.commentId ? updatedComment : comment
+          )
+        );
+        
+        fetchComments(); // 댓글 목록 갱신  
+      } else {
+        alert("댓글 채택에 실패했습니다.");
+      }
+    } catch (error) {
+      console.error("댓글 채택 중 오류 발생:", error);
+      alert("댓글 채택 중 오류가 발생했습니다.");
+    }
+  };
+
   useEffect(() => {
     fetchComments();
   }, [postId]);
@@ -374,6 +422,7 @@ const PostDetail: React.FC = () => {
             <div className="PostDetail_total">
               <div className="PostDetail_totallike" onClick={handleHeart}>
                 {heart ? <FaHeart color="red" /> : <FaRegHeart />}
+                <span>{heartCount}</span> {/* 하트 수 표시 */}
               </div>
               <div
                 className="PostDetail_totalcomm"
@@ -383,7 +432,6 @@ const PostDetail: React.FC = () => {
               </div>
               <div className="PostDetail_totalscrap" onClick={handleBookmark}>
                 {bookmark ? <FaBookmark color="gold" /> : <FaRegBookmark />}
-                <span>{heartCount}</span> {/* 하트 수 표시 */}
               </div>
             </div>
           </div>
@@ -399,9 +447,41 @@ const PostDetail: React.FC = () => {
           </button>
         </div>
 
+          {/* 채택된 댓글 출력 */}
+          <div className="PostDetail_commentbox">
+            {comments.filter(comment => comment.adopt).map((comment) => (
+              <div className="PostDetail_comment" key={comment.commentId}>
+                <div className="PostDetail_writer">
+                  <div className="PostDetail_commproImage">
+                    <img src={myImage} alt="프로필" />
+                  </div>
+                  <div className="PostDetail_commwriter">{comment.memberId}</div>
+                </div>
+                <div className="PostDetail_content PostDetail_comm_cont adopted">
+                  채택된 댓글입니다 : {comment.content}
+                </div>
+                <div className="PostDetail_time">
+                  {formatDate(comment.updatedAt || comment.createdAt)}
+                </div>
+                {/* 채택된 댓글에 대해 수정 및 삭제 버튼 추가 (필요시) */}
+                {comment.userId === getCurrentUserId() && (
+                  <>
+                    <button onClick={() => handleEditComment(comment.commentId)}>
+                      수정
+                    </button>
+                    <button onClick={() => handleDeleteComment(comment.commentId)}>
+                      삭제
+                    </button>
+                  </>
+                )}
+              </div>
+            ))}
+          </div>
+        
+        
         {/*댓글 출력 영역 */}
         <div className="PostDetail_commentbox">
-          {comments.map((comment) => (
+        {comments.map((comment) => (
             <div className="PostDetail_comment" key={comment.commentId}>
               <div className="PostDetail_writer">
                 <div className="PostDetail_commproImage">
@@ -417,13 +497,17 @@ const PostDetail: React.FC = () => {
                 <div className="PostDetail_heart">
                   <FaRegHeart />
                 </div>
-                <div className="PostDetail_adopt">
-                  <AiOutlineLike />
-                </div>
+                {/* 댓글 채택 버튼 조건, 여기서는 게시글 작성자와 로그인된 사용자의 이름을 비교하고있어서
+                 게시글작성시 UserID넘어가게 완성되면 userName(이름)이아니라 UserID(아이디)로 비교하게 getCurrentUserId() === postAuthorId 이걸로 바꿔야함*/}
+                {userName === localStorage.getItem("userName") && !comment.adopt && comment.userId !== getCurrentUserId() && !hasAdoptedComment && (
+                  <div className="PostDetail_adopt" onClick={() => handleAdoptComment(comment.commentId)}>
+                    <AiOutlineLike />
+                  </div>
+                )}
               </div>
 
-              <div className="PostDetail_content PostDetail_comm_cont">
-                {comment.content}
+              <div className={`PostDetail_content PostDetail_comm_cont ${comment.adopt ? 'adopted' : ''}`}>
+                  {comment.content}
               </div>
               <div className="PostDetail_time">
                 {formatDate(comment.updatedAt || comment.createdAt)}
@@ -452,6 +536,13 @@ const PostDetail: React.FC = () => {
                       <div className="PostDetail_commwriter">
                         {reply.memberId}
                       </div>
+                      {/* 대댓글 채택 버튼 조건, 여기서는 게시글 작성자와 로그인된 사용자의 이름을 비교하고있어서
+                      게시글작성시 UserID넘어가게 완성되면 userName(이름)이아니라 UserID(아이디)로 비교하게 getCurrentUserId() === postAuthorId 이걸로 바꿔야함 */}
+                      {userName === localStorage.getItem("userName") && !reply.adopt && reply.userId !== getCurrentUserId() && !hasAdoptedComment && (
+                        <div className="PostDetail_adopt" onClick={() => handleAdoptComment(reply.commentId)}>
+                          <AiOutlineLike />
+                        </div>
+                      )}
                     </div>
                     <div className="PostDetail_content PostDetail_comm_cont">
                       {reply.content}
