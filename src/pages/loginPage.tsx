@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import CongratulationsModal from "../pages/CongratulatoryModal"; // 모달 컴포넌트 가져오기
 import "../assets/css/loginPage.css";
 import PTU from "../assets/images/PTU.png";
 import logo from "../assets/images/rogo.png";
@@ -9,6 +10,7 @@ function LoginPage() {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태 추가
   const navigate = useNavigate();
 
   const handleMainClick = async (event: React.FormEvent) => {
@@ -29,12 +31,21 @@ function LoginPage() {
         }
       );
 
+      // 로그인 성공 여부 및 신규 회원 확인
       if (response.status === 200 && response.data.userID) {
+        const { userID, userName, newMember } = response.data; // 필요한 값들을 구조 분해 할당으로 가져옴
         sessionStorage.setItem("authenticated", "true");
-        localStorage.setItem("memberId", response.data.userID); // userID를 localStorage에 저장
-        localStorage.setItem("userName", response.data.userName); // userName을 localStorage에 저장
-        localStorage.setItem("token", response.data.token); // 토큰을 localStorage에 저장
-        navigate("/Main");
+        localStorage.setItem("memberId", userID); // userID를 localStorage에 저장
+        localStorage.setItem("userName", userName); // userName을 localStorage에 저장
+        
+        const isNewMember = response.data.newMember; // API로부터 신규 회원 여부 가져오기
+        sessionStorage.setItem("isNewMember", newMember.toString()); // 신규 회원 여부를 세션 스토리지에 저장
+        
+        if (isNewMember) {
+          setIsModalOpen(true); // 신규 회원이면 모달 열기
+        } else {
+          navigate("/Main"); // 신규 회원이 아닐 경우 메인 페이지로 이동
+        }
       }
     } catch (error) {
       setErrorMessage("아이디 또는 비밀번호가 일치하지 않습니다.");
@@ -51,6 +62,11 @@ function LoginPage() {
 
   const handleSearchPwClick = () => {
     navigate("/SearchPwPage"); // 비밀번호 찾기 페이지로 이동
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false); // 모달 닫기
+    navigate("/Main"); // 메인 페이지로 이동
   };
 
   return (
@@ -134,6 +150,8 @@ function LoginPage() {
           </form>
         </div>
       </div>
+      
+      <CongratulationsModal isOpen={isModalOpen} onClose={closeModal} /> {/* 모달 컴포넌트 추가 */}
     </>
   );
 }
