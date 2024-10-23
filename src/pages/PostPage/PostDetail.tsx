@@ -194,19 +194,26 @@ const PostDetail: React.FC = () => {
     if (!commentInput) return;
     const userName = localStorage.getItem("userName"); // 로컬 스토리지에서 userName 가져오기
     const userId = getCurrentUserId(); // 사용자 ID 가져오기
+    const userLevelExperience = 10; // 부여할 레벨 경험치 값
     console.log("Comment Input:", commentInput);
     console.log("Post ID:", postId);
     console.log("User Name:", userName);
     console.log("UserID:", userId);
     try {
-      await axios.post("/api/comments", {
+      const commentResponse = await axios.post("/api/comments", {
         postId: postId,
         content: commentInput,
         userId: userId,
         memberId: userName,
       });
-      setCommentInput("");
-      fetchComments();
+      if (commentResponse.status === 200) {
+        await axios.put(`/api/auth/experience`, {
+          userId: userId,
+          userLevelExperience,
+        });
+        setCommentInput("");
+        fetchComments();
+      }
     } catch (error) {
       console.error("댓글 추가 실패:", error);
     }
@@ -222,20 +229,28 @@ const PostDetail: React.FC = () => {
 
     const userName = localStorage.getItem("userName"); // 사용자 이름 가져오기
     const userId = getCurrentUserId(); // 사용자 ID 가져오기
+    const userLevelExperience = 10; // 부여할 레벨 경험치 값
     if (!userName) {
       console.error("User Name is null");
       return; // 사용자 이름이 없으면 함수 종료
     }
     try {
-      await axios.post("/api/comments", {
+      const replyResponse = await axios.post("/api/comments", {
         postId,
         parentId,
         content: replyInput[parentId],
         userId: userId, // 실제 사용자 ID 전송
         memberId: userName, // memberId에 사용자 이름 추가
       });
+      // 대댓글 추가가 성공한 경우에만 경험치 추가 요청
+      if (replyResponse.status === 200) {
+      await axios.put(`/api/auth/experience`, {
+        userId: userId,
+        userLevelExperience,
+      });
       setReplyInput({ ...replyInput, [parentId]: "" });
       fetchComments();
+    }
     } catch (error) {
       console.error("대댓글 추가 실패:", error);
     }
@@ -306,13 +321,22 @@ const PostDetail: React.FC = () => {
   // 댓글 삭제하는 함수
   const handleDeleteComment = async (commentId: number) => {
     const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
+    const userId = getCurrentUserId(); // 사용자 ID 가져오기
+    const userLevelExperience = -10; // 부여할 레벨 경험치 값
     if (confirmDelete) {
       try {
-        await axios.delete(
+        const deleteResponse = await axios.delete(
           `/api/comments/${commentId}`,
           { headers: { "Content-Type": "application/json" } } // 헤더 추가
         );
-        fetchComments(); // 댓글 목록 갱신
+        // 댓글 삭제가 성공한 경우에만 경험치 차감 요청
+        if (deleteResponse.status === 200) {
+          await axios.put(`/api/auth/experience`, {
+            userId: userId,
+            userLevelExperience,
+          });
+          fetchComments(); // 댓글 목록 갱신
+        }
       } catch (error) {
         console.error("댓글 삭제 실패:", error);
       }
@@ -359,13 +383,22 @@ const PostDetail: React.FC = () => {
   // 대댓글 삭제하는 함수
   const handleDeleteReply = async (replyId: number) => {
     const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
+    const userId = getCurrentUserId(); // 사용자 ID 가져오기
+    const userLevelExperience = -10; // 부여할 티어 경험치 값
     if (confirmDelete) {
       try {
-        await axios.delete(
+        const deleteResponse = await axios.delete(
           `/api/comments/replies/${replyId}`,
           { headers: { "Content-Type": "application/json" } } // 헤더 추가
         );
+        // 대댓글 삭제가 성공한 경우에만 경험치 차감 요청
+      if (deleteResponse.status === 200) {
+        await axios.put(`/api/auth/experience`, {
+          userId: userId,
+          userLevelExperience,
+        });
         fetchComments(); // 댓글 목록 갱신
+      }
       } catch (error) {
         console.error("대댓글 삭제 실패:", error);
       }
@@ -378,7 +411,7 @@ const PostDetail: React.FC = () => {
     ? comments.flatMap(comment => comment.replies || []).find(reply => reply.commentId === commentId) // replies가 undefined일 경우 빈 배열로 대체
       : comments.find(comment => comment.commentId === commentId);
     
-    const tierExperience = 100; // 부여할 티어 경험치 값
+    const tierExperience = 10; // 부여할 티어 경험치 값
     if (!adoptedComment) {
       alert("댓글을 찾을 수 없습니다.");
       return;
