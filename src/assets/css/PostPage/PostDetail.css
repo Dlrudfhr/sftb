@@ -232,3 +232,10 @@ img{
     margin-bottom: 50px;
 }
 
+/* 채택된 댓글 표시하는 영역 */
+.PostDetail_adopted_comments {
+    margin-top: 20px; /* 적절한 여백 */
+    padding: 10px;
+    border: 1px solid #ccc; /* 경계선 추가 */
+    background-color: #f9f9f9; /* 배경색 추가 */
+  }
