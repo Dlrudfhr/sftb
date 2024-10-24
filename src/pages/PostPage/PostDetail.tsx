@@ -7,6 +7,7 @@ import myImage from "../../assets/images/manggu.jpg";
 import {FaRegComment, FaRegHeart, FaRegBookmark, FaHeart,FaBookmark,} from "react-icons/fa";
 import { FaPaperPlane } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
+import { FiMoreHorizontal } from "react-icons/fi";
 import axios from "axios";
 
 
@@ -27,6 +28,7 @@ const PostDetail: React.FC = () => {
     const [replyInput, setReplyInput] = useState<{ [key: number]: string }>({});
     const { postId } = useParams<{ postId: string }>();
     const commentElement = useRef<null | HTMLInputElement>(null); //스크롤 될 첫번째 위치요소
+    const [showDropdown, setShowDropdown] = useState(false);
 
     // 시간을 포맷하는 함수
     const formatDate = (dateString: string) => {
@@ -38,6 +40,11 @@ const PostDetail: React.FC = () => {
         const minutes = String(date.getMinutes()).padStart(2, "0");
         return `${year}-${month}-${day} ${hours}:${minutes}`;
     };
+
+    const handleMoreClick = () => {
+        setShowDropdown(!showDropdown);
+    }
+
     //버튼 클릭시 ref를 받아와 요소로 이동하는 스크롤 이벤트
     const onMoveBox = (ref: React.RefObject<HTMLInputElement>) => {
         ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -170,9 +177,21 @@ const PostDetail: React.FC = () => {
                 {/*게시글 작성자 */}
                 <div className="PostDetail_profile">
                     <div className="PostDetail_proImage">{/*<img src={catImage}/>*/}</div>
-                    <div className="">
+                    <div className="PostDetail_middle">
                         <div className="PostDetail_writer">{userName || "작성자"}</div>
                         <div className="PostDetail_time">{formatDate(time) || "몇 분전"}</div>
+                    </div>
+                    <div className="PostDetail_more">
+                        <div  onClick={handleMoreClick}><FiMoreHorizontal /></div>
+                        {showDropdown && (
+                            <ul className="PostDetail_dropdown">
+                                {/* 수정하기 버튼 추가 */}
+                                <li className="PostDetail_editButton" onClick={handleEdit}>
+                                수정하기
+                                </li>
+                                <li>삭제하기</li>
+                            </ul>
+                        )}
                     </div>
                 </div>
 
@@ -186,12 +205,10 @@ const PostDetail: React.FC = () => {
                     <div className="PostDetail_totalcomm" onClick={() => onMoveBox(commentElement)}><FaRegComment /></div>
                     <div className="PostDetail_totalscrap" onClick={handleBookmark}>{bookmark ? (<FaBookmark color="gold" />) : (<FaRegBookmark />)}</div>
                 </div>
+                
             </div>
+                    
 
-            {/* 수정하기 버튼 추가 */}
-            <button className="PostDetail_editButton" onClick={handleEdit}>
-              수정하기
-            </button>
           
         </div>
 
@@ -204,11 +221,14 @@ const PostDetail: React.FC = () => {
                             <img src={myImage} alt="프로필" />
                         </div>
                         <div className="PostDetail_commwriter">{comment.memberId}</div>
-                        <div className="PostDetail_viewwrite" onClick={() => toggleReplyVisibility(comment.commentId)} >
-                            <FaRegComment />
+                        <div className="PostDetail_postwriter">작성자</div>
+                        <div className="PostDetail_combtn">
+                            <div className="PostDetail_viewwrite" onClick={() => toggleReplyVisibility(comment.commentId)} >
+                                <FaRegComment />
+                            </div>
+                            <div className="PostDetail_heart"><FaRegHeart /></div>
+                            <div className="PostDetail_adopt"><AiOutlineLike /></div> 
                         </div>
-                        <div className="PostDetail_heart"><FaRegHeart /></div>
-                        <div className="PostDetail_adopt"><AiOutlineLike /></div> 
                     </div>
                     
                     <div className="PostDetail_content PostDetail_comm_cont">{comment.content}</div>
@@ -219,6 +239,12 @@ const PostDetail: React.FC = () => {
                             <div className="PostDetail_writer">
                                 <div className="PostDetail_commproImage"> <img src={myImage} alt="프로필" /> </div>
                                 <div className="PostDetail_commwriter">{reply.memberId}</div>
+                                <div className="PostDetail_postwriter">작성자</div>
+                                <div className="PostDetail_combtn">
+                                    
+                                    <div className="PostDetail_heart"><FaRegHeart /></div>
+                                    <div className="PostDetail_adopt"><AiOutlineLike /></div> 
+                                </div>
                             </div>
                              <div className="PostDetail_content PostDetail_comm_cont">{reply.content}</div>
                                 <div className="PostDetail_time">{formatDate(reply.createdAt)}</div>
@@ -244,7 +270,7 @@ const PostDetail: React.FC = () => {
                                         value={replyInput[comment.commentId] || ""}
                                         onChange={(e) => setReplyInput({ ...replyInput, [comment.commentId]: e.target.value })}
                                 />
-                                <button onClick={(e) => handleReplySubmit(e, comment.commentId)}>작성</button>
+                                <button className="PostDetail_button" onClick={(e) => handleReplySubmit(e, comment.commentId)}><FaPaperPlane /></button>
                             </div>       
                         </div>
                     )}
@@ -268,6 +294,8 @@ const PostDetail: React.FC = () => {
         <div className="PostDetail_postlistbtn" onClick={() => navigate("/Certificate")}>글 목록</div>
         
     </div>
+
+    
     </>
     );
 };
