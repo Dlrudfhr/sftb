@@ -11,6 +11,8 @@ function PostWrite() {
   const [postId, setPostID] = useState(""); // 게시물 고유 번호
   const [errorMessage, setErrorMessage] = useState(""); // 에러 메시지
   const navigate = useNavigate();
+  const location = useLocation(); // location 훅 사용하여 전달된 상태 가져오기
+  const boardId = location.state?.boardId || 2; // boardId를 location 상태에서 가져오고 기본값은 2로 설정
   const { state } = useLocation(); // 이전 페이지에서 전달된 상태
 
   // 로그인된 사용자 UserName을 localStorage에서 가져옴
@@ -41,6 +43,17 @@ function PostWrite() {
         return;
       }
 
+      // 현재 시간을 한국 시간대로 변환
+      const updatedTime = new Date().toLocaleString("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      });
+
       // 수정하는 경우 ID가 있을 때 PUT 요청
       if (state && state.postId) {
         console.log("Updating post with ID:", state.postId); // ID 확인
@@ -49,7 +62,7 @@ function PostWrite() {
           {
             title: title,
             content: content,
-            boardId: 2,
+            boardId: boardId, // 동적으로 boardId 설정
             postId: state.postId,
           },
           {
@@ -68,7 +81,7 @@ function PostWrite() {
               title: title,
               content: content,
               userName: userName,
-              time: new Date().toISOString(), // 수정 시간을 현재 시간으로 설정
+              time: updatedTime, // 수정 시간을 현재 시간으로 설정
               postId: state.postId, // 게시물 ID 추가
             },
           });
@@ -83,7 +96,8 @@ function PostWrite() {
             title: title,
             content: content,
             userName: userName,
-            boardId: 2,
+            time: updatedTime, // 작성 시간을 한국 시간으로 설정
+            boardId: boardId, // 동적으로 boardId 설정
           },
           {
             headers: {

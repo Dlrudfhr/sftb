@@ -5,17 +5,42 @@ import ConfirmLogoutModal from "./ConfirmLogoutModal";
 import axios from "axios";
 
 interface ProgressBarProps {
-  progress: number;
   icon: string;
 }
 
-const ProgressBar: React.FC<ProgressBarProps> = ({ progress, icon }) => {
+const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
+  const [progress, setProgress] = useState(0); // 첫 번째 게이지에 반영될 경험치 상태
+  const [tierProgress, setTierProgress] = useState(0); // 두 번째 게이지를 위한 상태
+  const [totalExperience, setTotalExperience] = useState(100); // 총 경험치 (예: 100)
   const [expanded, setExpanded] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (progress / 100) * circumference;
-  const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const offset = circumference - (progress / totalExperience) * circumference;
+
+  // 로그인한 사용자 ID를 localStorage에서 가져옴
+  const userId = localStorage.getItem("memberId");
+
+  // 경험치 데이터를 API로 가져옴
+  useEffect(() => {
+    const fetchExperience = async () => {
+      try {
+        if (userId) {
+          const response = await axios.get(
+            `http://localhost:8080/api/auth/users/${userId}/experience`
+          );
+          setProgress(response.data.experiencePoints); // 첫 번째 게이지에 경험치 반영
+          setTierProgress(50); // 두 번째 게이지는 예시로 50% 설정
+          setTotalExperience(100); // 총 경험치 설정 (예: 100)
+        }
+      } catch (error) {
+        console.error("경험치 데이터를 가져오는 중 오류 발생:", error);
+      }
+    };
+    fetchExperience();
+  }, [userId]);
 
   useEffect(() => {
     document.documentElement.style.setProperty("--offset", `${offset}`);
@@ -30,46 +55,37 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress, icon }) => {
   };
 
   const handleLogout = () => {
-    setIsModalOpen(true); // 모달 열기
+    setIsModalOpen(true); // 로그아웃 모달 열기
   };
 
   const handleConfirmLogout = async () => {
     try {
-      // 로그아웃 요청을 서버로 보냄 (POST 요청)
       const response = await axios.post(
         "http://localhost:8080/api/auth/logout",
         {},
-        {
-          withCredentials: true,
-        }
+        { withCredentials: true }
       );
       if (response.status === 200) {
-        // 로그아웃이 성공적으로 처리되면 리다이렉트
         sessionStorage.removeItem("authToken");
         sessionStorage.removeItem("authenticated");
+        localStorage.removeItem("memberId"); // 로그아웃 시 사용자 ID 제거
         setIsModalOpen(false);
         navigate("/");
-      } else {
-        console.error("로그아웃 실패:", response);
       }
     } catch (error) {
       console.error("로그아웃 중 오류 발생:", error);
     }
   };
+
   const handleCancelLogout = () => {
-    setIsModalOpen(false); // 모달 닫기
+    setIsModalOpen(false); // 로그아웃 모달 닫기
   };
 
   return (
     <div className="ProgressBar__container">
       {!expanded && (
         <svg className="ProgressBar__svg">
-          <circle
-            className="ProgressBar__circleBg"
-            r={radius}
-            cx="60"
-            cy="60"
-          />
+          <circle className="ProgressBar__circleBg" r={radius} cx="60" cy="60" />
           <circle
             className="ProgressBar__circle"
             r={radius}
@@ -110,20 +126,30 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ progress, icon }) => {
               </li>
             </ul>
           </div>
-          <div className="ProgressBar__expandedProgress">
-            <div className="ProgressBar__progressBg">
-              <div
-                className="ProgressBar__progressFill"
-                style={{ width: `${progress}%` }}
+        <div className="ProgressBar__expandedProgress">
+               {/* 첫 번째 게이지 - 경험치 */}
+          <div className="ProgressBar__progressBg">
+          <div
+              className="ProgressBar__progressFill"
+              style={{ width: `${progress}%` }} // 첫 번째 게이지 - 사용자 경험치
               />
-            </div>
-            <div className="ProgressBar__progressBg">
-              <div
-                className="ProgressBar__progressFill"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
           </div>
+           <div className="ProgressBar__labelContainer">
+            <span className="ProgressBar__label">경험치: {progress} / 100</span> {/* 경험치 표시 */}
+          </div>
+
+              {/* 두 번째 게이지 - Tier */}
+          <div className="ProgressBar__progressBg">
+          <div
+              className="ProgressBar__progressFill"
+              style={{ width: `${tierProgress}%` }} // 두 번째 게이지 - tierProgress 예시값
+              />
+          </div>
+            <div className="ProgressBar__labelContainer">
+              <span className="ProgressBar__label">티어: {tierProgress} / 100</span> {/* 티어 표시 */}
+          </div>
+      </div>
+
           <ConfirmLogoutModal
             isOpen={isModalOpen}
             onClose={handleCancelLogout}
