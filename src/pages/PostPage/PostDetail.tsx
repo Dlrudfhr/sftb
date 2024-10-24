@@ -522,7 +522,7 @@ const handleFNDClick = () => {
             <div className="PostDetail_total">
               <div className="PostDetail_totallike" onClick={handleHeart}>
                 {heart ? <FaHeart color="red" /> : <FaRegHeart />}
-                <span>{heartCount}</span> {/* 하트 수 표시 */}
+                <span> {heartCount}</span> {/* 하트 수 표시 */}
               </div>
               <div
                 className="PostDetail_totalcomm"
