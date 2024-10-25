@@ -31,7 +31,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
           const response = await axios.get(
             `http://localhost:8080/api/auth/users/${userId}/experience`
           );
-          setProgress(response.data.experiencePoints); // 첫 번째 게이지에 경험치 반영
+          setProgress(response.data.userLevelExperience); // 첫 번째 게이지에 경험치 반영
           setTierProgress(50); // 두 번째 게이지는 예시로 50% 설정
           setTotalExperience(100); // 총 경험치 설정 (예: 100)
         }
