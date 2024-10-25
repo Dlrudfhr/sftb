@@ -194,7 +194,7 @@ const PostDetail: React.FC = () => {
     if (!commentInput) return;
     const userName = localStorage.getItem("userName"); // 로컬 스토리지에서 userName 가져오기
     const userId = getCurrentUserId(); // 사용자 ID 가져오기
-    const userLevelExperience = 10; // 부여할 레벨 경험치 값
+    const userLevelExperience = 60; // 부여할 레벨 경험치 값
     console.log("Comment Input:", commentInput);
     console.log("Post ID:", postId);
     console.log("User Name:", userName);
@@ -323,6 +323,12 @@ const PostDetail: React.FC = () => {
     const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
     const userId = getCurrentUserId(); // 사용자 ID 가져오기
     const userLevelExperience = -10; // 부여할 레벨 경험치 값
+    const adoptedComment = comments.find(comment => comment.commentId === commentId); // 삭제할 댓글 찾기
+    let tierExperience = 0; // 부여할 레벨 경험치 값
+    // 삭제할 댓글이 채택된 댓글인지 확인
+    if (adoptedComment && adoptedComment.adopt) {
+    tierExperience = -30; // 채택된 댓글이면 -30 차감
+    }
     if (confirmDelete) {
       try {
         const deleteResponse = await axios.delete(
@@ -335,6 +341,13 @@ const PostDetail: React.FC = () => {
             userId: userId,
             userLevelExperience,
           });
+
+          if (tierExperience < 0) {
+          await axios.put(`/api/auth/tier-experience`, { // 티어 경험치 차감 API 호출
+            userId: userId,
+            tierExperience,
+          });
+        }
           fetchComments(); // 댓글 목록 갱신
         }
       } catch (error) {
@@ -384,7 +397,14 @@ const PostDetail: React.FC = () => {
   const handleDeleteReply = async (replyId: number) => {
     const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
     const userId = getCurrentUserId(); // 사용자 ID 가져오기
-    const userLevelExperience = -10; // 부여할 티어 경험치 값
+    const userLevelExperience = -10; // 부여할 레벨 경험치 값
+    let tierExperience = 0; // 부여할 티어 경험치 값
+    // 삭제할 대댓글 찾기
+    const replyComment = comments.flatMap(comment => comment.replies || []).find(reply => reply.commentId === replyId);
+    // 대댓글이 채택된 댓글인지 확인
+    if (replyComment && replyComment.adopt) {
+    tierExperience = -30; // 채택된 대댓글이면 -30 차감
+    }
     if (confirmDelete) {
       try {
         const deleteResponse = await axios.delete(
@@ -397,6 +417,13 @@ const PostDetail: React.FC = () => {
           userId: userId,
           userLevelExperience,
         });
+      // 티어 경험치 차감 요청 (채택된 대댓글일 경우)
+      if (tierExperience < 0) {
+        await axios.put(`/api/auth/tier-experience`, {
+          userId: userId,
+          tierExperience,
+        });
+        }
         fetchComments(); // 댓글 목록 갱신
       }
       } catch (error) {
@@ -411,7 +438,7 @@ const PostDetail: React.FC = () => {
     ? comments.flatMap(comment => comment.replies || []).find(reply => reply.commentId === commentId) // replies가 undefined일 경우 빈 배열로 대체
       : comments.find(comment => comment.commentId === commentId);
     
-    const tierExperience = 10; // 부여할 티어 경험치 값
+    const tierExperience = 30; // 부여할 티어 경험치 값
     if (!adoptedComment) {
       alert("댓글을 찾을 수 없습니다.");
       return;
