@@ -14,6 +14,7 @@ import {
 import { FaPaperPlane } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import axios from "axios";
+import { FiMoreHorizontal } from "react-icons/fi";
 
 interface Comment {
   commentId: number;
@@ -36,6 +37,17 @@ const PostDetail: React.FC = () => {
   const [commentInput, setCommentInput] = useState("");
   const [replyInput, setReplyInput] = useState<{ [key: number]: string }>({});
   const commentElement = useRef<null | HTMLInputElement>(null);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [comDropdown, setcomDropdown] = useState(false);
+//
+  const handleMoreClick = () => {
+    setShowDropdown(!showDropdown);
+}
+
+const handleFNDClick = () => {
+    setcomDropdown(!comDropdown);
+}
+
 
   // 모달 상태 및 채택할 댓글 ID 상태 추가
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -124,6 +136,13 @@ const PostDetail: React.FC = () => {
       console.error("하트 수를 업데이트하는 데 실패했습니다.", error);
     }
   };
+
+    {/*댓글 하트 클릭 이벤트 */}
+    const [comheart, setcomHeart] = useState(false);
+    const handlecomHeart = () => {
+          setcomHeart(!comheart);
+    }
+  
 
   // 게시물 삭제 함수
   const handleDelete = async () => {
@@ -500,11 +519,25 @@ const PostDetail: React.FC = () => {
               <div className="PostDetail_proImage">
                 {/*<img src={catImage}/>*/}
               </div>
-              <div className="">
+              <div className="PostDetail_middle">
                 <div className="PostDetail_writer">{userName || "작성자"}</div>
                 <div className="PostDetail_time">
                   {time ? formatDate(time) : "몇 분전"}
+
                 </div>
+                <div className="PostDetail_more">
+                        <div  onClick={handleMoreClick}><FiMoreHorizontal /></div>
+                        {showDropdown && (
+                            <ul className="PostDetail_dropdown">
+                                {/* 수정하기 버튼 추가 */}
+                                <li className="PostDetail_editButton" onClick={handleEdit}>
+                                수정하기
+                                </li>
+                                <li>삭제하기</li>
+                            </ul>
+                        )}
+                </div>
+
               </div>
             </div>
 
@@ -516,7 +549,7 @@ const PostDetail: React.FC = () => {
             <div className="PostDetail_total">
               <div className="PostDetail_totallike" onClick={handleHeart}>
                 {heart ? <FaHeart color="red" /> : <FaRegHeart />}
-                <span>{heartCount}</span> {/* 하트 수 표시 */}
+                <span> {heartCount}</span> {/* 하트 수 표시 */}
               </div>
               <div
                 className="PostDetail_totalcomm"
@@ -529,20 +562,10 @@ const PostDetail: React.FC = () => {
               </div>
             </div>
           </div>
-
-          {/* 수정하기 버튼 추가 */}
-          <button className="PostDetail_editButton" onClick={handleEdit}>
-            수정하기
-          </button>
-
-          {/* 게시글 삭제 버튼 추가 */}
-          <button className="PostDetail_deleteButton" onClick={handleDelete}>
-            삭제하기
-          </button>
         </div>
 
-          {/* 채택된 댓글 출력 */}
-          <div className="PostDetail_commentbox">
+        {/* 채택된 댓글 출력 */}
+        <div className="PostDetail_commentbox">
             {comments.filter(comment => comment.adopt).map((comment) => (
               <div className="PostDetail_comment" key={comment.commentId}>
                 <div className="PostDetail_writer">
@@ -600,133 +623,138 @@ const PostDetail: React.FC = () => {
                 </div>
               ))
             )}
-          </div>
+        </div>
           
         
         {/*댓글 출력 영역 */}
         <div className="PostDetail_commentbox">
-        {comments.map((comment) => (
-            <div className="PostDetail_comment" key={comment.commentId}>
-              <div className="PostDetail_writer">
-                <div className="PostDetail_commproImage">
-                  <img src={myImage} alt="프로필" />
-                </div>
-                <div className="PostDetail_commwriter">{comment.memberId}</div>
-                <div
-                  className="PostDetail_viewwrite"
-                  onClick={() => toggleReplyVisibility(comment.commentId)}
-                >
-                  <FaRegComment />
-                </div>
-                <div className="PostDetail_heart">
-                  <FaRegHeart />
-                </div>
-                {/* 댓글 채택 버튼 조건, 여기서는 게시글 작성자와 로그인된 사용자의 이름을 비교하고있어서
-                 게시글작성시 UserID넘어가게 완성되면 userName(이름)이아니라 UserID(아이디)로 비교하게 getCurrentUserId() === postAuthorId 이걸로 바꿔야함*/}
-                {userName === localStorage.getItem("userName") && !comment.adopt && comment.userId !== getCurrentUserId() && !hasAdoptedComment && (
-                  <div className="PostDetail_adopt" onClick={() => openModal(comment.commentId)}>
-                    <AiOutlineLike />
-                  </div>
-                )}
-              </div>
-
-              <div className={`PostDetail_content PostDetail_comm_cont ${comment.adopt ? 'adopted' : ''}`}>
-                  {comment.content}
-              </div>
-              <div className="PostDetail_time">
-                {formatDate(comment.updatedAt || comment.createdAt)}
-              </div>
-              {comment.userId === getCurrentUserId() && ( // 사용자 ID로 비교
-                <>
-                  <button onClick={() => handleEditComment(comment.commentId)}>
-                    수정
-                  </button>
-                  <button
-                    onClick={() => handleDeleteComment(comment.commentId)}
-                  >
-                    삭제
-                  </button>
-                </>
-              )}
-              {/*대댓글 출력 영역*/}
-              {comment.replies &&
-                comment.replies.map((reply) => (
-                  <div className="PostDetail_recomment" key={reply.commentId}>
+            {comments.map((comment) => (
+                <div className="PostDetail_comment" key={comment.commentId}>
                     <div className="PostDetail_writer">
-                      <div className="PostDetail_commproImage">
-                        {" "}
-                        <img src={myImage} alt="프로필" />{" "}
-                      </div>
-                      <div className="PostDetail_commwriter">
-                        {reply.memberId}
-                      </div>
-                      {/* 대댓글 채택 버튼 조건, 여기서는 게시글 작성자와 로그인된 사용자의 이름을 비교하고있어서
-                      게시글작성시 UserID넘어가게 완성되면 userName(이름)이아니라 UserID(아이디)로 비교하게 getCurrentUserId() === postAuthorId 이걸로 바꿔야함 */}
-                      {userName === localStorage.getItem("userName") && !reply.adopt && reply.userId !== getCurrentUserId() && !hasAdoptedComment && (
-                        <div className="PostDetail_adopt" onClick={() => openModal(reply.commentId)}>
-                          <AiOutlineLike />
+                        <div className="PostDetail_commproImage">
+                            <img src={myImage} alt="프로필" />
                         </div>
-                      )}
+                        <div className="PostDetail_commwriter">{comment.memberId}</div>
+                        <div className="PostDetail_viewwrite" onClick={() => toggleReplyVisibility(comment.commentId)}>
+                            <FaRegComment />
+                        </div>
+                        <div className="PostDetail_heart">
+                            <FaRegHeart />
+                        </div>
+                        <div className="">
+                        <div  onClick={handleFNDClick}><FiMoreHorizontal /></div>
+                        {comment.userId === getCurrentUserId() && ( // 사용자 ID로 비교
+                            <>
+                        {comDropdown && (
+                            <ul className="PostDetail_comdropdown">
+                                {/* 수정하기 버튼 추가 */}
+                                <li className="PostDetail_editButton"  onClick={() => handleEditComment(comment.commentId)}>
+                                수정
+                                </li>
+                                <li onClick={() => handleDeleteComment(comment.commentId)}>삭제</li>
+                            </ul>
+                        )}
+                            
+                            
+                            </>
+                        )}
+                        </div>
+                    {/* 댓글 채택 버튼 조건, 여기서는 게시글 작성자와 로그인된 사용자의 이름을 비교하고있어서
+                    게시글작성시 UserID넘어가게 완성되면 userName(이름)이아니라 UserID(아이디)로 비교하게 getCurrentUserId() === postAuthorId 이걸로 바꿔야함*/}
+                    {userName === localStorage.getItem("userName") && !comment.adopt && comment.userId !== getCurrentUserId() && !hasAdoptedComment && (
+                    <div className="PostDetail_adopt" onClick={() => openModal(comment.commentId)}>
+                        <AiOutlineLike />
                     </div>
-                    <div className={`PostDetail_content PostDetail_comm_cont ${reply.adopt ? 'adopted' : ''}`}>
-                      {reply.content}
-                    </div>
-                    <div className="PostDetail_time">
-                      {formatDate(reply.updatedAt || reply.createdAt)}
-                    </div>
-                    {reply.userId === getCurrentUserId() && ( // 사용자 ID로 비교
-                      <>
-                        <button
-                          onClick={() => handleEditReply(reply.commentId)}
-                        >
-                          수정
-                        </button>
-                        <button
-                          onClick={() => handleDeleteReply(reply.commentId)}
-                        >
-                          삭제
-                        </button>
-                      </>
                     )}
-                  </div>
-                ))}
-
-              {/*대댓글 숨기기/보여지기 */}
-              {isReplyVisible[comment.commentId] && (
-                <div className="reply">
-                  {/* 대댓글 작성 영역 */}
-                  <div className="PostDetail_rerecomm">
-                    <div className="PostDetail_writer">
-                      <div className="PostDetail_commproImage">
-                        <img src={myImage} alt="프로필" />
-                      </div>
-                      {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
-                      <div className="PostDetail_commwriter">
-                        {localStorage.getItem("userName") || "작성자"}
-                      </div>
-                    </div>
-
-                    <input
-                      className="PostDetail_commWrite"
-                      placeholder="대댓글을 입력하세요."
-                      value={replyInput[comment.commentId] || ""}
-                      onChange={(e) =>
-                        setReplyInput({
-                          ...replyInput,
-                          [comment.commentId]: e.target.value,
-                        })
-                      }
-                    />
-                    <button
-                      onClick={(e) => handleReplySubmit(e, comment.commentId)}
-                    >
-                      작성
-                    </button>
-                  </div>
                 </div>
-              )}
-            </div>
-          ))}
+
+                <div className={`PostDetail_content PostDetail_comm_cont ${comment.adopt ? 'adopted' : ''}`}>
+                    {comment.content}
+                </div>
+                
+                <div className="PostDetail_time">
+                    {formatDate(comment.updatedAt || comment.createdAt)}
+                </div>
+                
+                {/*대댓글 출력 영역*/}
+                {comment.replies &&
+                    comment.replies.map((reply) => (
+                    <div className="PostDetail_recomment" key={reply.commentId}>
+                        <div className="PostDetail_writer">
+                        <div className="PostDetail_commproImage">
+                            {" "}
+                            <img src={myImage} alt="프로필" />{" "}
+                        </div>
+                        <div className="PostDetail_commwriter">
+                            {reply.memberId}
+                        </div>
+                        {/* 대댓글 채택 버튼 조건, 여기서는 게시글 작성자와 로그인된 사용자의 이름을 비교하고있어서
+                        게시글작성시 UserID넘어가게 완성되면 userName(이름)이아니라 UserID(아이디)로 비교하게 getCurrentUserId() === postAuthorId 이걸로 바꿔야함 */}
+                        {userName === localStorage.getItem("userName") && !reply.adopt && reply.userId !== getCurrentUserId() && !hasAdoptedComment && (
+                            <div className="PostDetail_adopt" onClick={() => openModal(reply.commentId)}>
+                            <AiOutlineLike />
+                            </div>
+                        )}
+                        </div>
+                        <div className={`PostDetail_content PostDetail_comm_cont ${reply.adopt ? 'adopted' : ''}`}>
+                        {reply.content}
+                        </div>
+                        <div className="PostDetail_time">
+                        {formatDate(reply.updatedAt || reply.createdAt)}
+                        </div>
+                        {reply.userId === getCurrentUserId() && ( // 사용자 ID로 비교
+                        <>
+                            <button
+                            onClick={() => handleEditReply(reply.commentId)}
+                            >
+                            수정
+                            </button>
+                            <button
+                            onClick={() => handleDeleteReply(reply.commentId)}
+                            >
+                            삭제
+                            </button>
+                        </>
+                        )}
+                    </div>
+                    ))}
+
+                {/*대댓글 숨기기/보여지기 */}
+                {isReplyVisible[comment.commentId] && (
+                    <div className="reply">
+                    {/* 대댓글 작성 영역 */}
+                    <div className="PostDetail_rerecomm">
+                        <div className="PostDetail_writer">
+                        <div className="PostDetail_commproImage">
+                            <img src={myImage} alt="프로필" />
+                        </div>
+                        {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
+                        <div className="PostDetail_commwriter">
+                            {localStorage.getItem("userName") || "작성자"}
+                        </div>
+                        </div>
+
+                        <input
+                        className="PostDetail_commWrite"
+                        placeholder="대댓글을 입력하세요."
+                        value={replyInput[comment.commentId] || ""}
+                        onChange={(e) =>
+                            setReplyInput({
+                            ...replyInput,
+                            [comment.commentId]: e.target.value,
+                            })
+                        }
+                        />
+                        <button
+                        onClick={(e) => handleReplySubmit(e, comment.commentId)}
+                        >
+                        작성
+                        </button>
+                    </div>
+                    </div>
+                )}
+                </div>
+            ))}
         </div>
         
         {/* 모달 */}
