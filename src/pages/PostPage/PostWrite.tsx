@@ -43,6 +43,17 @@ function PostWrite() {
         return;
       }
 
+      // 현재 시간을 한국 시간대로 변환
+      const updatedTime = new Date().toLocaleString("ko-KR", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      });
+
       // 수정하는 경우 ID가 있을 때 PUT 요청
       if (state && state.postId) {
         console.log("Updating post with ID:", state.postId); // ID 확인
@@ -70,7 +81,7 @@ function PostWrite() {
               title: title,
               content: content,
               userName: userName,
-              time: new Date().toISOString(), // 수정 시간을 현재 시간으로 설정
+              time: updatedTime, // 수정 시간을 현재 시간으로 설정
               postId: state.postId, // 게시물 ID 추가
             },
           });
@@ -85,6 +96,7 @@ function PostWrite() {
             title: title,
             content: content,
             userName: userName,
+            time: updatedTime, // 작성 시간을 한국 시간으로 설정
             boardId: boardId, // 동적으로 boardId 설정
           },
           {

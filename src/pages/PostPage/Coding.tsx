@@ -23,7 +23,9 @@ const Coding = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/posts");
+        const response = await axios.get("http://localhost:8080/api/posts",{
+          params: { boardId: 7 } // 여기서 Board_ID를 쿼리 파라미터로 전달
+        });
         setPosts(response.data); // 게시물 데이터 상태에 저장
         setLoading(false); // 로딩 완료
       } catch (error) {

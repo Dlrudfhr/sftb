@@ -107,10 +107,27 @@
   width: 100px;
   height: 10px;
   background-color: #e0e0de;
+  
+  
 }
 
 .ProgressBar__progressFill {
   height: 100%;
   background-color: #3b5998;
   transition: width 1s ease-out; /*왜 안움직이는지 모르겠다*/
+
+  
 }
+
+/* 추가된 CSS: 경험치 레이블 표시 이 두개의 필요성을 잘모르겟다*/
+.ProgressBar__labelContainer {
+  display: flex;
+  justify-content: flex-start; /* 수평 정렬 */
+  margin-left: 10px;
+}
+
+.ProgressBar__label {
+  font-size: 14px;
+  color: #000;
+}
+
