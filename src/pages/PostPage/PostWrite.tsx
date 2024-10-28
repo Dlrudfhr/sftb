@@ -96,7 +96,6 @@ function PostWrite() {
 
         if (response.status === 200) {
           navigate("/Main");
-          navigate("/Certificate");
         } else {
           setErrorMessage("게시물 작성에 실패했습니다.");
         }
