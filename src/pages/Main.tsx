@@ -107,7 +107,9 @@ function Main() {
                 <div className="Main_card_content">
                   <div className="Main_card_title">질문과 답</div>
                   <div className="Main_card_info">자유롭게 질문하고 답하기</div>
-                  <div className="Main_card_icons"><FaRegComment /></div>
+                  <div className="Main_card_icons">
+                    <FaRegComment />
+                  </div>
                 </div>
               </div>
             </li>
@@ -120,7 +122,9 @@ function Main() {
                 <div className="Main_card_content">
                   <div className="Main_card_title">자격증 정보</div>
                   <div className="Main_card_info">자격증 정보</div>
-                  <div className="Main_card_icons"><PiCertificate /></div>
+                  <div className="Main_card_icons">
+                    <PiCertificate />
+                  </div>
                 </div>
               </div>
             </li>
