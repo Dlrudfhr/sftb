@@ -79,10 +79,7 @@ const Ledger = () => {
               <input className="Certificate_search_txt" type="text" placeholder="검색어를 입력하세요." />
             </div>
             
-            <div className="Certificate_button_list">
-              <button className="Certificate_search_button" type="submit">검색</button>
-              <button className="Certificate_search_button" type="button">초기화</button>
-            </div>
+            
           </div>
         </div>
 

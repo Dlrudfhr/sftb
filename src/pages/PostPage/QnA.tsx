@@ -123,14 +123,7 @@ const QnA = () => {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <div className="Certificate_button_list">
-              <button className="Certificate_search_button" type="submit">
-                <FaSearch />{" "}
-              </button>
-              <div className="Certificate_search_button">
-                <CiCircleRemove />
-              </div>
-            </div>
+            
           </div>
         </div>
 

@@ -79,10 +79,7 @@ const Coding = () => {
               <input className="Coding_search_txt" type="text" placeholder="검색어를 입력하세요." />
             </div>
             
-            <div className="Coding_button_list">
-              <button className="Coding_search_button" type="submit">검색</button>
-              <button className="Coding_search_button" type="button">초기화</button>
-            </div>
+            
           </div>
         </div>
 

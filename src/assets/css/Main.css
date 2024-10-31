@@ -9,7 +9,7 @@ body {
   /* font-family: "DungGeunMo"; */
   overflow: hidden;
   margin: auto;
-  width: 1280px;
+  width: 100%;
   margin-top: 100px;
 }
 
@@ -33,6 +33,7 @@ body {
   font-weight: bold;
   padding: 40px;
   color: #ffd700;
+  font-family: "DungGeunMo";
 }
 
 /*********카테고리 이동 버튼**********/
@@ -89,12 +90,19 @@ body {
   letter-spacing: -2px;
 }
 
+/**/
+.Main__line{
+  margin:auto;
+  /* background-color: #004fa8; */
+  width: 90%;
+}
+
 /*게시판 블럭 스타일*/
 .Main_card {
-  width: 250px;
-  height: 250px;
+  width: 220px;
+  height: 220px;
   cursor: pointer;
-  margin-right: 50px;
+  margin-right: 20px;
   align-content: center; /*카드 안에 콘텐츠 세로 중앙 정렬*/
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
   -webkit-transition: 0.5s ease-in-out;

@@ -96,14 +96,7 @@ const Share = () => {
                 placeholder="검색어를 입력하세요."
               />
             </div>
-            <div className="Certificate_button_list">
-              <button className="Certificate_search_button" type="submit">
-                <FaSearch />{" "}
-              </button>
-              <div className="Certificate_search_button">
-                <CiCircleRemove />
-              </div>
-            </div>
+            
           </div>
         </div>
 
