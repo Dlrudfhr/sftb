@@ -27,7 +27,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
     const fetchExperienceData = async () => {
       try {
         if (userId) {
-          // 경험치와 티어 경험치 데이터를 가져오는 API 호출
+          // 경험치, 티어 경험치 데이터를 가져오는 API 호출
           const response = await axios.get(
             `http://localhost:8080/api/auth/users/${userId}/experience`
           );
