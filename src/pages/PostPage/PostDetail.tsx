@@ -30,7 +30,7 @@ interface Comment {
 const PostDetail: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { title, content, userName, time } = state || {};
+  const { title, content, userName, time, newTime } = state || {};
   const { postId } = useParams<{ postId: string }>();
   const [hasAdoptedComment, setHasAdoptedComment] = useState(false); // 상태 추가
   const [comments, setComments] = useState<Comment[]>([]);
@@ -305,7 +305,7 @@ const PostDetail: React.FC = () => {
         title,
         content,
         userName,
-        time: updatedTime, // 수정된 시간을 현재 시간으로 설정
+        newTime, // 수정된 시간을 현재 시간으로 설정
         postId, // 게시물 ID 추가
       },
     });
@@ -541,7 +541,11 @@ const PostDetail: React.FC = () => {
               <div className="PostDetail_middle">
                 <div className="PostDetail_writer">{userName || "작성자"}</div>
                 <div className="PostDetail_time">
-                  {time ? formatDate(time) : "몇 분전"}
+                  {newTime
+                    ? formatDate(newTime)
+                    : time
+                    ? formatDate(time)
+                    : "몇 분전"}
                 </div>
                 <div className="PostDetail_more">
                   <div onClick={handleMoreClick}>

@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from "react"; /* 바로가기 참�
 import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import Header from "../Header"; /* Header 참조 */
 import Footer from "../Footer"; /* footer 참조 */
-import "../../assets/css/Coding.css"; 
+import "../../assets/css/Coding.css";
 import { FaRegStar, FaSearch, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa6";
 import axios from "axios";
@@ -15,6 +15,8 @@ interface Post {
   userName: string; // 사용자명
   content: string; // 내용
   createAt: string; // 생성 시간 (ISO 8601 형식)
+  updateAt: string;
+  userId: string;
 }
 
 const Share = () => {
@@ -33,7 +35,7 @@ const Share = () => {
       try {
         // Board_ID가 2인 게시물만 가져오기
         const response = await axios.get("http://localhost:8080/api/posts", {
-          params: { boardId: 3 } // 여기서 Board_ID를 쿼리 파라미터로 전달
+          params: { boardId: 3 }, // 여기서 Board_ID를 쿼리 파라미터로 전달
         });
         setPosts(response.data); // 게시물 데이터 상태에 저장
         setLoading(false); // 로딩 완료
@@ -96,7 +98,6 @@ const Share = () => {
                 placeholder="검색어를 입력하세요."
               />
             </div>
-            
           </div>
         </div>
 
@@ -108,12 +109,12 @@ const Share = () => {
             </span>
           </div>
 
-           {/*게시글 작성 페이지로 이동 */}
-           <div className="Coding_write">
-          <Link to="/PostWrite" state={{ boardId: 3 }}>
-              <button type="submit" className="Coding_toWrite"
-               
-               >작성하기</button>
+          {/*게시글 작성 페이지로 이동 */}
+          <div className="Coding_write">
+            <Link to="/PostWrite" state={{ boardId: 3 }}>
+              <button type="submit" className="Coding_toWrite">
+                작성하기
+              </button>
             </Link>
           </div>
         </div>
@@ -135,7 +136,8 @@ const Share = () => {
                           content: post.content,
                           userName: post.userName,
                           time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
-                        
+                          newTime: post.updateAt,
+                          userId: post.userId,
                         },
                       })
                     }

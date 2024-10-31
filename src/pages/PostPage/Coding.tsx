@@ -16,6 +16,7 @@ interface Post {
   content: string; // 내용
   createAt: string; // 생성 시간 (ISO 8601 형식)
   updateAt: string;
+  userId: string;
 }
 
 const Coding = () => {
@@ -34,7 +35,7 @@ const Coding = () => {
       try {
         // Board_ID가 2인 게시물만 가져오기
         const response = await axios.get("http://localhost:8080/api/posts", {
-          params: { boardId: 7 } // 여기서 Board_ID를 쿼리 파라미터로 전달
+          params: { boardId: 7 }, // 여기서 Board_ID를 쿼리 파라미터로 전달
         });
         setPosts(response.data); // 게시물 데이터 상태에 저장
         setLoading(false); // 로딩 완료
@@ -97,8 +98,6 @@ const Coding = () => {
                 placeholder="검색어를 입력하세요."
               />
             </div>
-            
-            
           </div>
         </div>
 
@@ -110,12 +109,12 @@ const Coding = () => {
             </span>
           </div>
 
-           {/*게시글 작성 페이지로 이동 */}
-           <div className="Coding_write">
-          <Link to="/PostWrite" state={{ boardId: 7 }}>
-              <button type="submit" className="Coding_toWrite"
-               
-               >작성하기</button>
+          {/*게시글 작성 페이지로 이동 */}
+          <div className="Coding_write">
+            <Link to="/PostWrite" state={{ boardId: 7 }}>
+              <button type="submit" className="Coding_toWrite">
+                작성하기
+              </button>
             </Link>
           </div>
         </div>
@@ -137,7 +136,8 @@ const Coding = () => {
                           content: post.content,
                           userName: post.userName,
                           time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
-                        
+                          newTime: post.updateAt,
+                          userId: post.userId,
                         },
                       })
                     }
