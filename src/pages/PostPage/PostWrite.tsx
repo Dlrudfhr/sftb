@@ -55,6 +55,7 @@ const handleGoToList = () => {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
     console.log("handleSubmit called"); // 함수 호출 확인
+    const userID = localStorage.getItem("memberId");
 
     try {
       if (!userName) {
@@ -117,6 +118,7 @@ const handleGoToList = () => {
             userName: userName,
             time: updatedTime, // 작성 시간을 한국 시간으로 설정
             boardId: boardId, // 동적으로 boardId 설정
+            userId: userID,
           },
           {
             headers: {
