@@ -18,30 +18,32 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
 
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (progress / totalExperience) * circumference;
+  const offset = circumference - (tierProgress / totalExperience) * circumference;
 
   // 로그인한 사용자 ID를 localStorage에서 가져옴
   const userId = localStorage.getItem("memberId");
 
-  // 경험치 데이터를 API로 가져옴
   useEffect(() => {
-    const fetchExperience = async () => {
+    const fetchExperienceData = async () => {
       try {
         if (userId) {
+          // 경험치랑 티어 경험치 데이터를 가져오는 API 호출
           const response = await axios.get(
             `http://localhost:8080/api/auth/users/${userId}/experience`
           );
-          setProgress(response.data.experiencePoints); // 첫 번째 게이지에 경험치 반영
-          setTierProgress(50); // 두 번째 게이지는 예시로 50% 설정
+          setProgress(response.data.userLevelExperience); // 첫 번째 게이지 - 레벨 경험치 반영
+          setTierProgress(response.data.tierExperience); // 두 번째 게이지 - 티어 경험치 반영
           setTotalExperience(100); // 총 경험치 설정 (예: 100)
         }
       } catch (error) {
         console.error("경험치 데이터를 가져오는 중 오류 발생:", error);
       }
     };
-    fetchExperience();
+  
+    fetchExperienceData();
   }, [userId]);
 
+  
   useEffect(() => {
     document.documentElement.style.setProperty("--offset", `${offset}`);
   }, [offset]);

@@ -39,20 +39,19 @@ const PostDetail: React.FC = () => {
   const commentElement = useRef<null | HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [comDropdown, setcomDropdown] = useState(false);
-//
+  //
   const handleMoreClick = () => {
     setShowDropdown(!showDropdown);
-}
+  };
 
-const handleFNDClick = () => {
+  const handleFNDClick = () => {
     setcomDropdown(!comDropdown);
-}
-
+  };
 
   // 모달 상태 및 채택할 댓글 ID 상태 추가
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [commentToAdopt, setCommentToAdopt] = useState<number | null>(null);
-  
+
   // 모달 열기
   const openModal = (commentId: number) => {
     setCommentToAdopt(commentId);
@@ -68,7 +67,9 @@ const handleFNDClick = () => {
   // 채택 확인
   const confirmAdopt = async () => {
     if (commentToAdopt !== null) {
-      const isReply = comments.flatMap(comment => comment.replies || []).some(reply => reply.commentId === commentToAdopt);
+      const isReply = comments
+        .flatMap((comment) => comment.replies || [])
+        .some((reply) => reply.commentId === commentToAdopt);
       await handleAdoptComment(commentToAdopt, isReply); // isReply 값을 전달
       closeModal(); // 모달 닫기
     }
@@ -113,17 +114,6 @@ const handleFNDClick = () => {
     fetchHeartCount();
   }, [postId]);
 
-  // 현재 시간을 한국 시간대로 변환
-  const updatedTime = new Date().toLocaleString("ko-KR", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  });
-
   // 하트 클릭 이벤트
   const handleHeart = async () => {
     setHeart(!heart);
@@ -137,12 +127,13 @@ const handleFNDClick = () => {
     }
   };
 
-    {/*댓글 하트 클릭 이벤트 */}
-    const [comheart, setcomHeart] = useState(false);
-    const handlecomHeart = () => {
-          setcomHeart(!comheart);
-    }
-  
+  {
+    /*댓글 하트 클릭 이벤트 */
+  }
+  const [comheart, setcomHeart] = useState(false);
+  const handlecomHeart = () => {
+    setcomHeart(!comheart);
+  };
 
   // 게시물 삭제 함수
   const handleDelete = async () => {
@@ -184,22 +175,39 @@ const handleFNDClick = () => {
     setBookmark(!bookmark);
   };
 
+  // 게시글 가져오는 함수
+  const fetchPosts = async (boardId: number) => {
+    try {
+      const response = await axios.get("/api/posts", {
+        params: {
+          boardId: boardId, // 필요한 경우 boardId를 쿼리 파라미터로 전달
+        },
+      });
+      return response.data; // 응답으로 받은 게시글 목록 반환
+    } catch (error) {
+      console.error("게시글 가져오기 실패:", error);
+    }
+  };
+
   // 댓글 가져오는 함수
   const fetchComments = async () => {
     try {
       const response = await axios.get<Comment[]>(`/api/comments/${postId}`);
-  
+
       // 댓글 데이터에서 Adopt 값을 초기화
       const commentsWithAdoptedStatus = response.data.map((comment) => ({
         ...comment,
         adopt: comment.adopt || false, // 기본값 설정
       }));
-  
+
       setComments(commentsWithAdoptedStatus);
-    // 채택된 댓글이나 대댓글이 있는지 확인
-    const adoptedExists = commentsWithAdoptedStatus.some(comment => comment.adopt) || 
-                          commentsWithAdoptedStatus.some(comment => comment.replies?.some(reply => reply.adopt));
-    setHasAdoptedComment(adoptedExists);
+      // 채택된 댓글이나 대댓글이 있는지 확인
+      const adoptedExists =
+        commentsWithAdoptedStatus.some((comment) => comment.adopt) ||
+        commentsWithAdoptedStatus.some((comment) =>
+          comment.replies?.some((reply) => reply.adopt)
+        );
+      setHasAdoptedComment(adoptedExists);
     } catch (error) {
       console.error("댓글 가져오기 실패:", error);
     }
@@ -213,7 +221,7 @@ const handleFNDClick = () => {
     if (!commentInput) return;
     const userName = localStorage.getItem("userName"); // 로컬 스토리지에서 userName 가져오기
     const userId = getCurrentUserId(); // 사용자 ID 가져오기
-    const userLevelExperience = 10; // 부여할 레벨 경험치 값
+    const userLevelExperience = 60; // 부여할 레벨 경험치 값
     console.log("Comment Input:", commentInput);
     console.log("Post ID:", postId);
     console.log("User Name:", userName);
@@ -263,13 +271,13 @@ const handleFNDClick = () => {
       });
       // 대댓글 추가가 성공한 경우에만 경험치 추가 요청
       if (replyResponse.status === 200) {
-      await axios.put(`/api/auth/experience`, {
-        userId: userId,
-        userLevelExperience,
-      });
-      setReplyInput({ ...replyInput, [parentId]: "" });
-      fetchComments();
-    }
+        await axios.put(`/api/auth/experience`, {
+          userId: userId,
+          userLevelExperience,
+        });
+        setReplyInput({ ...replyInput, [parentId]: "" });
+        fetchComments();
+      }
     } catch (error) {
       console.error("대댓글 추가 실패:", error);
     }
@@ -302,7 +310,6 @@ const handleFNDClick = () => {
       },
     });
   };
-
   // 댓글 수정하는 함수
   const handleEditComment = async (commentId: number) => {
     const newContent = prompt("수정할 댓글 내용을 입력하세요:");
@@ -342,6 +349,14 @@ const handleFNDClick = () => {
     const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
     const userId = getCurrentUserId(); // 사용자 ID 가져오기
     const userLevelExperience = -10; // 부여할 레벨 경험치 값
+    const adoptedComment = comments.find(
+      (comment) => comment.commentId === commentId
+    ); // 삭제할 댓글 찾기
+    let tierExperience = 0; // 부여할 레벨 경험치 값
+    // 삭제할 댓글이 채택된 댓글인지 확인
+    if (adoptedComment && adoptedComment.adopt) {
+      tierExperience = -30; // 채택된 댓글이면 -30 차감
+    }
     if (confirmDelete) {
       try {
         const deleteResponse = await axios.delete(
@@ -354,6 +369,14 @@ const handleFNDClick = () => {
             userId: userId,
             userLevelExperience,
           });
+
+          if (tierExperience < 0) {
+            await axios.put(`/api/auth/tier-experience`, {
+              // 티어 경험치 차감 API 호출
+              userId: userId,
+              tierExperience,
+            });
+          }
           fetchComments(); // 댓글 목록 갱신
         }
       } catch (error) {
@@ -403,7 +426,16 @@ const handleFNDClick = () => {
   const handleDeleteReply = async (replyId: number) => {
     const confirmDelete = window.confirm("정말로 삭제하시겠습니까?");
     const userId = getCurrentUserId(); // 사용자 ID 가져오기
-    const userLevelExperience = -10; // 부여할 티어 경험치 값
+    const userLevelExperience = -10; // 부여할 레벨 경험치 값
+    let tierExperience = 0; // 부여할 티어 경험치 값
+    // 삭제할 대댓글 찾기
+    const replyComment = comments
+      .flatMap((comment) => comment.replies || [])
+      .find((reply) => reply.commentId === replyId);
+    // 대댓글이 채택된 댓글인지 확인
+    if (replyComment && replyComment.adopt) {
+      tierExperience = -30; // 채택된 대댓글이면 -30 차감
+    }
     if (confirmDelete) {
       try {
         const deleteResponse = await axios.delete(
@@ -411,13 +443,20 @@ const handleFNDClick = () => {
           { headers: { "Content-Type": "application/json" } } // 헤더 추가
         );
         // 대댓글 삭제가 성공한 경우에만 경험치 차감 요청
-      if (deleteResponse.status === 200) {
-        await axios.put(`/api/auth/experience`, {
-          userId: userId,
-          userLevelExperience,
-        });
-        fetchComments(); // 댓글 목록 갱신
-      }
+        if (deleteResponse.status === 200) {
+          await axios.put(`/api/auth/experience`, {
+            userId: userId,
+            userLevelExperience,
+          });
+          // 티어 경험치 차감 요청 (채택된 대댓글일 경우)
+          if (tierExperience < 0) {
+            await axios.put(`/api/auth/tier-experience`, {
+              userId: userId,
+              tierExperience,
+            });
+          }
+          fetchComments(); // 댓글 목록 갱신
+        }
       } catch (error) {
         console.error("대댓글 삭제 실패:", error);
       }
@@ -425,17 +464,22 @@ const handleFNDClick = () => {
   };
 
   //댓글 채택 함수
-  const handleAdoptComment = async (commentId: number, isReply: boolean = false) => {
+  const handleAdoptComment = async (
+    commentId: number,
+    isReply: boolean = false
+  ) => {
     const adoptedComment = isReply
-    ? comments.flatMap(comment => comment.replies || []).find(reply => reply.commentId === commentId) // replies가 undefined일 경우 빈 배열로 대체
-      : comments.find(comment => comment.commentId === commentId);
-    
-    const tierExperience = 10; // 부여할 티어 경험치 값
+      ? comments
+          .flatMap((comment) => comment.replies || [])
+          .find((reply) => reply.commentId === commentId) // replies가 undefined일 경우 빈 배열로 대체
+      : comments.find((comment) => comment.commentId === commentId);
+
+    const tierExperience = 30; // 부여할 티어 경험치 값
     if (!adoptedComment) {
       alert("댓글을 찾을 수 없습니다.");
       return;
     }
-  
+
     const commentAuthorId = adoptedComment.userId;
     try {
       const response = await axios.post(`/api/comments/${commentId}/adopt`, {
@@ -443,22 +487,24 @@ const handleFNDClick = () => {
         tierExperience,
         postId,
       });
-  
+
       if (response.status === 200) {
         alert("댓글이 채택되었습니다!");
         const updatedComment = response.data;
-        setComments(prevComments => 
-          prevComments.map(comment => ({
+        setComments((prevComments) =>
+          prevComments.map((comment) => ({
             ...comment,
             replies: comment.replies
-              ? comment.replies.map(reply => 
-                  reply.commentId === updatedComment.commentId ? updatedComment : reply
+              ? comment.replies.map((reply) =>
+                  reply.commentId === updatedComment.commentId
+                    ? updatedComment
+                    : reply
                 )
               : [],
           }))
         );
-  
-        fetchComments(); // 댓글 목록 갱신  
+
+        fetchComments(); // 댓글 목록 갱신
       } else {
         alert("댓글 채택에 실패했습니다.");
       }
@@ -487,30 +533,43 @@ const handleFNDClick = () => {
         {/*게시글 출력 박스 */}
         <div className="PostDetail_box">
           <div className="PostDetail_innerbox">
-            {/*게시글 작성자 */}
+            {/* 게시글 작성자 목록 출력 */}
             <div className="PostDetail_profile">
               <div className="PostDetail_proImage">
-                {/*<img src={catImage}/>*/}
+                {/* <img src={catImage} alt="프로필" /> */}
               </div>
               <div className="PostDetail_middle">
                 <div className="PostDetail_writer">{userName || "작성자"}</div>
                 <div className="PostDetail_time">
                   {time ? formatDate(time) : "몇 분전"}
-
                 </div>
                 <div className="PostDetail_more">
-                        <div  onClick={handleMoreClick}><FiMoreHorizontal /></div>
-                        {showDropdown && (
-                            <ul className="PostDetail_dropdown">
-                                {/* 수정하기 버튼 추가 */}
-                                <li className="PostDetail_editButton" onClick={handleEdit}>
-                                수정하기
-                                </li>
-                                <li>삭제하기</li>
-                            </ul>
-                        )}
-                </div>
+                  <div onClick={handleMoreClick}>
+                    <FiMoreHorizontal />
+                  </div>
+                  {state.userId === getCurrentUserId() && ( // 현재 사용자 ID와 작성자 ID 비교
+                    <>
+                      {showDropdown && (
+                        <ul className="PostDetail_dropdown">
+                          {/* 수정하기 버튼 추가 */}
 
+                          <li
+                            className="PostDetail_editButton"
+                            onClick={handleEdit} // postId를 사용하여 수정
+                          >
+                            수정하기
+                          </li>
+                          <li
+                            className="PostDetail_editButton"
+                            onClick={handleDelete}
+                          >
+                            삭제하기
+                          </li>
+                        </ul>
+                      )}
+                    </>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -539,13 +598,17 @@ const handleFNDClick = () => {
 
         {/* 채택된 댓글 출력 */}
         <div className="PostDetail_commentbox">
-            {comments.filter(comment => comment.adopt).map((comment) => (
+          {comments
+            .filter((comment) => comment.adopt)
+            .map((comment) => (
               <div className="PostDetail_comment" key={comment.commentId}>
                 <div className="PostDetail_writer">
                   <div className="PostDetail_commproImage">
                     <img src={myImage} alt="프로필" />
                   </div>
-                  <div className="PostDetail_commwriter">{comment.memberId}</div>
+                  <div className="PostDetail_commwriter">
+                    {comment.memberId}
+                  </div>
                 </div>
                 <div className="PostDetail_content PostDetail_comm_cont adopted">
                   채택된 댓글입니다 : {comment.content}
@@ -556,25 +619,33 @@ const handleFNDClick = () => {
                 {/* 채택된 댓글에 대해 수정 및 삭제 버튼 추가 (필요시) */}
                 {comment.userId === getCurrentUserId() && (
                   <>
-                    <button onClick={() => handleEditComment(comment.commentId)}>
+                    <button
+                      onClick={() => handleEditComment(comment.commentId)}
+                    >
                       수정
                     </button>
-                    <button onClick={() => handleDeleteComment(comment.commentId)}>
+                    <button
+                      onClick={() => handleDeleteComment(comment.commentId)}
+                    >
                       삭제
                     </button>
                   </>
                 )}
               </div>
             ))}
-             {/* 채택된 대댓글 출력 */}
-            {comments.map(comment => 
-              comment.replies?.filter(reply => reply.adopt).map(reply => (
+          {/* 채택된 대댓글 출력 */}
+          {comments.map((comment) =>
+            comment.replies
+              ?.filter((reply) => reply.adopt)
+              .map((reply) => (
                 <div className="PostDetail_comment" key={reply.commentId}>
                   <div className="PostDetail_writer">
                     <div className="PostDetail_commproImage">
                       <img src={myImage} alt="프로필" />
                     </div>
-                    <div className="PostDetail_commwriter">{reply.memberId}</div>
+                    <div className="PostDetail_commwriter">
+                      {reply.memberId}
+                    </div>
                   </div>
                   <div className="PostDetail_content PostDetail_comm_cont adopted">
                     채택된 대댓글입니다 : {reply.content}
@@ -588,148 +659,181 @@ const handleFNDClick = () => {
                       <button onClick={() => handleEditReply(reply.commentId)}>
                         수정
                       </button>
-                      <button onClick={() => handleDeleteReply(reply.commentId)}>
+                      <button
+                        onClick={() => handleDeleteReply(reply.commentId)}
+                      >
                         삭제
                       </button>
                     </>
                   )}
                 </div>
               ))
-            )}
+          )}
         </div>
-          
-        
+
         {/*댓글 출력 영역 */}
         <div className="PostDetail_commentbox">
-            {comments.map((comment) => (
-                <div className="PostDetail_comment" key={comment.commentId}>
-                    <div className="PostDetail_writer">
-                        <div className="PostDetail_commproImage">
-                            <img src={myImage} alt="프로필" />
-                        </div>
-                        <div className="PostDetail_commwriter">{comment.memberId}</div>
-                        <div className="PostDetail_viewwrite" onClick={() => toggleReplyVisibility(comment.commentId)}>
-                            <FaRegComment />
-                        </div>
-                        <div className="PostDetail_heart">
-                            <FaRegHeart />
-                        </div>
-                        <div className="">
-                        <div  onClick={handleFNDClick}><FiMoreHorizontal /></div>
-                        {comment.userId === getCurrentUserId() && ( // 사용자 ID로 비교
-                            <>
-                        {comDropdown && (
-                            <ul className="PostDetail_comdropdown">
-                                {/* 수정하기 버튼 추가 */}
-                                <li className="PostDetail_editButton"  onClick={() => handleEditComment(comment.commentId)}>
-                                수정
-                                </li>
-                                <li onClick={() => handleDeleteComment(comment.commentId)}>삭제</li>
-                            </ul>
-                        )}
-                            
-                            
-                            </>
-                        )}
-                        </div>
-                    {/* 댓글 채택 버튼 조건, 여기서는 게시글 작성자와 로그인된 사용자의 이름을 비교하고있어서
-                    게시글작성시 UserID넘어가게 완성되면 userName(이름)이아니라 UserID(아이디)로 비교하게 getCurrentUserId() === postAuthorId 이걸로 바꿔야함*/}
-                    {userName === localStorage.getItem("userName") && !comment.adopt && comment.userId !== getCurrentUserId() && !hasAdoptedComment && (
-                    <div className="PostDetail_adopt" onClick={() => openModal(comment.commentId)}>
-                        <AiOutlineLike />
-                    </div>
-                    )}
+          {comments.map((comment) => (
+            <div className="PostDetail_comment" key={comment.commentId}>
+              <div className="PostDetail_writer">
+                <div className="PostDetail_commproImage">
+                  <img src={myImage} alt="프로필" />
                 </div>
-
-                <div className={`PostDetail_content PostDetail_comm_cont ${comment.adopt ? 'adopted' : ''}`}>
-                    {comment.content}
+                <div className="PostDetail_commwriter">{comment.memberId}</div>
+                <div
+                  className="PostDetail_viewwrite"
+                  onClick={() => toggleReplyVisibility(comment.commentId)}
+                >
+                  <FaRegComment />
                 </div>
-                
-                <div className="PostDetail_time">
-                    {formatDate(comment.updatedAt || comment.createdAt)}
+                <div className="PostDetail_heart">
+                  <FaRegHeart />
                 </div>
-                
-                {/*대댓글 출력 영역*/}
-                {comment.replies &&
-                    comment.replies.map((reply) => (
-                    <div className="PostDetail_recomment" key={reply.commentId}>
-                        <div className="PostDetail_writer">
-                        <div className="PostDetail_commproImage">
-                            {" "}
-                            <img src={myImage} alt="프로필" />{" "}
-                        </div>
-                        <div className="PostDetail_commwriter">
-                            {reply.memberId}
-                        </div>
-                        {/* 대댓글 채택 버튼 조건, 여기서는 게시글 작성자와 로그인된 사용자의 이름을 비교하고있어서
-                        게시글작성시 UserID넘어가게 완성되면 userName(이름)이아니라 UserID(아이디)로 비교하게 getCurrentUserId() === postAuthorId 이걸로 바꿔야함 */}
-                        {userName === localStorage.getItem("userName") && !reply.adopt && reply.userId !== getCurrentUserId() && !hasAdoptedComment && (
-                            <div className="PostDetail_adopt" onClick={() => openModal(reply.commentId)}>
-                            <AiOutlineLike />
-                            </div>
-                        )}
-                        </div>
-                        <div className={`PostDetail_content PostDetail_comm_cont ${reply.adopt ? 'adopted' : ''}`}>
-                        {reply.content}
-                        </div>
-                        <div className="PostDetail_time">
-                        {formatDate(reply.updatedAt || reply.createdAt)}
-                        </div>
-                        {reply.userId === getCurrentUserId() && ( // 사용자 ID로 비교
-                        <>
-                            <button
-                            onClick={() => handleEditReply(reply.commentId)}
-                            >
+                <div className="">
+                  <div onClick={handleFNDClick}>
+                    <FiMoreHorizontal />
+                  </div>
+                  {comment.userId === getCurrentUserId() && ( // 사용자 ID로 비교
+                    <>
+                      {comDropdown && (
+                        <ul className="PostDetail_comdropdown">
+                          {/* 수정하기 버튼 추가 */}
+                          <li
+                            className="PostDetail_editButton"
+                            onClick={() => handleEditComment(comment.commentId)}
+                          >
                             수정
-                            </button>
-                            <button
-                            onClick={() => handleDeleteReply(reply.commentId)}
-                            >
+                          </li>
+                          <li
+                            onClick={() =>
+                              handleDeleteComment(comment.commentId)
+                            }
+                          >
                             삭제
-                            </button>
-                        </>
+                          </li>
+                        </ul>
+                      )}
+                    </>
+                  )}
+                </div>
+                {/* 댓글 채택 버튼 조건, 여기서는 게시글 작성자와 로그인된 사용자의 이름을 비교하고있어서
+                    게시글작성시 UserID넘어가게 완성되면 userName(이름)이아니라 UserID(아이디)로 비교하게 getCurrentUserId() === postAuthorId 이걸로 바꿔야함*/}
+                {userName === localStorage.getItem("userName") &&
+                  !comment.adopt &&
+                  comment.userId !== getCurrentUserId() &&
+                  !hasAdoptedComment && (
+                    <div
+                      className="PostDetail_adopt"
+                      onClick={() => openModal(comment.commentId)}
+                    >
+                      <AiOutlineLike />
+                    </div>
+                  )}
+              </div>
+
+              <div
+                className={`PostDetail_content PostDetail_comm_cont ${
+                  comment.adopt ? "adopted" : ""
+                }`}
+              >
+                {comment.content}
+              </div>
+
+              <div className="PostDetail_time">
+                {formatDate(comment.updatedAt || comment.createdAt)}
+              </div>
+
+              {/*대댓글 출력 영역*/}
+              {comment.replies &&
+                comment.replies.map((reply) => (
+                  <div className="PostDetail_recomment" key={reply.commentId}>
+                    <div className="PostDetail_writer">
+                      <div className="PostDetail_commproImage">
+                        {" "}
+                        <img src={myImage} alt="프로필" />{" "}
+                      </div>
+                      <div className="PostDetail_commwriter">
+                        {reply.memberId}
+                      </div>
+                      {/* 대댓글 채택 버튼 조건, 여기서는 게시글 작성자와 로그인된 사용자의 이름을 비교하고있어서
+                        게시글작성시 UserID넘어가게 완성되면 userName(이름)이아니라 UserID(아이디)로 비교하게 getCurrentUserId() === postAuthorId 이걸로 바꿔야함 */}
+                      {userName === localStorage.getItem("userName") &&
+                        !reply.adopt &&
+                        reply.userId !== getCurrentUserId() &&
+                        !hasAdoptedComment && (
+                          <div
+                            className="PostDetail_adopt"
+                            onClick={() => openModal(reply.commentId)}
+                          >
+                            <AiOutlineLike />
+                          </div>
                         )}
                     </div>
-                    ))}
-
-                {/*대댓글 숨기기/보여지기 */}
-                {isReplyVisible[comment.commentId] && (
-                    <div className="reply">
-                    {/* 대댓글 작성 영역 */}
-                    <div className="PostDetail_rerecomm">
-                        <div className="PostDetail_writer">
-                        <div className="PostDetail_commproImage">
-                            <img src={myImage} alt="프로필" />
-                        </div>
-                        {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
-                        <div className="PostDetail_commwriter">
-                            {localStorage.getItem("userName") || "작성자"}
-                        </div>
-                        </div>
-
-                        <input
-                        className="PostDetail_commWrite"
-                        placeholder="대댓글을 입력하세요."
-                        value={replyInput[comment.commentId] || ""}
-                        onChange={(e) =>
-                            setReplyInput({
-                            ...replyInput,
-                            [comment.commentId]: e.target.value,
-                            })
-                        }
-                        />
+                    <div
+                      className={`PostDetail_content PostDetail_comm_cont ${
+                        reply.adopt ? "adopted" : ""
+                      }`}
+                    >
+                      {reply.content}
+                    </div>
+                    <div className="PostDetail_time">
+                      {formatDate(reply.updatedAt || reply.createdAt)}
+                    </div>
+                    {reply.userId === getCurrentUserId() && ( // 사용자 ID로 비교
+                      <>
                         <button
-                        onClick={(e) => handleReplySubmit(e, comment.commentId)}
+                          onClick={() => handleEditReply(reply.commentId)}
                         >
-                        작성
+                          수정
                         </button>
+                        <button
+                          onClick={() => handleDeleteReply(reply.commentId)}
+                        >
+                          삭제
+                        </button>
+                      </>
+                    )}
+                  </div>
+                ))}
+
+              {/*대댓글 숨기기/보여지기 */}
+              {isReplyVisible[comment.commentId] && (
+                <div className="reply">
+                  {/* 대댓글 작성 영역 */}
+                  <div className="PostDetail_rerecomm">
+                    <div className="PostDetail_writer">
+                      <div className="PostDetail_commproImage">
+                        <img src={myImage} alt="프로필" />
+                      </div>
+                      {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
+                      <div className="PostDetail_commwriter">
+                        {localStorage.getItem("userName") || "작성자"}
+                      </div>
                     </div>
-                    </div>
-                )}
+
+                    <input
+                      className="PostDetail_commWrite"
+                      placeholder="대댓글을 입력하세요."
+                      value={replyInput[comment.commentId] || ""}
+                      onChange={(e) =>
+                        setReplyInput({
+                          ...replyInput,
+                          [comment.commentId]: e.target.value,
+                        })
+                      }
+                    />
+                    <button
+                      onClick={(e) => handleReplySubmit(e, comment.commentId)}
+                    >
+                      작성
+                    </button>
+                  </div>
                 </div>
-            ))}
+              )}
+            </div>
+          ))}
         </div>
-        
+
         {/* 모달 */}
         {isModalOpen && (
           <div className="modal">
@@ -742,7 +846,7 @@ const handleFNDClick = () => {
             </div>
           </div>
         )}
-    
+
         {/* 댓글 작성 영역 */}
         <div className="PostDetail_commWritebox">
           <input

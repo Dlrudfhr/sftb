@@ -45,7 +45,7 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
         // 경험치 업데이트를 위한 API 호출
         const expResponse = await axios.put(
             `http://localhost:8080/api/auth/users/${userID}/experience`,
-            { experiencePoints: 40 },
+            {userLevelExperience: 40 },
             {
                 withCredentials: true,
                 headers: {
