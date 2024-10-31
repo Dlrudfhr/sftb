@@ -1,0 +1,39 @@
+@import url("Font.css");
+body {
+  font-family: "DungGeunMo", sans-serif;
+}
+
+.Ranking__container {
+  background-image: url("../images/figmaSlide.png");
+  width: 100%;
+  height: 1080px;
+  color: white;
+  z-index: -1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Ranking__table {
+  display: flex;
+  flex-direction: column; /* 세로 방향으로 배치 */
+  padding-top: 0; /* 상단 여백 */
+  align-items: center;
+}
+
+.Ranking__member {
+  display: flex;
+  justify-content: space-between; /* 가로 방향으로 배치 */
+  align-items: center; /* 세로 중앙 정렬 */
+  background-color: rgba(255, 255, 255, 0); /* 투명한 흰색 배경 */
+  color: white; /* 글자 색상 흰색 */
+  padding: 10px; /* 패딩 추가 */
+  border-radius: 8px; /* 모서리 둥글게 */
+  font-size: 40px;
+}
+
+.Ranking__member span {
+  flex: 1; /* 균일한 공간 배분 */
+  text-align: center; /* 가운데 정렬 */
+  margin: 0 30px;
+}
