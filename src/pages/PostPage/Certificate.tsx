@@ -136,6 +136,7 @@ const Certificate = () => {
                           content: post.content,
                           userName: post.userName,
                           time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
+                          newTime: post.updateAt,
                           userId: post.userId,
                         },
                       })
