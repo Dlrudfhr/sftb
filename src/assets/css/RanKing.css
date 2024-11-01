@@ -9,6 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "DungGeunMo", sans-serif;
 }
 
 .Ranking__table {
