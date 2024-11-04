@@ -23,6 +23,7 @@ const Coding = () => {
   const highElement = useRef<null | HTMLDivElement>(null); // 상단으로 돌아가기 버튼
   const [posts, setPosts] = useState<Post[]>([]); // 게시물 목록 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
+  const [isAdmin, setIsAdmin] = useState(false);
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
   const [searchKey, setSearchKey] = useState("제목"); // 검색 기준 상태
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
@@ -47,7 +48,23 @@ const Coding = () => {
       }
     };
     fetchPosts();
+    checkAdminStatus();
   }, []);
+
+  // 관리자 여부 확인 함수
+  const checkAdminStatus = async () => {
+    try {
+      const userID = localStorage.getItem("memberId"); // 로컬 스토리지에서 userID 가져오기
+      if (userID) {
+        const response = await axios.get(
+          `http://localhost:8080/api/auth/users/${userID}/isAdmin`
+        );
+        setIsAdmin(response.data.isAdmin); // true면 관리자
+      }
+    } catch (error) {
+      console.error("Error checking admin status:", error);
+    }
+  };
 
   // 글자수 제한
   interface PostProps {
@@ -137,14 +154,16 @@ const Coding = () => {
             </span>
           </div>
 
-          {/*게시글 작성 페이지로 이동 */}
-          <div className="Coding_write">
-            <Link to="/PostWrite" state={{ boardId: 7 }}>
-              <button type="submit" className="Coding_toWrite">
-                작성하기
-              </button>
-            </Link>
-          </div>
+          {/* 작성하기 버튼 - 관리자만 접근 가능 */}
+          {isAdmin && (
+            <div className="Coding_write">
+              <Link to="/PostWrite" state={{ boardId: 7 }}>
+                <button type="submit" className="Coding_toWrite">
+                  작성하기
+                </button>
+              </Link>
+            </div>
+          )}
         </div>
 
         <div className="Certificate_postline">
@@ -152,10 +171,7 @@ const Coding = () => {
             <div>Loading...</div>
           ) : (
             <ul className="Certificate_postline1">
-              {filteredPosts.map(
-                (
-                  post
-                ) => (
+              {filteredPosts.map((post) => (
                 <li key={post.postId}>
                   <div
                     className="Certificate_card"
