@@ -77,7 +77,6 @@ const Store: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   ? `${tokenCount.toLocaleString()} coin`
                   : "로딩 중..."}
               </div>
-              <div className="Store__coin">1,000 coin</div>
               <div className=""></div>
             </div>
           </div>

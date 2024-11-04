@@ -109,6 +109,11 @@ function PostWrite() {
         );
 
         if (response.status === 200) {
+          const userLevelExperience = 10;
+          await axios.put(`/api/auth/experience`, {
+            userId: userID,
+            userLevelExperience,
+          });
           navigate("/Main");
         } else {
           setErrorMessage("게시물 작성에 실패했습니다.");
