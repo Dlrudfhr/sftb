@@ -24,10 +24,13 @@ function PostWrite() {
     if (state) {
       console.log("PostWrite state:", state); // state 전체 출력
       const { title, content, postId } = state; // 이전 페이지에서 받은 데이터
-      setTitle(title); // 제목 설정
-      setContent(content); // 내용 설정
-      setPostID(postId); // 게시물 고유 번호 설정
+      setTitle(title || ""); // 제목 설정
+      setContent(content || ""); // 내용 설정
+      setPostID(postId || ""); // 게시물 고유 번호 설정
     } else {
+      setTitle(""); // 초기화
+      setContent(""); // 초기화
+      setPostID(""); // 초기화
       console.log("No state received"); // state가 없을 경우 로그 출력
     }
   }, [state]);
