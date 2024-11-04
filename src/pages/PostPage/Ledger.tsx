@@ -156,7 +156,7 @@ const Ledger = () => {
           {/* 작성하기 버튼 - 관리자만 접근 가능 */}
           {isAdmin && (
             <div className="Coding_write">
-              <Link to="/PostWrite" state={{ boardId: 7 }}>
+              <Link to="/PostWrite" state={{ boardId: 9 }}>
                 <button type="submit" className="Coding_toWrite">
                   작성하기
                 </button>
