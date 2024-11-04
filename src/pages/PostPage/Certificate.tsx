@@ -23,6 +23,8 @@ const Certificate = () => {
   const highElement = useRef<null | HTMLDivElement>(null); // 상단으로 돌아가기 버튼
   const [posts, setPosts] = useState<Post[]>([]); // 게시물 목록 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
+  const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
+  const [searchKey, setSearchKey] = useState("제목"); // 검색 기준 상태
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
 
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
@@ -66,6 +68,26 @@ const Certificate = () => {
     return <p>{truncatedContent}</p>;
   };
 
+  //검색어와 게시글 비교할때 띄워쓰기 제거
+  const removeSpaces = (str: string) => {
+    return str.replace(/\s+/g, ""); // 모든 공백 제거
+  };
+
+  const filteredPosts = posts.filter((post) => {
+    const lowerCaseSearchTerm = removeSpaces(searchTerm.toLowerCase()); // 검색어에서 띄어쓰기 제거, 소문자로 변환
+    const lowerCaseTitle = removeSpaces(post.title.toLowerCase()); // 게시물 제목에서 띄어쓰기 제거, 소문자로 변환
+    const lowerCaseContent = removeSpaces(post.content.toLowerCase()); // 게시물 내용에서 띄어쓰기 제거, 소문자로 변환
+    const lowerCaseUserName = removeSpaces(post.userName.toLowerCase()); // 작성자 이름에서 띄어쓰기 제거, 소문자로 변환
+    if (searchKey === "제목") {
+      return lowerCaseTitle.includes(lowerCaseSearchTerm);
+    } else if (searchKey === "내용") {
+      return lowerCaseContent.includes(lowerCaseSearchTerm);
+    } else if (searchKey === "등록자명") {
+      return lowerCaseUserName.includes(lowerCaseSearchTerm);
+    }
+    return true; // 기본적으로 모든 게시물을 반환
+  });
+
   return (
     <>
       <Header />
@@ -84,7 +106,11 @@ const Certificate = () => {
         <div className="Certificate_Search">
           <div className="Certificate_Search_form">
             <div className="Certificate_filter">
-              <select className="Certificate_search_key">
+              <select
+                className="Certificate_search_key"
+                value={searchKey}
+                onChange={(e) => setSearchKey(e.target.value)}
+              >
                 <option>--검색선택--</option>
                 <option>제목</option>
                 <option>내용</option>
@@ -96,6 +122,8 @@ const Certificate = () => {
                 className="Certificate_search_txt"
                 type="text"
                 placeholder="검색어를 입력하세요."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
           </div>
@@ -105,7 +133,8 @@ const Certificate = () => {
         <div className="Certificate_Number">
           <div className="Certificate_postNumber">
             <span>
-              총 게시물 <strong>{posts.length}</strong>
+              총 게시물 <strong>{filteredPosts.length}</strong>{" "}
+              {/* 필터링된 게시물 수 */}
             </span>
           </div>
 
@@ -124,7 +153,10 @@ const Certificate = () => {
             <div>Loading...</div>
           ) : (
             <ul className="Certificate_postline1">
-              {posts.map((post) => (
+              {filteredPosts.map (
+                (
+                  post
+                ) => (
                 <li key={post.postId}>
                   <div
                     className="Certificate_card"
