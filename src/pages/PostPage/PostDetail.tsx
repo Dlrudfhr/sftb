@@ -30,7 +30,7 @@ interface Comment {
 const PostDetail: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { title, content, userName, time } = state || {};
+  const { title, content, userName, time, newTime } = state || {};
   const { postId } = useParams<{ postId: string }>();
   const [hasAdoptedComment, setHasAdoptedComment] = useState(false); // 상태 추가
   const [comments, setComments] = useState<Comment[]>([]);
@@ -83,8 +83,7 @@ const PostDetail: React.FC = () => {
     const day = String(date.getDate()).padStart(2, "0");
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
-    const seconds = String(date.getSeconds()).padStart(2, "0");
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    return `${year}-${month}-${day} ${hours}:${minutes}`;
   };
   //버튼 클릭시 ref를 받아와 요소로 이동하는 스크롤 이벤트
   const onMoveBox = (ref: React.RefObject<HTMLInputElement>) => {
@@ -158,6 +157,12 @@ const PostDetail: React.FC = () => {
       );
 
       if (response.status === 200) {
+        const userLevelExperience = -10; // 부여할 레벨 경험치 값
+        const userId = getCurrentUserId();
+        await axios.put(`/api/auth/experience`, {
+          userId: userId,
+          userLevelExperience,
+        });
         alert("게시물이 삭제되었습니다.");
         navigate("/Certificate"); // 삭제 후 목록으로 이동
       } else {
@@ -221,7 +226,7 @@ const PostDetail: React.FC = () => {
     if (!commentInput) return;
     const userName = localStorage.getItem("userName"); // 로컬 스토리지에서 userName 가져오기
     const userId = getCurrentUserId(); // 사용자 ID 가져오기
-    const userLevelExperience = 60; // 부여할 레벨 경험치 값
+    const userLevelExperience = 10; // 부여할 레벨 경험치 값
     console.log("Comment Input:", commentInput);
     console.log("Post ID:", postId);
     console.log("User Name:", userName);
@@ -234,10 +239,13 @@ const PostDetail: React.FC = () => {
         memberId: userName,
       });
       if (commentResponse.status === 200) {
-        await axios.put(`/api/auth/experience`, {
-          userId: userId,
-          userLevelExperience,
-        });
+        const postAuthorId = commentResponse.data.postAuthorId;
+        if (userId !== postAuthorId) { // 댓글 작성자가 게시글 작성자와 다를 경우
+          await axios.put(`/api/auth/experience`, {
+            userId: userId,
+            userLevelExperience,
+          });
+        }
         setCommentInput("");
         fetchComments();
       }
@@ -271,10 +279,13 @@ const PostDetail: React.FC = () => {
       });
       // 대댓글 추가가 성공한 경우에만 경험치 추가 요청
       if (replyResponse.status === 200) {
-        await axios.put(`/api/auth/experience`, {
-          userId: userId,
-          userLevelExperience,
-        });
+        const postAuthorId = replyResponse.data.postAuthorId;
+        if (userId !== postAuthorId) { // 대댓글 작성자가 게시글 작성자와 다를 경우
+          await axios.put(`/api/auth/experience`, {
+            userId: userId,
+            userLevelExperience,
+          });
+        }
         setReplyInput({ ...replyInput, [parentId]: "" });
         fetchComments();
       }
@@ -305,7 +316,7 @@ const PostDetail: React.FC = () => {
         title,
         content,
         userName,
-        time: updatedTime, // 수정된 시간을 현재 시간으로 설정
+        newTime, // 수정된 시간을 현재 시간으로 설정
         postId, // 게시물 ID 추가
       },
     });
@@ -365,11 +376,13 @@ const PostDetail: React.FC = () => {
         );
         // 댓글 삭제가 성공한 경우에만 경험치 차감 요청
         if (deleteResponse.status === 200) {
-          await axios.put(`/api/auth/experience`, {
-            userId: userId,
-            userLevelExperience,
-          });
-
+          const postAuthorId = deleteResponse.data;
+          if (userId !== postAuthorId) {
+            await axios.put(`/api/auth/experience`, {
+              userId: userId,
+              userLevelExperience,
+            });
+          }
           if (tierExperience < 0) {
             await axios.put(`/api/auth/tier-experience`, {
               // 티어 경험치 차감 API 호출
@@ -444,10 +457,13 @@ const PostDetail: React.FC = () => {
         );
         // 대댓글 삭제가 성공한 경우에만 경험치 차감 요청
         if (deleteResponse.status === 200) {
-          await axios.put(`/api/auth/experience`, {
-            userId: userId,
-            userLevelExperience,
-          });
+            const postAuthorId = deleteResponse.data;
+            if (userId !== postAuthorId) {
+              await axios.put(`/api/auth/experience`, {
+                userId: userId,
+                userLevelExperience,
+              });
+            }
           // 티어 경험치 차감 요청 (채택된 대댓글일 경우)
           if (tierExperience < 0) {
             await axios.put(`/api/auth/tier-experience`, {
@@ -541,7 +557,11 @@ const PostDetail: React.FC = () => {
               <div className="PostDetail_middle">
                 <div className="PostDetail_writer">{userName || "작성자"}</div>
                 <div className="PostDetail_time">
-                  {time ? formatDate(time) : "몇 분전"}
+                  {newTime
+                    ? formatDate(newTime)
+                    : time
+                    ? formatDate(time)
+                    : "몇 분전"}
                 </div>
                 <div className="PostDetail_more">
                   <div onClick={handleMoreClick}>

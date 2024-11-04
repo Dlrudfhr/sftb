@@ -1,7 +1,4 @@
 @import url("Font.css");
-body {
-  font-family: "DungGeunMo", sans-serif;
-}
 
 .Ranking__container {
   background-image: url("../images/figmaSlide.png");
@@ -12,6 +9,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: "DungGeunMo", sans-serif;
 }
 
 .Ranking__table {
