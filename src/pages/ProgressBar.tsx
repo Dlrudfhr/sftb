@@ -9,8 +9,8 @@ interface ProgressBarProps {
 }
 
 const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
-  const [progress, setProgress] = useState(0); // 첫 번째 게이지에 반영될 경험치 상태
-  const [tierProgress, setTierProgress] = useState(0); // 두 번째 게이지를 위한 상태
+  const [progress, setProgress] = useState(0); // 레벨 게이지에 반영될 경험치 상태
+  const [tierProgress, setTierProgress] = useState(0); // 티어 게이지에 반영될 경험치 상태
   const [totalExperience, setTotalExperience] = useState(100); // 총 경험치 (예: 100)
   const [expanded, setExpanded] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -31,8 +31,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
           const response = await axios.get(
             `http://localhost:8080/api/auth/users/${userId}/experience`
           );
-          setProgress(response.data.userLevelExperience); // 첫 번째 게이지 - 레벨 경험치 반영
-          setTierProgress(response.data.tierExperience); // 두 번째 게이지 - 티어 경험치 반영
+          setProgress(response.data.userLevelExperience); //  레벨 경험치 반영
+          setTierProgress(response.data.tierExperience); //  티어 경험치 반영
           setTotalExperience(100); // 총 경험치 설정 (예: 100)
         }
       } catch (error) {
@@ -129,26 +129,26 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
             </ul>
           </div>
         <div className="ProgressBar__expandedProgress">
-               {/* 첫 번째 게이지 - 경험치 */}
+               {/* 첫 번째 게이지 - 티어 경험치 */}
           <div className="ProgressBar__progressBg">
           <div
               className="ProgressBar__progressFill"
-              style={{ width: `${progress}%` }} // 첫 번째 게이지 - 사용자 경험치
+              style={{ width: `${tierProgress}%` }} // 첫 번째 게이지 - 티어 경험치
               />
           </div>
            <div className="ProgressBar__labelContainer">
-            <span className="ProgressBar__label">경험치: {progress} / 100</span> {/* 경험치 표시 */}
+            <span className="ProgressBar__label">티어: {tierProgress} / 100</span> {/* 경험치 표시 */}
           </div>
 
-              {/* 두 번째 게이지 - Tier */}
+              {/* 두 번째 게이지 - 레벨 경험치 */}
           <div className="ProgressBar__progressBg">
           <div
               className="ProgressBar__progressFill"
-              style={{ width: `${tierProgress}%` }} // 두 번째 게이지 - tierProgress 예시값
+              style={{ width: `${progress}%` }} // 두 번째 게이지 - 레벨 경험치
               />
           </div>
             <div className="ProgressBar__labelContainer">
-              <span className="ProgressBar__label">티어: {tierProgress} / 100</span> {/* 티어 표시 */}
+              <span className="ProgressBar__label">경험치: {progress} / 100</span> {/* 티어 표시 */}
           </div>
       </div>
 
