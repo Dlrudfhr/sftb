@@ -32,6 +32,24 @@ function PostWrite() {
     }
   }, [state]);
 
+    // boardId에 따라 해당 게시판 URL로 이동하도록 수정
+const handleGoToList = () => {
+  const boardUrlMap: { [key: number]: string } = {
+    1: "/QnA",
+    2: "/Certificate",
+    3: "/Share",
+    4: "/FreePost",
+    5: "/Mentor_mentee",
+    6: "/Project",
+    7: "/Coding",
+    8: "/Marketplace",
+    9: "/Ledger",
+    // 추가 게시판이 있다면 여기서 추가
+  };
+  const boardUrl = boardUrlMap[boardId] || "/Main"; // 기본값은 Main
+  navigate(boardUrl);
+};
+
   // 게시물 제출 함수
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault(); // 폼 제출 시 페이지 리로드 방지
@@ -114,7 +132,22 @@ function PostWrite() {
             userId: userID,
             userLevelExperience,
           });
-          navigate("/Main");
+         // boardId에 따라 해당 게시판 URL로 리다이렉트
+         const boardUrlMap: { [key: number]: string } = {
+          1: "/QnA",
+          2: "/Certificate",
+          3: "/Share",
+          4: "/FreePost",
+          5: "/Mentor_mentee",
+          6: "/Project",
+          7: "/Coding",
+          8: "/Marketplace",
+          9: "/Ledger",
+          // 추가 게시판이 있다면 여기서 추가
+        };
+      
+        const boardUrl = boardUrlMap[boardId] || "/Main"; // 기본값은 Main
+        navigate(boardUrl);
         } else {
           setErrorMessage("게시물 작성에 실패했습니다.");
         }
@@ -165,11 +198,9 @@ function PostWrite() {
             </div>
           )}
           <div className="PostWrite_btns">
-            <button
-              className="PostWrite_golist"
-              onClick={() => (window.location.href = "/Certificate")}
-            >
-              목록
+          <button className="PostWrite_golist" onClick={handleGoToList}>
+                 목록
+             
             </button>
             <button className="post_button" type="submit">
               {state && state.postId ? "수정하기" : "작성하기"}
