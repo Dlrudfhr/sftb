@@ -23,12 +23,11 @@
   fill: transparent;
   stroke-width: 10;
   transition: stroke-dashoffset 0.35s;
-  animation: progress-animation 1s ease-out forwards;
-}
+  animation: progress-animation 1s ease-out forwards;}
 
 @keyframes progress-animation {
   from {
-    stroke-dashoffset: 360;
+    stroke-dashoffset: 300;/* 이 부분을 360에서 300으로 변경함 <동그란 게이지의 시작점>*/
   }
   to {
     stroke-dashoffset: var(--offset);

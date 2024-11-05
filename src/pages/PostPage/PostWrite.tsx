@@ -24,14 +24,18 @@ function PostWrite() {
     if (state) {
       console.log("PostWrite state:", state); // state 전체 출력
       const { title, content, postId } = state; // 이전 페이지에서 받은 데이터
-      setTitle(title); // 제목 설정
-      setContent(content); // 내용 설정
-      setPostID(postId); // 게시물 고유 번호 설정
+      setTitle(title || ""); // 제목 설정
+      setContent(content || ""); // 내용 설정
+      setPostID(postId || ""); // 게시물 고유 번호 설정
     } else {
+      setTitle(""); // 초기화
+      setContent(""); // 초기화
+      setPostID(""); // 초기화
       console.log("No state received"); // state가 없을 경우 로그 출력
     }
   }, [state]);
-  // boardId에 따라 해당 게시판 URL로 이동하도록 수정
+
+    // boardId에 따라 해당 게시판 URL로 이동하도록 수정
 const handleGoToList = () => {
   const boardUrlMap: { [key: number]: string } = {
     1: "/QnA",
@@ -45,11 +49,9 @@ const handleGoToList = () => {
     9: "/Ledger",
     // 추가 게시판이 있다면 여기서 추가
   };
-
   const boardUrl = boardUrlMap[boardId] || "/Main"; // 기본값은 Main
   navigate(boardUrl);
 };
-
 
   // 게시물 제출 함수
   const handleSubmit = async (event: React.FormEvent) => {
@@ -126,25 +128,29 @@ const handleGoToList = () => {
             },
           }
         );
-        
 
         if (response.status === 200) {
-          // boardId에 따라 해당 게시판 URL로 리다이렉트
-          const boardUrlMap: { [key: number]: string } = {
-            1: "/QnA",
-            2: "/Certificate",
-            3: "/Share",
-            4: "/FreePost",
-            5: "/Mentor_mentee",
-            6: "/Project",
-            7: "/Coding",
-            8: "/Marketplace",
-            9: "/Ledger",
-            // 추가 게시판이 있다면 여기서 추가
-          };
-        
-          const boardUrl = boardUrlMap[boardId] || "/Main"; // 기본값은 Main
-          navigate(boardUrl);
+          const userLevelExperience = 10;
+          await axios.put(`/api/auth/experience`, {
+            userId: userID,
+            userLevelExperience,
+          });
+         // boardId에 따라 해당 게시판 URL로 리다이렉트
+         const boardUrlMap: { [key: number]: string } = {
+          1: "/QnA",
+          2: "/Certificate",
+          3: "/Share",
+          4: "/FreePost",
+          5: "/Mentor_mentee",
+          6: "/Project",
+          7: "/Coding",
+          8: "/Marketplace",
+          9: "/Ledger",
+          // 추가 게시판이 있다면 여기서 추가
+        };
+      
+        const boardUrl = boardUrlMap[boardId] || "/Main"; // 기본값은 Main
+        navigate(boardUrl);
         } else {
           setErrorMessage("게시물 작성에 실패했습니다.");
         }
@@ -195,10 +201,10 @@ const handleGoToList = () => {
             </div>
           )}
           <div className="PostWrite_btns">
-            
           <button className="PostWrite_golist" onClick={handleGoToList}>
                  목록
-             </button>
+             
+            </button>
             <button className="post_button" type="submit">
               {state && state.postId ? "수정하기" : "작성하기"}
             </button>
