@@ -1,5 +1,7 @@
 
 .Store__background{
+  margin-top:100px;
+  height: 800px;
   background: url("../images/다운로드\ \(1\).jpg");
   z-index: -1;
 }
@@ -18,7 +20,6 @@
 
   .Store__frame{
     width: 70%;
-    height: 685px;
     background-color: #009b64;
     margin: auto;
     border-top-left-radius: 40px;
