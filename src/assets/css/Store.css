@@ -1,8 +1,9 @@
+@import url("Font.css");
 
 .Store__background{
   margin-top:100px;
   height: 800px;
-  background: url("../images/다운로드\ \(1\).jpg");
+  background-image: url("../images/배경_초록.jpg");
   z-index: -1;
 }
 .Store__h1 {
@@ -18,29 +19,42 @@
   backdrop-filter: blur(5px);
 }
 
+/*카테고리 전환 버튼 모음*/
+.Store__category{
+  display:flex;
+  margin:auto;
+}
+
+/*카테고리 전환 버튼*/
+.Store__cateBtn{
+  margin-right:10px;
+  width: 120px;
+  height: 20px;
+  background-color: red;
+
+}
+
 .Store__frame {
   width: 70%;
-  background-color: #009b64;
+  background-image:url("../images/자판기_초록.png");
+  background-size: 1920px 900px;
+  background-position: center;
   margin: auto;
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
   padding: 15px;
 }
 
 .Store__innerFrame {
-  border: solid 0.667px white;
-  border-top-left-radius: 40px;
-  border-top-right-radius: 40px;
+
   padding: 30px;
+  height:700px;
 }
 
 .Store__productLine1,
 .Store__productLine2 {
-  height: 250px;
-  /* background-color: #d2d2d2; */
-  margin-bottom: 30px;
+  height: 160px;
+  width: 83%;
   display: flex;
-  padding: 5px;
+  margin:auto;
 }
 
 .Store__prodBlock {
@@ -48,8 +62,8 @@
 }
 
 .Store__product {
-  width: 180px;
-  height: 180px;
+  width: 150px;
+  height: 150px;
   background-color: #d9d9d9;
 }
 
@@ -66,7 +80,8 @@
   width: 150px;
   background-color: white;
   height: 50px;
-  font-size: 25px;
+  font-size: 30px;
   text-align: center;
   border-radius: 8px;
+  font-family: "LAB디지털";
 }
