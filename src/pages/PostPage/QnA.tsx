@@ -61,16 +61,16 @@ const QnA = () => {
     return <p>{truncatedContent}</p>;
   };
 
-  //검색어와 게시글 비교할때 띄워쓰기 제거
-  const removeSpaces = (str: string) => {
-    return str.replace(/\s+/g, ""); // 모든 공백 제거
-  };
-
   // 게시글 제목 글자수 제한 컴포넌트
   const PostTitle: React.FC<PostProps> = ({ content }) => {
     const truncatedContent =
       content.length > 11 ? content.substring(0, 11) + "..." : content;
     return <p>{truncatedContent}</p>;
+  };
+
+  //검색어와 게시글 비교할때 띄워쓰기 제거
+  const removeSpaces = (str: string) => {
+    return str.replace(/\s+/g, ""); // 모든 공백 제거
   };
 
   const filteredPosts = posts.filter((post) => {
