@@ -26,7 +26,7 @@ const Share = () => {
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
   const [searchKey, setSearchKey] = useState("제목"); // 검색 기준 상태
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
-  
+
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -68,8 +68,8 @@ const Share = () => {
     return <p>{truncatedContent}</p>;
   };
 
-   //검색어와 게시글 비교할때 띄워쓰기 제거
-   const removeSpaces = (str: string) => {
+  //검색어와 게시글 비교할때 띄워쓰기 제거
+  const removeSpaces = (str: string) => {
     return str.replace(/\s+/g, ""); // 모든 공백 제거
   };
 
@@ -152,10 +152,7 @@ const Share = () => {
             <div>Loading...</div>
           ) : (
             <ul className="Certificate_postline1">
-              {filteredPosts.map(
-                (
-                  post
-                ) => (
+              {filteredPosts.map((post) => (
                 <li key={post.postId}>
                   <div
                     className="Certificate_card"
@@ -169,6 +166,7 @@ const Share = () => {
                           time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
                           newTime: post.updateAt,
                           userId: post.userId,
+                          boardId: 3,
                         },
                       })
                     }

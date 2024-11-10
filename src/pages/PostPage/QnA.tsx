@@ -169,6 +169,7 @@ const QnA = () => {
                             time: post.createAt, // 생성 시간을 상태로 전달
                             newTime: post.updateAt,
                             userId: post.userId,
+                            boardId: 1,
                           },
                         })
                       }

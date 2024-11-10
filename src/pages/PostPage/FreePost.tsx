@@ -152,10 +152,7 @@ const FreePost = () => {
             <div>Loading...</div>
           ) : (
             <ul className="Certificate_postline1">
-              {filteredPosts.map(
-                (
-                  post
-                ) => (
+              {filteredPosts.map((post) => (
                 <li key={post.postId}>
                   <div
                     className="Certificate_card"
@@ -169,6 +166,7 @@ const FreePost = () => {
                           time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
                           newTime: post.updateAt,
                           userId: post.userId,
+                          boardId: 4,
                         },
                       })
                     }

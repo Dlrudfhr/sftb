@@ -68,8 +68,8 @@ const Marketplace = () => {
     return <p>{truncatedContent}</p>;
   };
 
-   //검색어와 게시글 비교할때 띄워쓰기 제거
-   const removeSpaces = (str: string) => {
+  //검색어와 게시글 비교할때 띄워쓰기 제거
+  const removeSpaces = (str: string) => {
     return str.replace(/\s+/g, ""); // 모든 공백 제거
   };
 
@@ -152,10 +152,7 @@ const Marketplace = () => {
             <div>Loading...</div>
           ) : (
             <ul className="Certificate_postline1">
-              {filteredPosts.map(
-                (
-                  post
-                ) => (
+              {filteredPosts.map((post) => (
                 <li key={post.postId}>
                   <div
                     className="Certificate_card"
@@ -169,6 +166,7 @@ const Marketplace = () => {
                           time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
                           newTime: post.updateAt,
                           userId: post.userId,
+                          boardId: 8,
                         },
                       })
                     }
