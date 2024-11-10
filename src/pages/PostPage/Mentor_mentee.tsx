@@ -40,6 +40,7 @@ const Mentor_mentee = () => {
           params: { boardId: 5 }, // 여기서 Board_ID를 쿼리 파라미터로 전달
         });
         setPosts(response.data); // 게시물 데이터 상태에 저장
+        console.log(response.data);
         setLoading(false); // 로딩 완료
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -137,7 +138,6 @@ const Mentor_mentee = () => {
             </span>
           </div>
 
-          {/*게시글 작성 페이지로 이동 */}
           <div className="Coding_write">
             <Link to="/PostWrite" state={{ boardId: 5 }}>
               <button type="submit" className="Coding_toWrite">
@@ -152,15 +152,12 @@ const Mentor_mentee = () => {
             <div>Loading...</div>
           ) : (
             <ul className="Certificate_postline1">
-              {filteredPosts.map(
-                (
-                  post
-                ) => (
+              {filteredPosts.map((post) => (
                 <li key={post.postId}>
                   <div
                     className="Certificate_card"
                     onClick={() =>
-                      navigate(`/PostDetail/${post.postId}`, {
+                      navigate(`/PostAdopt/${post.postId}`, {
                         state: {
                           postId: post.postId,
                           title: post.title,
@@ -169,6 +166,7 @@ const Mentor_mentee = () => {
                           time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
                           newTime: post.updateAt,
                           userId: post.userId,
+                          boardId: 5,
                         },
                       })
                     }
