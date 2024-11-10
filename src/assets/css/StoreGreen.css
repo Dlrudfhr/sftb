@@ -1,0 +1,171 @@
+@import url("Font.css");
+
+.StoreGreen__background {
+  background-image: url("../images/자판기배경_초록.jpg");
+  z-index: 0;
+  position: relative;
+  margin-top: 100px;
+  height: 89vh; /* 전체 뷰포트 높이에 맞춤 */
+}
+
+.StoreGreen__section {
+  width: 70%;
+  margin: auto;
+}
+
+/*카테고리 전환 버튼 모음*/
+.StoreGreen__category {
+  display: flex;
+  margin: auto;
+}
+
+/*카테고리 전환 버튼*/
+.StoreGreen__cateBtn {
+  margin-right: 10px;
+  width: 120px;
+  height: 20px;
+  background-color: red;
+}
+
+.StoreGreen__frame {
+  margin-top: 100px;
+  position: fixed;
+  width: 737px;
+  height: 710px;
+  top: 119px;
+  left: 591px;
+  z-index: 2;
+}
+
+.StoreGreen__innerFrame {
+  padding: 50px;
+  height: 710px;
+}
+
+.StoreGreen__productLine1 {
+  display: flex;
+  margin-top: 28px;
+  margin-left: 35px;
+}
+.StoreGreen__productLine2 {
+  display: flex;
+  margin-top: 42px;
+  margin-left: 35px;
+}
+
+.StoreGreen__product {
+  width: 7.3125rem;
+  height: 7.3125rem;
+  background-color: #d9d9d9;
+  margin-right: 34px;
+}
+
+.StoreGreen__selectBtnLine1 {
+  display: flex;
+  flex-wrap: nowrap; /* 줄 바꿈을 방지 */
+}
+
+.StoreGreen__selectBtn1 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 11px;
+  margin-left: 56px;
+}
+
+.StoreGreen__selectBtn2 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 9px;
+  margin-left: 73.5px;
+}
+
+.StoreGreen__selectBtn3 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 9px;
+  margin-left: 75px;
+}
+.StoreGreen__selectBtn4 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 9px;
+  margin-left: 75.9px;
+}
+
+.StoreGreen__selectBtnLine2 {
+  display: flex;
+  flex-wrap: nowrap; /* 줄 바꿈을 방지 */
+}
+.StoreGreen__selectBtn5 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 30px;
+  margin-left: 54px;
+}
+.StoreGreen__selectBtn6 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 30px;
+  margin-left: 75.5px;
+}
+
+.StoreGreen__selectBtn7 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 30px;
+  margin-left: 75px;
+}
+.StoreGreen__selectBtn8 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 30px;
+  margin-left: 75.9px;
+}
+
+.StoreGreen__coin {
+  width: 200px;
+  height: 54px;
+  background-color: #ff000000;
+
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  justify-content: center;
+  font-family: "DS-DIGIB";
+
+  margin-top: 62px;
+  margin-left: 330px;
+  display: flex;
+}
+
+.StoreGreen__cointext {
+  font-size: 22px;
+  margin-left: 10px;
+  padding-top: 15px;
+  align-self: center;
+  color: white;
+}

@@ -2,7 +2,9 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/loginPage";
 import DefaultLayout from "./pages/DefaultLayout";
-import Store from "./pages/Store";
+import StoreGreen from "./pages/StoreGreen";
+import StoreRed from "./pages/StoreRed";
+import StoreYellow from "./pages/StoreYellow";
 import Information from "./pages/Information";
 import SiteIntroduce from "./pages/SiteIntroduce";
 import RanKing from "./pages/RanKing";
@@ -35,7 +37,9 @@ interface RouteProps {
 
 const routes: Array<RouteProps> = [
   { path: "/", component: LoginPage, anonymous: true },
-  { path: "/store", component: Store },
+  { path: "/storeGreen", component: StoreGreen },
+  { path: "/storeRed", component: StoreRed },
+  { path: "/storeYellow", component: StoreYellow },
   { path: "/information", component: Information },
   { path: "/signup", component: SignUpPage, anonymous: true },
   { path: "/SearchIdPage", component: SearchIdPage, anonymous: true },
@@ -61,27 +65,23 @@ const routes: Array<RouteProps> = [
 
 function App() {
   return (
-      <Routes>
-        {routes.map((route, idx) => {
-          if (route.anonymous) {
-            return (
-              <Route
-                path={route.path}
-                element={<route.component />}
-                key={idx}
-              />
-            );
-          } else {
-            return (
-              <Route
-                path={route.path}
-                element={<PrivateRoute component={route.component} />}
-                key={idx}
-              />
-            );
-          }
-        })}
-      </Routes>
+    <Routes>
+      {routes.map((route, idx) => {
+        if (route.anonymous) {
+          return (
+            <Route path={route.path} element={<route.component />} key={idx} />
+          );
+        } else {
+          return (
+            <Route
+              path={route.path}
+              element={<PrivateRoute component={route.component} />}
+              key={idx}
+            />
+          );
+        }
+      })}
+    </Routes>
   );
 }
 
