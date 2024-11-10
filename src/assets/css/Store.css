@@ -30,16 +30,41 @@
   margin-right: 10px;
   width: 120px;
   height: 20px;
-  background-color: red;
+  border:0.667px solid white;
+  cursor:pointer;
 }
 
-.Store__frame {
-  width: 70%;
+
+@keyframes motion {
+  0% {margin-top: 0px;}
+	100% {margin-top: 10px;}
+}
+
+.Store__area{
+  display: flex;
+}
+.Store__left{
+  width: 400px;
+}
+
+/**/
+.Store__move{
+  width: 100px;
+  height: 100px;
+  animation: motion 0.5s linear 0s infinite alternate; 
+  margin-top: 0;
+}
+
+.Store__middle {
+  width: 100%;
   background-image: url("../images/자판기_초록.png");
   background-size: 1920px 900px;
   background-position: center;
-  margin: auto;
   padding: 15px;
+}
+
+.Store__right{
+  width: 400px;
 }
 
 .Store__innerFrame {
@@ -62,7 +87,7 @@
 .Store__product {
   width: 150px;
   height: 150px;
-  background-color: #d9d9d9;
+  /* background-color: #d9d9d9; */
 }
 
 .Store__selectBtn {
@@ -82,4 +107,9 @@
   text-align: center;
   border-radius: 8px;
   font-family: "DS-DIGIB";
+  background-color: transparent;
+  float: right;
+  margin-right:200px;
+  margin-top:135px;
+  color:white;
 }

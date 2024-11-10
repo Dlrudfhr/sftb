@@ -6,6 +6,8 @@ import "../assets/css/Store.css";
 import background from "../assets/images/자판기_초록.png";
 import background2 from "../assets/images/자판기_노랑.png";
 import star from "../assets/images/기프티콘사진/star_americano.jpg";
+import coffee from "../assets/images/자산 1.png";
+import cake from "../assets/images/자산 2.png";
 
 const Store: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [tokenCount, setTokenCount] = useState<number | null>(null);
@@ -49,58 +51,58 @@ const Store: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <div className="Store__background">
         <div className="Store__section">
           <div className="Store__h1">_</div>
-          <div className="Store__category">
-            <div className="Store__cateBtn">편의점</div>
-            <div className="Store__cateBtn" onClick={handleClick}>
-              카페
+          <div className="Store__area">
+            <div className="Store__left">
+              <img src={coffee} className="Store__move"></img>
+              <img src={cake} className="Store__move"></img>
             </div>
-            <div className="Store__cateBtn">카테고리 3</div>
-          </div>
+            <div className="Store__middle">
+              <div className="Store__innerFrame">
+                <div className="Store__productLine1">
+                  <div className="Store__prodBlock">
+                    <img src={star} className="Store__product"></img>
+                    {/* <div className="Store__selectBtn">SELECT</div> */}
+                  </div>
+                  <div className="Store__prodBlock">
+                    <div className="Store__product"></div>
+                    {/* <div className="Store__selectBtn">SELECT</div> */}
+                  </div>
+                  <div className="Store__prodBlock">
+                    <div className="Store__product"></div>
+                    {/* <div className="Store__selectBtn">SELECT</div> */}
+                  </div>
+                  <div className="Store__prodBlock">
+                    <div className="Store__product"></div>
+                    {/* <div className="Store__selectBtn">SELECT</div> */}
+                  </div>
+                </div>
 
-          <div className="Store__frame">
-            <div className="Store__innerFrame">
-              <div className="Store__productLine1">
-                <div className="Store__prodBlock">
-                  <img src={star} className="Store__product"></img>
-                  {/* <div className="Store__selectBtn">SELECT</div> */}
+                <div className="Store__productLine2">
+                  <div className="Store__prodBlock">
+                    <div className="Store__product"></div>
+                    {/* <div className="Store__selectBtn">SELECT</div> */}
+                  </div>
+                  <div className="Store__prodBlock">
+                    <div className="Store__product"></div>
+                    {/* <div className="Store__selectBtn">SELECT</div> */}
+                  </div>
+                  <div className="Store__prodBlock">
+                    <div className="Store__product"></div>
+                    {/* <div className="Store__selectBtn">SELECT</div> */}
+                  </div>
+                  <div className="Store__prodBlock">
+                    <div className="Store__product"></div>
+                    {/* <div className="Store__selectBtn">SELECT</div> */}
+                  </div>
                 </div>
-                <div className="Store__prodBlock">
-                  <div className="Store__product"></div>
-                  {/* <div className="Store__selectBtn">SELECT</div> */}
-                </div>
-                <div className="Store__prodBlock">
-                  <div className="Store__product"></div>
-                  {/* <div className="Store__selectBtn">SELECT</div> */}
-                </div>
-                <div className="Store__prodBlock">
-                  <div className="Store__product"></div>
-                  {/* <div className="Store__selectBtn">SELECT</div> */}
-                </div>
-              </div>
-
-              <div className="Store__productLine2">
-                <div className="Store__prodBlock">
-                  <div className="Store__product"></div>
-                  {/* <div className="Store__selectBtn">SELECT</div> */}
-                </div>
-                <div className="Store__prodBlock">
-                  <div className="Store__product"></div>
-                  {/* <div className="Store__selectBtn">SELECT</div> */}
-                </div>
-                <div className="Store__prodBlock">
-                  <div className="Store__product"></div>
-                  {/* <div className="Store__selectBtn">SELECT</div> */}
-                </div>
-                <div className="Store__prodBlock">
-                  <div className="Store__product"></div>
-                  {/* <div className="Store__selectBtn">SELECT</div> */}
+                <div className="Store__coin">
+                  {tokenCount !== null && tokenCount !== undefined
+                    ? `${tokenCount.toLocaleString()}`
+                    : "로딩 중..."}
                 </div>
               </div>
-              <div className="Store__coin">
-                {tokenCount !== null && tokenCount !== undefined
-                  ? `${tokenCount.toLocaleString()}`
-                  : "로딩 중..."}
-              </div>
+            </div>
+            <div className="Store__right">
             </div>
           </div>
         </div>
