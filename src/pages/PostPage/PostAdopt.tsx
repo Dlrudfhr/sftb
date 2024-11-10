@@ -12,7 +12,6 @@ import {
   FaBookmark,
 } from "react-icons/fa";
 import { FaPaperPlane } from "react-icons/fa";
-import { AiOutlineLike } from "react-icons/ai";
 import axios from "axios";
 import { FiMoreHorizontal } from "react-icons/fi";
 
@@ -23,14 +22,12 @@ interface Comment {
   userId: string;
   createdAt: string;
   updatedAt: string;
-  adopt: boolean; // 채택 여부를 나타내는 속성
   replies?: Comment[];
 }
 
-const PostDetail: React.FC = () => {
+const PostAdopt: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-
   const { title, content, userName, time, newTime, boardId } = state || {};
   const { postId } = useParams<{ postId: string }>();
   const [hasAdoptedComment, setHasAdoptedComment] = useState(false); // 상태 추가
@@ -40,7 +37,9 @@ const PostDetail: React.FC = () => {
   const commentElement = useRef<null | HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [comDropdown, setcomDropdown] = useState(false);
-  console.log("State:", state);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [newAdopt, setNewAdopt] = useState(false); // 채택 상태 관리
+
   //
   const handleMoreClick = () => {
     setShowDropdown(!showDropdown);
@@ -50,32 +49,6 @@ const PostDetail: React.FC = () => {
     setcomDropdown(!comDropdown);
   };
 
-  // 모달 상태 및 채택할 댓글 ID 상태 추가
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [commentToAdopt, setCommentToAdopt] = useState<number | null>(null);
-
-  // 모달 열기
-  const openModal = (commentId: number) => {
-    setCommentToAdopt(commentId);
-    setIsModalOpen(true);
-  };
-
-  // 모달 닫기
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setCommentToAdopt(null);
-  };
-
-  // 채택 확인
-  const confirmAdopt = async () => {
-    if (commentToAdopt !== null) {
-      const isReply = comments
-        .flatMap((comment) => comment.replies || [])
-        .some((reply) => reply.commentId === commentToAdopt);
-      await handleAdoptComment(commentToAdopt, isReply); // isReply 값을 전달
-      closeModal(); // 모달 닫기
-    }
-  };
   const boardUrlMap: { [key: number]: string } = {
     1: "/QnA",
     2: "/Certificate",
@@ -137,7 +110,43 @@ const PostDetail: React.FC = () => {
     };
 
     fetchHeartCount();
+    checkAdminStatus();
   }, [postId]);
+
+  // 관리자 여부 확인 함수
+  const checkAdminStatus = async () => {
+    try {
+      const userID = localStorage.getItem("memberId"); // 로컬 스토리지에서 userID 가져오기
+      if (userID) {
+        const response = await axios.get(
+          `http://localhost:8080/api/auth/users/${userID}/isAdmin`
+        );
+        setIsAdmin(response.data.isAdmin); // true면 관리자
+      }
+    } catch (error) {
+      console.error("Error checking admin status:", error);
+    }
+  };
+
+  // 게시글 채택 함수
+  const handlePostAdopt = async () => {
+    const userId = localStorage.getItem("memberId"); // 로컬 스토리지에서 사용자 ID 가져오기
+    if (!userId) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    try {
+      // 서버로 채택 요청
+      const response = await axios.put(
+        `http://localhost:8080/api/posts/${postId}/adopt`
+      );
+      setNewAdopt(response.data.adopt); // 채택 상태 업데이트
+    } catch (error) {
+      console.error("게시글 채택 실패:", error);
+      alert("게시글 채택에 실패했습니다.");
+    }
+  };
 
   // 하트 클릭 이벤트
   const handleHeart = async () => {
@@ -228,17 +237,9 @@ const PostDetail: React.FC = () => {
       // 댓글 데이터에서 Adopt 값을 초기화
       const commentsWithAdoptedStatus = response.data.map((comment) => ({
         ...comment,
-        adopt: comment.adopt || false, // 기본값 설정
       }));
 
       setComments(commentsWithAdoptedStatus);
-      // 채택된 댓글이나 대댓글이 있는지 확인
-      const adoptedExists =
-        commentsWithAdoptedStatus.some((comment) => comment.adopt) ||
-        commentsWithAdoptedStatus.some((comment) =>
-          comment.replies?.some((reply) => reply.adopt)
-        );
-      setHasAdoptedComment(adoptedExists);
     } catch (error) {
       console.error("댓글 가져오기 실패:", error);
     }
@@ -392,10 +393,6 @@ const PostDetail: React.FC = () => {
       (comment) => comment.commentId === commentId
     ); // 삭제할 댓글 찾기
     let tierExperience = 0; // 부여할 레벨 경험치 값
-    // 삭제할 댓글이 채택된 댓글인지 확인
-    if (adoptedComment && adoptedComment.adopt) {
-      tierExperience = -30; // 채택된 댓글이면 -30 차감
-    }
     if (confirmDelete) {
       try {
         const deleteResponse = await axios.delete(
@@ -474,7 +471,7 @@ const PostDetail: React.FC = () => {
       .flatMap((comment) => comment.replies || [])
       .find((reply) => reply.commentId === replyId);
     // 대댓글이 채택된 댓글인지 확인
-    if (replyComment && replyComment.adopt) {
+    if (replyComment) {
       tierExperience = -30; // 채택된 대댓글이면 -30 차감
     }
     if (confirmDelete) {
@@ -559,6 +556,19 @@ const PostDetail: React.FC = () => {
   };
 
   useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/api/posts/${postId}`
+        );
+        console.log(response.data);
+        setNewAdopt(response.data.adopt); // 초기 채택 상태 설정
+      } catch (error) {
+        console.error("게시글 정보 가져오기 실패:", error);
+      }
+    };
+
+    fetchPost();
     fetchComments();
   }, [postId]);
 
@@ -569,7 +579,7 @@ const PostDetail: React.FC = () => {
         {/*게시판 타이틀 */}
         <h3
           className="postpage_title"
-          onClick={() => navigate(boardUrlMap[boardId])} // boardId에 따라 이동
+          onClick={() => (window.location.href = "/Certificate")}
         >
           <div className="PostDetail_titleinnerbox">
             {boardTitleMap[boardId] || "게시판"}{" "}
@@ -597,6 +607,12 @@ const PostDetail: React.FC = () => {
                 <div className="PostDetail_more">
                   <div onClick={handleMoreClick}>
                     <FiMoreHorizontal />
+                  </div>
+                  <div className="PostAdopt_adoptButton">
+                    {isAdmin && !newAdopt && (
+                      <button onClick={handlePostAdopt}>채택하기</button>
+                    )}
+                    {newAdopt && <span>채택됨</span>}
                   </div>
                   {state.userId === getCurrentUserId() && ( // 현재 사용자 ID와 작성자 ID 비교
                     <>
@@ -647,81 +663,6 @@ const PostDetail: React.FC = () => {
           </div>
         </div>
 
-        {/* 채택된 댓글 출력 */}
-        <div className="PostDetail_commentbox">
-          {comments
-            .filter((comment) => comment.adopt)
-            .map((comment) => (
-              <div className="PostDetail_comment" key={comment.commentId}>
-                <div className="PostDetail_writer">
-                  <div className="PostDetail_commproImage">
-                    <img src={myImage} alt="프로필" />
-                  </div>
-                  <div className="PostDetail_commwriter">
-                    {comment.memberId}
-                  </div>
-                </div>
-                <div className="PostDetail_content PostDetail_comm_cont adopted">
-                  채택된 댓글입니다 : {comment.content}
-                </div>
-                <div className="PostDetail_time">
-                  {formatDate(comment.updatedAt || comment.createdAt)}
-                </div>
-                {/* 채택된 댓글에 대해 수정 및 삭제 버튼 추가 (필요시) */}
-                {comment.userId === getCurrentUserId() && (
-                  <>
-                    <button
-                      onClick={() => handleEditComment(comment.commentId)}
-                    >
-                      수정
-                    </button>
-                    <button
-                      onClick={() => handleDeleteComment(comment.commentId)}
-                    >
-                      삭제
-                    </button>
-                  </>
-                )}
-              </div>
-            ))}
-          {/* 채택된 대댓글 출력 */}
-          {comments.map((comment) =>
-            comment.replies
-              ?.filter((reply) => reply.adopt)
-              .map((reply) => (
-                <div className="PostDetail_comment" key={reply.commentId}>
-                  <div className="PostDetail_writer">
-                    <div className="PostDetail_commproImage">
-                      <img src={myImage} alt="프로필" />
-                    </div>
-                    <div className="PostDetail_commwriter">
-                      {reply.memberId}
-                    </div>
-                  </div>
-                  <div className="PostDetail_content PostDetail_comm_cont adopted">
-                    채택된 대댓글입니다 : {reply.content}
-                  </div>
-                  <div className="PostDetail_time">
-                    {formatDate(reply.updatedAt || reply.createdAt)}
-                  </div>
-                  {/* 대댓글에 대해 수정 및 삭제 버튼 추가 (필요시) */}
-                  {reply.userId === getCurrentUserId() && (
-                    <>
-                      <button onClick={() => handleEditReply(reply.commentId)}>
-                        수정
-                      </button>
-                      <button
-                        onClick={() => handleDeleteReply(reply.commentId)}
-                      >
-                        삭제
-                      </button>
-                    </>
-                  )}
-                </div>
-              ))
-          )}
-        </div>
-
         {/*댓글 출력 영역 */}
         <div className="PostDetail_commentbox">
           {comments.map((comment) => (
@@ -767,24 +708,11 @@ const PostDetail: React.FC = () => {
                     </>
                   )}
                 </div>
-                {/* 댓글 채택 버튼 조건, 여기서는 게시글 작성자와 로그인된 사용자의 이름을 비교하고있어서
-                    게시글작성시 UserID넘어가게 완성되면 userName(이름)이아니라 UserID(아이디)로 비교하게 getCurrentUserId() === postAuthorId 이걸로 바꿔야함*/}
-                {userName === localStorage.getItem("userName") &&
-                  !comment.adopt &&
-                  comment.userId !== getCurrentUserId() &&
-                  !hasAdoptedComment && (
-                    <div
-                      className="PostDetail_adopt"
-                      onClick={() => openModal(comment.commentId)}
-                    >
-                      <AiOutlineLike />
-                    </div>
-                  )}
               </div>
 
               <div
                 className={`PostDetail_content PostDetail_comm_cont ${
-                  comment.adopt ? "adopted" : ""
+                  comment ? "adopted" : ""
                 }`}
               >
                 {comment.content}
@@ -806,23 +734,10 @@ const PostDetail: React.FC = () => {
                       <div className="PostDetail_commwriter">
                         {reply.memberId}
                       </div>
-                      {/* 대댓글 채택 버튼 조건, 여기서는 게시글 작성자와 로그인된 사용자의 이름을 비교하고있어서
-                        게시글작성시 UserID넘어가게 완성되면 userName(이름)이아니라 UserID(아이디)로 비교하게 getCurrentUserId() === postAuthorId 이걸로 바꿔야함 */}
-                      {userName === localStorage.getItem("userName") &&
-                        !reply.adopt &&
-                        reply.userId !== getCurrentUserId() &&
-                        !hasAdoptedComment && (
-                          <div
-                            className="PostDetail_adopt"
-                            onClick={() => openModal(reply.commentId)}
-                          >
-                            <AiOutlineLike />
-                          </div>
-                        )}
                     </div>
                     <div
                       className={`PostDetail_content PostDetail_comm_cont ${
-                        reply.adopt ? "adopted" : ""
+                        reply ? "adopted" : ""
                       }`}
                     >
                       {reply.content}
@@ -885,19 +800,6 @@ const PostDetail: React.FC = () => {
           ))}
         </div>
 
-        {/* 모달 */}
-        {isModalOpen && (
-          <div className="modal">
-            <div className="modal-content">
-              <h2>이 댓글을 채택하면 더이상 취소할 수 없습니다.</h2>
-              <div className="modal-buttons">
-                <button onClick={confirmAdopt}>예</button>
-                <button onClick={closeModal}>아니오</button>
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* 댓글 작성 영역 */}
         <div className="PostDetail_commWritebox">
           <input
@@ -923,4 +825,4 @@ const PostDetail: React.FC = () => {
   );
 };
 
-export default PostDetail;
+export default PostAdopt;
