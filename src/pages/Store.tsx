@@ -3,6 +3,9 @@ import Header from "./Header"; // 상단 배너 컴포넌트
 import Footer from "./Footer"; // 하단 배너 컴포넌트
 import axios from "axios";
 import "../assets/css/Store.css";
+import background from "../assets/images/자판기_초록.png";
+import background2 from "../assets/images/자판기_노랑.png";
+import star from "../assets/images/기프티콘사진/star_americano.jpg";
 
 const Store: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [tokenCount, setTokenCount] = useState<number | null>(null);
@@ -26,6 +29,19 @@ const Store: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       fetchUserToken(userId); // 사용자 ID가 있을 때 API 호출
     }
   }, []);
+
+  const [bgImage, setBgImage] = useState(
+    "url('../assets/images/자판기_초록.png')"
+  );
+  const handleClick = () => {
+    const newImage =
+      bgImage === "url('../assets/images/자판기_초록.png')"
+        ? "url('../assets/images/자판기_노랑.png')"
+        : "url('../assets/images/자판기_초록.png')";
+    setBgImage(newImage);
+    document.body.style.backgroundImage = newImage;
+  };
+
   return (
     <div>
       <Header /> {/* 상단 배너 */}
@@ -33,51 +49,58 @@ const Store: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <div className="Store__background">
         <div className="Store__section">
           <div className="Store__h1">_</div>
+          <div className="Store__category">
+            <div className="Store__cateBtn">편의점</div>
+            <div className="Store__cateBtn" onClick={handleClick}>
+              카페
+            </div>
+            <div className="Store__cateBtn">카테고리 3</div>
+          </div>
+
           <div className="Store__frame">
             <div className="Store__innerFrame">
               <div className="Store__productLine1">
                 <div className="Store__prodBlock">
-                  <div className="Store__product"></div>
-                  <div className="Store__selectBtn">SELECT</div>
+                  <img src={star} className="Store__product"></img>
+                  {/* <div className="Store__selectBtn">SELECT</div> */}
                 </div>
                 <div className="Store__prodBlock">
                   <div className="Store__product"></div>
-                  <div className="Store__selectBtn">SELECT</div>
+                  {/* <div className="Store__selectBtn">SELECT</div> */}
                 </div>
                 <div className="Store__prodBlock">
                   <div className="Store__product"></div>
-                  <div className="Store__selectBtn">SELECT</div>
+                  {/* <div className="Store__selectBtn">SELECT</div> */}
                 </div>
                 <div className="Store__prodBlock">
                   <div className="Store__product"></div>
-                  <div className="Store__selectBtn">SELECT</div>
+                  {/* <div className="Store__selectBtn">SELECT</div> */}
                 </div>
               </div>
 
               <div className="Store__productLine2">
                 <div className="Store__prodBlock">
                   <div className="Store__product"></div>
-                  <div className="Store__selectBtn">SELECT</div>
+                  {/* <div className="Store__selectBtn">SELECT</div> */}
                 </div>
                 <div className="Store__prodBlock">
                   <div className="Store__product"></div>
-                  <div className="Store__selectBtn">SELECT</div>
+                  {/* <div className="Store__selectBtn">SELECT</div> */}
                 </div>
                 <div className="Store__prodBlock">
                   <div className="Store__product"></div>
-                  <div className="Store__selectBtn">SELECT</div>
+                  {/* <div className="Store__selectBtn">SELECT</div> */}
                 </div>
                 <div className="Store__prodBlock">
                   <div className="Store__product"></div>
-                  <div className="Store__selectBtn">SELECT</div>
+                  {/* <div className="Store__selectBtn">SELECT</div> */}
                 </div>
               </div>
               <div className="Store__coin">
                 {tokenCount !== null && tokenCount !== undefined
-                  ? `${tokenCount.toLocaleString()} coin`
+                  ? `${tokenCount.toLocaleString()}`
                   : "로딩 중..."}
               </div>
-              <div className=""></div>
             </div>
           </div>
         </div>
