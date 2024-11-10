@@ -27,7 +27,28 @@
   background-color: red;
 }
 
-.StoreGreen__frame {
+@keyframes motion {
+  0% {margin-top: 0px;}
+  100% {margin-top: 10px;}
+}
+
+.Store__area{
+  display: flex;
+}
+.Store__left{
+  width: 400px;
+}
+
+/**/
+.Store__move{
+  width: 100px;
+  height: 100px;
+  animation: motion 0.5s linear 0s infinite alternate; 
+  margin-top: 0;
+}
+
+
+.StoreGreen__middle {
   margin-top: 100px;
   position: fixed;
   width: 737px;
@@ -35,6 +56,10 @@
   top: 119px;
   left: 591px;
   z-index: 2;
+}
+
+.Store__right{
+  width: 400px;
 }
 
 .StoreGreen__innerFrame {
