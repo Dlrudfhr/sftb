@@ -188,6 +188,7 @@
 .Certificate_card_innerbox .Certificate_card_icons {
   font-size: 12px;
   display: flex;
+  align-items: flex-end; /* 요소를 하단 정렬 */
   min-height: 30%;
 }
 
@@ -211,13 +212,21 @@
 
 /**/
 .Certificate_heart{
-  margin-right:8px;
+  float : right;
+  margin-left:8px;
 }
 
 /**/
+.Certificate_viewCount{
+  float : right;
+  margin-left:8px;
+}
+
+/* 
 .Certificate_scrap{
   float: right;
-}
+  margin-left:10px;
+} */
 
 /*맨위로 button*/
 .Certificate_high button {

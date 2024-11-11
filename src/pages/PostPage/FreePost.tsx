@@ -7,6 +7,7 @@ import { FaRegStar, FaSearch, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa6";
 import axios from "axios";
 import { CiCircleRemove } from "react-icons/ci";
+import { IoEyeSharp } from "react-icons/io5";
 
 // 게시물 타입 정의
 interface Post {
@@ -17,6 +18,8 @@ interface Post {
   createAt: string; // 생성 시간 (ISO 8601 형식)
   updateAt: string;
   userId: string;
+  viewCount : number;
+  heart : number;
 }
 
 const FreePost = () => {
@@ -187,13 +190,11 @@ const FreePost = () => {
                           {post.userName}
                         </div>
                         <div className="Certificate_icons_right">
-                          <div className="">조회수</div>
-                          <div className="Certificate_heart">
-                            <FaRegHeart />
-                          </div>
-                          <div className="Certificate_scrap">
+                          <div className="Certificate_viewCount"><IoEyeSharp /> {post.viewCount}</div>
+                          <div className="Certificate_heart"><FaRegHeart /> {post.heart}</div>
+                          {/* <div className="Certificate_scrap">
                             <FaRegBookmark />
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
