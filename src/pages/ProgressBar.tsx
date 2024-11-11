@@ -21,7 +21,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
 
   const radius = 50;
   const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (tierProgress / totalExperience) * circumference;
+  const offset =
+    circumference - (tierProgress / totalExperience) * circumference;
 
   // 로그인한 사용자 ID를 localStorage에서 가져옴
   const userId = localStorage.getItem("memberId");
@@ -45,11 +46,10 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
         console.error("경험치 데이터를 가져오는 중 오류 발생:", error);
       }
     };
-  
+
     fetchExperienceData();
   }, [userId]);
 
-  
   useEffect(() => {
     document.documentElement.style.setProperty("--offset", `${offset}`);
   }, [offset]);
@@ -93,7 +93,12 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
     <div className="ProgressBar__container">
       {!expanded && (
         <svg className="ProgressBar__svg">
-          <circle className="ProgressBar__circleBg" r={radius} cx="60" cy="60" />
+          <circle
+            className="ProgressBar__circleBg"
+            r={radius}
+            cx="60"
+            cy="60"
+          />
           <circle
             className="ProgressBar__circle"
             r={radius}
@@ -122,7 +127,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
               </li>
               <li
                 style={{ cursor: "pointer", color: "#007bff" }}
-                onClick={() => handleNavigation("/store")}
+                onClick={() => handleNavigation("/StoreGreen")}
               >
                 상점
               </li>
@@ -134,32 +139,39 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
               </li>
             </ul>
           </div>
-        <div className="ProgressBar__expandedProgress">
-               {/* 첫 번째 게이지 - 티어 경험치 */}
-          <div className="ProgressBar__progressBg">
-          <div
-              className="ProgressBar__progressFill"
-              style={{ width: `${tierProgress}%` }} // 첫 번째 게이지 - 티어 경험치
+          <div className="ProgressBar__expandedProgress">
+            {/* 첫 번째 게이지 - 티어 경험치 */}
+            <div className="ProgressBar__progressBg">
+              <div
+                className="ProgressBar__progressFill"
+                style={{ width: `${tierProgress}%` }} // 첫 번째 게이지 - 티어 경험치
               />
-          </div>
-           <div className="ProgressBar__labelContainer">
-            <span className="ProgressBar__label">티어: {tierProgress} / 100</span> {/* 경험치 표시 */}
-          </div>
-
-              {/* 두 번째 게이지 - 레벨 경험치 */}
-          <div className="ProgressBar__progressBg">
-          <div
-              className="ProgressBar__progressFill"
-              style={{ width: `${progress}%` }} // 두 번째 게이지 - 레벨 경험치
-              />
-          </div>
-            <div className="ProgressBar__labelContainer">
-              <span className="ProgressBar__label">경험치: {progress} / 100</span> {/* 티어 표시 */}
-          </div>
-          <div className="ProgressBar__levelContainer">
-              <span className="ProgressBar__label">레벨: {userLevel}</span> {/* 사용자 레벨 표시 */}
             </div>
-      </div>
+            <div className="ProgressBar__labelContainer">
+              <span className="ProgressBar__label">
+                티어: {tierProgress} / 100
+              </span>{" "}
+              {/* 경험치 표시 */}
+            </div>
+
+            {/* 두 번째 게이지 - 레벨 경험치 */}
+            <div className="ProgressBar__progressBg">
+              <div
+                className="ProgressBar__progressFill"
+                style={{ width: `${progress}%` }} // 두 번째 게이지 - 레벨 경험치
+              />
+            </div>
+            <div className="ProgressBar__labelContainer">
+              <span className="ProgressBar__label">
+                경험치: {progress} / 100
+              </span>{" "}
+              {/* 티어 표시 */}
+            </div>
+            <div className="ProgressBar__levelContainer">
+              <span className="ProgressBar__label">레벨: {userLevel}</span>{" "}
+              {/* 사용자 레벨 표시 */}
+            </div>
+          </div>
 
           <ConfirmLogoutModal
             isOpen={isModalOpen}

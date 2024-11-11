@@ -2,7 +2,9 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./pages/loginPage";
 import DefaultLayout from "./pages/DefaultLayout";
-import Store from "./pages/Store";
+import StoreGreen from "./pages/StoreGreen";
+import StoreRed from "./pages/StoreRed";
+import StoreYellow from "./pages/StoreYellow";
 import Information from "./pages/Information";
 import SiteIntroduce from "./pages/SiteIntroduce";
 import RanKing from "./pages/RanKing";
@@ -23,6 +25,7 @@ import SearchIdPage from "./pages/SearchIdPage";
 import SearchPwPage from "./pages/SearchPwPage";
 import PostWrite from "./pages/PostPage/PostWrite";
 import PostDetail from "./pages/PostPage/PostDetail";
+import PostAdopt from "./pages/PostPage/PostAdopt"; // PostAdopt 페이지 import
 import PrivateRoute from "./PrivateRoute";
 import "./App.css";
 
@@ -35,7 +38,9 @@ interface RouteProps {
 
 const routes: Array<RouteProps> = [
   { path: "/", component: LoginPage, anonymous: true },
-  { path: "/store", component: Store },
+  { path: "/storeGreen", component: StoreGreen },
+  { path: "/storeRed", component: StoreRed },
+  { path: "/storeYellow", component: StoreYellow },
   { path: "/information", component: Information },
   { path: "/signup", component: SignUpPage, anonymous: true },
   { path: "/SearchIdPage", component: SearchIdPage, anonymous: true },
@@ -56,32 +61,29 @@ const routes: Array<RouteProps> = [
   { path: "/Ledger", component: Ledger },
   { path: "/FreePost", component: FreePost },
   { path: "/PostWrite", component: PostWrite },
-  { path: "/PostDetail/:postId", component: PostDetail }, // 수정된 경로
+  { path: "/PostDetail/:postId", component: PostDetail },
+  { path: "/PostAdopt/:postId", component: PostAdopt }, // 추가된 PostAdopt 경로
 ];
 
 function App() {
   return (
-      <Routes>
-        {routes.map((route, idx) => {
-          if (route.anonymous) {
-            return (
-              <Route
-                path={route.path}
-                element={<route.component />}
-                key={idx}
-              />
-            );
-          } else {
-            return (
-              <Route
-                path={route.path}
-                element={<PrivateRoute component={route.component} />}
-                key={idx}
-              />
-            );
-          }
-        })}
-      </Routes>
+    <Routes>
+      {routes.map((route, idx) => {
+        if (route.anonymous) {
+          return (
+            <Route path={route.path} element={<route.component />} key={idx} />
+          );
+        } else {
+          return (
+            <Route
+              path={route.path}
+              element={<PrivateRoute component={route.component} />}
+              key={idx}
+            />
+          );
+        }
+      })}
+    </Routes>
   );
 }
 

@@ -1,6 +1,8 @@
 @import url("Font.css");
 body {
+  width: 100vw;
   background-color: #f6f6f6;
+  overflow-x:auto;
 }
 
 /*메인 전체 부분*/
@@ -11,10 +13,11 @@ body {
   margin: auto;
   width: 100%;
   margin-top: 100px;
+  
 }
 
 /*게시판 블럭들 - 모든 ul flex설정과 list스타일 해제*/
-.Main_layout ul {
+.Main_layout .Main_box_tab ul {
   display: flex; /**/
   list-style: none;
 }
@@ -92,10 +95,19 @@ body {
 
 /**/
 .Main__line{
-  margin:auto;
+  
   /* background-color: #004fa8; */
+  display: grid; 
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
   width: 90%;
 }
+@media (max-width: 968px) { 
+  .Main__line { 
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 600px;
+    margin-left:100px;
+  } }
 
 /*게시판 블럭 스타일*/
 .Main_card {

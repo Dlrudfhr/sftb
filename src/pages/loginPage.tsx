@@ -43,6 +43,7 @@ function LoginPage() {
 
         if (NewMember) {
           setIsModalOpen(true); // 신규 회원이면 모달 열기
+          navigate("/Main?showModal=true");
         } else {
           navigate("/Main"); // 신규 회원이 아닐 경우 메인 페이지로 이동
         }

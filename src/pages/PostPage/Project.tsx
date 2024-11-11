@@ -139,7 +139,8 @@ const Project = () => {
             </span>
           </div>
 
-          {/*게시글 작성 페이지로 이동 */}
+          {/* 작성하기 버튼 - 관리자만 접근 가능 */}
+
           <div className="Coding_write">
             <Link to="/PostWrite" state={{ boardId: 6 }}>
               <button type="submit" className="Coding_toWrite">
@@ -154,15 +155,12 @@ const Project = () => {
             <div>Loading...</div>
           ) : (
             <ul className="Certificate_postline1">
-              {filteredPosts.map(
-                (
-                  post
-                ) => (
+              {filteredPosts.map((post) => (
                 <li key={post.postId}>
                   <div
                     className="Certificate_card"
                     onClick={() =>
-                      navigate(`/PostDetail/${post.postId}`, {
+                      navigate(`/PostAdopt/${post.postId}`, {
                         state: {
                           postId: post.postId,
                           title: post.title,
@@ -171,6 +169,7 @@ const Project = () => {
                           time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
                           newTime: post.updateAt,
                           userId: post.userId,
+                          boardId: 6,
                         },
                       })
                     }
