@@ -128,25 +128,32 @@ const PostAdopt: React.FC = () => {
     }
   };
 
-  // 게시글 채택 함수
-  const handlePostAdopt = async () => {
-    const userId = localStorage.getItem("memberId"); // 로컬 스토리지에서 사용자 ID 가져오기
-    if (!userId) {
-      alert("로그인이 필요합니다.");
-      return;
-    }
+// 게시글 채택 함수
+const handlePostAdopt = async (event: React.MouseEvent<HTMLButtonElement>) => {
+  const postId = Number(event.currentTarget.dataset.postId); // data-post-id에서 postId 가져오기
+ 
+  // 서버에서 해당 게시물의 작성자(userId)와 티어 경험치 값을 가져와야 합니다.
+  try {
+    // 게시물 정보를 가져오기 위한 API 호출
+    const postResponse = await axios.get(`http://localhost:8080/api/posts/${postId}`);
+    const postAuthorId = postResponse.data.userId; // 게시물 작성자 ID
+    
+    const tierExperience = 30; // 게시물 작성자에게 부여할 경험치 값
 
-    try {
-      // 서버로 채택 요청
-      const response = await axios.put(
-        `http://localhost:8080/api/posts/${postId}/adopt`
-      );
-      setNewAdopt(response.data.adopt); // 채택 상태 업데이트
-    } catch (error) {
-      console.error("게시글 채택 실패:", error);
-      alert("게시글 채택에 실패했습니다.");
-    }
-  };
+    // 서버로 채택 요청 (postId와 postAuthorId를 전달)
+    const response = await axios.put(
+      `http://localhost:8080/api/posts/${postId}/adopt`,
+      { userId: postAuthorId, tierExperience } // 게시물 작성자에게 경험치 부여
+    );
+
+    // 채택 상태 업데이트
+    setNewAdopt(response.data.adopt);
+    alert("게시물이 채택되었습니다!");
+  } catch (error) {
+    console.error("게시글 채택 실패:", error);
+    alert("게시글 채택에 실패했습니다.");
+  }
+};
 
   // 하트 클릭 이벤트
   const handleHeart = async () => {
@@ -169,45 +176,57 @@ const PostAdopt: React.FC = () => {
     setcomHeart(!comheart);
   };
 
-  // 게시물 삭제 함수
-  const handleDelete = async () => {
-    try {
-      const confirmDelete = window.confirm(
-        "정말로 이 게시물을 삭제하시겠습니까?"
-      );
-      if (!confirmDelete) return; // 사용자가 삭제를 취소하면 함수 종료
+ // 게시물 삭제 함수
+const handleDeletePost = async () => {
+  try {
+    const confirmDelete = window.confirm("정말로 이 게시물을 삭제하시겠습니까?");
+    if (!confirmDelete) return;
 
-      // 토큰 확인
-      const token = localStorage.getItem("token");
-      console.log("현재 토큰:", token);
-
-      // 게시물 삭제 요청
-      const response = await axios.delete(
-        `http://localhost:8080/api/posts/${state.postId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`, // 필요한 경우 Authorization 헤더 추가
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        const userLevelExperience = -10; // 부여할 레벨 경험치 값
-        const userId = getCurrentUserId();
-        await axios.put(`/api/auth/experience`, {
-          userId: userId,
-          userLevelExperience,
-        });
-        alert("게시물이 삭제되었습니다.");
-        navigate("/Certificate"); // 삭제 후 목록으로 이동
-      } else {
-        alert("게시물 삭제에 실패했습니다.");
+    // 게시물 삭제 요청
+    const response = await axios.delete(
+      `http://localhost:8080/api/posts/${state.postId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       }
-    } catch (error) {
-      console.error("게시물 삭제 중 오류 발생:", error);
+    );
+
+    if (response.status === 200) {
+      const deletedPost = response.data; // 삭제된 게시물 데이터 가져오기
+      console.log('삭제된 게시물:', deletedPost); // 삭제된 게시물 데이터 확인
+      const userLevelExperience = -10; // 부여할 레벨 경험치 값
+      const userId = getCurrentUserId();
+      await axios.put(`/api/auth/experience`, {
+        userId: userId,
+        userLevelExperience,
+      });
+      if (deletedPost.adopt === true) {
+        // 게시물이 채택된 상태면 티어 경험치 차감 API 호출
+        const tierExperience = -30; // 차감할 티어 경험치 값
+        
+// 값 확인
+          console.log("userId:", userId);
+          console.log("tierExperience:", tierExperience);
+        await axios.put(`/api/auth/tier-experience`, {
+          userId: userId,
+          tierExperience: tierExperience,
+          
+        });
+      
+      }
+
+      alert("게시물이 삭제되었습니다.");
+      navigate("/Project"); // 삭제 후 목록으로 이동
+    } else {
       alert("게시물 삭제에 실패했습니다.");
     }
-  };
+  } catch (error) {
+    console.error("게시물 삭제 중 오류 발생:", error);
+    alert("게시물 삭제에 실패했습니다.");
+  }
+};
+
 
   // 북마크 상태
   const [bookmark, setBookmark] = useState(false);
@@ -609,11 +628,16 @@ const PostAdopt: React.FC = () => {
                     <FiMoreHorizontal />
                   </div>
                   <div className="PostAdopt_adoptButton">
-                    {isAdmin && !newAdopt && (
-                      <button onClick={handlePostAdopt}>채택하기</button>
-                    )}
-                    {newAdopt && <span>채택됨</span>}
-                  </div>
+  {isAdmin && !newAdopt && (
+    <button 
+      data-post-id={postId}  // postId를 data-* 속성으로 전달
+      onClick={handlePostAdopt} // 클릭 시 handlePostAdopt 함수 호출
+    >
+      채택하기
+    </button>
+  )}
+  {newAdopt && <span>채택됨</span>}
+</div>
                   {state.userId === getCurrentUserId() && ( // 현재 사용자 ID와 작성자 ID 비교
                     <>
                       {showDropdown && (
@@ -628,7 +652,7 @@ const PostAdopt: React.FC = () => {
                           </li>
                           <li
                             className="PostDetail_editButton"
-                            onClick={handleDelete}
+                            onClick={handleDeletePost}
                           >
                             삭제하기
                           </li>
