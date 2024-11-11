@@ -171,6 +171,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
               <span className="ProgressBar__label">레벨: {userLevel}</span>{" "}
               {/* 사용자 레벨 표시 */}
             </div>
+            <div className="ProgressBar__tierName">
+              <span>{userTier}</span> {/* 티어 이름 표시 */}
+            </div>
           </div>
 
           <ConfirmLogoutModal

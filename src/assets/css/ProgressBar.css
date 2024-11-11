@@ -130,3 +130,7 @@
   color: #000;
 }
 
+.ProgressBar__tierName {
+  font-weight: bold;
+  color: #007bff; /* 스타일을 원하는 대로 조정 */
+}

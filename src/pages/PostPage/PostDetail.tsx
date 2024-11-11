@@ -26,6 +26,7 @@ interface Comment {
   updatedAt: string;
   adopt: boolean; // 채택 여부를 나타내는 속성
   replies?: Comment[];
+  authorTier: string;
 }
 
 const PostDetail: React.FC = () => {
@@ -42,8 +43,37 @@ const PostDetail: React.FC = () => {
   const [comDropdown, setcomDropdown] = useState(false);
   const [viewCount, setViewCount] = useState(0); // 조회수 상태
   const [visibleCommentDropdown, setVisibleCommentDropdown] = useState<{ [key: number]: boolean }>({});
-  const [userTier, setUserTier] = useState(0);
-  
+  const [postwriterTier, setPostUserTier] = useState(0);
+  const [UserTier, setUserTier] = useState(0);
+  const fetchpostwriterTier = async () => {
+    try {
+      if (userId) {
+        // 경험치랑 티어 경험치 데이터를 가져오는 API 호출
+        const response = await axios.get(
+          `http://localhost:8080/api/auth/users/${userId}/experience`
+        );
+        setPostUserTier(response.data.userTier);
+      }
+    } catch (error) {
+      console.error("경험치 데이터를 가져오는 중 오류 발생:", error);
+    }
+  };
+
+  const fetchuserTier = async () => {
+    const userId = getCurrentUserId();
+    try {
+      if (userId) {
+        // 경험치랑 티어 경험치 데이터를 가져오는 API 호출
+        const response = await axios.get(
+          `http://localhost:8080/api/auth/users/${userId}/experience`
+        );
+        setUserTier(response.data.userTier);
+      }
+    } catch (error) {
+      console.error("경험치 데이터를 가져오는 중 오류 발생:", error);
+    }
+  };
+
   const toggleCommentDropdown = (commentId: number) => {
     setVisibleCommentDropdown((prev) => ({
       ...prev,
@@ -197,14 +227,17 @@ const PostDetail: React.FC = () => {
   const fetchComments = async () => {
     try {
       const response = await axios.get<Comment[]>(`/api/comments/${postId}`);
-
+      console.log(response.data); // API 응답 확인
       // 댓글 데이터에서 Adopt 값을 초기화
       const commentsWithAdoptedStatus = response.data.map((comment) => ({
         ...comment,
         adopt: comment.adopt || false, // 기본값 설정
+        // 작성자 티어 정보 추가
+        authorTier: comment.authorTier || "기본 티어", // 예시: 기본값 설정
       }));
 
       setComments(commentsWithAdoptedStatus);
+      console.log(commentsWithAdoptedStatus);
       // 채택된 댓글이나 대댓글이 있는지 확인
       const adoptedExists =
         commentsWithAdoptedStatus.some((comment) => comment.adopt) ||
@@ -550,6 +583,8 @@ const PostDetail: React.FC = () => {
         console.error("하트 수를 가져오는 데 실패했습니다.", error);
       }
     };
+    fetchpostwriterTier();
+    fetchuserTier();
     fetchHeartCount();
     incrementViewCount();
     fetchComments();
@@ -576,7 +611,9 @@ const PostDetail: React.FC = () => {
             {/* 게시글 작성자 목록 출력 */}
             <div className="PostDetail_profile">
               <div className="PostDetail_proImage">
-                {/* <img src={catImage} alt="프로필" /> */}
+                <img src = {getTierImage(postwriterTier)} 
+                 alt={`${postwriterTier}`}
+                />
               </div>
               <div className="PostDetail_middle">
                 <div className="PostDetail_writer">{userName || "작성자"}</div>
@@ -650,7 +687,7 @@ const PostDetail: React.FC = () => {
               <div className="PostDetail_comment" key={comment.commentId}>
                 <div className="PostDetail_writer">
                   <div className="PostDetail_commproImage">
-                    <img src={myImage} alt="프로필" />
+                    <img src={getTierImage(comment.authorTier)} alt={`${comment.memberId}`} />
                   </div>
                   <div className="PostDetail_commwriter">
                     {comment.memberId}
@@ -694,7 +731,7 @@ const PostDetail: React.FC = () => {
                 <div className="PostDetail_comment" key={reply.commentId}>
                   <div className="PostDetail_writer">
                     <div className="PostDetail_commproImage">
-                      <img src={myImage} alt="프로필" />
+                    <img src={getTierImage(reply.authorTier)} alt={`${reply.memberId}`} />
                     </div>
                     <div className="PostDetail_commwriter">
                       {reply.memberId}
@@ -739,7 +776,7 @@ const PostDetail: React.FC = () => {
             <div className="PostDetail_comment" key={comment.commentId}>
               <div className="PostDetail_writer">
                 <div className="PostDetail_commproImage">
-                  <img src={myImage} alt="프로필" />
+                <img src={getTierImage(comment.authorTier)} alt={`${comment.memberId}`} />
                 </div>
                 <div className="PostDetail_commwriter">{comment.memberId}</div>
                 <div
@@ -811,7 +848,7 @@ const PostDetail: React.FC = () => {
                     <div className="PostDetail_writer">
                       <div className="PostDetail_commproImage">
                         {" "}
-                        <img src={myImage} alt="프로필" />{" "}
+                        <img src={getTierImage(reply.authorTier)} alt={`${reply.memberId}`} />
                       </div>
                       <div className="PostDetail_commwriter">
                         {reply.memberId}
@@ -871,7 +908,7 @@ const PostDetail: React.FC = () => {
                   <div className="PostDetail_rerecomm">
                     <div className="PostDetail_writer">
                       <div className="PostDetail_commproImage">
-                        <img src={myImage} alt="프로필" />
+                      <img src={getTierImage(UserTier)} alt={`${UserTier}`} />
                       </div>
                       {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
                       <div className="PostDetail_commwriter">
@@ -917,6 +954,15 @@ const PostDetail: React.FC = () => {
 
         {/* 댓글 작성 영역 */}
         <div className="PostDetail_commWritebox">
+          <div className="PostDetail_writer">
+            <div className="PostDetail_commproImage2">
+              <img src={getTierImage(UserTier)} alt={`${UserTier}`} />
+            </div>
+          {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
+            <div className="PostDetail_commwriter">
+              {localStorage.getItem("userName") || "작성자"}
+            </div>
+          </div>
           <input
             className="PostDetail_commWrite"
             placeholder="댓글을 입력하세요."
