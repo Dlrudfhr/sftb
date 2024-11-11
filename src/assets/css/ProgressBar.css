@@ -39,8 +39,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 100px;
-  height: 100px;
+  width: 75px;
+  height: 75px;
   cursor: pointer;
   transition: transform 0.3s;
 }
@@ -130,3 +130,7 @@
   color: #000;
 }
 
+.ProgressBar__tierName {
+  font-weight: bold;
+  color: #007bff; /* 스타일을 원하는 대로 조정 */
+}

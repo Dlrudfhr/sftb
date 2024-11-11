@@ -150,6 +150,18 @@
     cursor: pointer;
 }
 
+/* 댓글 작성란 이미지*/
+.PostDetail_commproImage2{
+    background-color: lightgrey;
+    width: 40px;
+    height: 42px;
+    border-radius: 10%;
+    margin-right:5px;
+    margin-top : 5px;
+    margin-left :3px;
+    cursor: pointer;
+}
+
 /**/
 img{
     width: 100%;

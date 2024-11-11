@@ -7,6 +7,7 @@ import { FaRegStar, FaSearch, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa6";
 import axios from "axios";
 import { CiCircleRemove } from "react-icons/ci";
+import { IoEyeSharp } from "react-icons/io5";
 
 // 게시물 타입 정의
 interface Post {
@@ -18,6 +19,8 @@ interface Post {
   updateAt: string;
   userId: string;
   filePath: string;
+  viewCount : number;
+  heart : number;
 }
 
 const Project = () => {
@@ -137,7 +140,8 @@ const Project = () => {
             </span>
           </div>
 
-          {/*게시글 작성 페이지로 이동 */}
+          {/* 작성하기 버튼 - 관리자만 접근 가능 */}
+
           <div className="Coding_write">
             <Link to="/PostWrite" state={{ boardId: 6 }}>
               <button type="submit" className="Coding_toWrite">
@@ -152,15 +156,12 @@ const Project = () => {
             <div>Loading...</div>
           ) : (
             <ul className="Certificate_postline1">
-              {filteredPosts.map(
-                (
-                  post
-                ) => (
+              {filteredPosts.map((post) => (
                 <li key={post.postId}>
                   <div
                     className="Certificate_card"
                     onClick={() =>
-                      navigate(`/PostDetail/${post.postId}`, {
+                      navigate(`/PostAdopt/${post.postId}`, {
                         state: {
                           postId: post.postId,
                           title: post.title,
@@ -170,6 +171,7 @@ const Project = () => {
                           newTime: post.updateAt,
                           userId: post.userId,
                           fileName :post.filePath,
+                          boardId: 6,
                         },
                       })
                     }
@@ -188,13 +190,11 @@ const Project = () => {
                           {post.userName}
                         </div>
                         <div className="Certificate_icons_right">
-                          <div className="">조회수</div>
-                          <div className="Certificate_heart">
-                            <FaRegHeart />
-                          </div>
-                          <div className="Certificate_scrap">
+                          <div className="Certificate_viewCount"><IoEyeSharp /> {post.viewCount}</div>
+                          <div className="Certificate_heart"><FaRegHeart /> {post.heart}</div>
+                          {/* <div className="Certificate_scrap">
                             <FaRegBookmark />
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>

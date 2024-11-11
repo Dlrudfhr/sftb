@@ -1,15 +1,20 @@
 import { useState, useRef, useEffect } from "react"; //useRef 버튼 클릭 시 스크롤 이벤트
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, Link, useLocation } from "react-router-dom";
 import "../assets/css/Main.css";
 import React, { Children } from "react";
 import "../assets/css/Font.css";
-import question from "../assets/images/question.png";
-import slide01 from "../assets/images/slide01.jpg";
-import slide02 from "../assets/images/slide02.png";
-import slide03 from "../assets/images/slide03.png";
+import CongratulationsModal from "./CongratulatoryModal";
 import { FaRegComment, FaComments } from "react-icons/fa";
 import { PiCertificate } from "react-icons/pi";
-import { FcConferenceCall, FcShop, FcCommandLine, FcWorkflow, FcCollaboration, FcDiploma1, FcDocument } from "react-icons/fc";
+import {
+  FcConferenceCall,
+  FcShop,
+  FcCommandLine,
+  FcWorkflow,
+  FcCollaboration,
+  FcDiploma1,
+  FcDocument,
+} from "react-icons/fc";
 
 function Main() {
   const firstElement = useRef<null | HTMLDivElement>(null); //스크롤 될 첫번째 위치요소
@@ -18,13 +23,36 @@ function Main() {
   const fourthElement = useRef<null | HTMLDivElement>(null); //스크롤 될 네번째 위치요소
 
   const [showIntro, setShowIntro] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const location = useLocation();
+
   const handleCloseIntro = () => {
     setShowIntro(false);
   };
 
+  useEffect(() => {
+    // URL에서 쿼리 파라미터를 확인하여 모달 열기
+    const params = new URLSearchParams(location.search);
+    if (params.get("showModal") === "true") {
+      setIsModalOpen(true);
+    }
+  }, [location]);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    // URL에서 쿼리 파라미터 제거
+    const url = new URL(window.location.href);
+    url.searchParams.delete("showModal");
+    window.history.replaceState({}, "", url);
+  };
+
   //버튼 클릭시 ref를 받아와 요소로 이동하는 스크롤 이벤트
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
-    if (ref.current) { const elementTop = ref.current.getBoundingClientRect().top + window.scrollY; window.scrollTo({ top: elementTop - 120, behavior: "smooth" }); }
+    if (ref.current) {
+      const elementTop =
+        ref.current.getBoundingClientRect().top + window.scrollY;
+      window.scrollTo({ top: elementTop - 120, behavior: "smooth" });
+    }
   };
 
   return (
@@ -82,8 +110,6 @@ function Main() {
         </div>
       </div>
 
-      
-
       <div className="Main_categoryLayout">
         {/*소통 카테고리 카드 */}
         <div className="Main_info_cate" id="Main_communication_card">
@@ -115,7 +141,9 @@ function Main() {
                 <div className="Main_card_content">
                   <div className="Main_card_title">자격증 정보</div>
                   <div className="Main_card_info">자격증 정보</div>
-                  <div className="Main_card_icons"><FcDiploma1 /></div>
+                  <div className="Main_card_icons">
+                    <FcDiploma1 />
+                  </div>
                 </div>
               </div>
             </li>
@@ -128,7 +156,9 @@ function Main() {
                 <div className="Main_card_content">
                   <div className="Main_card_title">과목별 정보공유</div>
                   <div className="Main_card_info">과목별 정보공유</div>
-                  <div className="Main_card_icons"><FcWorkflow /></div>
+                  <div className="Main_card_icons">
+                    <FcWorkflow />
+                  </div>
                 </div>
               </div>
             </li>
@@ -141,7 +171,9 @@ function Main() {
                 <div className="Main_card_content">
                   <div className="Main_card_title">자유게시판</div>
                   <div className="Main_card_info">자유게시판</div>
-                  <div className="Main_card_icons"><FaComments /></div>
+                  <div className="Main_card_icons">
+                    <FaComments />
+                  </div>
                 </div>
               </div>
             </li>
@@ -162,7 +194,9 @@ function Main() {
                 <div className="Main_card_content">
                   <div className="Main_card_title">멘토멘티</div>
                   <div className="Main_card_info">멘토멘티</div>
-                  <div className="Main_card_icons"><FcCollaboration /></div>
+                  <div className="Main_card_icons">
+                    <FcCollaboration />
+                  </div>
                 </div>
               </div>
             </li>
@@ -175,7 +209,9 @@ function Main() {
                 <div className="Main_card_content">
                   <div className="Main_card_title">프로젝트 개발</div>
                   <div className="Main_card_info">프로젝트 개발</div>
-                  <div className="Main_card_icons"><FcConferenceCall /></div>
+                  <div className="Main_card_icons">
+                    <FcConferenceCall />
+                  </div>
                 </div>
               </div>
             </li>
@@ -188,7 +224,9 @@ function Main() {
                 <div className="Main_card_content">
                   <div className="Main_card_title">코딩 문제</div>
                   <div className="Main_card_info">코딩 문제</div>
-                  <div className="Main_card_icons"><FcCommandLine /></div>
+                  <div className="Main_card_icons">
+                    <FcCommandLine />
+                  </div>
                 </div>
               </div>
             </li>
@@ -222,7 +260,9 @@ function Main() {
                 <div className="Main_card_content">
                   <div className="Main_card_title">전공책 장터</div>
                   <div className="Main_card_info">전공책 장터</div>
-                  <div className="Main_card_icons"><FcShop /></div>
+                  <div className="Main_card_icons">
+                    <FcShop />
+                  </div>
                 </div>
               </div>
             </li>
@@ -282,7 +322,9 @@ function Main() {
                 <div className="Main_card_content">
                   <div className="Main_card_title">장부 기록 공개</div>
                   <div className="Main_card_info">장부 기록 공개</div>
-                  <div className="Main_card_icons"><FcDocument /></div>
+                  <div className="Main_card_icons">
+                    <FcDocument />
+                  </div>
                 </div>
               </div>
             </li>
@@ -331,6 +373,12 @@ function Main() {
 
       {/*스크롤 시 필요한 footer공간 */}
       <div className="Main_last_div"></div>
+
+      {/* 스크롤 시 필요한 footer 공간 */}
+      <div className="Main_last_div"></div>
+
+      {/* CongratulationsModal 추가 */}
+      <CongratulationsModal isOpen={isModalOpen} onClose={handleCloseModal} />
     </article>
   );
 }

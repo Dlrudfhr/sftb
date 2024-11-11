@@ -6,8 +6,7 @@ import "../../assets/css/PostPage/Certificate.css"; /* 스타일 참조 */
 import { FaRegStar, FaSearch, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa6";
 import axios from "axios";
-import { CiCircleRemove } from "react-icons/ci";
-
+import { IoEyeSharp } from "react-icons/io5";
 // 게시물 타입 정의
 interface Post {
   postId: number; // 게시물 ID
@@ -18,6 +17,8 @@ interface Post {
   updateAt: string;
   userId: string;
   filePath: string;
+  viewCount : number;
+  heart : number;
 }
 
 const Certificate = () => {
@@ -154,10 +155,7 @@ const Certificate = () => {
             <div>Loading...</div>
           ) : (
             <ul className="Certificate_postline1">
-              {filteredPosts.map (
-                (
-                  post
-                ) => (
+              {filteredPosts.map((post) => (
                 <li key={post.postId}>
                   <div
                     className="Certificate_card"
@@ -172,6 +170,7 @@ const Certificate = () => {
                           newTime: post.updateAt,
                           userId: post.userId,
                           fileName: post.filePath,
+                          boardId: 2,
                         },
                       })
                     }
@@ -190,13 +189,11 @@ const Certificate = () => {
                           {post.userName}
                         </div>
                         <div className="Certificate_icons_right">
-                          <div className="">조회수</div>
-                          <div className="Certificate_heart">
-                            <FaRegHeart />
-                          </div>
-                          <div className="Certificate_scrap">
+                          <div className="Certificate_viewCount"><IoEyeSharp /> {post.viewCount}</div>
+                          <div className="Certificate_heart"><FaRegHeart /> {post.heart}</div>
+                          {/* <div className="Certificate_scrap">
                             <FaRegBookmark />
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>

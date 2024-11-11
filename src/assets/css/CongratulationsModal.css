@@ -2,24 +2,58 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
   align-items: center;
-  z-index: 1000; /* 모달이 최상단에 오도록 */
+  justify-content: center;
+  font-family: "DungGeunMo";
 }
 
 .Congratulation__modal {
   background: white;
   padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  text-align: center;
+  width: 80%;
+  max-width: 600px;
 }
 
-  
-  .Congratulation__button {
-    margin-top: 10px;
-  }
-  
+.Congratulation__arrow {
+  width: 20%;
+  height: auto;
+}
+
+.Congratulation__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.Congratulation__image {
+  width: 200px; /* 원하는 크기로 조정 */
+  height: auto; /* 비율 유지 */
+}
+.Congratulation__jobSeekerImage {
+  width: 150px; /* 원하는 크기로 조정 */
+  height: auto; /* 비율 유지 */
+}
+
+.Congratulation__button {
+  background-color: #009b64;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.Congratulation__button:hover {
+  background-color: #007a50;
+}
+
+.Congratulation__info {
+  font-size: 20px;
+}

@@ -7,6 +7,7 @@ import { FaRegStar, FaSearch, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa6";
 import axios from "axios";
 import { CiCircleRemove } from "react-icons/ci";
+import { IoEyeSharp } from "react-icons/io5";
 
 // 게시물 타입 정의
 interface Post {
@@ -18,6 +19,8 @@ interface Post {
   updateAt: string;
   userId: string;
   filePath: string;
+  viewCount : number;
+  heart : number;
 }
 
 const Share = () => {
@@ -27,7 +30,7 @@ const Share = () => {
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
   const [searchKey, setSearchKey] = useState("제목"); // 검색 기준 상태
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
-  
+
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
@@ -69,8 +72,8 @@ const Share = () => {
     return <p>{truncatedContent}</p>;
   };
 
-   //검색어와 게시글 비교할때 띄워쓰기 제거
-   const removeSpaces = (str: string) => {
+  //검색어와 게시글 비교할때 띄워쓰기 제거
+  const removeSpaces = (str: string) => {
     return str.replace(/\s+/g, ""); // 모든 공백 제거
   };
 
@@ -153,10 +156,7 @@ const Share = () => {
             <div>Loading...</div>
           ) : (
             <ul className="Certificate_postline1">
-              {filteredPosts.map(
-                (
-                  post
-                ) => (
+              {filteredPosts.map((post) => (
                 <li key={post.postId}>
                   <div
                     className="Certificate_card"
@@ -171,6 +171,7 @@ const Share = () => {
                           newTime: post.updateAt,
                           userId: post.userId,
                           fileName :post.filePath,
+                          boardId: 3,
                         },
                       })
                     }
@@ -189,13 +190,11 @@ const Share = () => {
                           {post.userName}
                         </div>
                         <div className="Certificate_icons_right">
-                          <div className="">조회수</div>
-                          <div className="Certificate_heart">
-                            <FaRegHeart />
-                          </div>
-                          <div className="Certificate_scrap">
+                          <div className="Certificate_viewCount"><IoEyeSharp /> {post.viewCount}</div>
+                          <div className="Certificate_heart"><FaRegHeart /> {post.heart}</div>
+                          {/* <div className="Certificate_scrap">
                             <FaRegBookmark />
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>
