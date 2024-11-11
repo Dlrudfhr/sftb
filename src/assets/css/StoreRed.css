@@ -1,0 +1,171 @@
+@import url("Font.css");
+
+.StoreRed__background {
+  background-image: url("../images/자판기배경_빨강.jpg");
+  z-index: 0;
+  position: relative;
+  margin-top: 100px;
+  height: 89vh; /* 전체 뷰포트 높이에 맞춤 */
+}
+
+.StoreRed__section {
+  width: 70%;
+  margin: auto;
+}
+
+/*카테고리 전환 버튼 모음*/
+.StoreRed__category {
+  display: flex;
+  margin: auto;
+}
+
+/*카테고리 전환 버튼*/
+.StoreRed__cateBtn {
+  margin-right: 10px;
+  width: 120px;
+  height: 20px;
+  background-color: red;
+}
+
+.StoreRed__frame {
+  margin-top: 100px;
+  position: fixed;
+  width: 737px;
+  height: 710px;
+  top: 119px;
+  left: 591px;
+  z-index: 2;
+}
+
+.StoreRed__innerFrame {
+  padding: 50px;
+  height: 710px;
+}
+
+.StoreRed__productLine1 {
+  display: flex;
+  margin-top: 27px;
+  margin-left: 38px;
+}
+.StoreRed__productLine2 {
+  display: flex;
+  margin-top: 41px;
+  margin-left: 35px;
+}
+
+.StoreRed__product {
+  width: 7.3125rem;
+  height: 7.3125rem;
+  background-color: #d9d9d9;
+  margin-right: 35px;
+}
+
+.StoreRed__selectBtnLine1 {
+  display: flex;
+  flex-wrap: nowrap; /* 줄 바꿈을 방지 */
+}
+
+.StoreRed__selectBtn1 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 11px;
+  margin-left: 56px;
+}
+
+.StoreRed__selectBtn2 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 10px;
+  margin-left: 74px;
+}
+
+.StoreRed__selectBtn3 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 9px;
+  margin-left: 75px;
+}
+.StoreRed__selectBtn4 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 9px;
+  margin-left: 75.9px;
+}
+
+.StoreRed__selectBtnLine2 {
+  display: flex;
+  flex-wrap: nowrap; /* 줄 바꿈을 방지 */
+}
+.StoreRed__selectBtn5 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 31px;
+  margin-left: 54px;
+}
+.StoreRed__selectBtn6 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 31px;
+  margin-left: 75.5px;
+}
+
+.StoreRed__selectBtn7 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 31px;
+  margin-left: 75px;
+}
+.StoreRed__selectBtn8 {
+  width: 4.6875rem;
+  height: 1.4375rem;
+  border: none;
+  border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
+  background: #d9d9d9;
+  margin-top: 31px;
+  margin-left: 75.9px;
+}
+
+.StoreRed__coin {
+  width: 200px;
+  height: 54px;
+  background-color: #ff000000;
+
+  font-size: 50px;
+  color: white;
+  text-align: center;
+  justify-content: center;
+  font-family: "DS-DIGIB";
+
+  margin-top: 62px;
+  margin-left: 330px;
+  display: flex;
+}
+
+.StoreRed__cointext {
+  font-size: 22px;
+  margin-left: 10px;
+  padding-top: 15px;
+  align-self: center;
+  color: white;
+}
