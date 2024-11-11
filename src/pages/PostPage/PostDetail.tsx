@@ -30,7 +30,7 @@ interface Comment {
 const PostDetail: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { title, content, userName, time, newTime } = state || {};
+  const { title, content, userName, time, newTime, fileName } = state || {};
   const { postId } = useParams<{ postId: string }>();
   const [hasAdoptedComment, setHasAdoptedComment] = useState(false); // 상태 추가
   const [comments, setComments] = useState<Comment[]>([]);
@@ -39,7 +39,8 @@ const PostDetail: React.FC = () => {
   const commentElement = useRef<null | HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [comDropdown, setcomDropdown] = useState(false);
-  //
+  const [imageSrc, setImageSrc] = useState(""); // 기본 이미지를 설정
+  
   const handleMoreClick = () => {
     setShowDropdown(!showDropdown);
   };
@@ -531,8 +532,31 @@ const PostDetail: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchComments();
-  }, [postId]);
+    const Imageload = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/files/${postId}`, {
+              responseType: "blob", // 이미지 데이터를 blob 형식으로 받아옴
+            });
+
+            // Blob 데이터를 URL로 변환하여 이미지 소스로 사용
+            const imageUrl = URL.createObjectURL(response.data);
+            setImageSrc(imageUrl); // setImageSrc에 이미지 URL 설정
+        } catch (error) {
+            console.error("Error fetching the image:", error);
+        }
+    };
+
+    Imageload();
+
+    return () => {
+        // 클린업 함수로 URL 객체 해제
+        if (imageSrc) {
+            URL.revokeObjectURL(imageSrc);
+        }
+    };
+
+  fetchComments();
+}, [postId]);
 
   return (
     <>
@@ -596,6 +620,13 @@ const PostDetail: React.FC = () => {
             {/*게시글 제목&내용 */}
             <div className="PostDetail_postTitle">{title || "제목"}</div>
             <div className="PostDetail_content">{content || "내용"}</div>
+
+             {/* 글 내용 아래에 이미지 표시 */}
+             {imageSrc && (
+          <div className="PostDetail_image">
+            <img src={imageSrc} alt="게시글 이미지" style={{ width: "50%", height: "auto" }} />
+          </div>
+             )}
 
             {/*게시글 좋아요,댓글 수, 스크랩 수 */}
             <div className="PostDetail_total">

@@ -14,6 +14,9 @@ function PostWrite() {
   const location = useLocation(); // location 훅 사용하여 전달된 상태 가져오기
   const boardId = location.state?.boardId || 2; // boardId를 location 상태에서 가져오고 기본값은 2로 설정
   const { state } = useLocation(); // 이전 페이지에서 전달된 상태
+  const [file, setFile] = useState<File | null>(null); // 첨부할 사진 파일
+
+
 
   // 로그인된 사용자 UserName을 localStorage에서 가져옴
   const userName = localStorage.getItem("userName");
@@ -23,10 +26,11 @@ function PostWrite() {
   useEffect(() => {
     if (state) {
       console.log("PostWrite state:", state); // state 전체 출력
-      const { title, content, postId } = state; // 이전 페이지에서 받은 데이터
+      const { title, content, postId,filePath } = state; // 이전 페이지에서 받은 데이터
       setTitle(title || ""); // 제목 설정
       setContent(content || ""); // 내용 설정
       setPostID(postId || ""); // 게시물 고유 번호 설정
+      
     } else {
       setTitle(""); // 초기화
       setContent(""); // 초기화
@@ -34,6 +38,12 @@ function PostWrite() {
       console.log("No state received"); // state가 없을 경우 로그 출력
     }
   }, [state]);
+
+  // 파일 선택 시 호출되는 함수
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFile(event.target.files?.[0] || null); // 선택한 파일을 상태에 저장
+  };
+
 
     // boardId에 따라 해당 게시판 URL로 이동하도록 수정
 const handleGoToList = () => {
@@ -78,24 +88,30 @@ const handleGoToList = () => {
 
       // 수정하는 경우 ID가 있을 때 PUT 요청
       if (state && state.postId) {
-        console.log("Updating post with ID:", state.postId); // ID 확인
+        console.log("Updating post with ID:", state.postId);
+
+        // 파일을 새로 선택하지 않았을 경우 기존 파일 경로를 유지
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("content", content);
+        formData.append("boardId", String(boardId));
+        formData.append("postId", state.postId);
+        formData.append("userId", userID || "");
+
+        if (file) {
+          formData.append("file", file); // 새로 선택한 파일을 추가
+        } 
+
         const response = await axios.put(
           `http://localhost:8080/api/posts/${state.postId}`, // 수정할 게시물의 ID를 포함한 URL
-          {
-            title: title,
-            content: content,
-            boardId: boardId, // 동적으로 boardId 설정
-            postId: state.postId,
-          },
+          formData,
           {
             headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`, // 토큰 추가
+              "Content-Type": "multipart/form-data",
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           }
         );
-        console.log("Response from server:", response.data);
-
         if (response.status === 200) {
           // 수정 후 해당 게시물 상세 페이지로 이동, 상태 전달 추가
           navigate(`/PostDetail/${state.postId}`, {
@@ -105,6 +121,7 @@ const handleGoToList = () => {
               userName: userName,
               time: updatedTime, // 수정 시간을 현재 시간으로 설정
               postId: state.postId, // 게시물 ID 추가
+              
             },
           });
         } else {
@@ -112,22 +129,28 @@ const handleGoToList = () => {
         }
       } else {
         // 새로 작성하는 경우 POST 요청
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("content", content);
+        formData.append("userName", userName);
+        formData.append("time", updatedTime);
+        formData.append("boardId", String(boardId));
+        formData.append("userId", userID || "");
+        if (file) {
+          formData.append("file", file); // 파일 추가
+        }
+
         const response = await axios.post(
-          "http://localhost:8080/api/posts", // 백엔드 URL
-          {
-            title: title,
-            content: content,
-            userName: userName,
-            time: updatedTime, // 작성 시간을 한국 시간으로 설정
-            boardId: boardId, // 동적으로 boardId 설정
-            userId: userID,
-          },
+          "http://localhost:8080/api/posts",
+          formData,
           {
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "multipart/form-data",
             },
           }
+          
         );
+        console.log(response.data);
 
         if (response.status === 200) {
           const userLevelExperience = 10;
@@ -195,6 +218,15 @@ const handleGoToList = () => {
           />
           <br />
 
+           {/* 사진 파일 입력 필드 추가 */}
+           <input
+            type="file"
+            accept="image/*"
+            onChange={handleFileChange} // 파일 선택 시 상태 업데이트
+          />
+          <br />
+
+
           {errorMessage && (
             <div style={{ color: "red", marginBottom: "10px" }}>
               {errorMessage}
@@ -202,7 +234,7 @@ const handleGoToList = () => {
           )}
           <div className="PostWrite_btns">
           <button className="PostWrite_golist" onClick={handleGoToList}>
-                 목록
+              목록
              
             </button>
             <button className="post_button" type="submit">
