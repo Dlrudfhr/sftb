@@ -3,7 +3,6 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import Header from "../Header";
 import CommentAdoptModal from "./Comment_Adopt_Modal"; // 모달 컴포넌트 import
 import "../../assets/css/PostPage/PostDetail.css";
-import myImage from "../../assets/images/manggu.jpg";
 import {
   FaRegComment,
   FaRegHeart,
@@ -261,10 +260,6 @@ const PostDetail: React.FC = () => {
     const userName = localStorage.getItem("userName"); // 로컬 스토리지에서 userName 가져오기
     const userId = getCurrentUserId(); // 사용자 ID 가져오기
     const userLevelExperience = 10; // 부여할 레벨 경험치 값
-    console.log("Comment Input:", commentInput);
-    console.log("Post ID:", postId);
-    console.log("User Name:", userName);
-    console.log("UserID:", userId);
     try {
       const commentResponse = await axios.post("/api/comments", {
         postId: postId,
@@ -589,8 +584,6 @@ const PostDetail: React.FC = () => {
             URL.revokeObjectURL(imageSrc);
         }
     };
-
-  fetchComments();
 }, [postId]);
 
  useEffect(() => {
@@ -820,9 +813,6 @@ const PostDetail: React.FC = () => {
                   onClick={() => toggleReplyVisibility(comment.commentId)}
                 >
                   <FaRegComment />
-                </div>
-                <div className="PostDetail_heart">
-                  <FaRegHeart />
                 </div>
                 <div className="">
                 <div onClick={() => toggleCommentDropdown(comment.commentId)}>
