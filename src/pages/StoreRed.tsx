@@ -13,6 +13,15 @@ import cafe14 from "../assets/images/상점사진/자산 14.png";
 
 import greenBtn from "../assets/images/greenBtn.png"; // 빨간 버튼 이미지
 import redBtn from "../assets/images/redBtn.png"; // 빨간 버튼 이미지
+
+import megaAA from "../assets/images/giftImage/megaAA.png";
+import megaAshot from "../assets/images/giftImage/megaAshot.png";
+import megaChoco from "../assets/images/giftImage/megaChoco.png";
+import megaCookie from "../assets/images/giftImage/megaCookie.png";
+import starAA from "../assets/images/giftImage/starAA.png";
+import starLatte from "../assets/images/giftImage/starLatte.png";
+import twoChoco from "../assets/images/giftImage/twoChoco.png";
+import twoIcebox from "../assets/images/giftImage/twoIcebox.png";
 const StoreRed: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [tokenCount, setTokenCount] = useState<number | null>(null);
   const navigate = useNavigate();
@@ -60,10 +69,25 @@ const StoreRed: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <div className="StoreRed__middle">
           <div className="StoreRed__innerFrame">
             <div className="StoreRed__productLine1">
-              <img src={star} className="StoreRed__product" alt="스타 상품" />
-              <div className="StoreRed__product"></div>
-              <div className="StoreRed__product"></div>
-              <div className="StoreRed__product"></div>
+              <div className="StoreGreen__productContainer">
+                <img src={starAA} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">10000</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={starLatte} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">10001</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={megaAA} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">9999</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={megaAshot} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">10002</div>
+              </div>
             </div>
             <div className="StoreRed__selectBtnLine1">
               {[10000, 10001, 9999, 10002].map((value, index) => (
@@ -85,10 +109,25 @@ const StoreRed: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               ))}
             </div>
             <div className="StoreRed__productLine2">
-              <div className="StoreRed__product"></div>
-              <div className="StoreRed__product"></div>
-              <div className="StoreRed__product"></div>
-              <div className="StoreRed__product"></div>
+              <div className="StoreGreen__productContainer">
+                <img src={megaChoco} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">10000</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={megaCookie} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">10001</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={twoChoco} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">9999</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={twoIcebox} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">10002</div>
+              </div>
             </div>
             <div className="StoreRed__selectBtnLine2">
               {[10000, 10001, 9999, 10002].map((value, index) => (

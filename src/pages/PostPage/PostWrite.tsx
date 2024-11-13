@@ -14,6 +14,10 @@ function PostWrite() {
   const location = useLocation(); // location 훅 사용하여 전달된 상태 가져오기
   const boardId = location.state?.boardId || 2; // boardId를 location 상태에서 가져오고 기본값은 2로 설정
   const { state } = useLocation(); // 이전 페이지에서 전달된 상태
+  const [file, setFile] = useState<File | null>(null); // 첨부할 사진 파일
+  const [filePath, setFilePath] = useState<string | null>(null); // 기존 파일 경로 상태 추가
+
+
 
   // 로그인된 사용자 UserName을 localStorage에서 가져옴
   const userName = localStorage.getItem("userName");
@@ -23,17 +27,23 @@ function PostWrite() {
   useEffect(() => {
     if (state) {
       console.log("PostWrite state:", state); // state 전체 출력
-      const { title, content, postId } = state; // 이전 페이지에서 받은 데이터
+      const { title = "", content = "", postId = "", filePath = null } = state; // 기본값을 추가
       setTitle(title || ""); // 제목 설정
       setContent(content || ""); // 내용 설정
       setPostID(postId || ""); // 게시물 고유 번호 설정
-    } else {
-      setTitle(""); // 초기화
-      setContent(""); // 초기화
-      setPostID(""); // 초기화
-      console.log("No state received"); // state가 없을 경우 로그 출력
+      setFilePath(filePath || null); // 수정 시 기존 파일 경로 설정
+      
     }
   }, [state]);
+
+  // 파일 선택 시 호출되는 함수
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFile(event.target.files?.[0] || null); // 선택한 파일을 상태에 저장
+    if (event.target.files?.[0]) {
+      setFilePath(null); // 새 파일 선택 시 기존 파일 경로 제거
+    }
+  };
+
 
     // boardId에 따라 해당 게시판 URL로 이동하도록 수정
 const handleGoToList = () => {
@@ -47,6 +57,7 @@ const handleGoToList = () => {
     7: "/Coding",
     8: "/Marketplace",
     9: "/Ledger",
+    10: "/main/Announcement",
     // 추가 게시판이 있다면 여기서 추가
   };
   const boardUrl = boardUrlMap[boardId] || "/Main"; // 기본값은 Main
@@ -78,56 +89,76 @@ const handleGoToList = () => {
 
       // 수정하는 경우 ID가 있을 때 PUT 요청
       if (state && state.postId) {
-        console.log("Updating post with ID:", state.postId); // ID 확인
-        const response = await axios.put(
-          `http://localhost:8080/api/posts/${state.postId}`, // 수정할 게시물의 ID를 포함한 URL
-          {
-            title: title,
-            content: content,
-            boardId: boardId, // 동적으로 boardId 설정
-            postId: state.postId,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${localStorage.getItem("token")}`, // 토큰 추가
-            },
-          }
-        );
-        console.log("Response from server:", response.data);
+        console.log("Updating post with ID:", state.postId);
 
-        if (response.status === 200) {
-          // 수정 후 해당 게시물 상세 페이지로 이동, 상태 전달 추가
-          navigate(`/PostDetail/${state.postId}`, {
-            state: {
-              title: title,
-              content: content,
-              userName: userName,
-              time: updatedTime, // 수정 시간을 현재 시간으로 설정
-              postId: state.postId, // 게시물 ID 추가
-            },
-          });
-        } else {
-          setErrorMessage("게시물 수정에 실패했습니다.");
+        // 파일을 새로 선택하지 않았을 경우 기존 파일 경로를 유지
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("content", content);
+        formData.append("boardId", String(boardId));
+        formData.append("postId", state.postId);
+        formData.append("userId", userID || "");
+
+        if (file) {
+          formData.append("file", file); // 새로 선택한 파일을 추가
+        } else if (filePath) {
+          formData.append("filePath", filePath); // 기존 파일 경로 유지
+        }
+
+        try {
+          const response = await axios.put(
+            `http://localhost:8080/api/posts/${state.postId}`, // 수정할 게시물의 ID를 포함한 URL
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+        
+          if (response.status === 200) {
+            // 수정 후 해당 게시물 상세 페이지로 이동, 상태 전달 추가
+            navigate(`/PostDetail/${state.postId}`, {
+              state: {
+                title: title,
+                content: content,
+                userName: userName,
+                time: updatedTime, // 수정 시간을 현재 시간으로 설정
+                postId: state.postId, // 게시물 ID 추가
+              },
+            });
+          } else {
+            setErrorMessage("게시물 수정에 실패했습니다.");
+          }
+        } catch (error) {
+          console.error("Error in PUT request:", error); // 에러 내용 출력
+          setErrorMessage("서버 오류가 발생했습니다. 다시 시도해주세요.");
         }
       } else {
         // 새로 작성하는 경우 POST 요청
+        const formData = new FormData();
+        formData.append("title", title);
+        formData.append("content", content);
+        formData.append("userName", userName);
+        formData.append("time", updatedTime);
+        formData.append("boardId", String(boardId));
+        formData.append("userId", userID || "");
+        if (file) {
+          formData.append("file", file); // 파일 추가
+        }
+
         const response = await axios.post(
-          "http://localhost:8080/api/posts", // 백엔드 URL
-          {
-            title: title,
-            content: content,
-            userName: userName,
-            time: updatedTime, // 작성 시간을 한국 시간으로 설정
-            boardId: boardId, // 동적으로 boardId 설정
-            userId: userID,
-          },
+          "http://localhost:8080/api/posts",
+          formData,
           {
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "multipart/form-data",
             },
           }
+          
         );
+        console.log(response.data);
 
         if (response.status === 200) {
           const userLevelExperience = 10;
@@ -146,6 +177,7 @@ const handleGoToList = () => {
           7: "/Coding",
           8: "/Marketplace",
           9: "/Ledger",
+          10: "/main/Announcement",
           // 추가 게시판이 있다면 여기서 추가
         };
       
@@ -195,6 +227,21 @@ const handleGoToList = () => {
           />
           <br />
 
+          <input type="file" accept="image/*" onChange={handleFileChange} />
+          {/* 기존 파일이 있을 경우 미리보기 제공 */}
+          {filePath && (
+            <div className="file-preview">
+              <p>현재 파일: {filePath}</p>
+              <img
+                src={`http://localhost:8080/api/files/${filePath}`}
+                alt="Uploaded file preview"
+                style={{ maxWidth: "100px", maxHeight: "100px" }}
+              />
+            </div>
+          )}
+          <br />
+
+
           {errorMessage && (
             <div style={{ color: "red", marginBottom: "10px" }}>
               {errorMessage}
@@ -202,7 +249,7 @@ const handleGoToList = () => {
           )}
           <div className="PostWrite_btns">
           <button className="PostWrite_golist" onClick={handleGoToList}>
-                 목록
+              목록
              
             </button>
             <button className="post_button" type="submit">
