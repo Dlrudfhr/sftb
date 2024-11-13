@@ -3,7 +3,7 @@ import "../assets/css/RanKing.css";
 import Footer from "./Footer";
 import Header from "./Header";
 import axios from "axios";
-
+import { getTierImage } from "./TierImageUtils";
 interface User {
   userID: number;
   userName: string;
@@ -66,6 +66,13 @@ const Ranking: React.FC = () => {
           {userRank.map((user, index) => (
             <div key={user.userID} className="Ranking__member">
               <span>{index + 1}등</span> {/* 순위 표시 */}
+              <span>
+              <img
+                src={getTierImage(user.tier)}
+                alt={`${user.tier}`}
+                className="Ranking__tierImage"
+              />
+              </span>
               <span>{user.tier}</span>
               <span>{user.userName}</span>
               <span>레벨: {user.userLevel}</span>

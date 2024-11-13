@@ -7,6 +7,7 @@ import { FaRegStar, FaSearch, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa6";
 import axios from "axios";
 import { CiCircleRemove } from "react-icons/ci";
+import { IoEyeSharp } from "react-icons/io5";
 
 // 게시물 타입 정의
 interface Post {
@@ -17,6 +18,9 @@ interface Post {
   createAt: string; // 생성 시간 (ISO 8601 형식)
   updateAt: string;
   userId: string;
+  filePath: string;
+  viewCount : number;
+  heart : number;
 }
 
 const Mentor_mentee = () => {
@@ -166,6 +170,7 @@ const Mentor_mentee = () => {
                           time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
                           newTime: post.updateAt,
                           userId: post.userId,
+                          fileName :post.filePath,
                           boardId: 5,
                         },
                       })
@@ -185,13 +190,11 @@ const Mentor_mentee = () => {
                           {post.userName}
                         </div>
                         <div className="Certificate_icons_right">
-                          <div className="">조회수</div>
-                          <div className="Certificate_heart">
-                            <FaRegHeart />
-                          </div>
-                          <div className="Certificate_scrap">
+                          <div className="Certificate_viewCount"><IoEyeSharp /> {post.viewCount}</div>
+                          <div className="Certificate_heart"><FaRegHeart /> {post.heart}</div>
+                          {/* <div className="Certificate_scrap">
                             <FaRegBookmark />
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </div>

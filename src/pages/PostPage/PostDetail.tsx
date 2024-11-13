@@ -3,7 +3,6 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import Header from "../Header";
 import CommentAdoptModal from "./Comment_Adopt_Modal"; // 모달 컴포넌트 import
 import "../../assets/css/PostPage/PostDetail.css";
-import myImage from "../../assets/images/manggu.jpg";
 import {
   FaRegComment,
   FaRegHeart,
@@ -15,7 +14,8 @@ import { FaPaperPlane } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import axios from "axios";
 import { FiMoreHorizontal } from "react-icons/fi";
-
+import { IoEyeSharp } from "react-icons/io5";
+import { getTierImage } from "../TierImageUtils";
 interface Comment {
   commentId: number;
   content: string;
@@ -25,14 +25,13 @@ interface Comment {
   updatedAt: string;
   adopt: boolean; // 채택 여부를 나타내는 속성
   replies?: Comment[];
+  authorTier: string;
 }
 
 const PostDetail: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-
-  const { title, content, userName, time, newTime, boardId } = state || {};
-  const { postId } = useParams<{ postId: string }>();
+  const { title, content, userName, time, newTime,userId, boardId,  postId, fileName } = state || {};
   const [hasAdoptedComment, setHasAdoptedComment] = useState(false); // 상태 추가
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentInput, setCommentInput] = useState("");
@@ -40,7 +39,47 @@ const PostDetail: React.FC = () => {
   const commentElement = useRef<null | HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [comDropdown, setcomDropdown] = useState(false);
-  console.log("State:", state);
+  const [imageSrc, setImageSrc] = useState(""); // 기본 이미지를 설정
+  
+  const [viewCount, setViewCount] = useState(0); // 조회수 상태
+  const [visibleCommentDropdown, setVisibleCommentDropdown] = useState<{ [key: number]: boolean }>({});
+  const [postwriterTier, setPostUserTier] = useState(0);
+  const [UserTier, setUserTier] = useState(0);
+  const fetchpostwriterTier = async () => {
+    try {
+      if (userId) {
+        // 경험치랑 티어 경험치 데이터를 가져오는 API 호출
+        const response = await axios.get(
+          `http://localhost:8080/api/auth/users/${userId}/experience`
+        );
+        setPostUserTier(response.data.userTier);
+      }
+    } catch (error) {
+      console.error("경험치 데이터를 가져오는 중 오류 발생:", error);
+    }
+  };
+
+  const fetchuserTier = async () => {
+    const userId = getCurrentUserId();
+    try {
+      if (userId) {
+        // 경험치랑 티어 경험치 데이터를 가져오는 API 호출
+        const response = await axios.get(
+          `http://localhost:8080/api/auth/users/${userId}/experience`
+        );
+        setUserTier(response.data.userTier);
+      }
+    } catch (error) {
+      console.error("경험치 데이터를 가져오는 중 오류 발생:", error);
+    }
+  };
+
+  const toggleCommentDropdown = (commentId: number) => {
+    setVisibleCommentDropdown((prev) => ({
+      ...prev,
+      [commentId]: !prev[commentId], // 현재 상태를 반전
+    }));
+  };
   //
   const handleMoreClick = () => {
     setShowDropdown(!showDropdown);
@@ -86,6 +125,7 @@ const PostDetail: React.FC = () => {
     7: "/Coding",
     8: "/Marketplace",
     9: "/Ledger",
+    10: "/main/Announcement",
   };
 
   // boardId에 따른 제목 매핑
@@ -99,6 +139,7 @@ const PostDetail: React.FC = () => {
     7: "코딩 문제 게시판",
     8: "전공책 장터 게시판",
     9: "장부 기록 공개 게시판",
+    10: "공지사항 게시판",
   };
 
   // 시간을 포맷하는 함수
@@ -125,20 +166,6 @@ const PostDetail: React.FC = () => {
   const [heart, setHeart] = useState(false);
   const [heartCount, setHeartCount] = useState(0);
 
-  useEffect(() => {
-    // 컴포넌트가 마운트될 때 하트 수를 가져옵니다.
-    const fetchHeartCount = async () => {
-      try {
-        const response = await axios.get(`/api/posts/${postId}/hearts`); // 하트 수를 가져오는 API 호출
-        setHeartCount(response.data.heartCount); // 응답에서 하트 수 설정
-      } catch (error) {
-        console.error("하트 수를 가져오는 데 실패했습니다.", error);
-      }
-    };
-
-    fetchHeartCount();
-  }, [postId]);
-
   // 하트 클릭 이벤트
   const handleHeart = async () => {
     setHeart(!heart);
@@ -150,14 +177,6 @@ const PostDetail: React.FC = () => {
     } catch (error) {
       console.error("하트 수를 업데이트하는 데 실패했습니다.", error);
     }
-  };
-
-  {
-    /*댓글 하트 클릭 이벤트 */
-  }
-  const [comheart, setcomHeart] = useState(false);
-  const handlecomHeart = () => {
-    setcomHeart(!comheart);
   };
 
   // 게시물 삭제 함수
@@ -202,36 +221,22 @@ const PostDetail: React.FC = () => {
 
   // 북마크 상태
   const [bookmark, setBookmark] = useState(false);
-  const handleBookmark = () => {
-    setBookmark(!bookmark);
-  };
-
-  // 게시글 가져오는 함수
-  const fetchPosts = async (boardId: number) => {
-    try {
-      const response = await axios.get("/api/posts", {
-        params: {
-          boardId: boardId, // 필요한 경우 boardId를 쿼리 파라미터로 전달
-        },
-      });
-      return response.data; // 응답으로 받은 게시글 목록 반환
-    } catch (error) {
-      console.error("게시글 가져오기 실패:", error);
-    }
-  };
 
   // 댓글 가져오는 함수
   const fetchComments = async () => {
     try {
       const response = await axios.get<Comment[]>(`/api/comments/${postId}`);
-
+      console.log(response.data); // API 응답 확인
       // 댓글 데이터에서 Adopt 값을 초기화
       const commentsWithAdoptedStatus = response.data.map((comment) => ({
         ...comment,
         adopt: comment.adopt || false, // 기본값 설정
+        // 작성자 티어 정보 추가
+        authorTier: comment.authorTier || "기본 티어", // 예시: 기본값 설정
       }));
 
       setComments(commentsWithAdoptedStatus);
+      console.log(commentsWithAdoptedStatus);
       // 채택된 댓글이나 대댓글이 있는지 확인
       const adoptedExists =
         commentsWithAdoptedStatus.some((comment) => comment.adopt) ||
@@ -253,10 +258,6 @@ const PostDetail: React.FC = () => {
     const userName = localStorage.getItem("userName"); // 로컬 스토리지에서 userName 가져오기
     const userId = getCurrentUserId(); // 사용자 ID 가져오기
     const userLevelExperience = 10; // 부여할 레벨 경험치 값
-    console.log("Comment Input:", commentInput);
-    console.log("Post ID:", postId);
-    console.log("User Name:", userName);
-    console.log("UserID:", userId);
     try {
       const commentResponse = await axios.post("/api/comments", {
         postId: postId,
@@ -558,7 +559,79 @@ const PostDetail: React.FC = () => {
     }
   };
 
+  const handleBookmark = async () => {
+    const userId = getCurrentUserId();
+    console.log("북마크 버튼 클릭"); // 추가
+    setBookmark(!bookmark); // 북마크 상태 전환
+
+    try {
+        await axios.post(`/api/posts/${postId}/bookmarks`, null, {
+            params: { userId } // 사용자 ID를 쿼리 파라미터로 전달
+        });
+    } catch (error) {
+        console.error("북마크 상태를 업데이트하는 데 실패했습니다.", error);
+    }
+  };
+
   useEffect(() => {
+    const loadImage = async () => {
+      try {
+        if (fileName && !imageSrc) { // imageSrc가 없을 때만 요청
+          // 파일 경로가 있는 경우 서버에서 이미지를 가져옴
+          const response = await axios.get(`http://localhost:8080/api/files/${postId}`, {
+            responseType: "blob",
+          });
+          const imageUrl = URL.createObjectURL(response.data);
+          setImageSrc(imageUrl);
+        }
+      } catch (error) {
+        console.error("Error fetching the image:", error);
+      }
+    };
+
+    loadImage();
+
+    return () => {
+      if (imageSrc) {
+        URL.revokeObjectURL(imageSrc); // URL 객체 해제
+      }
+    };
+  }, [postId, fileName]); // imageSrc는 의존성 배열에서 제외
+
+ useEffect(() => {
+    const incrementViewCount = async () => {
+      try {
+        await axios.post(`http://localhost:8080/api/posts/${postId}/incrementViewCount`);
+        // 조회수 업데이트 후 최신 조회수 가져오기
+        const response = await axios.get(`http://localhost:8080/api/posts/${postId}`);
+        setViewCount(response.data.viewCount); // 최신 조회수 설정
+      } catch (error) {
+        console.error("Error incrementing view count:", error);
+      }
+    };
+  
+    const fetchHeartCount = async () => {
+      try {
+        const response = await axios.get(`/api/posts/${postId}`); // 하트 수를 가져오는 API 호출
+        setHeartCount(response.data.heart); // 응답에서 하트 수 설정
+      } catch (error) {
+        console.error("하트 수를 가져오는 데 실패했습니다.", error);
+      }
+    };
+
+    const fetchPostDetails = async () => {
+      const userId = getCurrentUserId();
+      const response = await axios.get(`/api/posts/${postId}/bookmarks`, {
+          params: { userId } // 사용자 ID를 쿼리 파라미터로 전달
+      });
+      setBookmark(response.data); // 북마크 상태 설정
+    };
+
+    fetchPostDetails();
+    fetchpostwriterTier();
+    fetchuserTier();
+    fetchHeartCount();
+    incrementViewCount();
     fetchComments();
   }, [postId]);
 
@@ -583,7 +656,9 @@ const PostDetail: React.FC = () => {
             {/* 게시글 작성자 목록 출력 */}
             <div className="PostDetail_profile">
               <div className="PostDetail_proImage">
-                {/* <img src={catImage} alt="프로필" /> */}
+                <img src = {getTierImage(postwriterTier)} 
+                 alt={`${postwriterTier}`}
+                />
               </div>
               <div className="PostDetail_middle">
                 <div className="PostDetail_writer">{userName || "작성자"}</div>
@@ -628,6 +703,16 @@ const PostDetail: React.FC = () => {
             <div className="PostDetail_postTitle">{title || "제목"}</div>
             <div className="PostDetail_content">{content || "내용"}</div>
 
+             {/* 글 내용 아래에 이미지 표시 */}
+            {imageSrc ? (
+              <div className="PostDetail_image">
+                <img src={imageSrc} alt="게시글 이미지" style={{ width: "70%", height: "auto" }} />
+              </div>
+            ) : (
+              <p>이미지가 없습니다.</p>
+            )}
+          </div>
+
             {/*게시글 좋아요,댓글 수, 스크랩 수 */}
             <div className="PostDetail_total">
               <div className="PostDetail_totallike" onClick={handleHeart}>
@@ -643,9 +728,10 @@ const PostDetail: React.FC = () => {
               <div className="PostDetail_totalscrap" onClick={handleBookmark}>
                 {bookmark ? <FaBookmark color="gold" /> : <FaRegBookmark />}
               </div>
+              {/* 조회수 표시 */}
+              <div className="PostDetail_viewCount"> <IoEyeSharp /> {viewCount || 0}</div>
             </div>
           </div>
-        </div>
 
         {/* 채택된 댓글 출력 */}
         <div className="PostDetail_commentbox">
@@ -655,11 +741,33 @@ const PostDetail: React.FC = () => {
               <div className="PostDetail_comment" key={comment.commentId}>
                 <div className="PostDetail_writer">
                   <div className="PostDetail_commproImage">
-                    <img src={myImage} alt="프로필" />
+                    <img src={getTierImage(comment.authorTier)} alt={`${comment.memberId}`} />
                   </div>
                   <div className="PostDetail_commwriter">
                     {comment.memberId}
                   </div>
+                  <div onClick={() => toggleCommentDropdown(comment.commentId)}>
+                    <FiMoreHorizontal />
+                  </div>
+                  {comment.userId === getCurrentUserId() && (
+                    <>
+                      {visibleCommentDropdown[comment.commentId] && (
+                        <ul className="PostDetail_comdropdown">
+                          <li
+                            className="PostDetail_editButton"
+                            onClick={() => handleEditComment(comment.commentId)}
+                          >
+                            수정
+                          </li>
+                          <li
+                            onClick={() => handleDeleteComment(comment.commentId)}
+                          >
+                            삭제
+                          </li>
+                        </ul>
+                      )}
+                    </>
+                  )}
                 </div>
                 <div className="PostDetail_content PostDetail_comm_cont adopted">
                   채택된 댓글입니다 : {comment.content}
@@ -667,21 +775,6 @@ const PostDetail: React.FC = () => {
                 <div className="PostDetail_time">
                   {formatDate(comment.updatedAt || comment.createdAt)}
                 </div>
-                {/* 채택된 댓글에 대해 수정 및 삭제 버튼 추가 (필요시) */}
-                {comment.userId === getCurrentUserId() && (
-                  <>
-                    <button
-                      onClick={() => handleEditComment(comment.commentId)}
-                    >
-                      수정
-                    </button>
-                    <button
-                      onClick={() => handleDeleteComment(comment.commentId)}
-                    >
-                      삭제
-                    </button>
-                  </>
-                )}
               </div>
             ))}
           {/* 채택된 대댓글 출력 */}
@@ -692,11 +785,33 @@ const PostDetail: React.FC = () => {
                 <div className="PostDetail_comment" key={reply.commentId}>
                   <div className="PostDetail_writer">
                     <div className="PostDetail_commproImage">
-                      <img src={myImage} alt="프로필" />
+                    <img src={getTierImage(reply.authorTier)} alt={`${reply.memberId}`} />
                     </div>
                     <div className="PostDetail_commwriter">
                       {reply.memberId}
                     </div>
+                    <div onClick={() => toggleCommentDropdown(reply.commentId)}>
+                      <FiMoreHorizontal />
+                    </div>
+                    {reply.userId === getCurrentUserId() && (
+                      <>
+                      {visibleCommentDropdown[reply.commentId] && (
+                        <ul className="PostDetail_comdropdown">
+                          <li
+                            className="PostDetail_editButton"
+                            onClick={() => handleEditReply(reply.commentId)}
+                          >
+                            수정
+                          </li>
+                          <li
+                            onClick={() => handleDeleteReply(reply.commentId)}
+                          >
+                            삭제
+                          </li>
+                        </ul>
+                      )}
+                    </>
+                    )}
                   </div>
                   <div className="PostDetail_content PostDetail_comm_cont adopted">
                     채택된 대댓글입니다 : {reply.content}
@@ -704,19 +819,6 @@ const PostDetail: React.FC = () => {
                   <div className="PostDetail_time">
                     {formatDate(reply.updatedAt || reply.createdAt)}
                   </div>
-                  {/* 대댓글에 대해 수정 및 삭제 버튼 추가 (필요시) */}
-                  {reply.userId === getCurrentUserId() && (
-                    <>
-                      <button onClick={() => handleEditReply(reply.commentId)}>
-                        수정
-                      </button>
-                      <button
-                        onClick={() => handleDeleteReply(reply.commentId)}
-                      >
-                        삭제
-                      </button>
-                    </>
-                  )}
                 </div>
               ))
           )}
@@ -728,7 +830,7 @@ const PostDetail: React.FC = () => {
             <div className="PostDetail_comment" key={comment.commentId}>
               <div className="PostDetail_writer">
                 <div className="PostDetail_commproImage">
-                  <img src={myImage} alt="프로필" />
+                <img src={getTierImage(comment.authorTier)} alt={`${comment.memberId}`} />
                 </div>
                 <div className="PostDetail_commwriter">{comment.memberId}</div>
                 <div
@@ -737,16 +839,13 @@ const PostDetail: React.FC = () => {
                 >
                   <FaRegComment />
                 </div>
-                <div className="PostDetail_heart">
-                  <FaRegHeart />
-                </div>
                 <div className="">
-                  <div onClick={handleFNDClick}>
-                    <FiMoreHorizontal />
-                  </div>
+                <div onClick={() => toggleCommentDropdown(comment.commentId)}>
+                  <FiMoreHorizontal />
+                </div>
                   {comment.userId === getCurrentUserId() && ( // 사용자 ID로 비교
                     <>
-                      {comDropdown && (
+                      {visibleCommentDropdown[comment.commentId]  && (
                         <ul className="PostDetail_comdropdown">
                           {/* 수정하기 버튼 추가 */}
                           <li
@@ -767,9 +866,8 @@ const PostDetail: React.FC = () => {
                     </>
                   )}
                 </div>
-                {/* 댓글 채택 버튼 조건, 여기서는 게시글 작성자와 로그인된 사용자의 이름을 비교하고있어서
-                    게시글작성시 UserID넘어가게 완성되면 userName(이름)이아니라 UserID(아이디)로 비교하게 getCurrentUserId() === postAuthorId 이걸로 바꿔야함*/}
-                {userName === localStorage.getItem("userName") &&
+                {/* 댓글 채택 버튼 조건*/}
+                {userId === getCurrentUserId() &&
                   !comment.adopt &&
                   comment.userId !== getCurrentUserId() &&
                   !hasAdoptedComment && (
@@ -801,14 +899,35 @@ const PostDetail: React.FC = () => {
                     <div className="PostDetail_writer">
                       <div className="PostDetail_commproImage">
                         {" "}
-                        <img src={myImage} alt="프로필" />{" "}
+                        <img src={getTierImage(reply.authorTier)} alt={`${reply.memberId}`} />
                       </div>
                       <div className="PostDetail_commwriter">
                         {reply.memberId}
                       </div>
-                      {/* 대댓글 채택 버튼 조건, 여기서는 게시글 작성자와 로그인된 사용자의 이름을 비교하고있어서
-                        게시글작성시 UserID넘어가게 완성되면 userName(이름)이아니라 UserID(아이디)로 비교하게 getCurrentUserId() === postAuthorId 이걸로 바꿔야함 */}
-                      {userName === localStorage.getItem("userName") &&
+                      <div onClick={() => toggleCommentDropdown(reply.commentId)}>
+                        <FiMoreHorizontal />
+                      </div>
+                      {reply.userId === getCurrentUserId() && (
+                        <>
+                          {visibleCommentDropdown[reply.commentId] && (
+                            <ul className="PostDetail_comdropdown">
+                              <li
+                                className="PostDetail_editButton"
+                                onClick={() => handleEditReply(reply.commentId)}
+                              >
+                                수정
+                              </li>
+                              <li
+                                onClick={() => handleDeleteReply(reply.commentId)}
+                              >
+                                삭제
+                              </li>
+                            </ul>
+                          )}
+                        </>
+                      )}
+                      {/* 대댓글 채택 버튼 조건*/}
+                      {userId === getCurrentUserId() &&
                         !reply.adopt &&
                         reply.userId !== getCurrentUserId() &&
                         !hasAdoptedComment && (
@@ -830,20 +949,6 @@ const PostDetail: React.FC = () => {
                     <div className="PostDetail_time">
                       {formatDate(reply.updatedAt || reply.createdAt)}
                     </div>
-                    {reply.userId === getCurrentUserId() && ( // 사용자 ID로 비교
-                      <>
-                        <button
-                          onClick={() => handleEditReply(reply.commentId)}
-                        >
-                          수정
-                        </button>
-                        <button
-                          onClick={() => handleDeleteReply(reply.commentId)}
-                        >
-                          삭제
-                        </button>
-                      </>
-                    )}
                   </div>
                 ))}
 
@@ -854,7 +959,7 @@ const PostDetail: React.FC = () => {
                   <div className="PostDetail_rerecomm">
                     <div className="PostDetail_writer">
                       <div className="PostDetail_commproImage">
-                        <img src={myImage} alt="프로필" />
+                      <img src={getTierImage(UserTier)} alt={`${UserTier}`} />
                       </div>
                       {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
                       <div className="PostDetail_commwriter">
@@ -900,6 +1005,15 @@ const PostDetail: React.FC = () => {
 
         {/* 댓글 작성 영역 */}
         <div className="PostDetail_commWritebox">
+          <div className="PostDetail_writer">
+            <div className="PostDetail_commproImage2">
+              <img src={getTierImage(UserTier)} alt={`${UserTier}`} />
+            </div>
+          {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
+            <div className="PostDetail_commwriter">
+              {localStorage.getItem("userName") || "작성자"}
+            </div>
+          </div>
           <input
             className="PostDetail_commWrite"
             placeholder="댓글을 입력하세요."

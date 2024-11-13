@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../assets/css/ProgressBar.css";
 import ConfirmLogoutModal from "./ConfirmLogoutModal";
+import { getTierImage } from "./TierImageUtils";
 import axios from "axios";
 
 interface ProgressBarProps {
@@ -13,6 +14,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
   const [tierProgress, setTierProgress] = useState(0); // 티어 게이지에 반영될 경험치 상태
   const [totalExperience, setTotalExperience] = useState(100); // 총 경험치 (예: 100)
   const [userLevel, setUserLevel] = useState(0);
+  const [userTier, setUserTier] = useState(0);
   const [expanded, setExpanded] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
@@ -37,6 +39,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
           setTierProgress(response.data.tierExperience); //  티어 경험치 반영
           setTotalExperience(100); // 총 경험치 설정 (예: 100)
           setUserLevel(response.data.userLevel);
+          setUserTier(response.data.userTier);
+          console.log(response.data.userTier);
         }
       } catch (error) {
         console.error("경험치 데이터를 가져오는 중 오류 발생:", error);
@@ -106,8 +110,8 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
         </svg>
       )}
       <img
-        src={icon}
-        alt="icon"
+        src={getTierImage(userTier)}
+        alt={`${userTier}`}
         onClick={handleIconClick}
         className="ProgressBar__icon"
       />
@@ -166,6 +170,9 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
             <div className="ProgressBar__levelContainer">
               <span className="ProgressBar__label">레벨: {userLevel}</span>{" "}
               {/* 사용자 레벨 표시 */}
+            </div>
+            <div className="ProgressBar__tierName">
+              <span>{userTier}</span> {/* 티어 이름 표시 */}
             </div>
           </div>
 

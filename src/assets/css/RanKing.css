@@ -35,3 +35,8 @@
   text-align: center; /* 가운데 정렬 */
   margin: 0 30px;
 }
+
+.Ranking__tierImage {
+  width: 100px; /* 원하는 너비로 설정 */
+  height: auto; /* 비율을 유지하려면 높이를 auto로 설정 */
+}
