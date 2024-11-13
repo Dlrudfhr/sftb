@@ -31,8 +31,7 @@ interface Comment {
 const PostDetail: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { title, content, userName, time, newTime,userId, boardId,fileName } = state || {};
-  const { postId } = useParams<{ postId: string }>();
+  const { title, content, userName, time, newTime,userId, boardId, postId, fileName } = state || {};
   const [hasAdoptedComment, setHasAdoptedComment] = useState(false); // 상태 추가
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentInput, setCommentInput] = useState("");
@@ -126,6 +125,7 @@ const PostDetail: React.FC = () => {
     7: "/Coding",
     8: "/Marketplace",
     9: "/Ledger",
+    10: "/main/Announcement",
   };
 
   // boardId에 따른 제목 매핑
@@ -139,6 +139,7 @@ const PostDetail: React.FC = () => {
     7: "코딩 문제 게시판",
     8: "전공책 장터 게시판",
     9: "장부 기록 공개 게시판",
+    10: "공지사항 게시판",
   };
 
   // 시간을 포맷하는 함수
@@ -220,9 +221,6 @@ const PostDetail: React.FC = () => {
 
   // 북마크 상태
   const [bookmark, setBookmark] = useState(false);
-  const handleBookmark = () => {
-    setBookmark(!bookmark);
-  };
 
   // 댓글 가져오는 함수
   const fetchComments = async () => {
@@ -561,6 +559,20 @@ const PostDetail: React.FC = () => {
     }
   };
 
+  const handleBookmark = async () => {
+    const userId = getCurrentUserId();
+    console.log("북마크 버튼 클릭"); // 추가
+    setBookmark(!bookmark); // 북마크 상태 전환
+
+    try {
+        await axios.post(`/api/posts/${postId}/bookmarks`, null, {
+            params: { userId } // 사용자 ID를 쿼리 파라미터로 전달
+        });
+    } catch (error) {
+        console.error("북마크 상태를 업데이트하는 데 실패했습니다.", error);
+    }
+  };
+
   useEffect(() => {
     const Imageload = async () => {
         try {
@@ -587,7 +599,7 @@ const PostDetail: React.FC = () => {
 }, [postId]);
 
  useEffect(() => {
-  const incrementViewCount = async () => {
+    const incrementViewCount = async () => {
       try {
         await axios.post(`http://localhost:8080/api/posts/${postId}/incrementViewCount`);
         // 조회수 업데이트 후 최신 조회수 가져오기
@@ -597,6 +609,7 @@ const PostDetail: React.FC = () => {
         console.error("Error incrementing view count:", error);
       }
     };
+  
     const fetchHeartCount = async () => {
       try {
         const response = await axios.get(`/api/posts/${postId}`); // 하트 수를 가져오는 API 호출
@@ -605,6 +618,16 @@ const PostDetail: React.FC = () => {
         console.error("하트 수를 가져오는 데 실패했습니다.", error);
       }
     };
+
+    const fetchPostDetails = async () => {
+      const userId = getCurrentUserId();
+      const response = await axios.get(`/api/posts/${postId}/bookmarks`, {
+          params: { userId } // 사용자 ID를 쿼리 파라미터로 전달
+      });
+      setBookmark(response.data); // 북마크 상태 설정
+    };
+
+    fetchPostDetails();
     fetchpostwriterTier();
     fetchuserTier();
     fetchHeartCount();

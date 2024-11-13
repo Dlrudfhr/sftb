@@ -170,6 +170,15 @@ const PostAdopt: React.FC = () => {
       }
     };
 
+    const fetchPostDetails = async () => {
+      const userId = getCurrentUserId();
+      const response = await axios.get(`/api/posts/${postId}/bookmarks`, {
+          params: { userId } // 사용자 ID를 쿼리 파라미터로 전달
+      });
+      setBookmark(response.data); // 북마크 상태 설정
+    };
+
+    fetchPostDetails();
     fetchPost();
     incrementViewCount();
     fetchpostwriterTier();
@@ -288,10 +297,20 @@ const handleDeletePost = async () => {
 
   // 북마크 상태
   const [bookmark, setBookmark] = useState(false);
-  const handleBookmark = () => {
-    setBookmark(!bookmark);
-  };
+  //북마크 클릭 함수
+  const handleBookmark = async () => {
+    const userId = getCurrentUserId();
+    console.log("북마크 버튼 클릭"); // 추가
+    setBookmark(!bookmark); // 북마크 상태 전환
 
+    try {
+        await axios.post(`/api/posts/${postId}/bookmarks`, null, {
+            params: { userId } // 사용자 ID를 쿼리 파라미터로 전달
+        });
+    } catch (error) {
+        console.error("북마크 상태를 업데이트하는 데 실패했습니다.", error);
+    }
+  };
   // 댓글 가져오는 함수
   const fetchComments = async () => {
     try {
