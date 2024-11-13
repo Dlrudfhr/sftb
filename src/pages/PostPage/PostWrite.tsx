@@ -15,6 +15,7 @@ function PostWrite() {
   const boardId = location.state?.boardId || 2; // boardId를 location 상태에서 가져오고 기본값은 2로 설정
   const { state } = useLocation(); // 이전 페이지에서 전달된 상태
   const [file, setFile] = useState<File | null>(null); // 첨부할 사진 파일
+  const [filePath, setFilePath] = useState<string | null>(null); // 기존 파일 경로 상태 추가
 
 
 
@@ -26,22 +27,21 @@ function PostWrite() {
   useEffect(() => {
     if (state) {
       console.log("PostWrite state:", state); // state 전체 출력
-      const { title, content, postId,filePath } = state; // 이전 페이지에서 받은 데이터
+      const { title = "", content = "", postId = "", filePath = null } = state; // 기본값을 추가
       setTitle(title || ""); // 제목 설정
       setContent(content || ""); // 내용 설정
       setPostID(postId || ""); // 게시물 고유 번호 설정
+      setFilePath(filePath || null); // 수정 시 기존 파일 경로 설정
       
-    } else {
-      setTitle(""); // 초기화
-      setContent(""); // 초기화
-      setPostID(""); // 초기화
-      console.log("No state received"); // state가 없을 경우 로그 출력
     }
   }, [state]);
 
   // 파일 선택 시 호출되는 함수
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFile(event.target.files?.[0] || null); // 선택한 파일을 상태에 저장
+    if (event.target.files?.[0]) {
+      setFilePath(null); // 새 파일 선택 시 기존 파일 경로 제거
+    }
   };
 
 
@@ -100,32 +100,39 @@ const handleGoToList = () => {
 
         if (file) {
           formData.append("file", file); // 새로 선택한 파일을 추가
-        } 
+        } else if (filePath) {
+          formData.append("filePath", filePath); // 기존 파일 경로 유지
+        }
 
-        const response = await axios.put(
-          `http://localhost:8080/api/posts/${state.postId}`, // 수정할 게시물의 ID를 포함한 URL
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
+        try {
+          const response = await axios.put(
+            `http://localhost:8080/api/posts/${state.postId}`, // 수정할 게시물의 ID를 포함한 URL
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            }
+          );
+        
+          if (response.status === 200) {
+            // 수정 후 해당 게시물 상세 페이지로 이동, 상태 전달 추가
+            navigate(`/PostDetail/${state.postId}`, {
+              state: {
+                title: title,
+                content: content,
+                userName: userName,
+                time: updatedTime, // 수정 시간을 현재 시간으로 설정
+                postId: state.postId, // 게시물 ID 추가
+              },
+            });
+          } else {
+            setErrorMessage("게시물 수정에 실패했습니다.");
           }
-        );
-        if (response.status === 200) {
-          // 수정 후 해당 게시물 상세 페이지로 이동, 상태 전달 추가
-          navigate(`/PostDetail/${state.postId}`, {
-            state: {
-              title: title,
-              content: content,
-              userName: userName,
-              time: updatedTime, // 수정 시간을 현재 시간으로 설정
-              postId: state.postId, // 게시물 ID 추가
-              
-            },
-          });
-        } else {
-          setErrorMessage("게시물 수정에 실패했습니다.");
+        } catch (error) {
+          console.error("Error in PUT request:", error); // 에러 내용 출력
+          setErrorMessage("서버 오류가 발생했습니다. 다시 시도해주세요.");
         }
       } else {
         // 새로 작성하는 경우 POST 요청
@@ -218,12 +225,18 @@ const handleGoToList = () => {
           />
           <br />
 
-           {/* 사진 파일 입력 필드 추가 */}
-           <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange} // 파일 선택 시 상태 업데이트
-          />
+          <input type="file" accept="image/*" onChange={handleFileChange} />
+          {/* 기존 파일이 있을 경우 미리보기 제공 */}
+          {filePath && (
+            <div className="file-preview">
+              <p>현재 파일: {filePath}</p>
+              <img
+                src={`http://localhost:8080/api/files/${filePath}`}
+                alt="Uploaded file preview"
+                style={{ maxWidth: "100px", maxHeight: "100px" }}
+              />
+            </div>
+          )}
           <br />
 
 

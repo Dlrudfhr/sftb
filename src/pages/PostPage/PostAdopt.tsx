@@ -29,7 +29,7 @@ interface Comment {
 const PostAdopt: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { title, content, userName, time, newTime, boardId, userId } = state || {};
+  const { title, content, userName, time, newTime, boardId, userId, fileName } = state || {};
   const { postId } = useParams<{ postId: string }>();
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentInput, setCommentInput] = useState("");
@@ -43,6 +43,7 @@ const PostAdopt: React.FC = () => {
   const [UserTier, setUserTier] = useState(0);
   const [viewCount, setViewCount] = useState(0); // 조회수 상태
   const [visibleCommentDropdown, setVisibleCommentDropdown] = useState<{ [key: number]: boolean }>({});
+  const [imageSrc, setImageSrc] = useState(""); // 기본 이미지를 설정
   const fetchpostwriterTier = async () => {
     try {
       if (userId) {
@@ -178,6 +179,31 @@ const PostAdopt: React.FC = () => {
     checkAdminStatus();
     fetchComments();
   }, [postId]);
+
+  useEffect(() => {
+    const Imageload = async () => {
+        try {
+            const response = await axios.get(`http://localhost:8080/api/files/${postId}`, {
+              responseType: "blob", // 이미지 데이터를 blob 형식으로 받아옴
+            });
+
+            // Blob 데이터를 URL로 변환하여 이미지 소스로 사용
+            const imageUrl = URL.createObjectURL(response.data);
+            setImageSrc(imageUrl); // setImageSrc에 이미지 URL 설정
+        } catch (error) {
+            console.error("Error fetching the image:", error);
+        }
+    };
+
+    Imageload();
+
+    return () => {
+        // 클린업 함수로 URL 객체 해제
+        if (imageSrc) {
+            URL.revokeObjectURL(imageSrc);
+        }
+    };
+}, [postId]);
 
   // 관리자 여부 확인 함수
   const checkAdminStatus = async () => {
@@ -406,6 +432,7 @@ const handleDeletePost = async () => {
         userName,
         newTime, // 수정된 시간을 현재 시간으로 설정
         postId, // 게시물 ID 추가
+        fileName,
       },
     });
   };
@@ -634,6 +661,13 @@ const handleDeletePost = async () => {
             {/*게시글 제목&내용 */}
             <div className="PostDetail_postTitle">{title || "제목"}</div>
             <div className="PostDetail_content">{content || "내용"}</div>
+
+            {/* 글 내용 아래에 이미지 표시 */}
+            {imageSrc && (
+          <div className="PostDetail_image">
+            <img src={imageSrc} alt="게시글 이미지" style={{ width: "70%", height: "auto" }} />
+          </div>
+             )}
 
             {/*게시글 좋아요,댓글 수, 스크랩 수 */}
             <div className="PostDetail_total">

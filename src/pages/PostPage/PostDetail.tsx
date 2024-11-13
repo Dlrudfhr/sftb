@@ -31,7 +31,7 @@ interface Comment {
 const PostDetail: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { title, content, userName, time, newTime,userId, boardId,fileName } = state || {};
+  const { title, content, userName, time, newTime,userId, boardId, fileName } = state || {};
   const { postId } = useParams<{ postId: string }>();
   const [hasAdoptedComment, setHasAdoptedComment] = useState(false); // 상태 추가
   const [comments, setComments] = useState<Comment[]>([]);
@@ -562,29 +562,29 @@ const PostDetail: React.FC = () => {
   };
 
   useEffect(() => {
-    const Imageload = async () => {
-        try {
-            const response = await axios.get(`http://localhost:8080/api/files/${postId}`, {
-              responseType: "blob", // 이미지 데이터를 blob 형식으로 받아옴
-            });
-
-            // Blob 데이터를 URL로 변환하여 이미지 소스로 사용
-            const imageUrl = URL.createObjectURL(response.data);
-            setImageSrc(imageUrl); // setImageSrc에 이미지 URL 설정
-        } catch (error) {
-            console.error("Error fetching the image:", error);
+    const loadImage = async () => {
+      try {
+        if (fileName && !imageSrc) { // imageSrc가 없을 때만 요청
+          // 파일 경로가 있는 경우 서버에서 이미지를 가져옴
+          const response = await axios.get(`http://localhost:8080/api/files/${postId}`, {
+            responseType: "blob",
+          });
+          const imageUrl = URL.createObjectURL(response.data);
+          setImageSrc(imageUrl);
         }
+      } catch (error) {
+        console.error("Error fetching the image:", error);
+      }
     };
 
-    Imageload();
+    loadImage();
 
     return () => {
-        // 클린업 함수로 URL 객체 해제
-        if (imageSrc) {
-            URL.revokeObjectURL(imageSrc);
-        }
+      if (imageSrc) {
+        URL.revokeObjectURL(imageSrc); // URL 객체 해제
+      }
     };
-}, [postId]);
+  }, [postId, fileName]); // imageSrc는 의존성 배열에서 제외
 
  useEffect(() => {
   const incrementViewCount = async () => {
@@ -681,11 +681,14 @@ const PostDetail: React.FC = () => {
             <div className="PostDetail_content">{content || "내용"}</div>
 
              {/* 글 내용 아래에 이미지 표시 */}
-             {imageSrc && (
-          <div className="PostDetail_image">
-            <img src={imageSrc} alt="게시글 이미지" style={{ width: "50%", height: "auto" }} />
+            {imageSrc ? (
+              <div className="PostDetail_image">
+                <img src={imageSrc} alt="게시글 이미지" style={{ width: "70%", height: "auto" }} />
+              </div>
+            ) : (
+              <p>이미지가 없습니다.</p>
+            )}
           </div>
-             )}
 
             {/*게시글 좋아요,댓글 수, 스크랩 수 */}
             <div className="PostDetail_total">
@@ -706,7 +709,6 @@ const PostDetail: React.FC = () => {
               <div className="PostDetail_viewCount"> <IoEyeSharp /> {viewCount || 0}</div>
             </div>
           </div>
-        </div>
 
         {/* 채택된 댓글 출력 */}
         <div className="PostDetail_commentbox">
