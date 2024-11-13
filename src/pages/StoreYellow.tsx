@@ -4,10 +4,18 @@ import Header from "./Header"; // 상단 배너 컴포넌트
 import Footer from "./Footer"; // 하단 배너 컴포넌트
 import axios from "axios";
 import "../assets/css/StoreYellow.css";
-import star from "../assets/images/기프티콘사진/star_americano.jpg";
 
 import greenBtn from "../assets/images/greenBtn.png"; // 빨간 버튼 이미지
 import redBtn from "../assets/images/redBtn.png"; // 빨간 버튼 이미지
+
+import megaAA from "../assets/images/giftImage/megaAA.png";
+import megaAshot from "../assets/images/giftImage/megaAshot.png";
+import megaChoco from "../assets/images/giftImage/megaChoco.png";
+import megaCookie from "../assets/images/giftImage/megaCookie.png";
+import starAA from "../assets/images/giftImage/starAA.png";
+import starLatte from "../assets/images/giftImage/starLatte.png";
+import twoChoco from "../assets/images/giftImage/twoChoco.png";
+import twoIcebox from "../assets/images/giftImage/twoIcebox.png";
 const StoreYellow: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [tokenCount, setTokenCount] = useState<number | null>(null);
   const navigate = useNavigate();
@@ -47,14 +55,25 @@ const StoreYellow: React.FC<{ children: React.ReactNode }> = ({ children }) => {
         <div className="StoreYellow__frame">
           <div className="StoreYellow__innerFrame">
             <div className="StoreYellow__productLine1">
-              <img
-                src={star}
-                className="StoreYellow__product"
-                alt="스타 상품"
-              />
-              <div className="StoreYellow__product"></div>
-              <div className="StoreYellow__product"></div>
-              <div className="StoreYellow__product"></div>
+              <div className="StoreGreen__productContainer">
+                <img src={starAA} className="StoreYellow__product" />
+                <div className="StoreYellow_priceLabel">10000</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={starLatte} className="StoreYellow__product" />
+                <div className="StoreYellow_priceLabel">10001</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={megaAA} className="StoreYellow__product" />
+                <div className="StoreYellow_priceLabel">9999</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={megaAshot} className="StoreYellow__product" />
+                <div className="StoreYellow_priceLabel">10002</div>
+              </div>
             </div>
             <div className="StoreYellow__selectBtnLine1">
               {[10000, 10001, 9999, 10002].map((value, index) => (
@@ -76,10 +95,25 @@ const StoreYellow: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               ))}
             </div>
             <div className="StoreYellow__productLine2">
-              <div className="StoreYellow__product"></div>
-              <div className="StoreYellow__product"></div>
-              <div className="StoreYellow__product"></div>
-              <div className="StoreYellow__product"></div>
+              <div className="StoreGreen__productContainer">
+                <img src={megaChoco} className="StoreYellow__product" />
+                <div className="StoreYellow_priceLabel">10000</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={megaCookie} className="StoreYellow__product" />
+                <div className="StoreYellow_priceLabel">10001</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={twoChoco} className="StoreYellow__product" />
+                <div className="StoreYellow_priceLabel">9999</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={twoIcebox} className="StoreYellow__product" />
+                <div className="StoreYellow_priceLabel">10002</div>
+              </div>
             </div>
             <div className="StoreYellow__selectBtnLine2">
               {[10000, 10001, 9999, 10002].map((value, index) => (

@@ -28,25 +28,28 @@
 }
 
 @keyframes motion {
-  0% {margin-top: 0px;}
-  100% {margin-top: 10px;}
+  0% {
+    margin-top: 0px;
+  }
+  100% {
+    margin-top: 10px;
+  }
 }
 
-.Store__area{
+.Store__area {
   display: flex;
 }
-.Store__left{
+.Store__left {
   width: 400px;
 }
 
 /**/
-.Store__move{
+.Store__move {
   width: 100px;
   height: 100px;
-  animation: motion 0.5s linear 0s infinite alternate; 
+  animation: motion 0.5s linear 0s infinite alternate;
   margin-top: 0;
 }
-
 
 .StoreGreen__middle {
   margin-top: 100px;
@@ -58,7 +61,7 @@
   z-index: 2;
 }
 
-.Store__right{
+.Store__right {
   width: 400px;
 }
 
@@ -69,11 +72,13 @@
 
 .StoreGreen__productLine1 {
   display: flex;
+  position: relative;
   margin-top: 28px;
   margin-left: 35px;
 }
 .StoreGreen__productLine2 {
   display: flex;
+  position: relative;
   margin-top: 42px;
   margin-left: 35px;
 }
@@ -81,7 +86,7 @@
 .StoreGreen__product {
   width: 7.3125rem;
   height: 7.3125rem;
-  background-color: #d9d9d9;
+  background-color: rgba(217, 217, 217, 0.6); /* 불투명하게 조정 */
   margin-right: 34px;
 }
 
@@ -96,8 +101,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 11px;
+  margin-top: 6px;
   margin-left: 56px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreGreen__selectBtn1:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 
 .StoreGreen__selectBtn2 {
@@ -106,8 +117,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 9px;
+  margin-top: 5px;
   margin-left: 73.5px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreGreen__selectBtn2:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 
 .StoreGreen__selectBtn3 {
@@ -116,8 +133,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 9px;
+  margin-top: 5px;
   margin-left: 75px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreGreen__selectBtn3:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 .StoreGreen__selectBtn4 {
   width: 4.6875rem;
@@ -125,8 +148,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 9px;
+  margin-top: 5px;
   margin-left: 75.9px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreGreen__selectBtn4:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 
 .StoreGreen__selectBtnLine2 {
@@ -139,8 +168,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 30px;
+  margin-top: 26px;
   margin-left: 54px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreGreen__selectBtn5:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 .StoreGreen__selectBtn6 {
   width: 4.6875rem;
@@ -148,8 +183,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 30px;
+  margin-top: 26px;
   margin-left: 75.5px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreGreen__selectBtn6:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 
 .StoreGreen__selectBtn7 {
@@ -158,8 +199,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 30px;
+  margin-top: 26px;
   margin-left: 75px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreGreen__selectBtn7:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 .StoreGreen__selectBtn8 {
   width: 4.6875rem;
@@ -167,8 +214,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 30px;
+  margin-top: 26px;
   margin-left: 75.9px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreGreen__selectBtn8:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 
 .StoreGreen__coin {
@@ -193,4 +246,14 @@
   padding-top: 15px;
   align-self: center;
   color: white;
+}
+
+.StoreGreen_priceLabel {
+  position: absolute; /* 절대 위치 설정 */
+  z-index: 3; /* 제품 위에 표시되도록 z-index 조정 */
+  color: balck; /* 텍스트 색상 설정 */
+  font-size: 17px; /* 필요에 따라 크기 조정 */
+  bottom: 0px;
+  margin-left: 33px;
+  font-family: "DungGeunMo";
 }

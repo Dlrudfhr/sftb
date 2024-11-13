@@ -44,11 +44,13 @@
 
 .StoreRed__productLine1 {
   display: flex;
+  position: relative;
   margin-top: 27px;
-  margin-left: 38px;
+  margin-left: 35px;
 }
 .StoreRed__productLine2 {
   display: flex;
+  position: relative;
   margin-top: 41px;
   margin-left: 35px;
 }
@@ -56,7 +58,7 @@
 .StoreRed__product {
   width: 7.3125rem;
   height: 7.3125rem;
-  background-color: #d9d9d9;
+  background-color: rgba(217, 217, 217, 0.6); /* 불투명하게 조정 */
   margin-right: 35px;
 }
 
@@ -71,8 +73,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 11px;
+  margin-top: 7px;
   margin-left: 56px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreRed__selectBtn1:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 
 .StoreRed__selectBtn2 {
@@ -81,8 +89,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 10px;
+  margin-top: 6px;
   margin-left: 74px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreRed__selectBtn2:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 
 .StoreRed__selectBtn3 {
@@ -91,8 +105,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 9px;
+  margin-top: 6px;
   margin-left: 75px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreRed__selectBtn3:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 .StoreRed__selectBtn4 {
   width: 4.6875rem;
@@ -100,8 +120,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 9px;
+  margin-top: 6px;
   margin-left: 75.9px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreRed__selectBtn4:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 
 .StoreRed__selectBtnLine2 {
@@ -114,8 +140,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 31px;
+  margin-top: 28px;
   margin-left: 54px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreRed__selectBtn5:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 .StoreRed__selectBtn6 {
   width: 4.6875rem;
@@ -123,8 +155,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 31px;
+  margin-top: 28px;
   margin-left: 75.5px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreRed__selectBtn6:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 
 .StoreRed__selectBtn7 {
@@ -133,8 +171,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 31px;
+  margin-top: 28px;
   margin-left: 75px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreRed__selectBtn7:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 .StoreRed__selectBtn8 {
   width: 4.6875rem;
@@ -142,8 +186,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 31px;
+  margin-top: 28px;
   margin-left: 75.9px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreRed__selectBtn8:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 
 .StoreRed__coin {
@@ -168,4 +218,14 @@
   padding-top: 15px;
   align-self: center;
   color: white;
+}
+
+.StoreRed_priceLabel {
+  position: absolute; /* 절대 위치 설정 */
+  z-index: 3; /* 제품 위에 표시되도록 z-index 조정 */
+  color: black; /* 텍스트 색상 설정 */
+  font-size: 17px; /* 필요에 따라 크기 조정 */
+  bottom: 0px;
+  margin-left: 36px;
+  font-family: "DungGeunMo";
 }
