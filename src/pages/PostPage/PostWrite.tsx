@@ -57,6 +57,7 @@ const handleGoToList = () => {
     7: "/Coding",
     8: "/Marketplace",
     9: "/Ledger",
+    10: "/main/Announcement",
     // 추가 게시판이 있다면 여기서 추가
   };
   const boardUrl = boardUrlMap[boardId] || "/Main"; // 기본값은 Main
@@ -176,6 +177,7 @@ const handleGoToList = () => {
           7: "/Coding",
           8: "/Marketplace",
           9: "/Ledger",
+          10: "/main/Announcement",
           // 추가 게시판이 있다면 여기서 추가
         };
       
