@@ -5,6 +5,11 @@ import Footer from "./Footer"; // 하단 배너 컴포넌트
 import axios from "axios";
 import "../assets/css/StoreYellow.css";
 import star from "../assets/images/기프티콘사진/star_americano.jpg";
+import cafe9 from "../assets/images/상점사진/자산 9.png";
+import cafe11 from "../assets/images/상점사진/자산 11.png";
+import cafe13 from "../assets/images/상점사진/자산 13.png";
+import cafe15 from "../assets/images/상점사진/자산 15.png";
+import cafe16 from "../assets/images/상점사진/자산 16.png";
 
 import greenBtn from "../assets/images/greenBtn.png"; // 빨간 버튼 이미지
 import redBtn from "../assets/images/redBtn.png"; // 빨간 버튼 이미지
@@ -42,8 +47,15 @@ const StoreYellow: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <Header />
       <Footer />
       <div className="StoreYellow__background">
-        <button onClick={goToPrevStore}>◀️</button>
-        <button onClick={goToNextStore}>▶️</button>
+        <button className="StoreYellow__PrevBtn" onClick={goToPrevStore}>◀️</button>
+        <button className="StoreYellow__NextBtn" onClick={goToNextStore}>▶️</button>
+        <div className="Store__left">
+          <div className="Store__movebox">
+              <img src={cafe9} className="Store__move"></img>
+              <img src={cafe11} className="Store__move"></img>
+              <img src={cafe13} className="Store__move"></img>
+            </div>
+        </div>
         <div className="StoreYellow__frame">
           <div className="StoreYellow__innerFrame">
             <div className="StoreYellow__productLine1">
@@ -107,6 +119,13 @@ const StoreYellow: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <div className="StoreYellow__cointext">coin</div>
             </div>
           </div>
+        </div>
+        <div className="Store__right">
+        <div className="Store__movebox">
+              <img src={cafe15} className="Store__move"></img>
+              <img src={cafe16} className="Store__move"></img>
+              
+            </div>
         </div>
       </div>
     </div>

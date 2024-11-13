@@ -8,8 +8,14 @@ import star from "../assets/images/기프티콘사진/star_americano.jpg";
 import greenBtn from "../assets/images/greenBtn.png"; // 빨간 버튼 이미지
 import redBtn from "../assets/images/redBtn.png"; // 빨간 버튼 이미지
 import rightBtn from "../assets/images/rightBtn.png";
-import coffee from "../assets/images/자산 1.png";
-import cake from "../assets/images/자산 2.png";
+import cafe1 from "../assets/images/상점사진/자산 1.png";
+import cafe2 from "../assets/images/상점사진/자산 2.png";
+import cafe3 from "../assets/images/상점사진/자산 3.png";
+import cafe4 from "../assets/images/상점사진/자산 4.png";
+import cafe5 from "../assets/images/상점사진/자산 5.png";
+
+
+
 
 const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [tokenCount, setTokenCount] = useState<number | null>(null);
@@ -45,12 +51,20 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <Footer />
       <div className="StoreGreen__background">
         <div className="Store__area">
-          <div className="Store__left">
+              <button className="StoreGreen__NextBtn" onClick={goToNextStore}>
+                <img src={rightBtn}></img>
+              </button>
             <button className="StoreGreen__PrevBtn" onClick={goToPrevStore}>
               ◀
             </button>
-            <img src={coffee} className="Store__move"></img>
-            <img src={cake} className="Store__move"></img>
+          <div className="Store__left">
+
+            <div className="Store__movebox">
+              <img src={cafe1} className="Store__move"></img>
+              <img src={cafe2} className="Store__move"></img>
+              <img src={cafe3} className="Store__move"></img>
+              <img src={cafe4} className="Store__move"></img>
+            </div>
           </div>
           <div className="StoreGreen__middle">
             <div className="StoreGreen__innerFrame">
@@ -118,10 +132,12 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </div>
           </div>
           <div className="Store__right">
-            <button className="StoreGreen__NextBtn" onClick={goToNextStore}>
-              <img src={rightBtn}></img>
-            </button>
-
+            <div className="Store__movebox">
+              <img src={cafe5} className="Store__move"></img>
+              <img src={cafe2} className="Store__move"></img>
+              <img src={cafe3} className="Store__move"></img>
+              <img src={cafe4} className="Store__move"></img>
+            </div>
           </div>
         </div>
 

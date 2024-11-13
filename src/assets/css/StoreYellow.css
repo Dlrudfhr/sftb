@@ -170,6 +170,17 @@
   color: white;
 }
 
-.StoreGreen__NextBtn {
-  background-color: #ff000000;
+.StoreYellow__NextBtn, .StoreYellow__PrevBtn{
+  z-index:9999;
+  position:fixed;
+  margin-top:40vh;
+}
+
+.StoreYellow__PrevBtn{
+  position:fixed;
+  left:30vh
+}
+.StoreYellow__NextBtn{
+  position:fixed;
+  right:30vh;
 }

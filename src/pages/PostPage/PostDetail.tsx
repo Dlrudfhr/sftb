@@ -4,6 +4,7 @@ import Header from "../Header";
 import CommentAdoptModal from "./Comment_Adopt_Modal"; // 모달 컴포넌트 import
 import "../../assets/css/PostPage/PostDetail.css";
 import myImage from "../../assets/images/manggu.jpg";
+import { SlArrowLeft } from "react-icons/sl";
 import {
   FaRegComment,
   FaRegHeart,
@@ -600,7 +601,7 @@ const PostDetail: React.FC = () => {
           onClick={() => navigate(boardUrlMap[boardId])} // boardId에 따라 이동
         >
           <div className="PostDetail_titleinnerbox">
-            {boardTitleMap[boardId] || "게시판"}{" "}
+            <SlArrowLeft /> {boardTitleMap[boardId] || "게시판"}{" "}
             {/* boardId에 맞는 제목 출력 */}
           </div>
         </h3>
@@ -624,33 +625,35 @@ const PostDetail: React.FC = () => {
                     ? formatDate(time)
                     : "몇 분전"}
                 </div>
-                <div className="PostDetail_more">
-                  <div onClick={handleMoreClick}>
-                    <FiMoreHorizontal />
-                  </div>
-                  {state.userId === getCurrentUserId() && ( // 현재 사용자 ID와 작성자 ID 비교
-                    <>
-                      {showDropdown && (
-                        <ul className="PostDetail_dropdown">
-                          {/* 수정하기 버튼 추가 */}
-
-                          <li
-                            className="PostDetail_editButton"
-                            onClick={handleEdit} // postId를 사용하여 수정
-                          >
-                            수정하기
-                          </li>
-                          <li
-                            className="PostDetail_editButton"
-                            onClick={handleDelete}
-                          >
-                            삭제하기
-                          </li>
-                        </ul>
-                      )}
-                    </>
-                  )}
+                
+              </div>
+              <div className="PostDetail_more">
+                <div onClick={handleMoreClick}>
+                  <FiMoreHorizontal />
                 </div>
+                {state.userId === getCurrentUserId() && ( // 현재 사용자 ID와 작성자 ID 비교
+                  <>
+                    {showDropdown && (
+                      <ul className="PostDetail_dropdown">
+                        {/* 수정하기 버튼 추가 */}
+
+                        <li
+                          className="PostDetail_editButton"
+                          onClick={handleEdit} // postId를 사용하여 수정
+                        >
+                          수정하기
+                        </li>
+                        <li
+                          className="PostDetail_editButton"
+                          onClick={handleDelete}
+                        >
+                          삭제하기
+                        </li>
+                      </ul>
+                    )}
+                  </>
+                )}
+
               </div>
             </div>
 
@@ -692,7 +695,7 @@ const PostDetail: React.FC = () => {
                   <div className="PostDetail_commwriter">
                     {comment.memberId}
                   </div>
-                  <div onClick={() => toggleCommentDropdown(comment.commentId)}>
+                  <div className="PostDetail_more" onClick={() => toggleCommentDropdown(comment.commentId)}>
                     <FiMoreHorizontal />
                   </div>
                   {comment.userId === getCurrentUserId() && (
@@ -853,7 +856,7 @@ const PostDetail: React.FC = () => {
                       <div className="PostDetail_commwriter">
                         {reply.memberId}
                       </div>
-                      <div onClick={() => toggleCommentDropdown(reply.commentId)}>
+                      <div className="PostDetail_more" onClick={() => toggleCommentDropdown(reply.commentId)}>
                         <FiMoreHorizontal />
                       </div>
                       {reply.userId === getCurrentUserId() && (

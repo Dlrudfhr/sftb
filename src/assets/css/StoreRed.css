@@ -27,7 +27,7 @@
   background-color: red;
 }
 
-.StoreRed__frame {
+.StoreRed__middle {
   margin-top: 100px;
   position: fixed;
   width: 737px;
@@ -168,4 +168,19 @@
   padding-top: 15px;
   align-self: center;
   color: white;
+}
+
+.StoreRed__NextBtn, .StoreRed__PrevBtn{
+  z-index:9999;
+  position:fixed;
+  margin-top:40vh;
+}
+
+.StoreRed__PrevBtn{
+  position:fixed;
+  left:30vh
+}
+.StoreRed__NextBtn{
+  position:fixed;
+  right:30vh;
 }
