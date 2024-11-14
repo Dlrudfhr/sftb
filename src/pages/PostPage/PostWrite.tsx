@@ -118,16 +118,22 @@ const handleGoToList = () => {
           );
         
           if (response.status === 200) {
-            // 수정 후 해당 게시물 상세 페이지로 이동, 상태 전달 추가
-            navigate(`/PostDetail/${state.postId}`, {
-              state: {
-                title: title,
-                content: content,
-                userName: userName,
-                time: updatedTime, // 수정 시간을 현재 시간으로 설정
-                postId: state.postId, // 게시물 ID 추가
-              },
-            });
+           // 수정 후 해당 게시물 페이지로 이동
+           const destinationPath =
+           boardId === 5 || boardId === 6
+           ? `/PostAdopt/${state.postId}`
+           : `/PostDetail/${state.postId}`;
+
+          navigate(destinationPath, {
+           state: {
+              title: title,
+             content: content,
+             userName: userName,
+               time: updatedTime, // 수정 시간을 현재 시간으로 설정
+             postId: state.postId, // 게시물 ID 추가
+             boardId: state.boardId,
+            },
+          });
           } else {
             setErrorMessage("게시물 수정에 실패했습니다.");
           }

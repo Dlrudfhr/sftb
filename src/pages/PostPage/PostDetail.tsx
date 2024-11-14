@@ -209,8 +209,9 @@ const PostDetail: React.FC = () => {
           userId: userId,
           userLevelExperience,
         });
-        alert("게시물이 삭제되었습니다.");
-        navigate("/Certificate"); // 삭제 후 목록으로 이동
+        // boardId에 따라 해당 게시판 URL로 이동
+    const targetUrl = boardUrlMap[boardId] || "/main"; // boardId에 맞는 URL, 기본값으로 메인 페이지('/main')
+    navigate(targetUrl);
       } else {
         alert("게시물 삭제에 실패했습니다.");
       }
@@ -348,6 +349,8 @@ const PostDetail: React.FC = () => {
         userName,
         newTime, // 수정된 시간을 현재 시간으로 설정
         postId, // 게시물 ID 추가
+        userId, // userId 추가
+        boardId,
       },
     });
   };
