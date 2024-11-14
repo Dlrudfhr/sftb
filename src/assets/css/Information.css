@@ -3,6 +3,17 @@
     background-color: #f0f0f0;
   }
   
-  .information-page h1 {
-    color: #333;
-  }
+.Information__frame{
+  
+  background-color: aquamarine;
+  width: 90%;
+  height: 995px;
+  margin:auto;
+}
+
+.Information__innerframe{
+  width: 90%;
+  height: 90%;
+  border: solid 0.667px lightgray;
+  margin:auto;
+}

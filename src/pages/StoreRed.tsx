@@ -5,9 +5,23 @@ import Footer from "./Footer"; // 하단 배너 컴포넌트
 import axios from "axios";
 import "../assets/css/StoreRed.css";
 import star from "../assets/images/기프티콘사진/star_americano.jpg";
+import cafe6 from "../assets/images/상점사진/자산 6.png";
+import cafe7 from "../assets/images/상점사진/자산 7.png";
+import cafe8 from "../assets/images/상점사진/자산 8.png";
+import cafe12 from "../assets/images/상점사진/자산 12.png";
+import cafe14 from "../assets/images/상점사진/자산 14.png";
 
 import greenBtn from "../assets/images/greenBtn.png"; // 빨간 버튼 이미지
 import redBtn from "../assets/images/redBtn.png"; // 빨간 버튼 이미지
+
+import megaAA from "../assets/images/giftImage/megaAA.png";
+import megaAshot from "../assets/images/giftImage/megaAshot.png";
+import megaChoco from "../assets/images/giftImage/megaChoco.png";
+import megaCookie from "../assets/images/giftImage/megaCookie.png";
+import starAA from "../assets/images/giftImage/starAA.png";
+import starLatte from "../assets/images/giftImage/starLatte.png";
+import twoChoco from "../assets/images/giftImage/twoChoco.png";
+import twoIcebox from "../assets/images/giftImage/twoIcebox.png";
 const StoreRed: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [tokenCount, setTokenCount] = useState<number | null>(null);
   const navigate = useNavigate();
@@ -41,15 +55,39 @@ const StoreRed: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <Header />
       <Footer />
       <div className="StoreRed__background">
-        <button onClick={goToPrevStore}>◀️</button>
-        <button onClick={goToNextStore}>▶️</button>
-        <div className="StoreRed__frame">
+        <div className="Store__area">
+          <div className="Store__left">
+            <div className="Store__movebox">
+                <img src={cafe6} className="Store__move"></img>
+                <img src={cafe7} className="Store__move"></img>
+                <img src={cafe8} className="Store__move"></img>
+              </div>
+          </div>
+        </div>
+        <button className="StoreRed__PrevBtn" onClick={goToPrevStore}>◀️</button>
+        <button className="StoreRed__NextBtn" onClick={goToNextStore}>▶️</button>
+        <div className="StoreRed__middle">
           <div className="StoreRed__innerFrame">
             <div className="StoreRed__productLine1">
-              <img src={star} className="StoreRed__product" alt="스타 상품" />
-              <div className="StoreRed__product"></div>
-              <div className="StoreRed__product"></div>
-              <div className="StoreRed__product"></div>
+              <div className="StoreGreen__productContainer">
+                <img src={starAA} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">10000</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={starLatte} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">10001</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={megaAA} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">9999</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={megaAshot} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">10002</div>
+              </div>
             </div>
             <div className="StoreRed__selectBtnLine1">
               {[10000, 10001, 9999, 10002].map((value, index) => (
@@ -71,10 +109,25 @@ const StoreRed: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               ))}
             </div>
             <div className="StoreRed__productLine2">
-              <div className="StoreRed__product"></div>
-              <div className="StoreRed__product"></div>
-              <div className="StoreRed__product"></div>
-              <div className="StoreRed__product"></div>
+              <div className="StoreGreen__productContainer">
+                <img src={megaChoco} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">10000</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={megaCookie} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">10001</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={twoChoco} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">9999</div>
+              </div>
+
+              <div className="StoreGreen__productContainer">
+                <img src={twoIcebox} className="StoreRed__product" />
+                <div className="StoreRed_priceLabel">10002</div>
+              </div>
             </div>
             <div className="StoreRed__selectBtnLine2">
               {[10000, 10001, 9999, 10002].map((value, index) => (
@@ -102,6 +155,12 @@ const StoreRed: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <div className="StoreRed__cointext">coin</div>
             </div>
           </div>
+        </div>
+        <div className="Store__right">
+          <div className="Store__movebox">
+              <img src={cafe12} className="Store__move"></img>
+              <img src={cafe14} className="Store__move"></img>
+            </div>
         </div>
       </div>
     </div>

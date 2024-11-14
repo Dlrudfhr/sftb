@@ -44,19 +44,21 @@
 
 .StoreYellow__productLine1 {
   display: flex;
+  position: relative;
   margin-top: 28px;
   margin-left: 31px;
 }
 .StoreYellow__productLine2 {
   display: flex;
-  margin-top: 42px;
-  margin-left: 35px;
+  position: relative;
+  margin-top: 44px;
+  margin-left: 31px;
 }
 
 .StoreYellow__product {
   width: 7.3125rem;
   height: 7.3125rem;
-  background-color: #d9d9d9;
+  background-color: rgba(217, 217, 217, 0.4); /* 불투명하게 조정 */
   margin-right: 35px;
 }
 
@@ -71,8 +73,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 11px;
+  margin-top: 7px;
   margin-left: 53px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreYellow__selectBtn1:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 
 .StoreYellow__selectBtn2 {
@@ -81,18 +89,29 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 11px;
+  margin-top: 7px;
   margin-left: 73.5px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
-
+.StoreYellow__selectBtn2:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
+}
 .StoreYellow__selectBtn3 {
   width: 4.6875rem;
   height: 1.4375rem;
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 11px;
+  margin-top: 7px;
   margin-left: 75px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreYellow__selectBtn3:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 .StoreYellow__selectBtn4 {
   width: 4.6875rem;
@@ -100,10 +119,15 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 11px;
+  margin-top: 7px;
   margin-left: 77px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
-
+.StoreYellow__selectBtn4:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
+}
 .StoreYellow__selectBtnLine2 {
   display: flex;
   flex-wrap: nowrap; /* 줄 바꿈을 방지 */
@@ -114,8 +138,14 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 32px;
+  margin-top: 27px;
   margin-left: 52px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreYellow__selectBtn5:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 .StoreYellow__selectBtn6 {
   width: 4.6875rem;
@@ -123,18 +153,29 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 32px;
+  margin-top: 27px;
   margin-left: 75.5px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
-
+.StoreYellow__selectBtn6:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
+}
 .StoreYellow__selectBtn7 {
   width: 4.6875rem;
   height: 1.4375rem;
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 32px;
+  margin-top: 27px;
   margin-left: 75px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+.StoreYellow__selectBtn7:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 .StoreYellow__selectBtn8 {
   width: 4.6875rem;
@@ -142,10 +183,15 @@
   border: none;
   border-radius: 0.875rem 0.875rem 0.4375rem 0.4375rem;
   background: #d9d9d9;
-  margin-top: 32px;
+  margin-top: 27px;
   margin-left: 75.9px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
 }
-
+.StoreYellow__selectBtn8:hover {
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
+}
 .StoreYellow__coin {
   width: 200px;
   height: 54px;
@@ -170,6 +216,26 @@
   color: white;
 }
 
-.StoreGreen__NextBtn {
-  background-color: #ff000000;
+.StoreYellow__NextBtn, .StoreYellow__PrevBtn{
+  z-index:9999;
+  position:fixed;
+  margin-top:40vh;
+}
+
+.StoreYellow__PrevBtn{
+  position:fixed;
+  left:30vh
+}
+.StoreYellow__NextBtn{
+  position:fixed;
+  right:30vh;
+}
+.StoreYellow_priceLabel {
+  position: absolute; /* 절대 위치 설정 */
+  z-index: 3; /* 제품 위에 표시되도록 z-index 조정 */
+  color: black; /* 텍스트 색상 설정 */
+  font-size: 17px; /* 필요에 따라 크기 조정 */
+  bottom: 0px;
+  margin-left: 36px;
+  font-family: "DungGeunMo";
 }

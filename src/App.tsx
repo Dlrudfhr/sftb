@@ -27,6 +27,7 @@ import PostWrite from "./pages/PostPage/PostWrite";
 import PostDetail from "./pages/PostPage/PostDetail";
 import PostAdopt from "./pages/PostPage/PostAdopt"; // PostAdopt 페이지 import
 import PrivateRoute from "./PrivateRoute";
+import PostAnnouncement from "./pages/PostAnnouncement";
 import "./App.css";
 
 interface RouteProps {
@@ -63,6 +64,7 @@ const routes: Array<RouteProps> = [
   { path: "/PostWrite", component: PostWrite },
   { path: "/PostDetail/:postId", component: PostDetail },
   { path: "/PostAdopt/:postId", component: PostAdopt }, // 추가된 PostAdopt 경로
+  { path: "/PostAnnouncement/:postId", component: PostAnnouncement },
 ];
 
 function App() {

@@ -3,7 +3,7 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import Header from "../Header";
 import CommentAdoptModal from "./Comment_Adopt_Modal"; // 모달 컴포넌트 import
 import "../../assets/css/PostPage/PostDetail.css";
-import myImage from "../../assets/images/manggu.jpg";
+import { SlArrowLeft } from "react-icons/sl";
 import {
   FaRegComment,
   FaRegHeart,
@@ -32,8 +32,7 @@ interface Comment {
 const PostDetail: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { title, content, userName, time, newTime,userId, boardId } = state || {};
-  const { postId } = useParams<{ postId: string }>();
+  const { title, content, userName, time, newTime,userId, boardId,  postId, fileName } = state || {};
   const [hasAdoptedComment, setHasAdoptedComment] = useState(false); // 상태 추가
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentInput, setCommentInput] = useState("");
@@ -41,6 +40,8 @@ const PostDetail: React.FC = () => {
   const commentElement = useRef<null | HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [comDropdown, setcomDropdown] = useState(false);
+  const [imageSrc, setImageSrc] = useState(""); // 기본 이미지를 설정
+  
   const [viewCount, setViewCount] = useState(0); // 조회수 상태
   const [visibleCommentDropdown, setVisibleCommentDropdown] = useState<{ [key: number]: boolean }>({});
   const [postwriterTier, setPostUserTier] = useState(0);
@@ -125,6 +126,7 @@ const PostDetail: React.FC = () => {
     7: "/Coding",
     8: "/Marketplace",
     9: "/Ledger",
+    10: "/main/Announcement",
   };
 
   // boardId에 따른 제목 매핑
@@ -138,6 +140,7 @@ const PostDetail: React.FC = () => {
     7: "코딩 문제 게시판",
     8: "전공책 장터 게시판",
     9: "장부 기록 공개 게시판",
+    10: "공지사항 게시판",
   };
 
   // 시간을 포맷하는 함수
@@ -220,9 +223,6 @@ const PostDetail: React.FC = () => {
 
   // 북마크 상태
   const [bookmark, setBookmark] = useState(false);
-  const handleBookmark = () => {
-    setBookmark(!bookmark);
-  };
 
   // 댓글 가져오는 함수
   const fetchComments = async () => {
@@ -260,10 +260,6 @@ const PostDetail: React.FC = () => {
     const userName = localStorage.getItem("userName"); // 로컬 스토리지에서 userName 가져오기
     const userId = getCurrentUserId(); // 사용자 ID 가져오기
     const userLevelExperience = 10; // 부여할 레벨 경험치 값
-    console.log("Comment Input:", commentInput);
-    console.log("Post ID:", postId);
-    console.log("User Name:", userName);
-    console.log("UserID:", userId);
     try {
       const commentResponse = await axios.post("/api/comments", {
         postId: postId,
@@ -567,7 +563,46 @@ const PostDetail: React.FC = () => {
     }
   };
 
+  const handleBookmark = async () => {
+    const userId = getCurrentUserId();
+    console.log("북마크 버튼 클릭"); // 추가
+    setBookmark(!bookmark); // 북마크 상태 전환
+
+    try {
+        await axios.post(`/api/posts/${postId}/bookmarks`, null, {
+            params: { userId } // 사용자 ID를 쿼리 파라미터로 전달
+        });
+    } catch (error) {
+        console.error("북마크 상태를 업데이트하는 데 실패했습니다.", error);
+    }
+  };
+
   useEffect(() => {
+    const loadImage = async () => {
+      try {
+        if (fileName && !imageSrc) { // imageSrc가 없을 때만 요청
+          // 파일 경로가 있는 경우 서버에서 이미지를 가져옴
+          const response = await axios.get(`http://localhost:8080/api/files/${postId}`, {
+            responseType: "blob",
+          });
+          const imageUrl = URL.createObjectURL(response.data);
+          setImageSrc(imageUrl);
+        }
+      } catch (error) {
+        console.error("Error fetching the image:", error);
+      }
+    };
+
+    loadImage();
+
+    return () => {
+      if (imageSrc) {
+        URL.revokeObjectURL(imageSrc); // URL 객체 해제
+      }
+    };
+  }, [postId, fileName]); // imageSrc는 의존성 배열에서 제외
+
+ useEffect(() => {
     const incrementViewCount = async () => {
       try {
         await axios.post(`http://localhost:8080/api/posts/${postId}/incrementViewCount`);
@@ -578,6 +613,7 @@ const PostDetail: React.FC = () => {
         console.error("Error incrementing view count:", error);
       }
     };
+  
     const fetchHeartCount = async () => {
       try {
         const response = await axios.get(`/api/posts/${postId}`); // 하트 수를 가져오는 API 호출
@@ -586,6 +622,16 @@ const PostDetail: React.FC = () => {
         console.error("하트 수를 가져오는 데 실패했습니다.", error);
       }
     };
+
+    const fetchPostDetails = async () => {
+      const userId = getCurrentUserId();
+      const response = await axios.get(`/api/posts/${postId}/bookmarks`, {
+          params: { userId } // 사용자 ID를 쿼리 파라미터로 전달
+      });
+      setBookmark(response.data); // 북마크 상태 설정
+    };
+
+    fetchPostDetails();
     fetchpostwriterTier();
     fetchuserTier();
     fetchHeartCount();
@@ -603,7 +649,7 @@ const PostDetail: React.FC = () => {
           onClick={() => navigate(boardUrlMap[boardId])} // boardId에 따라 이동
         >
           <div className="PostDetail_titleinnerbox">
-            {boardTitleMap[boardId] || "게시판"}{" "}
+            <SlArrowLeft /> {boardTitleMap[boardId] || "게시판"}{" "}
             {/* boardId에 맞는 제목 출력 */}
           </div>
         </h3>
@@ -627,39 +673,51 @@ const PostDetail: React.FC = () => {
                     ? formatDate(time)
                     : "몇 분전"}
                 </div>
-                <div className="PostDetail_more">
-                  <div onClick={handleMoreClick}>
-                    <FiMoreHorizontal />
-                  </div>
-                  {state.userId === getCurrentUserId() && ( // 현재 사용자 ID와 작성자 ID 비교
-                    <>
-                      {showDropdown && (
-                        <ul className="PostDetail_dropdown">
-                          {/* 수정하기 버튼 추가 */}
-
-                          <li
-                            className="PostDetail_editButton"
-                            onClick={handleEdit} // postId를 사용하여 수정
-                          >
-                            수정하기
-                          </li>
-                          <li
-                            className="PostDetail_editButton"
-                            onClick={handleDelete}
-                          >
-                            삭제하기
-                          </li>
-                        </ul>
-                      )}
-                    </>
-                  )}
+                
+              </div>
+              <div className="PostDetail_more">
+                <div onClick={handleMoreClick}>
+                  <FiMoreHorizontal />
                 </div>
+                {state.userId === getCurrentUserId() && ( // 현재 사용자 ID와 작성자 ID 비교
+                  <>
+                    {showDropdown && (
+                      <ul className="PostDetail_dropdown">
+                        {/* 수정하기 버튼 추가 */}
+
+                        <li
+                          className="PostDetail_editButton"
+                          onClick={handleEdit} // postId를 사용하여 수정
+                        >
+                          수정하기
+                        </li>
+                        <li
+                          className="PostDetail_editButton"
+                          onClick={handleDelete}
+                        >
+                          삭제하기
+                        </li>
+                      </ul>
+                    )}
+                  </>
+                )}
+
               </div>
             </div>
 
             {/*게시글 제목&내용 */}
             <div className="PostDetail_postTitle">{title || "제목"}</div>
             <div className="PostDetail_content">{content || "내용"}</div>
+
+             {/* 글 내용 아래에 이미지 표시 */}
+            {imageSrc ? (
+              <div className="PostDetail_image">
+                <img src={imageSrc} alt="게시글 이미지" style={{ width: "70%", height: "auto" }} />
+              </div>
+            ) : (
+              <p>이미지가 없습니다.</p>
+            )}
+          </div>
 
             {/*게시글 좋아요,댓글 수, 스크랩 수 */}
             <div className="PostDetail_total">
@@ -680,7 +738,6 @@ const PostDetail: React.FC = () => {
               <div className="PostDetail_viewCount"> <IoEyeSharp /> {viewCount || 0}</div>
             </div>
           </div>
-        </div>
 
         {/* 채택된 댓글 출력 */}
         <div className="PostDetail_commentbox">
@@ -695,7 +752,7 @@ const PostDetail: React.FC = () => {
                   <div className="PostDetail_commwriter">
                     {comment.memberId}
                   </div>
-                  <div onClick={() => toggleCommentDropdown(comment.commentId)}>
+                  <div className="PostDetail_more" onClick={() => toggleCommentDropdown(comment.commentId)}>
                     <FiMoreHorizontal />
                   </div>
                   {comment.userId === getCurrentUserId() && (
@@ -788,9 +845,6 @@ const PostDetail: React.FC = () => {
                 >
                   <FaRegComment />
                 </div>
-                <div className="PostDetail_heart">
-                  <FaRegHeart />
-                </div>
                 <div className="">
                 <div onClick={() => toggleCommentDropdown(comment.commentId)}>
                   <FiMoreHorizontal />
@@ -856,7 +910,7 @@ const PostDetail: React.FC = () => {
                       <div className="PostDetail_commwriter">
                         {reply.memberId}
                       </div>
-                      <div onClick={() => toggleCommentDropdown(reply.commentId)}>
+                      <div className="PostDetail_more" onClick={() => toggleCommentDropdown(reply.commentId)}>
                         <FiMoreHorizontal />
                       </div>
                       {reply.userId === getCurrentUserId() && (
