@@ -220,6 +220,10 @@
   z-index:9999;
   position:fixed;
   margin-top:40vh;
+  background: transparent;
+  border: none;
+  width: 90px;
+  transition: 0.3s ease-in-out;
 }
 
 .StoreYellow__PrevBtn{
@@ -230,6 +234,13 @@
   position:fixed;
   right:30vh;
 }
+
+.StoreYellow__NextBtn:hover, .StoreYellow__PrevBtn:hover{
+  background-color: transparent;
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
+}
+
 .StoreYellow_priceLabel {
   position: absolute; /* 절대 위치 설정 */
   z-index: 3; /* 제품 위에 표시되도록 z-index 조정 */

@@ -258,7 +258,6 @@ const handleGoToList = () => {
           </div>
         </form>
       </div>
-      <Footer />
     </>
   );
 }

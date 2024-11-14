@@ -12,6 +12,8 @@ import cafe2 from "../assets/images/상점사진/자산 2.png";
 import cafe3 from "../assets/images/상점사진/자산 3.png";
 import cafe4 from "../assets/images/상점사진/자산 4.png";
 import cafe5 from "../assets/images/상점사진/자산 5.png";
+import left from "../assets/images/상점사진/left.png";
+import right from "../assets/images/상점사진/right.png";
 
 
 
@@ -59,11 +61,11 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <Footer />
       <div className="StoreGreen__background">
         <div className="Store__area">
-              <button className="StoreGreen__NextBtn" onClick={goToNextStore}>
-                <img src={rightBtn}></img>
-              </button>
               <button className="StoreGreen__PrevBtn" onClick={goToPrevStore}>
-                <img src={rightBtn}></img>
+                <img src={left}></img>
+              </button>
+              <button className="StoreGreen__NextBtn" onClick={goToNextStore}>
+                <img src={right}></img>
               </button>
           <div className="Store__left">
 
@@ -71,7 +73,6 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               <img src={cafe1} className="Store__move"></img>
               <img src={cafe2} className="Store__move"></img>
               <img src={cafe3} className="Store__move"></img>
-              <img src={cafe4} className="Store__move"></img>
             </div>
           </div>
           <div className="StoreGreen__middle">
@@ -172,8 +173,6 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <div className="Store__right">
             <div className="Store__movebox">
               <img src={cafe5} className="Store__move"></img>
-              <img src={cafe2} className="Store__move"></img>
-              <img src={cafe3} className="Store__move"></img>
               <img src={cafe4} className="Store__move"></img>
             </div>
             

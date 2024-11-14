@@ -270,15 +270,25 @@
   z-index:9999;
   position:fixed;
   margin-top:40vh;
+  background: transparent;
+  border: none;
+  width: 90px;
+  transition: 0.3s ease-in-out;
 }
 
 .StoreGreen__PrevBtn{
   position:fixed;
-  left:30vh
+  left:30vh;
 }
 .StoreGreen__NextBtn{
   position:fixed;
   right:30vh;
+}
+
+.StoreGreen__NextBtn:hover, .StoreGreen__PrevBtn:hover{
+  background-color: transparent;
+  -webkit-transform: scale(1.033);
+  transform: scale(1.033);
 }
 .StoreGreen_priceLabel {
   position: absolute; /* 절대 위치 설정 */
@@ -289,3 +299,4 @@
   margin-left: 33px;
   font-family: "DungGeunMo";
 }
+

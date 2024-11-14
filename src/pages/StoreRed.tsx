@@ -10,6 +10,8 @@ import cafe7 from "../assets/images/상점사진/자산 7.png";
 import cafe8 from "../assets/images/상점사진/자산 8.png";
 import cafe12 from "../assets/images/상점사진/자산 12.png";
 import cafe14 from "../assets/images/상점사진/자산 14.png";
+import left from "../assets/images/상점사진/left.png";
+import right from "../assets/images/상점사진/right.png";
 
 import greenBtn from "../assets/images/greenBtn.png"; // 빨간 버튼 이미지
 import redBtn from "../assets/images/redBtn.png"; // 빨간 버튼 이미지
@@ -64,8 +66,8 @@ const StoreRed: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               </div>
           </div>
         </div>
-        <button className="StoreRed__PrevBtn" onClick={goToPrevStore}>◀️</button>
-        <button className="StoreRed__NextBtn" onClick={goToNextStore}>▶️</button>
+        <button className="StoreRed__PrevBtn" onClick={goToPrevStore}><img src={left}></img></button>
+        <button className="StoreRed__NextBtn" onClick={goToNextStore}><img src={right}></img></button>
         <div className="StoreRed__middle">
           <div className="StoreRed__innerFrame">
             <div className="StoreRed__productLine1">

@@ -10,6 +10,8 @@ import cafe11 from "../assets/images/상점사진/자산 11.png";
 import cafe13 from "../assets/images/상점사진/자산 13.png";
 import cafe15 from "../assets/images/상점사진/자산 15.png";
 import cafe16 from "../assets/images/상점사진/자산 16.png";
+import left from "../assets/images/상점사진/left.png";
+import right from "../assets/images/상점사진/right.png";
 
 import greenBtn from "../assets/images/greenBtn.png"; // 빨간 버튼 이미지
 import redBtn from "../assets/images/redBtn.png"; // 빨간 버튼 이미지
@@ -56,8 +58,8 @@ const StoreYellow: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <Header />
       <Footer />
       <div className="StoreYellow__background">
-        <button className="StoreYellow__PrevBtn" onClick={goToPrevStore}>◀️</button>
-        <button className="StoreYellow__NextBtn" onClick={goToNextStore}>▶️</button>
+        <button className="StoreYellow__PrevBtn" onClick={goToPrevStore}><img src={left}></img></button>
+        <button className="StoreYellow__NextBtn" onClick={goToNextStore}><img src={right}></img></button>
         <div className="Store__left">
           <div className="Store__movebox">
               <img src={cafe9} className="Store__move"></img>

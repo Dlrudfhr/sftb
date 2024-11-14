@@ -3,17 +3,84 @@
     background-color: #f0f0f0;
   }
   
+.Information{
+  margin-top:110px;
+}
+
 .Information__frame{
-  
   background-color: aquamarine;
-  width: 90%;
-  height: 995px;
+  width: 968px;
+  height: 1080px;
   margin:auto;
 }
 
 .Information__innerframe{
+  background-color: lightcoral;
   width: 90%;
-  height: 90%;
-  border: solid 0.667px lightgray;
   margin:auto;
+  padding:10px;
+}
+
+.Information__userbox{
+  height: 400px;
+  background-color: lightpink;
+  margin-bottom:30px;
+  padding:15px;
+  display:flex;
+}
+
+.Information__userImage{
+  width: 150px;
+  height: 200px;
+  background-color: black;
+  margin-right:10px;
+}
+
+.Information__user{
+  height: 100px;
+}
+
+.Information__progressBar{
+  /* display: flex; */
+  margin-bottom:30px;
+}
+
+.Information__userInfo{
+  width: 450px;
+  height: 60px;
+  background-color: lightcyan;
+  margin-bottom:10px;
+}
+
+.Information__tier{
+  width: 450px;
+  height: 60px;
+  background-color: lightcyan;
+  margin-bottom:10px;
+}
+
+.Information__level{
+  width: 450px;
+  height: 60px;
+  background-color: lightcyan;
+}
+
+.Information__postbox{
+  display:flex;
+}
+
+.Information__mypost{
+  background-color: lightgreen;
+  width: 300px;
+  height: 180px;
+  border-radius:7px;
+  margin-right:10px;
+  margin-bottom:30px;
+}
+
+.Information__setbox{
+  height: 70px;
+  background-color: lightseagreen;
+  border-radius:10px;
+  margin-bottom:10px;
 }
