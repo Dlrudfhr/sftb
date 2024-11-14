@@ -12,6 +12,7 @@ import {
   FaBookmark,
 } from "react-icons/fa";
 import { FaPaperPlane } from "react-icons/fa";
+import { AiOutlineLike } from "react-icons/ai";
 import axios from "axios";
 import { FiMoreHorizontal } from "react-icons/fi";
 
@@ -28,7 +29,7 @@ interface Comment {
 const PostAdopt: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { title, content, userName, time, newTime, boardId } = state || {};
+  const { title, content, userName, time, newTime, boardId, userId } = state || {};
   const { postId } = useParams<{ postId: string }>();
   const [hasAdoptedComment, setHasAdoptedComment] = useState(false); // 상태 추가
   const [comments, setComments] = useState<Comment[]>([]);
@@ -102,8 +103,8 @@ const PostAdopt: React.FC = () => {
     // 컴포넌트가 마운트될 때 하트 수를 가져옵니다.
     const fetchHeartCount = async () => {
       try {
-        const response = await axios.get(`/api/posts/${postId}/hearts`); // 하트 수를 가져오는 API 호출
-        setHeartCount(response.data.heartCount); // 응답에서 하트 수 설정
+        const response = await axios.get(`/api/posts/${postId}`); // 하트 수를 가져오는 API 호출
+        setHeartCount(response.data.heart); // 응답에서 하트 수 설정
       } catch (error) {
         console.error("하트 수를 가져오는 데 실패했습니다.", error);
       }
@@ -127,23 +128,20 @@ const PostAdopt: React.FC = () => {
       console.error("Error checking admin status:", error);
     }
   };
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태 관리
+  // 모달을 열고 닫는 함수
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
 // 게시글 채택 함수
 const handlePostAdopt = async (event: React.MouseEvent<HTMLButtonElement>) => {
-  const postId = Number(event.currentTarget.dataset.postId); // data-post-id에서 postId 가져오기
- 
-  // 서버에서 해당 게시물의 작성자(userId)와 티어 경험치 값을 가져와야 합니다.
   try {
-    // 게시물 정보를 가져오기 위한 API 호출
-    const postResponse = await axios.get(`http://localhost:8080/api/posts/${postId}`);
-    const postAuthorId = postResponse.data.userId; // 게시물 작성자 ID
-    
     const tierExperience = 30; // 게시물 작성자에게 부여할 경험치 값
 
     // 서버로 채택 요청 (postId와 postAuthorId를 전달)
     const response = await axios.put(
       `http://localhost:8080/api/posts/${postId}/adopt`,
-      { userId: postAuthorId, tierExperience } // 게시물 작성자에게 경험치 부여
+      { userId, tierExperience } // 게시물 작성자에게 경험치 부여
     );
 
     // 채택 상태 업데이트
@@ -153,6 +151,7 @@ const handlePostAdopt = async (event: React.MouseEvent<HTMLButtonElement>) => {
     console.error("게시글 채택 실패:", error);
     alert("게시글 채택에 실패했습니다.");
   }
+  closeModal();
 };
 
   // 하트 클릭 이벤트
@@ -217,9 +216,9 @@ const handleDeletePost = async () => {
       }
 
       alert("게시물이 삭제되었습니다.");
-      navigate("/Project"); // 삭제 후 목록으로 이동
-    } else {
-      alert("게시물 삭제에 실패했습니다.");
+       // boardId에 따라 해당 게시판 URL로 이동
+    const targetUrl = boardUrlMap[boardId] || "/main"; // boardId에 맞는 URL, 기본값으로 메인 페이지('/')
+    navigate(targetUrl);
     }
   } catch (error) {
     console.error("게시물 삭제 중 오류 발생:", error);
@@ -366,6 +365,8 @@ const handleDeletePost = async () => {
         userName,
         newTime, // 수정된 시간을 현재 시간으로 설정
         postId, // 게시물 ID 추가
+        userId, // userId 추가
+        boardId,
       },
     });
   };
@@ -628,16 +629,30 @@ const handleDeletePost = async () => {
                     <FiMoreHorizontal />
                   </div>
                   <div className="PostAdopt_adoptButton">
-  {isAdmin && !newAdopt && (
-    <button 
-      data-post-id={postId}  // postId를 data-* 속성으로 전달
-      onClick={handlePostAdopt} // 클릭 시 handlePostAdopt 함수 호출
-    >
-      채택하기
-    </button>
-  )}
-  {newAdopt && <span>채택됨</span>}
-</div>
+                    {isAdmin && !newAdopt && (
+                      <button
+                        onClick={openModal} // 클릭 시 openModal 호출
+                      >
+                        <AiOutlineLike />
+                      </button>
+                    )}
+                    {newAdopt && <span>채택됨</span>}
+                    {/* 모달 창 */}
+                    {isModalOpen && (
+                      <div className="modal">
+                        <div className="modal-content">
+                          <h3>게시물을 채택하시겠습니까?</h3>
+                          <button
+                            data-post-id={postId} // postId를 data-* 속성으로 전달
+                            onClick={handlePostAdopt}
+                          >
+                            채택하기
+                          </button>
+                          <button onClick={closeModal}>취소</button>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                   {state.userId === getCurrentUserId() && ( // 현재 사용자 ID와 작성자 ID 비교
                     <>
                       {showDropdown && (
