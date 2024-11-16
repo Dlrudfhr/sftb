@@ -31,7 +31,7 @@ const Project = () => {
   const [searchKey, setSearchKey] = useState("제목"); // 검색 기준 상태
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
-    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.scrollTo({ behavior: "smooth", top:0 });
   };
 
   // 백엔드에서 게시물 데이터 가져오기

@@ -1,4 +1,4 @@
-/* @font-face {
+@font-face {
     font-family: 'DungGeunMo';
     src: url('../fonts/DungGeunMo.ttf') format('woff');
     font-weight: normal;
@@ -10,4 +10,11 @@
     src: url('../fonts/DS-DIGIB.TTF') format('woff');
     font-weight: normal;
     font-style: normal;
-}  */
+} 
+
+@font-face {
+    font-family: 'SCDream7';
+    src: url('../fonts/SCDream7.otf') format('woff');
+    font-weight: normal;
+    font-style: normal;
+} 
