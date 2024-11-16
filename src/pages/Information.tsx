@@ -30,8 +30,8 @@ const Information: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             
             <div className="Information__postbox">
               <div className="Information__mypost" onClick={() => (window.location.href = "/MyWrittenPost")}>작성한 글 </div>
-              <div className="Information__mypost" onClick={() => (window.location.href = "/MyWrittenComm")}>북마크 한 글</div>
-              <div className="Information__mypost" onClick={() => (window.location.href = "/MyBookmark")}>좋아요한 글</div>
+              <div className="Information__mypost" onClick={() => (window.location.href = "/MyBookmark")}>북마크 한 글</div>
+              <div className="Information__mypost" onClick={() => (window.location.href = "/MyWrittenComm")}>작성한 댓글</div>
             </div>
           </div>
         </div>
