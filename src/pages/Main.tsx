@@ -30,6 +30,29 @@ function Main() {
     setShowIntro(false);
   };
 
+  const text: string =
+    "Helllo, World!\nWe're in the Department of Information & Communication";
+  const [displayedText, setDisplayedText] = useState<string>("");
+  const typingSpeed: number = 50; // 타이핑 속도 (밀리초)
+  useEffect(() => {
+    let index: number = 0;
+
+    const type = () => {
+      if (index < text.length) {
+        setDisplayedText((prev) => prev + text.charAt(index));
+        index++;
+        setTimeout(type, typingSpeed);
+      }
+    };
+
+    type();
+
+    // Cleanup function to avoid memory leaks
+    return () => {
+      index = text.length; // 타이핑이 끝나면 인덱스를 마지막으로 설정
+    };
+  }, [text]);
+
   useEffect(() => {
     // URL에서 쿼리 파라미터를 확인하여 모달 열기
     const params = new URLSearchParams(location.search);
@@ -60,8 +83,9 @@ function Main() {
       {/*배너 전체 박스*/}
       <div className="Main_banner">
         <div className="Main_box_visual">
-          Hello, World!<br></br>
-          We're in the Department of Information & Communication
+          {displayedText.split("\n").map((line, i) => (
+            <div key={i}>{line}</div>
+          ))}
         </div>
         {/*카테고리 이동 버튼 */}
         <div className="Main_box_tab">

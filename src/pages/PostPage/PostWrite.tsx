@@ -17,8 +17,6 @@ function PostWrite() {
   const [file, setFile] = useState<File | null>(null); // 첨부할 사진 파일
   const [filePath, setFilePath] = useState<string | null>(null); // 기존 파일 경로 상태 추가
 
-
-
   // 로그인된 사용자 UserName을 localStorage에서 가져옴
   const userName = localStorage.getItem("userName");
   console.log("userName from localStorage:", userName); // userName 로그 출력
@@ -32,7 +30,6 @@ function PostWrite() {
       setContent(content || ""); // 내용 설정
       setPostID(postId || ""); // 게시물 고유 번호 설정
       setFilePath(filePath || null); // 수정 시 기존 파일 경로 설정
-      
     }
   }, [state]);
 
@@ -44,25 +41,24 @@ function PostWrite() {
     }
   };
 
-
-    // boardId에 따라 해당 게시판 URL로 이동하도록 수정
-const handleGoToList = () => {
-  const boardUrlMap: { [key: number]: string } = {
-    1: "/QnA",
-    2: "/Certificate",
-    3: "/Share",
-    4: "/FreePost",
-    5: "/Mentor_mentee",
-    6: "/Project",
-    7: "/Coding",
-    8: "/Marketplace",
-    9: "/Ledger",
-    10: "/main/Announcement",
-    // 추가 게시판이 있다면 여기서 추가
+  // boardId에 따라 해당 게시판 URL로 이동하도록 수정
+  const handleGoToList = () => {
+    const boardUrlMap: { [key: number]: string } = {
+      1: "/QnA",
+      2: "/Certificate",
+      3: "/Share",
+      4: "/FreePost",
+      5: "/Mentor_mentee",
+      6: "/Project",
+      7: "/Coding",
+      8: "/Marketplace",
+      9: "/Ledger",
+      10: "/main/Announcement",
+      // 추가 게시판이 있다면 여기서 추가
+    };
+    const boardUrl = boardUrlMap[boardId] || "/Main"; // 기본값은 Main
+    navigate(boardUrl);
   };
-  const boardUrl = boardUrlMap[boardId] || "/Main"; // 기본값은 Main
-  navigate(boardUrl);
-};
 
   // 게시물 제출 함수
   const handleSubmit = async (event: React.FormEvent) => {
@@ -116,28 +112,28 @@ const handleGoToList = () => {
               },
             }
           );
-        
-          if (response.status === 200) {
-           // 수정 후 해당 게시물 페이지로 이동
-           const destinationPath =
-           boardId === 5 || boardId === 6
-           ? `/PostAdopt/${state.postId}`
-           : boardId === 10
-            ? `/PostAnnouncement/${state.postId}`
-            : `/PostDetail/${state.postId}`;
 
-          navigate(destinationPath, {
-           state: {
-              title: title,
-             content: content,
-             userName: userName,
-               time: updatedTime, // 수정 시간을 현재 시간으로 설정
-             postId: state.postId, // 게시물 ID 추가
-             boardId: state.boardId,
-             userId : state.userId,
-             fileName : state.fileName,
-            },
-          });
+          if (response.status === 200) {
+            // 수정 후 해당 게시물 페이지로 이동
+            const destinationPath =
+              boardId === 5 || boardId === 6
+                ? `/PostAdopt/${state.postId}`
+                : boardId === 10
+                ? `/PostAnnouncement/${state.postId}`
+                : `/PostDetail/${state.postId}`;
+
+            navigate(destinationPath, {
+              state: {
+                title: title,
+                content: content,
+                userName: userName,
+                time: updatedTime, // 수정 시간을 현재 시간으로 설정
+                postId: state.postId, // 게시물 ID 추가
+                boardId: state.boardId,
+                userId: state.userId,
+                fileName: state.fileName,
+              },
+            });
           } else {
             setErrorMessage("게시물 수정에 실패했습니다.");
           }
@@ -166,7 +162,6 @@ const handleGoToList = () => {
               "Content-Type": "multipart/form-data",
             },
           }
-          
         );
         console.log(response.data);
 
@@ -176,23 +171,23 @@ const handleGoToList = () => {
             userId: userID,
             userLevelExperience,
           });
-         // boardId에 따라 해당 게시판 URL로 리다이렉트
-         const boardUrlMap: { [key: number]: string } = {
-          1: "/QnA",
-          2: "/Certificate",
-          3: "/Share",
-          4: "/FreePost",
-          5: "/Mentor_mentee",
-          6: "/Project",
-          7: "/Coding",
-          8: "/Marketplace",
-          9: "/Ledger",
-          10: "/main/Announcement",
-          // 추가 게시판이 있다면 여기서 추가
-        };
-      
-        const boardUrl = boardUrlMap[boardId] || "/Main"; // 기본값은 Main
-        navigate(boardUrl);
+          // boardId에 따라 해당 게시판 URL로 리다이렉트
+          const boardUrlMap: { [key: number]: string } = {
+            1: "/QnA",
+            2: "/Certificate",
+            3: "/Share",
+            4: "/FreePost",
+            5: "/Mentor_mentee",
+            6: "/Project",
+            7: "/Coding",
+            8: "/Marketplace",
+            9: "/Ledger",
+            10: "/main/Announcement",
+            // 추가 게시판이 있다면 여기서 추가
+          };
+
+          const boardUrl = boardUrlMap[boardId] || "/Main"; // 기본값은 Main
+          navigate(boardUrl);
         } else {
           setErrorMessage("게시물 작성에 실패했습니다.");
         }
@@ -251,16 +246,14 @@ const handleGoToList = () => {
           )}
           <br />
 
-
           {errorMessage && (
             <div style={{ color: "red", marginBottom: "10px" }}>
               {errorMessage}
             </div>
           )}
           <div className="PostWrite_btns">
-          <button className="PostWrite_golist" onClick={handleGoToList}>
+            <button className="PostWrite_golist" onClick={handleGoToList}>
               목록
-             
             </button>
             <button className="post_button" type="submit">
               {state && state.postId ? "수정하기" : "작성하기"}
