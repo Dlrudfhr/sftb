@@ -11,3 +11,10 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "SCDream7";
+  src: url("../fonts/SCDream7.otf") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}

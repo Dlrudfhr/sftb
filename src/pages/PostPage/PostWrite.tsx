@@ -118,6 +118,8 @@ function PostWrite() {
             const destinationPath =
               boardId === 5 || boardId === 6
                 ? `/PostAdopt/${state.postId}`
+                : boardId === 10
+                ? `/PostAnnouncement/${state.postId}`
                 : `/PostDetail/${state.postId}`;
 
             navigate(destinationPath, {
@@ -128,6 +130,8 @@ function PostWrite() {
                 time: updatedTime, // 수정 시간을 현재 시간으로 설정
                 postId: state.postId, // 게시물 ID 추가
                 boardId: state.boardId,
+                userId: state.userId,
+                fileName: state.fileName,
               },
             });
           } else {

@@ -1,3 +1,6 @@
+@import url("Font.css");
+
+
 .information-page {
     padding: 20px;
     background-color: #f0f0f0;
@@ -8,14 +11,14 @@
 }
 
 .Information__frame{
-  background-color: aquamarine;
+  /* background-color: #fef5d4; */
   width: 968px;
-  height: 1080px;
+  height: 80vh;
   margin:auto;
 }
 
 .Information__innerframe{
-  background-color: lightcoral;
+  /* background-color: #efbad6; */
   width: 90%;
   margin:auto;
   padding:10px;
@@ -23,17 +26,19 @@
 
 .Information__userbox{
   height: 400px;
-  background-color: lightpink;
+  background-color: white;
   margin-bottom:30px;
   padding:15px;
   display:flex;
+  box-shadow:0px 6px 15px rgba(36, 37, 38, 0.12);
+  font-family: SCDream7;
 }
 
 .Information__userImage{
   width: 150px;
   height: 200px;
-  background-color: black;
-  margin-right:10px;
+  /* background-color: #abdee6; */
+  margin-right:20px;
 }
 
 .Information__user{
@@ -46,23 +51,10 @@
 }
 
 .Information__userInfo{
-  width: 450px;
-  height: 60px;
-  background-color: lightcyan;
+  width: 200px;
+  height: 50px;
+  /* background-color: lightcyan; */
   margin-bottom:10px;
-}
-
-.Information__tier{
-  width: 450px;
-  height: 60px;
-  background-color: lightcyan;
-  margin-bottom:10px;
-}
-
-.Information__level{
-  width: 450px;
-  height: 60px;
-  background-color: lightcyan;
 }
 
 .Information__postbox{
@@ -70,17 +62,16 @@
 }
 
 .Information__mypost{
-  background-color: lightgreen;
+  /* background-color: #ffffb5; */
   width: 300px;
   height: 180px;
   border-radius:7px;
   margin-right:10px;
   margin-bottom:30px;
+  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  cursor: pointer;
+  align-content: center;
+  text-align: center;
+  font-family: SCDream7;
 }
 
-.Information__setbox{
-  height: 70px;
-  background-color: lightseagreen;
-  border-radius:10px;
-  margin-bottom:10px;
-}

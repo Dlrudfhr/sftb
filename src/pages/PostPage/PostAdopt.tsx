@@ -160,6 +160,19 @@ const PostAdopt: React.FC = () => {
       }
     };
 
+    //하트 상태를 가져오는 API
+    const fetchHeartStatus = async () => {
+      const userId = getCurrentUserId();
+      try {
+        const response = await axios.get(`/api/posts/${postId}/hearts`,{
+          params: { userId }
+        });
+        setHeart(response.data); // 하트 상태 설정
+      } catch (error) {
+          console.error("하트 상태를 가져오는 데 실패했습니다.", error);  
+      }
+    };
+
     const fetchPost = async () => {
       try {
         const response = await axios.get(
@@ -188,6 +201,7 @@ const PostAdopt: React.FC = () => {
     fetchHeartCount();
     checkAdminStatus();
     fetchComments();
+    fetchHeartStatus();
   }, [postId]);
 
   useEffect(() => {
@@ -257,12 +271,13 @@ const handlePostAdopt = async (event: React.MouseEvent<HTMLButtonElement>) => {
 
   // 하트 클릭 이벤트
   const handleHeart = async () => {
-    setHeart(!heart);
-    const newHeartCount = heart ? heartCount - 1 : heartCount + 1; // 하트 클릭 시 하트 수 업데이트
-
+    const newHeartState = !heart; // 새로운 하트 상태
+    const newHeartCount = heart ? heartCount - 1 : heartCount + 1;
+    const userId = getCurrentUserId();
     try {
-      await axios.post(`/api/posts/${postId}/hearts`, { heart: !heart }); // 하트 상태 업데이트 API 호출
-      setHeartCount(newHeartCount); // 상태 업데이트
+      await axios.post(`/api/posts/${postId}/hearts/toggle`, { userId : userId }); // 하트 상태 업데이트 API 호출
+      setHeart(newHeartState); // 하트 상태 업데이트
+      setHeartCount(newHeartCount);
     } catch (error) {
       console.error("하트 수를 업데이트하는 데 실패했습니다.", error);
     }

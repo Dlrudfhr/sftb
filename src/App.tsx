@@ -28,6 +28,10 @@ import PostDetail from "./pages/PostPage/PostDetail";
 import PostAdopt from "./pages/PostPage/PostAdopt"; // PostAdopt 페이지 import
 import PrivateRoute from "./PrivateRoute";
 import PostAnnouncement from "./pages/PostAnnouncement";
+import MyWrittenPost from "./pages/PostPage/MyWrittenPost";
+import MyWrittenComm from "./pages/PostPage/MyWrittenComm";
+import MyBookmark from "./pages/PostPage/MyBookmark";
+
 import "./App.css";
 
 interface RouteProps {
@@ -65,6 +69,9 @@ const routes: Array<RouteProps> = [
   { path: "/PostDetail/:postId", component: PostDetail },
   { path: "/PostAdopt/:postId", component: PostAdopt }, // 추가된 PostAdopt 경로
   { path: "/PostAnnouncement/:postId", component: PostAnnouncement },
+  { path: "/MyWrittenPost", component: MyWrittenPost},
+  { path: "/MyWrittenComm", component: MyWrittenComm},
+  { path: "/MyBookmark", component: MyBookmark},
 ];
 
 function App() {
