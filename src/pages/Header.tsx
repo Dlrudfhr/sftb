@@ -82,9 +82,6 @@ const Header = () => {
             <Link to="/main/Announcement">
               <h4>공지사항</h4>
             </Link>
-            <Link to="/main/Organization">
-              <h4>조직도</h4>
-            </Link>
             <Link to="/main/Inquiry">
               <h4>문의</h4>
             </Link>
@@ -116,7 +113,6 @@ const Header = () => {
             <Link to="/main/SiteIntroduce">사이트소개</Link>
             <Link to="/main/RanKing">랭킹</Link>
             <Link to="/main/Announcement">공지사항</Link>
-            <Link to="/main/Organization">조직도</Link>
             <Link to="/main/Inquiry">문의</Link>
           </div>
         )}
