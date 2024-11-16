@@ -17,7 +17,7 @@ import { getTierImage } from "./TierImageUtils";
 const PostAnnouncement: React.FC = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { title, content, userName, time, newTime, boardId, postId, userId } = state || {};
+  const { title, content, userName, time, newTime, boardId, postId, userId, fileName } = state || {};
   const commentElement = useRef<null | HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [comDropdown, setcomDropdown] = useState(false);
@@ -92,6 +92,8 @@ const PostAnnouncement: React.FC = () => {
         console.error("Error incrementing view count:", error);
       }
     };
+
+    //하트수를 가져오는 API
     const fetchHeartCount = async () => {
       try {
         const response = await axios.get(`/api/posts/${postId}`); // 하트 수를 가져오는 API 호출
@@ -101,6 +103,18 @@ const PostAnnouncement: React.FC = () => {
       }
     };
     
+    //하트 상태를 가져오는 API
+    const fetchHeartStatus = async () => {
+      const userId = getCurrentUserId();
+      try {
+        const response = await axios.get(`/api/posts/${postId}/hearts`,{
+          params: { userId }
+        });
+        setHeart(response.data); // 하트 상태 설정
+      } catch (error) {
+          console.error("하트 상태를 가져오는 데 실패했습니다.", error);  
+      }
+    };
     const fetchPostDetails = async () => {
       const userId = getCurrentUserId();
       const response = await axios.get(`/api/posts/${postId}/bookmarks`, {
@@ -109,6 +123,7 @@ const PostAnnouncement: React.FC = () => {
       setBookmark(response.data); // 북마크 상태 설정
     };
     
+    fetchHeartStatus();
     fetchPostDetails();
     incrementViewCount();
     fetchpostwriterTier();
@@ -117,12 +132,13 @@ const PostAnnouncement: React.FC = () => {
 
   // 하트 클릭 이벤트
   const handleHeart = async () => {
-    setHeart(!heart);
-    const newHeartCount = heart ? heartCount - 1 : heartCount + 1; // 하트 클릭 시 하트 수 업데이트
-
+    const newHeartState = !heart; // 새로운 하트 상태
+    const newHeartCount = heart ? heartCount - 1 : heartCount + 1;
+    const userId = getCurrentUserId();
     try {
-      await axios.post(`/api/posts/${postId}/hearts`, { heart: !heart }); // 하트 상태 업데이트 API 호출
-      setHeartCount(newHeartCount); // 상태 업데이트
+      await axios.post(`/api/posts/${postId}/hearts/toggle`, { userId : userId }); // 하트 상태 업데이트 API 호출
+      setHeart(newHeartState); // 하트 상태 업데이트
+      setHeartCount(newHeartCount);
     } catch (error) {
       console.error("하트 수를 업데이트하는 데 실패했습니다.", error);
     }
@@ -187,6 +203,9 @@ const handleDeletePost = async () => {
         userName,
         newTime, // 수정된 시간을 현재 시간으로 설정
         postId, // 게시물 ID 추가
+        userId, // userId 추가
+        boardId,
+        fileName,
       },
     });
   };
