@@ -28,21 +28,10 @@ const SignUpModal: React.FC<SignUpModalProps> = ({
       centered // 모달을 화면 가운데에 배치
     >
       <div className="SignUpModal__modal">
-        <Modal.Header closeButton>
-          <Modal.Title>알림</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>{message}</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button
-            variant="secondary"
-            onClick={handleClose}
-            className="SignUpModal__button" // 버튼에 커스텀 클래스 적용
-          >
-            닫기
-          </Button>
-        </Modal.Footer>
+        <div className="SignUpModal__message">회원가입이 완료되었습니다!</div>
+        <button className="SignUpModal__button" onClick={handleClose}>
+          닫기
+        </button>
       </div>
     </Modal>
   );

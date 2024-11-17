@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom"; // useNavigate 사용
 import "../assets/css/CongratulationsModal.css";
 import jobSeekerImg from "../assets/images/jobSeeker.png";
-import internImg from "../assets/images/intern.png";
+import internImg from "../assets/images/인턴.png";
 
 interface CongratulationsModalProps {
   isOpen: boolean;

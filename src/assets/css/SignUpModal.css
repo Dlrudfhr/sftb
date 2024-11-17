@@ -1,3 +1,5 @@
+@import url("Font.css");
+
 .SignUpModal__overlay {
   position: fixed;
   top: 0;
@@ -16,8 +18,25 @@
   padding: 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
+  font-family: "DungGeunMo";
+  display: flex; /* flexbox 사용 */
+  flex-direction: column; /* 세로 방향으로 정렬 */
+  align-items: center; /* 중앙 정렬 */
+}
+
+.SignUpModal__message {
+  text-align: center;
+  padding: 20px;
+  font-size: 20px;
 }
 
 .SignUpModal__button {
+  font-family: "DungGeunMo";
+  background: #f44336;
+  color: white;
+  border: none; /* 기본 테두리 제거 */
+  padding: 5px 15px; /* 패딩 추가 */
+  border-radius: 5px; /* 모서리 둥글게 */
+  cursor: pointer; /* 커서 포인터로 변경 */
   margin-top: 10px;
 }

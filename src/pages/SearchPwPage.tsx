@@ -191,23 +191,58 @@ function SearchPwPage() {
         ) : (
           <div>
             <h2>새 비밀번호 입력</h2>
+            <br />
             <div>
-              <label htmlFor="newPassword">새 비밀번호:</label>
-              <input
-                type="password"
-                id="newPassword"
-                value={newPassword}
-                onChange={handleNewPasswordChange}
-              />
+              <div className="form-control">
+                <input
+                  type="password"
+                  id="newPassword"
+                  value={newPassword}
+                  onChange={handleNewPasswordChange}
+                />
+                <label>
+                  <span style={{ transitionDelay: "0ms" }}>N</span>
+                  <span style={{ transitionDelay: "50ms" }}>e</span>
+                  <span style={{ transitionDelay: "100ms" }}>w</span>
+                  <span style={{ transitionDelay: "150ms" }}> </span>
+                  <span style={{ transitionDelay: "200ms" }}>P</span>
+                  <span style={{ transitionDelay: "250ms" }}>a</span>
+                  <span style={{ transitionDelay: "300ms" }}>s</span>
+                  <span style={{ transitionDelay: "350ms" }}>s</span>
+                  <span style={{ transitionDelay: "400ms" }}>w</span>
+                  <span style={{ transitionDelay: "450ms" }}>o</span>
+                  <span style={{ transitionDelay: "500ms" }}>r</span>
+                  <span style={{ transitionDelay: "550ms" }}>d</span>
+                </label>
+              </div>
             </div>
             <div>
-              <label htmlFor="confirmPassword">새 비밀번호 확인:</label>
-              <input
-                type="password"
-                id="confirmPassword"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
-              />
+              <div className="form-control">
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  value={confirmPassword}
+                  onChange={handleConfirmPasswordChange}
+                />
+                <label>
+                  <span style={{ transitionDelay: "0ms" }}>C</span>
+                  <span style={{ transitionDelay: "50ms" }}>o</span>
+                  <span style={{ transitionDelay: "100ms" }}>n</span>
+                  <span style={{ transitionDelay: "150ms" }}>f</span>
+                  <span style={{ transitionDelay: "150ms" }}>i</span>
+                  <span style={{ transitionDelay: "200ms" }}>r</span>
+                  <span style={{ transitionDelay: "250ms" }}>m</span>
+                  <span style={{ transitionDelay: "300ms" }}> </span>
+                  <span style={{ transitionDelay: "350ms" }}>P</span>
+                  <span style={{ transitionDelay: "400ms" }}>a</span>
+                  <span style={{ transitionDelay: "450ms" }}>s</span>
+                  <span style={{ transitionDelay: "500ms" }}>s</span>
+                  <span style={{ transitionDelay: "550ms" }}>w</span>
+                  <span style={{ transitionDelay: "600ms" }}>o</span>
+                  <span style={{ transitionDelay: "650ms" }}>r</span>
+                  <span style={{ transitionDelay: "700ms" }}>d</span>
+                </label>
+              </div>
             </div>
             {!passwordsMatch && (
               <div style={{ color: "red" }}>
@@ -225,6 +260,7 @@ function SearchPwPage() {
             {error && <div>Error: {error}</div>}
           </div>
         )}
+        <br />
         <div className="SeachPwPage__backToLogin">
           <span
             style={{ cursor: "pointer", color: "#007bff" }}
