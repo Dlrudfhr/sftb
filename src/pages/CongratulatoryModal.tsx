@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // useNavigate 사용
 import "../assets/css/CongratulationsModal.css";
 import jobSeekerImg from "../assets/images/jobSeeker.png";
 import internImg from "../assets/images/intern.png";
@@ -14,7 +13,6 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
   isOpen,
   onClose,
 }) => {
-  const navigate = useNavigate(); // useNavigate 훅 초기화
 
   const handleClose = async () => {
     try {
@@ -41,20 +39,13 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
         console.error("Failed to update new member status");
         return; // 업데이트 실패 시 함수 종료
       }
-
-      console.log("New member status updated successfully");
-
+      
       // 경험치 업데이트를 위한 API 호출
-      const expResponse = await axios.put(
-        `http://localhost:8080/api/auth/users/${userID}/experience`,
-        { userLevelExperience: 40 },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const userLevelExperience = 40; // 부여할 레벨 경험치 값
+      const expResponse = await axios.put(`/api/auth/experience`, {
+        userId: userID,
+        userLevelExperience,
+      });
 
       if (expResponse.status === 200) {
         console.log("Experience points updated successfully");
