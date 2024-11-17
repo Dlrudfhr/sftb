@@ -21,14 +21,8 @@ function Main() {
   const secondElement = useRef<null | HTMLDivElement>(null); //스크롤 될 두번째 위치요소
   const thirdElement = useRef<null | HTMLDivElement>(null); //스크롤 될 세번째 위치요소
   const fourthElement = useRef<null | HTMLDivElement>(null); //스크롤 될 네번째 위치요소
-
-  const [showIntro, setShowIntro] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
-
-  const handleCloseIntro = () => {
-    setShowIntro(false);
-  };
 
   const text: string =
     "Helllo, World!\nWe're in the Department of Information & Communication";
