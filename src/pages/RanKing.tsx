@@ -18,7 +18,7 @@ const Ranking: React.FC = () => {
   const tierPriority: { [key: string]: number } = {
     이사: 1,
     사장: 2,
-    상무: 3,
+    전무: 3,
     부장: 4,
     차장: 5,
     과장: 6,

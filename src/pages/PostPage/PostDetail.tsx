@@ -42,7 +42,6 @@ const PostDetail: React.FC = () => {
     boardId,
     postId,
     fileName,
-    authorTier,
   } = state || {};
   const [hasAdoptedComment, setHasAdoptedComment] = useState(false); // 상태 추가
   const [comments, setComments] = useState<Comment[]>([]);

@@ -3,7 +3,6 @@ import { Routes, Route, Link, useNavigate } from "react-router-dom";
 import Header from "../Header"; /* Header 참조 */
 import Footer from "../Footer"; /* footer 참조 */
 import "../../assets/css/PostPage/Certificate.css"; /* 스타일 참조 */
-import { FaRegStar, FaSearch, FaRegBookmark, FaBookmark } from "react-icons/fa";
 import { FaRegHeart } from "react-icons/fa6";
 import axios from "axios";
 import { IoEyeSharp } from "react-icons/io5";
@@ -166,7 +165,7 @@ const Certificate = () => {
                           title: post.title,
                           content: post.content,
                           userName: post.userName,
-                          time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
+                          time: post.createAt,
                           newTime: post.updateAt,
                           userId: post.userId,
                           fileName: post.filePath,
