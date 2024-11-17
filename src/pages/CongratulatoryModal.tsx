@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import "../assets/css/CongratulationsModal.css";
 import jobSeekerImg from "../assets/images/jobSeeker.png";
-import internImg from "../assets/images/intern.png";
+import internImg from "../assets/images/인턴.png";
 
 interface CongratulationsModalProps {
   isOpen: boolean;

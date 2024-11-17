@@ -140,6 +140,12 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
             </ul>
           </div>
           <div className="ProgressBar__expandedProgress">
+            <div className="ProgressBar__labelContainer">
+              <span className="ProgressBar__label">
+                Tier: {userTier} Level: {userLevel}
+              </span>{" "}
+              {/* 사용자 레벨 표시 */}
+            </div>
             {/* 첫 번째 게이지 - 티어 경험치 */}
             <div className="ProgressBar__progressBg">
               <div
@@ -149,7 +155,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
             </div>
             <div className="ProgressBar__labelContainer">
               <span className="ProgressBar__label">
-                티어: {tierProgress} / 100
+                Tier: {tierProgress} / 100
               </span>{" "}
               {/* 경험치 표시 */}
             </div>
@@ -163,19 +169,11 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
             </div>
             <div className="ProgressBar__labelContainer">
               <span className="ProgressBar__label">
-                경험치: {progress} / 100
+                Level: {progress} / 100
               </span>{" "}
               {/* 티어 표시 */}
             </div>
-            <div className="ProgressBar__levelContainer">
-              <span className="ProgressBar__label">레벨: {userLevel}</span>{" "}
-              {/* 사용자 레벨 표시 */}
-            </div>
-            <div className="ProgressBar__tierName">
-              <span>{userTier}</span> {/* 티어 이름 표시 */}
-            </div>
           </div>
-
           <ConfirmLogoutModal
             isOpen={isModalOpen}
             onClose={handleCancelLogout}

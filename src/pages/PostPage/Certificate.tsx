@@ -30,7 +30,7 @@ const Certificate = () => {
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
 
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
-    ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.scrollTo({ behavior: "smooth", top:0 });
   };
 
   // 백엔드에서 게시물 데이터 가져오기
@@ -94,7 +94,7 @@ const Certificate = () => {
     <>
       <Header />
 
-      <div className="post_layout">
+      <div className="post_layout" >
         <h1 className="post_title">자격증 게시판</h1>
 
         {/* 위로이동 버튼 */}
@@ -191,9 +191,6 @@ const Certificate = () => {
                         <div className="Certificate_icons_right">
                           <div className="Certificate_viewCount"><IoEyeSharp /> {post.viewCount}</div>
                           <div className="Certificate_heart"><FaRegHeart /> {post.heart}</div>
-                          {/* <div className="Certificate_scrap">
-                            <FaRegBookmark />
-                          </div> */}
                         </div>
                       </div>
                     </div>

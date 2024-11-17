@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Link } from "react-router-dom";
-
+import "../assets/css/Inquiry.css";
 const Inquiry = () => {
   const [isSubMenuVisible, setSubMenuVisible] = useState(false);
 
@@ -17,6 +17,7 @@ const Inquiry = () => {
   return (
     <div>
       <Header />
+      <div className="Inquiry__container"></div>
       <Footer />
     </div>
   );

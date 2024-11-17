@@ -9,23 +9,10 @@ import axios from "axios";
 import { CiCircleRemove } from "react-icons/ci";
 import { IoEyeSharp } from "react-icons/io5";
 
-// 게시물 타입 정의
-interface Post {
-  postId: number; // 게시물 ID
-  title: string; // 제목
-  userName: string; // 사용자명
-  content: string; // 내용
-  createAt: string; // 생성 시간 (ISO 8601 형식)
-  updateAt: string;
-  userId: string;
-  filePath: string;
-  viewCount : number;
-  heart : number;
-}
 
-const QnA = () => {
+
+const MyWrittenComm = () => {
   const highElement = useRef<null | HTMLDivElement>(null); // 상단으로 돌아가기 버튼
-  const [posts, setPosts] = useState<Post[]>([]); // 게시물 목록 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
   const [searchKey, setSearchKey] = useState("제목"); // 검색 기준 상태
@@ -35,23 +22,7 @@ const QnA = () => {
     window.scrollTo({ behavior: "smooth", top:0 });
   };
 
-  // 백엔드에서 게시물 데이터 가져오기
-  useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        // Board_ID가 1인 게시물만 가져오기
-        const response = await axios.get("http://localhost:8080/api/posts", {
-          params: { boardId: 1 }, // 여기서 Board_ID를 쿼리 파라미터로 전달
-        });
-        setPosts(response.data); // 게시물 데이터 상태에 저장
-        setLoading(false); // 로딩 완료
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-        setLoading(false);
-      }
-    };
-    fetchPosts();
-  }, []);
+  
 
   // 글자수 제한
   interface PostProps {
@@ -77,26 +48,12 @@ const QnA = () => {
     return str.replace(/\s+/g, ""); // 모든 공백 제거
   };
 
-  const filteredPosts = posts.filter((post) => {
-    const lowerCaseSearchTerm = removeSpaces(searchTerm.toLowerCase()); // 검색어에서 띄어쓰기 제거, 소문자로 변환
-    const lowerCaseTitle = removeSpaces(post.title.toLowerCase()); // 게시물 제목에서 띄어쓰기 제거, 소문자로 변환
-    const lowerCaseContent = removeSpaces(post.content.toLowerCase()); // 게시물 내용에서 띄어쓰기 제거, 소문자로 변환
-    const lowerCaseUserName = removeSpaces(post.userName.toLowerCase()); // 작성자 이름에서 띄어쓰기 제거, 소문자로 변환
-    if (searchKey === "제목") {
-      return lowerCaseTitle.includes(lowerCaseSearchTerm);
-    } else if (searchKey === "내용") {
-      return lowerCaseContent.includes(lowerCaseSearchTerm);
-    } else if (searchKey === "등록자명") {
-      return lowerCaseUserName.includes(lowerCaseSearchTerm);
-    }
-    return true; // 기본적으로 모든 게시물을 반환
-  });
   return (
     <>
       <Header />
 
       <div className="post_layout">
-        <h1 className="post_title">질문과 답 게시판</h1>
+        <h1 className="post_title">작성한 댓글</h1>
 
         {/* 위로이동 버튼 */}
         <div className="Certificate_high">
@@ -136,7 +93,7 @@ const QnA = () => {
         <div className="Certificate_Number">
           <div className="Certificate_postNumber">
             <span>
-              총 게시물 <strong>{filteredPosts.length}</strong>{" "}
+              총 게시물 <strong></strong>{" "}
               {/* 필터링된 게시물 수 */}
             </span>
           </div>
@@ -152,61 +109,29 @@ const QnA = () => {
         </div>
 
         <div className="Certificate_postline">
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
             <ul className="Certificate_postline1">
-              {filteredPosts.map(
-                (
-                  post // 필터링된 게시물 목록 사용
-                ) => (
-                  <li key={post.postId}>
-                    <div
-                      className="Certificate_card"
-                      onClick={() =>
-                        navigate(`/PostDetail/${post.postId}`, {
-                          state: {
-                            postId: post.postId,
-                            title: post.title,
-                            content: post.content,
-                            userName: post.userName,
-                            time: post.createAt, // 생성 시간을 상태로 전달
-                            newTime: post.updateAt,
-                            userId: post.userId,
-                            fileName :post.filePath,
-                            boardId: 1,
-                          },
-                        })
-                      }
-                    >
+                <li>
                       <div className="Certificate_card_innerbox">
-                        <div className="Certificate_card_title">
-                          <PostTitle content={post.title} />
+                        <div className="Certificate_card_title"> 
                         </div>
                         <div className="Certificate_card_info">
-                          <Post content={post.content} />
                         </div>
 
                         {/* 작성자, 조회수, 좋아요수, 스크랩여부 */}
                         <div className="Certificate_card_icons">
                           <div className="Certificate_writer">
-                            {post.userName}
                           </div>
                           <div className="Certificate_icons_right">
-                            <div className="Certificate_viewCount"><IoEyeSharp /> {post.viewCount}</div>
-                            <div className="Certificate_heart"><FaRegHeart /> {post.heart}</div>
-                            {/* <div className="Certificate_scrap">
-                              <FaRegBookmark />
-                            </div> */}
+                            <div className="Certificate_viewCount"><IoEyeSharp /> </div>
+                            <div className="Certificate_heart"><FaRegHeart /> </div>
                           </div>
                         </div>
                       </div>
-                    </div>
+                    
                   </li>
-                )
-              )}
+                
             </ul>
-          )}
+          
         </div>
       </div>
 
@@ -214,4 +139,4 @@ const QnA = () => {
     </>
   );
 };
-export default QnA;
+export default MyWrittenComm;

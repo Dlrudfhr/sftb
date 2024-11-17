@@ -13,7 +13,7 @@
 }
 
 .ProgressBar__circleBg {
-  stroke: #e0e0de;
+  stroke: #ff000000;
   fill: transparent;
   stroke-width: 10;
 }
@@ -23,11 +23,12 @@
   fill: transparent;
   stroke-width: 10;
   transition: stroke-dashoffset 0.35s;
-  animation: progress-animation 1s ease-out forwards;}
+  animation: progress-animation 1s ease-out forwards;
+}
 
 @keyframes progress-animation {
   from {
-    stroke-dashoffset: 300;/* 이 부분을 360에서 300으로 변경함 <동그란 게이지의 시작점>*/
+    stroke-dashoffset: 300; /* 이 부분을 360에서 300으로 변경함 <동그란 게이지의 시작점>*/
   }
   to {
     stroke-dashoffset: var(--offset);
@@ -47,7 +48,7 @@
 
 .ProgressBar__expandedMenu {
   position: absolute;
-  top: -90px;
+  top: -95px;
   left: 50%;
   transform: translateX(-50%);
   background-color: white;
@@ -95,7 +96,7 @@
 .ProgressBar__expandedProgress {
   position: absolute;
   top: 55%;
-  right: -100px;
+  right: -130px;
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
@@ -103,19 +104,15 @@
 }
 
 .ProgressBar__progressBg {
-  width: 100px;
+  width: 130px;
   height: 10px;
   background-color: #e0e0de;
-  
-  
 }
 
 .ProgressBar__progressFill {
   height: 100%;
   background-color: #3b5998;
   transition: width 1s ease-out; /*왜 안움직이는지 모르겠다*/
-
-  
 }
 
 /* 추가된 CSS: 경험치 레이블 표시 이 두개의 필요성을 잘모르겟다*/

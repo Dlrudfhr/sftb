@@ -15,14 +15,14 @@
 /**/
 .Certificate_Search_form{
   width: 100%;
-  height: 40px;
-  display: flex;
+  
+  display: grid;
+  grid-template-columns: 120px 1220px 1fr 1fr;
   padding: 15px 30px;
 }
 
-/**/
+/*검색 필터를 담고 있는 div*/
 .Certificate_filter{
-  width: 10%;
   min-width:100px;
 }
 
@@ -39,12 +39,12 @@
 }
 
 /*게시물 검색 필터*/
-/* .Certificate_search_key{
+.Certificate_search_key{
   border: 0.667px solid lightgray;
   width: 100%;
-  height: 40px;
+  height: 58.5px;
   float: right;
-} */
+}
 
 /*게시물 검색어 input bar*/
 .Certificate_search_txt{
@@ -134,17 +134,18 @@
 .Certificate_card {
   width: 261px;
   height: 208px;
-  cursor: pointer; 
   margin-right:50px;
-  align-content: center; /*카드 안에 콘텐츠 세로 중앙 정렬*/
-  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  margin-bottom:30px;
+  /* align-content: center; 카드 안에 콘텐츠 세로 중앙 정렬 */
+  /* padding:10px; */
   background-color: white;
   -webkit-transition: 0.5s ease-in-out;
   transition: 0.5s ease-in-out;
-  border-radius: 5%;
   border:  solid 0.667px #e8e8e8;
-  margin-bottom:30px;
+  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  border-radius: 5%;
   overflow: hidden;
+  cursor: pointer; 
 }
 /*기본 카드 hover*/
 .Certificate_card:hover {
@@ -155,8 +156,8 @@
 /*게시글 카드 안에 inner box*/
 .Certificate_card_innerbox {
   margin:auto; /* 카드 안에 콘텐츠 가로 중앙 정렬*/
-  min-height: 150px;
-  width: 80%;
+  height: 160px;
+  width: 210px;
   -webkit-transform: scale(1);
   transform: scale(1);
 }
@@ -166,8 +167,9 @@
   font-size: 20px;
   font-weight: bold;
   max-height: 30px;
-  letter-spacing: -0.5px;
+  margin-top:30px;
   margin-bottom: 15px;
+  letter-spacing: -0.5px;
   position: relative;
   
 }
@@ -180,7 +182,7 @@
   /* height: 2.8em; */
   overflow: hidden;
   text-overflow: ellipsis;
-  min-height: 50px;
+  height: 50px;
   margin-bottom:35px;
 }
 
@@ -189,12 +191,13 @@
   font-size: 12px;
   display: flex;
   align-items: flex-end; /* 요소를 하단 정렬 */
-  min-height: 30%;
+  height: 30px;
 }
 
 /**/
 .Certificate_writer{
-  width: 60%;
+  width: 80%;
+  margin:auto;
 }
 
 /**/
@@ -205,8 +208,9 @@
 
 /**/
 .Certificate_icons_right{
-  width:40%;
+  /* width:40%; */
   display: flex;
+  margin:auto;
   /* background-color: lightblue; */
 }
 
@@ -214,19 +218,16 @@
 .Certificate_heart{
   float : right;
   margin-left:8px;
+  min-width: 30px;
 }
 
 /**/
 .Certificate_viewCount{
   float : right;
   margin-left:8px;
+  min-width: 35px;
 }
 
-/* 
-.Certificate_scrap{
-  float: right;
-  margin-left:10px;
-} */
 
 /*맨위로 button*/
 .Certificate_high button {
