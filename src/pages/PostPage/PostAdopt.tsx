@@ -35,7 +35,6 @@ const PostAdopt: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentInput, setCommentInput] = useState("");
   const [replyInput, setReplyInput] = useState<{ [key: number]: string }>({});
-  const commentElement = useRef<null | HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [comDropdown, setcomDropdown] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -723,12 +722,6 @@ const handleDeletePost = async () => {
               <div className="PostDetail_totallike" onClick={handleHeart}>
                 {heart ? <FaHeart color="red" /> : <FaRegHeart />}
                 <span> {heartCount}</span> {/* 하트 수 표시 */}
-              </div>
-              <div
-                className="PostDetail_totalcomm"
-                onClick={() => onMoveBox(commentElement)}
-              >
-                <FaRegComment />
               </div>
               <div className="PostDetail_totalscrap" onClick={handleBookmark}>
                 {bookmark ? <FaBookmark color="gold" /> : <FaRegBookmark />}

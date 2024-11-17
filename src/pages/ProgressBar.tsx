@@ -77,6 +77,7 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
         sessionStorage.removeItem("authToken");
         sessionStorage.removeItem("authenticated");
         localStorage.removeItem("memberId"); // 로그아웃 시 사용자 ID 제거
+        localStorage.removeItem("userName"); // 로그아웃 시 사용자 이름 제거
         setIsModalOpen(false);
         navigate("/");
       }
