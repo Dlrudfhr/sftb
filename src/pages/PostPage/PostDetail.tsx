@@ -36,7 +36,6 @@ const PostDetail: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentInput, setCommentInput] = useState("");
   const [replyInput, setReplyInput] = useState<{ [key: number]: string }>({});
-  const commentElement = useRef<null | HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [comDropdown, setcomDropdown] = useState(false);
   const [imageSrc, setImageSrc] = useState(""); // 기본 이미지를 설정
@@ -347,6 +346,8 @@ const PostDetail: React.FC = () => {
         userName,
         newTime, // 수정된 시간을 현재 시간으로 설정
         postId, // 게시물 ID 추가
+        userId,
+        boardId,
         fileName,
       },
     });
@@ -717,12 +718,6 @@ const PostDetail: React.FC = () => {
               <div className="PostDetail_totallike" onClick={handleHeart}>
                 {heart ? <FaHeart color="red" /> : <FaRegHeart />}
                 <span> {heartCount}</span> {/* 하트 수 표시 */}
-              </div>
-              <div
-                className="PostDetail_totalcomm"
-                onClick={() => onMoveBox(commentElement)}
-              >
-                <FaRegComment />
               </div>
               <div className="PostDetail_totalscrap" onClick={handleBookmark}>
                 {bookmark ? <FaBookmark color="gold" /> : <FaRegBookmark />}

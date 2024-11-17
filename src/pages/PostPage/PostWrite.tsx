@@ -16,7 +16,6 @@ function PostWrite() {
   const { state } = useLocation(); // 이전 페이지에서 전달된 상태
   const [file, setFile] = useState<File | null>(null); // 첨부할 사진 파일
   const [filePath, setFilePath] = useState<string | null>(null); // 기존 파일 경로 상태 추가
-  const [deleteFile, setDeleteFile] = useState(false); // 파일 삭제 여부
 
   // 로그인된 사용자 UserName을 localStorage에서 가져옴
   const userName = localStorage.getItem("userName");
@@ -36,7 +35,7 @@ function PostWrite() {
 
   // 파일 선택 시 호출되는 함수
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(event.target.files?.[0] || null);
+    setFile(event.target.files?.[0] || null); // 선택한 파일을 상태에 저장
     if (event.target.files?.[0]) {
       setFilePath(null); // 새 파일 선택 시 기존 파일 경로 제거
     }
@@ -183,7 +182,6 @@ function PostWrite() {
             },
           }
         );
-        console.log(response.data);
 
         if (response.status === 200) {
           const userLevelExperience = 10;
@@ -203,7 +201,6 @@ function PostWrite() {
             8: "/Marketplace",
             9: "/Ledger",
             10: "/main/Announcement",
-            // 추가 게시판이 있다면 여기서 추가
           };
 
           const boardUrl = boardUrlMap[boardId] || "/Main"; // 기본값은 Main
