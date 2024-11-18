@@ -361,7 +361,6 @@ const PostDetail: React.FC = () => {
         const response = await axios.put(
           `/api/comments/${commentId}`,
           { content: newContent },
-          { headers: { "Content-Type": "application/json" } } // 헤더 추가
         );
 
         // 수정된 댓글 객체를 가져오기
