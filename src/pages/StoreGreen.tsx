@@ -41,6 +41,31 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       console.error("토큰을 가져오는 중 오류 발생:", error);
     }
   };
+    // 상품 구매 처리
+    const handlePurchase = async (price: number) => {
+      const userId = localStorage.getItem("memberId");  // localStorage에서 userId 가져오기
+      if (tokenCount !== null && tokenCount >= price) {
+        try {
+          const response = await axios.post("/api/store/purchase", {
+            userId, // userId를 요청 본문에 포함
+            price,
+          });
+           // 응답 데이터 콘솔에 출력
+      console.log("응답 데이터:", response.data);
+          if (response.data.success) {
+            setTokenCount((prev) => (prev !== null ? prev - price : null)); // 토큰 차감
+            alert("구매 성공!"); // 성공 메시지
+          } else {
+            alert("구매 실패: " + response.data.message); // 서버 실패 응답
+          }
+        } catch (error) {
+          console.error("구매 요청 중 오류 발생:", error);
+          alert("구매 중 오류가 발생했습니다.");
+        }
+      } else {
+        alert("보유 토큰이 부족합니다."); // 잔액 부족
+      }
+    };
   const goToNextStore = () => {
     navigate("/StoreRed");
   };
@@ -110,6 +135,7 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={`StoreGreen__selectBtn${index + 1}`}
                     type="button"
                     value={value}
+                    onClick={() => handlePurchase(value)} // 구매 함수 연결
                     style={{
                       backgroundImage: `url(${
                         tokenCount !== null && tokenCount >= value
@@ -150,6 +176,7 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     className={`StoreGreen__selectBtn${index + 5}`}
                     type="button"
                     value={value}
+                    onClick={() => handlePurchase(value)} // 구매 함수 연결
                     style={{
                       backgroundImage: `url(${
                         tokenCount !== null && tokenCount >= value
