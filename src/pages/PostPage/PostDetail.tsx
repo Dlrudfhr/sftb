@@ -3,6 +3,7 @@ import { useNavigate, useLocation, useParams } from "react-router-dom";
 import Header from "../Header";
 import CommentAdoptModal from "./Comment_Adopt_Modal"; // 모달 컴포넌트 import
 import "../../assets/css/PostPage/PostDetail.css";
+import "../../assets/css/ConfirmLogoutModal.css"
 import {
   FaRegComment,
   FaRegHeart,
@@ -36,9 +37,12 @@ const PostDetail: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentInput, setCommentInput] = useState("");
   const [replyInput, setReplyInput] = useState<{ [key: number]: string }>({});
+  const commentElement = useRef<null | HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [comDropdown, setcomDropdown] = useState(false);
-  const [imageSrc, setImageSrc] = useState(""); // 기본 이미지를 설정
+  const [mediaSrc, setMediaSrc] = useState(""); // 이미지 또는 동영상 URL 저장
+  const [isVideo, setIsVideo] = useState(false); // 동영상 여부를 판단
+
   
   const [viewCount, setViewCount] = useState(0); // 조회수 상태
   const [visibleCommentDropdown, setVisibleCommentDropdown] = useState<{ [key: number]: boolean }>({});
@@ -578,27 +582,35 @@ const PostDetail: React.FC = () => {
   useEffect(() => {
     const loadImage = async () => {
       try {
-        if (fileName && !imageSrc) { // imageSrc가 없을 때만 요청
+        if (fileName && !mediaSrc) { // imageSrc가 없을 때만 요청
           // 파일 경로가 있는 경우 서버에서 이미지를 가져옴
           const response = await axios.get(`http://localhost:8080/api/files/${postId}`, {
             responseType: "blob",
           });
-          const imageUrl = URL.createObjectURL(response.data);
-          setImageSrc(imageUrl);
+          const mediaUrl = URL.createObjectURL(response.data);
+
+          // 파일 확장자를 확인하여 이미지인지 동영상인지 구분
+        const fileExtension = fileName.split(".").pop()?.toLowerCase();
+        if (fileExtension === "mp4" || fileExtension === "webm") {
+          setIsVideo(true); // 동영상 파일인 경우
+        } else {
+          setIsVideo(false); // 이미지 파일인 경우
         }
-      } catch (error) {
-        console.error("Error fetching the image:", error);
+        setMediaSrc(mediaUrl);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching the media:", error);
+    }
+  };
 
     loadImage();
 
     return () => {
-      if (imageSrc) {
-        URL.revokeObjectURL(imageSrc); // URL 객체 해제
+      if (mediaSrc) {
+        URL.revokeObjectURL(mediaSrc); // URL 객체 해제
       }
     };
-  }, [postId, fileName]); // imageSrc는 의존성 배열에서 제외
+  }, [postId, fileName, mediaSrc]); // imageSrc는 의존성 배열에서 제외
 
  useEffect(() => {
     const incrementViewCount = async () => {
@@ -706,18 +718,38 @@ const PostDetail: React.FC = () => {
             <div className="PostDetail_content">{content || "내용"}</div>
 
              {/* 글 내용 아래에 이미지 표시 */}
-            {imageSrc && (
+            {mediaSrc && (
               <div className="PostDetail_image">
-                <img src={imageSrc} alt="게시글 이미지" style={{ width: "70%", height: "auto" }} />
+                {isVideo ? ( //ture면 동영상, false면 이미지 태그를 렌더링
+                  <video
+                    src={mediaSrc}
+                    controls
+                    style={{ width: "70%", height: "auto" }}
+                  >
+                    동영상을 재생할 수 없습니다.
+                  </video>
+                ) : (
+                  <img
+                    src={mediaSrc}
+                    alt="게시글 미디어"
+                    style={{ width: "70%", height: "auto" }}
+                  />
+              )}
               </div>
-            ) }
-          </div>
+            )}
+            </div>
 
             {/*게시글 좋아요,댓글 수, 스크랩 수 */}
             <div className="PostDetail_total">
               <div className="PostDetail_totallike" onClick={handleHeart}>
                 {heart ? <FaHeart color="red" /> : <FaRegHeart />}
                 <span> {heartCount}</span> {/* 하트 수 표시 */}
+              </div>
+              <div
+                className="PostDetail_totalcomm"
+                onClick={() => onMoveBox(commentElement)}
+              >
+                <FaRegComment />
               </div>
               <div className="PostDetail_totalscrap" onClick={handleBookmark}>
                 {bookmark ? <FaBookmark color="gold" /> : <FaRegBookmark />}
@@ -986,10 +1018,10 @@ const PostDetail: React.FC = () => {
 
         {/* 모달 */}
         {isModalOpen && (
-          <div className="modal">
-            <div className="modal-content">
+          <div className="ConfirmLogoutModal__overlay">
+            <div className="ConfirmLogoutModal__content">
               <h2>이 댓글을 채택하면 더이상 취소할 수 없습니다.</h2>
-              <div className="modal-buttons">
+              <div className="ConfirmLogoutModal__buttons">
                 <button onClick={confirmAdopt}>예</button>
                 <button onClick={closeModal}>아니오</button>
               </div>
