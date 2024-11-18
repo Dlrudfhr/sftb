@@ -671,7 +671,8 @@ const PostDetail: React.FC = () => {
                     ? formatDate(time)
                     : "몇 분전"}
                 </div>
-                <div className="PostDetail_more">
+              </div>
+              <div className="PostDetail_more">
                   <div onClick={handleMoreClick}>
                     <FiMoreHorizontal />
                   </div>
@@ -697,7 +698,6 @@ const PostDetail: React.FC = () => {
                       )}
                     </>
                   )}
-                </div>
               </div>
             </div>
 

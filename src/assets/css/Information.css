@@ -1,10 +1,5 @@
 @import url("Font.css");
 
-
-.information-page {
-    padding: 20px;
-    background-color: #f0f0f0;
-  }
   
 .Information{
   margin-top:200px;
@@ -72,9 +67,10 @@
   display:flex;
 }
 
+/*작성한 글, 북마크한 글, 작성한 댓글 div박스 영역*/
 .Information__mypost{
   /* background-color: #ffffb5; */
-  width: 300px;
+  width: 285px;
   height: 120px;
   border-radius:7px;
   margin-right:10px;
@@ -82,8 +78,21 @@
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
   background-color: white;
   cursor: pointer;
-  align-content: center;
-  text-align: center;
   font-family: "SCDream3";
+  display: block;
+  object-fit: cover;
 }
 
+/*작성한 글 등 버튼*/
+.Information_mypostBtn{
+  text-align: center;
+  align-content: center;
+  width: 280px;
+  height: 120px;
+  overflow: hidden;
+  transition: all .3s ease-out;
+}
+
+.Information_mypostBtn:hover{
+  transform: scale(1.1);
+}

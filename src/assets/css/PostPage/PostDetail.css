@@ -16,14 +16,6 @@
 }
 /*********************************게시물 출력 박스********************************/
 
-/*게시글 댓글 작성박스*/
-.PostDetail_commWritebox{
-    display:grid;
-    margin-bottom:15px;
-    border-top:none;
-    border: solid 0.667px lightgray;
-    grid-template-columns: 120px 700px 50px;
-}
 
 /**/
 .PostDetail_box, .postpage_title, .PostDetail_commentbox{
@@ -35,20 +27,13 @@
     padding: 15px 30px;
 }
 
-/**/
-.PostDetail_commentbox{
-    /* border:solid 0.667px lightgray; */
-    margin-top:10px;
-    border-top:none;
-    font-size:16px;
-    box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+/*게시글 좋아요수, 댓글수, 스크랩수*/
+.PostDetail_total{
+    display: flex;
+    /* margin-bottom: 15px; */
+    padding:30px;
 }
-
 /**/
-.PostDetail_comment{
-    padding:15px 30px;
-    
-}
 
 /******************* 게시글 작성자, 제목, 내용, 좋아요, 스크랩 ********************/
 
@@ -67,7 +52,8 @@
 /*수정,삭제 더보기 버튼*/
 .PostDetail_more{
     margin-left: auto; 
-    align-content: center;  
+    align-content: center; 
+    float:right; 
     /* background-color: lightblue; */
 }
 
@@ -119,11 +105,11 @@
     margin-bottom: 15px;
 }
 
-/*게시글 좋아요수, 댓글수, 스크랩수*/
-.PostDetail_total{
-    display: flex;
-    margin-bottom: 15px;
+.PostDetail_image{
+    width: 800px;
+    margin:auto;
 }
+
 
 /*게시글 좋아요 수, 게시글 댓글 수, 게시글 스크랩 수*/
 .PostDetail_totallike, .PostDetail_totalcomm, .PostDetail_totalscrap, .PostDetail_likebutton{
@@ -173,6 +159,27 @@ img{
 }
 /********************************** 댓글 ******************************************/
 
+.PostDetail_commentbox{
+    /* border:solid 0.667px lightgray; */
+    margin-top:10px;
+    border-top:none;
+    font-size:16px;
+    box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+}
+
+/**/
+.PostDetail_comment{
+    padding:15px 30px;
+    
+}
+/*게시글 댓글 작성박스*/
+.PostDetail_commWritebox{
+    display:grid;
+    margin-bottom:15px;
+    border-top:none;
+    border: solid 0.667px lightgray;
+    grid-template-columns: 120px 700px 50px;
+}
 
 /**/
 .PostDetail_writer{
@@ -257,11 +264,6 @@ img{
     border:none;
     background-color: transparent;
     border-radius: 10%;
-}
-
-/**/
-.PostDetail_likebutton:hover, .PostDetail_scrapbutton:hover{
-    
 }
 
 
