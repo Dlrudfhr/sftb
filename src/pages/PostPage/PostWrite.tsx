@@ -25,11 +25,11 @@ function PostWrite() {
   useEffect(() => {
     if (state) {
       console.log("PostWrite state:", state); // state 전체 출력
-      const { title = "", content = "", postId = "", filePath = null } = state; // 기본값을 추가
-      setTitle(title || ""); // 제목 설정
-      setContent(content || ""); // 내용 설정
-      setPostID(postId || ""); // 게시물 고유 번호 설정
-      setFilePath(filePath || null); // 수정 시 기존 파일 경로 설정
+      const { title = "", content = "", postId = "", fileName = null } = state; // 기본값을 추가
+      setTitle(title); // 제목 설정
+      setContent(content); // 내용 설정
+      setPostID(postId); // 게시물 고유 번호 설정
+      setFilePath(fileName); // 수정 시 기존 파일 경로 설정
     }
   }, [state]);
 
@@ -38,6 +38,25 @@ function PostWrite() {
     setFile(event.target.files?.[0] || null); // 선택한 파일을 상태에 저장
     if (event.target.files?.[0]) {
       setFilePath(null); // 새 파일 선택 시 기존 파일 경로 제거
+    }
+  };
+
+  // **추가된 파일 삭제 핸들러**
+  const handleDeleteFile = async () => {
+    if (filePath) {
+      try {
+        await axios.delete(`http://localhost:8080/api/files/${postId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setFilePath(null); // 삭제 후 경로 초기화
+        setFile(null); // 선택된 파일 상태 초기화
+        alert("파일이 삭제되었습니다.");
+      } catch (error) {
+        console.error("파일 삭제 중 오류 발생:", error);
+        setErrorMessage("파일 삭제에 실패했습니다.");
+      }
     }
   };
 
@@ -163,7 +182,6 @@ function PostWrite() {
             },
           }
         );
-        console.log(response.data);
 
         if (response.status === 200) {
           const userLevelExperience = 10;
@@ -183,7 +201,6 @@ function PostWrite() {
             8: "/Marketplace",
             9: "/Ledger",
             10: "/main/Announcement",
-            // 추가 게시판이 있다면 여기서 추가
           };
 
           const boardUrl = boardUrlMap[boardId] || "/Main"; // 기본값은 Main
@@ -232,16 +249,14 @@ function PostWrite() {
           />
           <br />
 
-          <input type="file" accept="image/*" onChange={handleFileChange} />
-          {/* 기존 파일이 있을 경우 미리보기 제공 */}
+          <input type="file" accept="image/*,video/*" onChange={handleFileChange} />
+          {/* 파일 미리보기와 삭제 버튼 */}
           {filePath && (
             <div className="file-preview">
               <p>현재 파일: {filePath}</p>
-              <img
-                src={`http://localhost:8080/api/files/${filePath}`}
-                alt="Uploaded file preview"
-                style={{ maxWidth: "100px", maxHeight: "100px" }}
-              />
+              <button type="button" onClick={handleDeleteFile}>
+                파일 삭제
+              </button>
             </div>
           )}
           <br />

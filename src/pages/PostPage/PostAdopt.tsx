@@ -35,7 +35,6 @@ const PostAdopt: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentInput, setCommentInput] = useState("");
   const [replyInput, setReplyInput] = useState<{ [key: number]: string }>({});
-  const commentElement = useRef<null | HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [comDropdown, setcomDropdown] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -140,7 +139,7 @@ const PostAdopt: React.FC = () => {
   const [heartCount, setHeartCount] = useState(0);
 
   useEffect(() => {
-    // 컴포넌트가 마운트될 때 하트 수를 가져옵니다.
+    // 조회수 증가 및 가져오는API
     const incrementViewCount = async () => {
       try {
         await axios.post(`http://localhost:8080/api/posts/${postId}/incrementViewCount`);
@@ -151,6 +150,7 @@ const PostAdopt: React.FC = () => {
         console.error("Error incrementing view count:", error);
       }
     };
+    //하트 수 가져오는 API
     const fetchHeartCount = async () => {
       try {
         const response = await axios.get(`/api/posts/${postId}`); // 하트 수를 가져오는 API 호출
@@ -173,6 +173,7 @@ const PostAdopt: React.FC = () => {
       }
     };
 
+    //게시글의 채택상태 가져오는 API
     const fetchPost = async () => {
       try {
         const response = await axios.get(
@@ -184,7 +185,7 @@ const PostAdopt: React.FC = () => {
         console.error("게시글 정보 가져오기 실패:", error);
       }
     };
-
+    //북마크 상태 가져오는API
     const fetchPostDetails = async () => {
       const userId = getCurrentUserId();
       const response = await axios.get(`/api/posts/${postId}/bookmarks`, {
@@ -723,12 +724,6 @@ const handleDeletePost = async () => {
               <div className="PostDetail_totallike" onClick={handleHeart}>
                 {heart ? <FaHeart color="red" /> : <FaRegHeart />}
                 <span> {heartCount}</span> {/* 하트 수 표시 */}
-              </div>
-              <div
-                className="PostDetail_totalcomm"
-                onClick={() => onMoveBox(commentElement)}
-              >
-                <FaRegComment />
               </div>
               <div className="PostDetail_totalscrap" onClick={handleBookmark}>
                 {bookmark ? <FaBookmark color="gold" /> : <FaRegBookmark />}
