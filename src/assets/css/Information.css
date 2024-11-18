@@ -1,13 +1,8 @@
 @import url("Font.css");
 
-
-.information-page {
-    padding: 20px;
-    background-color: #f0f0f0;
-  }
   
 .Information{
-  margin-top:110px;
+  margin-top:200px;
 }
 
 .Information__frame{
@@ -18,7 +13,6 @@
 }
 
 .Information__innerframe{
-  /* background-color: #efbad6; */
   width: 90%;
   margin:auto;
   padding:10px;
@@ -26,52 +20,79 @@
 
 .Information__userbox{
   height: 400px;
+  margin-bottom:80px;
   background-color: white;
-  margin-bottom:30px;
-  padding:15px;
-  display:flex;
+  display:grid;
+  grid-template-columns: 300px 400px;
   box-shadow:0px 6px 15px rgba(36, 37, 38, 0.12);
-  font-family: SCDream7;
+  /* font-family: SCDream7; */
 }
 
 .Information__userImage{
-  width: 150px;
-  height: 200px;
-  /* background-color: #abdee6; */
   margin-right:20px;
+  align-content: center;
+  padding:30px;
+  
 }
 
 .Information__user{
-  height: 100px;
+  border-left:solid 0.667px #ABABAB;
+  padding:40px;
+  
 }
 
-.Information__progressBar{
-  /* display: flex; */
-  margin-bottom:30px;
-}
-
-.Information__userInfo{
-  width: 200px;
-  height: 50px;
+.Information__userInfo, .Information__userName{
+  /* width: 300px; */
+  height: 40px;
   /* background-color: lightcyan; */
   margin-bottom:10px;
+}
+
+.Information__userTL{
+  font-size: 13px;
+  margin-top:40px;
+}
+
+.Information__userName{
+  font-size:28px;
+  font-family: "SCDream7";
+  margin-bottom:40px;
+}
+
+.Information__userInfo, .Information__userTL {
+  font-family: "SCDream3";
 }
 
 .Information__postbox{
   display:flex;
 }
 
+/*작성한 글, 북마크한 글, 작성한 댓글 div박스 영역*/
 .Information__mypost{
   /* background-color: #ffffb5; */
-  width: 300px;
-  height: 180px;
+  width: 285px;
+  height: 120px;
   border-radius:7px;
   margin-right:10px;
   margin-bottom:30px;
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
+  background-color: white;
   cursor: pointer;
-  align-content: center;
-  text-align: center;
-  font-family: SCDream7;
+  font-family: "SCDream3";
+  display: block;
+  object-fit: cover;
 }
 
+/*작성한 글 등 버튼*/
+.Information_mypostBtn{
+  text-align: center;
+  align-content: center;
+  width: 280px;
+  height: 120px;
+  overflow: hidden;
+  transition: all .3s ease-out;
+}
+
+.Information_mypostBtn:hover{
+  transform: scale(1.1);
+}

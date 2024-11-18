@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../assets/css/Header.css?after"; // '.'은 현재 디렉터리를 의미
 import logo from "../assets/images/rogo.png"; // '..'은 현재 디렉터리의 바로 상위 디렉터리(부모 디렉터리)를 의미
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [isSubMenuVisible, setSubMenuVisible] = useState(false);
@@ -24,7 +24,7 @@ const Header = () => {
   };
 
   return (
-    <header className="Header">
+    <header className={"Header"}>
       <div className="Header__container-top">
         <div className="Header__navbar">
           <div className="Header__leftside">

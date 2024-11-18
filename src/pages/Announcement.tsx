@@ -38,7 +38,6 @@ const Announcement = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // Board_ID가 2인 게시물만 가져오기
         const response = await axios.get("http://localhost:8080/api/posts", {
           params: { boardId: 10 }, // 여기서 Board_ID를 쿼리 파라미터로 전달
         });

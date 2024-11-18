@@ -13,7 +13,6 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
   isOpen,
   onClose,
 }) => {
-
   const handleClose = async () => {
     try {
       const userID = localStorage.getItem("memberId"); // 로그인한 사용자 ID 가져오기
@@ -39,7 +38,7 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
         console.error("Failed to update new member status");
         return; // 업데이트 실패 시 함수 종료
       }
-      
+
       // 경험치 업데이트를 위한 API 호출
       const userLevelExperience = 40; // 부여할 레벨 경험치 값
       const expResponse = await axios.put(`/api/auth/experience`, {
@@ -63,7 +62,7 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
   return (
     <div className="Congratulation__overlay">
       <div className="Congratulation__modal">
-        <h1>Congratulation!</h1>
+        <div className="Congratulation__coment">Congratulation!</div>
         <div className="Congratulation__content">
           <img
             src={jobSeekerImg}
@@ -78,7 +77,7 @@ const CongratulationsModal: React.FC<CongratulationsModalProps> = ({
           <img src={internImg} alt="인턴" className="Congratulation__image" />
         </div>
         <div className="Congratulation__info">
-          취준생에서 인턴으로 승진했습니다!
+          취직성공! 인턴 생활을 응원합니다!
         </div>
         <br />
         <button className="Congratulation__button" onClick={handleClose}>

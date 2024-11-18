@@ -18,7 +18,7 @@ const Ranking: React.FC = () => {
   const tierPriority: { [key: string]: number } = {
     이사: 1,
     사장: 2,
-    상무: 3,
+    전무: 3,
     부장: 4,
     차장: 5,
     과장: 6,
@@ -49,6 +49,7 @@ const Ranking: React.FC = () => {
         // 사용자 이름 비교 (가나다라 순으로 정렬)
         else return a.userName.localeCompare(b.userName); // 사용자 이름으로 오름차순 정렬
       });
+      console.log(sortedData);
       setUserRank(sortedData);
     } catch (error) {
       console.error("Error fetching customer data:", error);
@@ -67,11 +68,11 @@ const Ranking: React.FC = () => {
             <div key={user.userID} className="Ranking__member">
               <span>{index + 1}등</span> {/* 순위 표시 */}
               <span>
-              <img
-                src={getTierImage(user.tier)}
-                alt={`${user.tier}`}
-                className="Ranking__tierImage"
-              />
+                <img
+                  src={getTierImage(user.tier)}
+                  alt={`${user.tier}`}
+                  className="Ranking__tierImage"
+                />
               </span>
               <span>{user.tier}</span>
               <span>{user.userName}</span>

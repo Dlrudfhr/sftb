@@ -87,7 +87,7 @@ const StoreRed: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             <div className="Store__movebox">
                 <img src={cafe6} className="Store__move"></img>
                 <img src={cafe7} className="Store__move"></img>
-                <img src={cafe8} className="Store__move"></img>
+                
               </div>
           </div>
         </div>
@@ -189,6 +189,7 @@ const StoreRed: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <div className="Store__movebox">
               <img src={cafe12} className="Store__move"></img>
               <img src={cafe14} className="Store__move"></img>
+              <img src={cafe8} className="Store__move"></img>
             </div>
         </div>
       </div>

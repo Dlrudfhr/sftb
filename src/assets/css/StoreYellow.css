@@ -219,7 +219,7 @@
 .StoreYellow__NextBtn, .StoreYellow__PrevBtn{
   z-index:9999;
   position:fixed;
-  margin-top:40vh;
+  top:500px;
   background: transparent;
   border: none;
   width: 90px;
@@ -228,11 +228,11 @@
 
 .StoreYellow__PrevBtn{
   position:fixed;
-  left:30vh
+  left:350px;
 }
 .StoreYellow__NextBtn{
   position:fixed;
-  right:30vh;
+  left:1450px;
 }
 
 .StoreYellow__NextBtn:hover, .StoreYellow__PrevBtn:hover{

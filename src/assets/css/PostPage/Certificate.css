@@ -1,4 +1,5 @@
 /*레이아웃*/
+
 .post_layout{
   width:1350px;
   margin: auto;
@@ -7,15 +8,20 @@
   /* border:solid; */
 }
 
+@media (max-width:968px){
+  .post_layout{
+    width: 200px;
+  }
+}
+
 .post_layout .post_title {
-  /* width: 100%; */
   align-content: center;
+  margin-top:40px;
 }
 
 /**/
 .Certificate_Search_form{
   width: 100%;
-  
   display: grid;
   grid-template-columns: 120px 1220px 1fr 1fr;
   padding: 15px 30px;

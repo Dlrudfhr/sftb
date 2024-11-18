@@ -14,6 +14,7 @@ import cafe4 from "../assets/images/상점사진/자산 4.png";
 import cafe5 from "../assets/images/상점사진/자산 5.png";
 import left from "../assets/images/상점사진/left.png";
 import right from "../assets/images/상점사진/right.png";
+import Loading from './Loading';
 
 
 
@@ -80,133 +81,151 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     }
   }, []);
 
+  /*로딩페이지 */
+  const [isLoading, setIsLoading] = useState(true); 
+
+  useEffect(() => { {/** 페이지 로딩 시 2초 동안 로딩 화면을 표시 */} 
+  const timer = setTimeout(() => { 
+    setIsLoading(false); }, 2000); 
+  return () => clearTimeout(timer); }, []); 
+  
+  const handleNavigate = () => { setIsLoading(true);
+     {/**페이지 이동 시 로딩 상태 활성화 */}  
+     setTimeout(() => { setIsLoading(false); 
+    {/* 실제로는 페이지 이동 로직 추가 */}
+
+    }, 2000);
+  };
+
   return (
     <div>
-      <Header />
-      <Footer />
-      <div className="StoreGreen__background">
-        <div className="Store__area">
-              <button className="StoreGreen__PrevBtn" onClick={goToPrevStore}>
-                <img src={left}></img>
-              </button>
-              <button className="StoreGreen__NextBtn" onClick={goToNextStore}>
-                <img src={right}></img>
-              </button>
-          <div className="Store__left">
+      {isLoading && <Loading />}
+        <div className="StoreGreen__background">
+          <Header />
+          <Footer />
+            <div className="Store__area">
+                  <button className="StoreGreen__PrevBtn" onClick={goToPrevStore}>
+                    <img src={left}></img>
+                  </button>
+                  <button className="StoreGreen__NextBtn" onClick={goToNextStore}>
+                    <img src={right}></img>
+                  </button>
+              <div className="Store__left">
 
-            <div className="Store__movebox">
-              <img src={cafe1} className="Store__move"></img>
-              <img src={cafe2} className="Store__move"></img>
-              <img src={cafe3} className="Store__move"></img>
-            </div>
-          </div>
-          <div className="StoreGreen__middle">
-            <div className="StoreGreen__innerFrame">
-              <div className="StoreGreen__productLine1">
-                <div className="StoreGreen__productContainer">
-                  <img src={starAA} className="StoreGreen__product" />
-                  <div className="StoreGreen_priceLabel">10000</div>
-                </div>
-
-                <div className="StoreGreen__productContainer">
-                  <img src={starLatte} className="StoreGreen__product" />
-                  <div className="StoreGreen_priceLabel">10001</div>
-                </div>
-
-                <div className="StoreGreen__productContainer">
-                  <img src={megaAA} className="StoreGreen__product" />
-                  <div className="StoreGreen_priceLabel">9999</div>
-                </div>
-
-                <div className="StoreGreen__productContainer">
-                  <img src={megaAshot} className="StoreGreen__product" />
-                  <div className="StoreGreen_priceLabel">10002</div>
+                <div className="Store__movebox">
+                  <img src={cafe1} className="Store__move move1"></img>
+                  <img src={cafe2} className="Store__move move2"></img>
                 </div>
               </div>
-              <div className="StoreGreen__selectBtnLine1">
-                {/* 
-                1 2 3 4
-                5 6 7 8 상품순
-                */}
-                {/*첫번째 상품 가격, 두번째 상품 가격, 세번째 상품가격, 네번째 상품가격 */}
-                {[10000, 10001, 9999, 10002].map((value, index) => (
-                  <button
-                    key={index}
-                    className={`StoreGreen__selectBtn${index + 1}`}
-                    type="button"
-                    value={value}
-                    onClick={() => handlePurchase(value)} // 구매 함수 연결
-                    style={{
-                      backgroundImage: `url(${
-                        tokenCount !== null && tokenCount >= value
+              <div className="StoreGreen__middle">
+                <div className="StoreGreen__innerFrame">
+                  <div className="StoreGreen__productLine1">
+                    <div className="StoreGreen__productContainer">
+                      <img src={starAA} className="StoreGreen__product" />
+                      <div className="StoreGreen_priceLabel">10000</div>
+                    </div>
+
+                    <div className="StoreGreen__productContainer">
+                      <img src={starLatte} className="StoreGreen__product" />
+                      <div className="StoreGreen_priceLabel">10001</div>
+                    </div>
+
+                    <div className="StoreGreen__productContainer">
+                      <img src={megaAA} className="StoreGreen__product" />
+                      <div className="StoreGreen_priceLabel">9999</div>
+                    </div>
+
+                    <div className="StoreGreen__productContainer">
+                      <img src={megaAshot} className="StoreGreen__product" />
+                      <div className="StoreGreen_priceLabel">10002</div>
+                    </div>
+                  </div>
+                  <div className="StoreGreen__selectBtnLine1">
+                    {/* 
+                    1 2 3 4
+                    5 6 7 8 상품순
+                    */}
+                    {/*첫번째 상품 가격, 두번째 상품 가격, 세번째 상품가격, 네번째 상품가격 */}
+                    {[10000, 10001, 9999, 10002].map((value, index) => (
+                      <button
+                        key={index}
+                        className={`StoreGreen__selectBtn${index + 1}`}
+                        type="button"
+                        value={value}
+                        onClick={() => handlePurchase(value)} // 구매 함수 연결
+                        style={{
+                          backgroundImage: `url(${
+                            tokenCount !== null && tokenCount >= value
+                            ? greenBtn
+                            : redBtn
+                          })`,
+                          backgroundSize: "cover",
+                          backgroundColor: "transparent",
+                        }}
+                        />
+                      ))}
+                  </div>
+                  <div className="StoreGreen__productLine2">
+                    <div className="StoreGreen__productContainer">
+                      <img src={megaChoco} className="StoreGreen__product" />
+                      <div className="StoreGreen_priceLabel">10000</div>
+                    </div>
+
+                    <div className="StoreGreen__productContainer">
+                      <img src={megaCookie} className="StoreGreen__product" />
+                      <div className="StoreGreen_priceLabel">10001</div>
+                    </div>
+
+                    <div className="StoreGreen__productContainer">
+                      <img src={twoChoco} className="StoreGreen__product" />
+                      <div className="StoreGreen_priceLabel">9999</div>
+                    </div>
+
+                    <div className="StoreGreen__productContainer">
+                      <img src={twoIcebox} className="StoreGreen__product" />
+                      <div className="StoreGreen_priceLabel">10002</div>
+                    </div>
+                  </div>
+                  <div className="StoreGreen__selectBtnLine2">
+                    {[10000, 10001, 9999, 10002].map((value, index) => (
+                      <button
+                      key={index}
+                      className={`StoreGreen__selectBtn${index + 5}`}
+                      type="button"
+                      value={value}
+                      onClick={() => handlePurchase(value)} // 구매 함수 연결
+                      style={{
+                        backgroundImage: `url(${
+                          tokenCount !== null && tokenCount >= value
                           ? greenBtn
                           : redBtn
-                      })`,
-                      backgroundSize: "cover",
-                      backgroundColor: "transparent",
-                    }}
-                  />
-                ))}
-              </div>
-              <div className="StoreGreen__productLine2">
-                <div className="StoreGreen__productContainer">
-                  <img src={megaChoco} className="StoreGreen__product" />
-                  <div className="StoreGreen_priceLabel">10000</div>
-                </div>
-
-                <div className="StoreGreen__productContainer">
-                  <img src={megaCookie} className="StoreGreen__product" />
-                  <div className="StoreGreen_priceLabel">10001</div>
-                </div>
-
-                <div className="StoreGreen__productContainer">
-                  <img src={twoChoco} className="StoreGreen__product" />
-                  <div className="StoreGreen_priceLabel">9999</div>
-                </div>
-
-                <div className="StoreGreen__productContainer">
-                  <img src={twoIcebox} className="StoreGreen__product" />
-                  <div className="StoreGreen_priceLabel">10002</div>
+                        })`,
+                        backgroundSize: "cover",
+                        backgroundColor: "transparent",
+                      }}
+                      />
+                    ))}
+                  </div>
+                  <div className="StoreGreen__coin">
+                    {tokenCount !== null && tokenCount !== undefined
+                      ? `${tokenCount.toLocaleString()}`
+                      : "로딩 중..."}
+                    <div className="StoreGreen__cointext">coin</div>
+                  </div>
                 </div>
               </div>
-              <div className="StoreGreen__selectBtnLine2">
-                {[10000, 10001, 9999, 10002].map((value, index) => (
-                  <button
-                    key={index}
-                    className={`StoreGreen__selectBtn${index + 5}`}
-                    type="button"
-                    value={value}
-                    onClick={() => handlePurchase(value)} // 구매 함수 연결
-                    style={{
-                      backgroundImage: `url(${
-                        tokenCount !== null && tokenCount >= value
-                          ? greenBtn
-                          : redBtn
-                      })`,
-                      backgroundSize: "cover",
-                      backgroundColor: "transparent",
-                    }}
-                  />
-                ))}
-              </div>
-              <div className="StoreGreen__coin">
-                {tokenCount !== null && tokenCount !== undefined
-                  ? `${tokenCount.toLocaleString()}`
-                  : "로딩 중..."}
-                <div className="StoreGreen__cointext">coin</div>
+              <div className="Store__right">
+                <div className="Store__movebox">
+                  <img src={cafe3} className="Store__move move3"></img>
+                  <img src={cafe5} className="Store__move move5"></img>
+                  <img src={cafe4} className="Store__move move4"></img>
+                </div> 
               </div>
             </div>
-          </div>
-          <div className="Store__right">
-            <div className="Store__movebox">
-              <img src={cafe5} className="Store__move"></img>
-              <img src={cafe4} className="Store__move"></img>
-            </div>
-            
-          </div>
         </div>
-      </div>
+       
     </div>
+    
   );
 };
 
