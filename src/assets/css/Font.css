@@ -18,3 +18,25 @@
   font-weight: normal;
   font-style: normal;
 }
+
+@font-face {
+  font-family: "malgun";
+  src: url("../fonts/malgun.ttf") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "malgunbd";
+  src: url("../fonts/malgunbd.ttf") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "SCDream3";
+  src: url("../fonts/SCDream3.otf") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+

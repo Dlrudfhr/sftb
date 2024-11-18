@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react"; //useRef 버튼 클릭 시 스크롤 이벤트
-import { Routes, Route, Link, useLocation } from "react-router-dom";
+import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
 import "../assets/css/Main.css";
 import React, { Children } from "react";
+import axios from "axios";
 import "../assets/css/Font.css";
 import CongratulationsModal from "./CongratulatoryModal";
 import { FaRegComment, FaComments } from "react-icons/fa";
@@ -16,6 +17,19 @@ import {
   FcDocument,
 } from "react-icons/fc";
 
+interface Post {
+  postId: number; // 게시물 ID
+  title: string; // 제목
+  userName: string; // 사용자명
+  content: string; // 내용
+  createAt: string; // 생성 시간 (ISO 8601 형식)
+  updateAt: string;
+  userId: string;
+  filePath: string;
+  viewCount : number;
+  heart : number;
+}
+
 function Main() {
   const firstElement = useRef<null | HTMLDivElement>(null); //스크롤 될 첫번째 위치요소
   const secondElement = useRef<null | HTMLDivElement>(null); //스크롤 될 두번째 위치요소
@@ -26,12 +40,17 @@ function Main() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
 
+  const [posts, setPosts] = useState<Post[]>([]); // 게시물 목록 상태
+  const [loading, setLoading] = useState(true); // 로딩 상태
+  const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
+
   const handleCloseIntro = () => {
     setShowIntro(false);
   };
 
   const text: string =
-    "Helllo, World!\nWe're in the Department of Information & Communication";
+    "Heello, World!";
+    //\nWe're in\n the Department of\n Information & Communication
   const [displayedText, setDisplayedText] = useState<string>("");
   const typingSpeed: number = 50; // 타이핑 속도 (밀리초)
   useEffect(() => {
@@ -78,14 +97,66 @@ function Main() {
     }
   };
 
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        // Board_ID가 10인 게시물만 가져오기
+        const response = await axios.get("http://localhost:8080/api/posts", {
+          params: { boardId: 10 }, // 여기서 Board_ID를 쿼리 파라미터로 전달
+        });
+        console.log(response.data);
+        setPosts(response.data); // 게시물 데이터 상태에 저장
+        setLoading(false); // 로딩 완료
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+        setLoading(false);
+      }
+    };
+    fetchPosts();
+  },[]);
+
+
+
+
+
   return (
     <article className="Main_layout">
       {/*배너 전체 박스*/}
       <div className="Main_banner">
-        <div className="Main_box_visual">
-          {displayedText.split("\n").map((line, i) => (
-            <div key={i}>{line}</div>
-          ))}
+        <div className="Main_bannerBox">
+          <div className="Main_box_visual">
+            {displayedText.split("\n").map((line, i) => (
+              <div key={i}>{line}</div>
+            ))}
+          </div>
+          <div className="Main_box_visual2">
+            {loading ? (
+              <div>Loading...</div>
+            ) : (
+              <ul>
+                {posts.map((post) => (
+                  <li key={post.postId}>
+                    <div className="Main_Info" onClick={() =>
+                      navigate(`/PostAnnouncement/${post.postId}`,{
+                        state: {
+                          postId: post.postId,
+                          title: post.title,
+                          content: post.content,
+                          userName: post.userName,
+                          time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
+                          newTime: post.updateAt,
+                          userId: post.userId,
+                          fileName: post.filePath,
+                          boardId: 10,
+                        },
+                      })}>{post.title}</div>
+                  </li>
+
+                ))}
+              </ul>
+            
+            )}
+          </div>
         </div>
         {/*카테고리 이동 버튼 */}
         <div className="Main_box_tab">
@@ -97,7 +168,7 @@ function Main() {
                 type="button"
                 onClick={() => onMoveBox(firstElement)}
               >
-                💬 소통해요!
+                함께 소통해요!
               </button>
             </li>
             <li className="">
@@ -138,7 +209,7 @@ function Main() {
         {/*소통 카테고리 카드 */}
         <div className="Main_info_cate" id="Main_communication_card">
           <div className="Main_category_title" ref={firstElement}>
-            💬 소통해요!
+            함께 소통해요!
           </div>
           <ul className="Main__line">
             {/*질문과 답 게시판 카드 */}
@@ -164,7 +235,7 @@ function Main() {
               >
                 <div className="Main_card_content">
                   <div className="Main_card_title">자격증 정보</div>
-                  <div className="Main_card_info">자격증 정보</div>
+                  <div className="Main_card_info">자격증 마스터</div>
                   <div className="Main_card_icons">
                     <FcDiploma1 />
                   </div>
@@ -396,10 +467,10 @@ function Main() {
       </div>
 
       {/*스크롤 시 필요한 footer공간 */}
-      <div className="Main_last_div"></div>
+      <div className="Main_last_div">
+        소통하고, 성장하자
+      </div>
 
-      {/* 스크롤 시 필요한 footer 공간 */}
-      <div className="Main_last_div"></div>
 
       {/* CongratulationsModal 추가 */}
       <CongratulationsModal isOpen={isModalOpen} onClose={handleCloseModal} />

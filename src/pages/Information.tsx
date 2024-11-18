@@ -16,16 +16,16 @@ const Information: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               
               <div className="Information__userImage"><img></img></div>
               <div className="Information__user">
-                <div className="Information__userInfo">NAME: 사용자 이름</div>
-                <div className="Information__userInfo">학번:</div>
-                <div className="Information__userInfo">TIER: 사용자 티어</div>
-                <div className="Information__userInfo">LEVEL: 사용자 레벨</div>
-                <div className="Information__userInfo">성과금:</div> 
-                <div className="Information__userInfo">EMAIL:</div>
+                <div className="Information__userTL">
+                  <div>부장 Level.15</div>
+                </div>
+                <div className="Information__userName">이정이</div>
+                <div className="Information__userInfo"><b>학번</b> : 2020143043</div>
+                <div className="Information__userInfo"><b>성과금</b> : 10000 COIN</div> 
+                <div className="Information__userInfo"><b>EMAIL</b> : jeongyi0131@naver.com</div>
                 
               </div>
-              {/* <div className="Information__userInfo">이메일</div>
-              <div className="Information__userInfo"></div> */}
+              
             </div>
             
             <div className="Information__postbox">

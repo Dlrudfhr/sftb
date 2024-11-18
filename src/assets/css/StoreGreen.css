@@ -8,6 +8,11 @@
   height: 89vh; /* 전체 뷰포트 높이에 맞춤 */
 }
 
+.StoreGreen__background Header{
+  background-color: transparent;
+}
+
+
 .StoreGreen__section {
   width: 70%;
   margin: auto;
@@ -44,25 +49,27 @@
 }
 .Store__left{
   margin-top:100px;
-  width: 40.6%;
-  height: 710px;
-  left:0px;
+  width: 350px;
+  height: 800px;
+  left:200px;
   top:119px;
   /* background-color: blue; */
   position:fixed;
 }
 
 .Store__movebox{
-  margin-top:570px;
+  margin-top:650px;
   
 }
 /**/
 .Store__move {
-  width: 100px;
+  width: 110px;
   height: 100px;
   animation: motion 0.5s linear 0s infinite alternate; 
   margin-left:30px;
 }
+
+
 
 .StoreGreen__middle {
   margin-top: 100px;
@@ -77,10 +84,11 @@
 .Store__right{
   margin-top:100px;
   top:119px;
-  width: 30%;
+  width: 450px;
   height: 710px;
-  left:1329px;
+  left:1389px;
   position:fixed;
+  /* background-color: black; */
 }
 
 .StoreGreen__innerFrame {
@@ -269,7 +277,7 @@
 .StoreGreen__NextBtn, .StoreGreen__PrevBtn{
   z-index:9999;
   position:fixed;
-  margin-top:40vh;
+  top:500px;
   background: transparent;
   border: none;
   width: 90px;
@@ -278,11 +286,11 @@
 
 .StoreGreen__PrevBtn{
   position:fixed;
-  left:30vh;
+  left:350px;
 }
 .StoreGreen__NextBtn{
   position:fixed;
-  right:30vh;
+  left:1450px;
 }
 
 .StoreGreen__NextBtn:hover, .StoreGreen__PrevBtn:hover{

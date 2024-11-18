@@ -122,8 +122,8 @@ const MyBookmark = () => {
                           <div className="Certificate_writer">
                           </div>
                           <div className="Certificate_icons_right">
-                            <div className="Certificate_viewCount"><IoEyeSharp /> </div>
-                            <div className="Certificate_heart"><FaRegHeart /> </div>
+                            {/* <div className="Certificate_viewCount"><IoEyeSharp /> </div> */}
+                            {/* <div className="Certificate_heart"><FaRegHeart /> </div> */}
                           </div>
                         </div>
                       </div>

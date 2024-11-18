@@ -18,10 +18,11 @@
 
 /*게시글 댓글 작성박스*/
 .PostDetail_commWritebox{
-    display:flex;
+    display:grid;
     margin-bottom:15px;
     border-top:none;
     border: solid 0.667px lightgray;
+    grid-template-columns: 120px 700px 50px;
 }
 
 /**/
@@ -36,14 +37,17 @@
 
 /**/
 .PostDetail_commentbox{
-    border:solid 0.667px lightgray;
+    /* border:solid 0.667px lightgray; */
+    margin-top:10px;
     border-top:none;
     font-size:16px;
+    box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
 }
 
 /**/
 .PostDetail_comment{
     padding:15px 30px;
+    
 }
 
 /******************* 게시글 작성자, 제목, 내용, 좋아요, 스크랩 ********************/
@@ -169,11 +173,6 @@ img{
 }
 /********************************** 댓글 ******************************************/
 
-/**/
-
-
-.PostDetail_rereinnerbox{
-}
 
 /**/
 .PostDetail_writer{
@@ -215,41 +214,35 @@ img{
 .PostDetail_viewwrite{
     margin-left:auto;
 }
-/*댓글 좋아요 버튼*/
-.PostDetail_heart{
-
-}
-/*채택 버튼*/
-.PostDetail_adopt{
-    
-}
 
 
 /******************대댓글*******************/
 
 /*대댓글 출력 영역*/
 .PostDetail_recomment{
-    border:solid 0.667px lightgray;
+    /* border:solid 0.667px lightgray; */
     /* height: 200px; */
     padding: 15px 30px;
+    border-radius: 20px;
+    box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
 }
 /*게시글 대댓글*/
 .PostDetail_rerecomm{
     border-top: none;
-    background-color: #f4f4f4;
+    margin-top:10px;
     padding:0px 15px;
-    display: flex;
+    display: grid;
+    grid-template-columns: 120px 650px 50px;
+    
 }
-
 
 /*****************댓글 작성 영역*****************/
 
 /*게시글 댓글 작성 영역*/
 .PostDetail_commWrite{
-    /* width:100%; */
+    
     padding: 15px 30px;
     border:none; 
-    background-color: #f4f4f4;
 }
 /**/
 .PostDetail_commWrite:focus{

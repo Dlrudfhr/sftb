@@ -1,10 +1,13 @@
 @import url("Font.css");
 
+body{
+
+  background-color: #f6f6f6;
+}
+
 /*메인 전체 부분*/
 .Main_layout {
-  background-color: #f6f6f6;
-  /* font-family: "DungGeunMo"; */
-  overflow: hidden;
+  /* overflow: hidden; */
   margin: auto;
   width: 100%;
   margin-top: 100px;
@@ -20,101 +23,138 @@
 
 /*메인화면 배너(visual+button)*/
 .Main_layout .Main_banner {
+  width: 1280px;
+  margin:auto;
+}
+
+.Main_bannerBox{
+  display: flex;
 }
 
 /*메인 배너 글자 있는 부분*/
-.Main_box_visual {
-  height: 70%;
-  background-color: #004fa8;
-  font-size: 40px;
-  font-weight: bold;
-  padding: 40px;
-  color: #ffd700;
+.Main_box_visual, .Main_box_visual2 {
+  margin-top:100px;
+  margin-left: 20px; margin-right: 20px;
+  width:526px;
+  height: 200px;
+  border: solid 0.889px #e6e6e6;
+  border-radius:20px;
+  overflow: hidden;
+  position: relative;
+  padding: 9px 30px;
+}
+
+.Main_box_visual{
   font-family: "DungGeunMo";
+  background-color: black;
+  font-size: 40px;
+  color: #20DE07;
+  align-content: center;
+  /* padding: 40px; */
+  /* transition: all .3s ease-out; */
+}
+
+.Main_box_visual2{
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  color:#1A1A1A;
+  background-color: #fff;
+  font-family: "malgunbd";
+  font-size: 13px;
+  overflow-y: scroll;
+}
+
+.Main_Info{
+  width: 468px;
+  margin-bottom:5px;
+  padding: 17px 0 18px;
+  border-bottom: 1px solid #E6E6E6;
+  align-content: center;
 }
 
 /*********카테고리 이동 버튼**********/
 
 /*카테고리 이동 버튼*/
 .Main_button {
+  height: 48px;
+  line-height: 46px;
   cursor: pointer;
-  font-size: 14px;
-  color: #464646;
-  font-weight: bold;
+  color: #898989;
   background-color: rgba(255, 255, 192, 0.1);
   backdrop-filter: blur(10px);
-  letter-spacing: -0.6px;
-  padding: 10px 33px;
+  /* letter-spacing: -0.6px; */
+  padding: 0 25px;
+  box-sizing: border-box;
+
+  border: solid 0.667px #ABABAB;
   border-radius: 100px;
-  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
-  border: none;
-  /* transition: box-shadow 0.25s ease, transform 0.25s ease; */
+  
+  margin:15px 0 0 10px;
+  font-size: 13px;
+  font-family:"malgunbd";
+  /* box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08); */
 }
 
-/**/
-.Main_button:hover {
-  background-color: white;
+.Main_button:hover{
+  background: black;
+  color:white;
 }
 
 /************게시판 카드 스타일*************/
 
 /**/
 .Main_categoryLayout {
-  margin-left: 328.5px;
-  margin-right: 308.5px;
+  margin:auto;
   width: 1280px;
 }
 
 /*게시판 블럭들 스타일*/
 .Main_info_cate {
-  padding-top: 100px;
+  padding-top: 50px;
   height: 100%;
   justify-content: center;
   /* background-color: lightblue; */
 }
 
-/**/
+/*질문과 답 ...*/
 .Main_info_cate li {
   margin-bottom: 32px;
-  /* background-color: lightcoral; */
   margin: auto;
+  
 }
 
 /*게시판 카테고리 설명 ex)소통해요!*/
 .Main_category_title {
-  font-size: 32px;
+  font-size: 26px;
   padding-left: 30px;
   margin-bottom: 30px;
-  letter-spacing: -2px;
+  font-family: "SCDream7";
 }
+
 
 /**/
 .Main__line {
   /* background-color: #004fa8; */
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
   width: 90%;
 }
-@media (max-width: 968px) {
-  .Main__line {
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 600px;
-    margin-left: 100px;
-  }
-}
+
+
+
 
 /*게시판 블럭 스타일*/
 .Main_card {
-  width: 220px;
-  height: 220px;
+  width: 240px;
+  height: 180px;
   cursor: pointer;
-  margin-right: 20px;
+  margin-right: 10px;
   align-content: center; /*카드 안에 콘텐츠 세로 중앙 정렬*/
   box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
   -webkit-transition: 0.5s ease-in-out;
   transition: 0.5s ease-in-out;
   border-radius: 5%;
+  padding:10px;
 }
 
 /**/
@@ -126,10 +166,9 @@
 /*게시판 안에 제목, 설명, 아이콘 포함 스타일*/
 .Main_card_content {
   margin: auto; /* 카드 안에 콘텐츠 가로 중앙 정렬*/
-  height: 80%;
   width: 80%;
-  /* -webkit-transform: scale(1);
-  transform: scale(1); */
+  /* height: 160px; */
+  /* background-color: #004fa8; */
 }
 
 /*게시판 카드 제목*/
@@ -137,7 +176,8 @@
   font-size: 20px;
   font-weight: bold;
   letter-spacing: -0.5px;
-  padding-bottom: 20px;
+  margin:15px 0 10px 0;
+  /* padding-bottom: 20px; */
   /*position: relative;*/
 }
 
@@ -145,7 +185,8 @@
 .Main_card_info {
   font-size: 14px;
   color: grey;
-  padding-bottom: 100px;
+  /* padding-bottom: 100px; */
+  margin-bottom:80px;
 }
 
 /*게시판 카드에 들어가는 아이콘 스타일*/
@@ -166,36 +207,31 @@
   border-radius: 5%;
 }
 
-.Main_content .Main_info_cate li {
-  /* margin-right: 30px;
-  border-radius: 12px;
-  background: white;
-  box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08);
-  transition: box-shadow 0.25s ease, transform 0.25s ease; */
-}
-
-.body {
-  /* font-family: notosans, Malgun Gothic, 맑은 고딕, sans-serif;
-  background-color: #f6f6f6;
-  min-width: 1280px;
-  min-height: 600px;
-  max-width: 1024px; */
-}
-
 /*페이지 밑 부분 연장으로 footer로 가려지는 부분 해결*/
 .Main_last_div {
-  height: 500px;
+  height: 115px;
+  background-color: #e6f2fe;
+  padding: 90px 0;
+  text-align: center;
+  margin: 120px 0 100px 0;
+  font-family:  sans-serif;
 }
 
 /******상단으로 돌아가는 버튼 스타일******/
 .Main_high button {
   position: fixed; /*요소 페이지에서 고정*/
   right: 0; /*오른쪽 배치*/
+  margin-right:10px;
   bottom: 80px; /*하단에서 부터 80px 떨어진 곳에 위치*/
   z-index: 1000; /*다른 요소위에 노출*/
   color: black;
   width: 50px;
   height: 50px;
-  background-color: lightgray;
+  background-color: white;
+  box-shadow:0 1px 3px rgba(0, 0, 0, 0.16);
   border: none;
+}
+
+.Main_high button:hover{
+  background-color: transparent;
 }
