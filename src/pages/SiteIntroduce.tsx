@@ -4,17 +4,84 @@ import Footer from "./Footer";
 import IntroImg from "../assets/images/Intro.png";
 import TierUp from "../assets/images/TierUp.png";
 import "../assets/css/SiteIntroduce.css";
+import left from "../assets/images/상점사진/left.png";
+import right from "../assets/images/상점사진/right.png";
+import topMenu_homepage from "../assets/images/사이트 소개/상단메뉴_홈페이지.png";
+import topMenu_Ranking1 from "../assets/images/사이트 소개/상단메뉴_랭킹(1).png";
+import topMenu_Ranking2 from "../assets/images/사이트 소개/상단메뉴_랭킹(2).png";
+import topMenu_announcement from "../assets/images/사이트 소개/상단메뉴_공지사항.png";
+import topMenu_inquiry from "../assets/images/사이트 소개/상단메뉴_문의.png";
+import middleMenu_level from "../assets/images/사이트 소개/게시판소개_레벨.png";
+import middleMenu_tier from "../assets/images/사이트 소개/게시판소개_티어.png";
+import middleMenu_warning from "../assets/images/사이트 소개/게시판소개_주의사항.png";
+import bottomMenu_intro1 from "../assets/images/사이트 소개/하단메뉴소개(1).png";
+import bottomMenu_intro2 from "../assets/images/사이트 소개/하단메뉴소개(2).png";
+
+const topMenuImages = [
+  topMenu_homepage,
+  topMenu_Ranking1,
+  topMenu_Ranking2,
+  topMenu_announcement,
+  topMenu_inquiry,
+];
+
+const middleMenuImages = [
+  middleMenu_level,
+  middleMenu_tier,
+  middleMenu_warning,
+];
+
+const bottomMenuImages = [bottomMenu_intro1, bottomMenu_intro2];
+
 const SiteIntroduce = () => {
+  const [currentTopIndex, setCurrentTopIndex] = useState(0); // 상단 메뉴 이미지 인덱스
+  const [currentMiddleIndex, setCurrentMiddleIndex] = useState(0); // 중간 메뉴 이미지 인덱스
+  const [currentBottomIndex, setCurrentBottomIndex] = useState(0); // 하단 메뉴 이미지 인덱스
   const firstElement = useRef<null | HTMLDivElement>(null); //스크롤 될 첫번째 위치요소
   const secondElement = useRef<null | HTMLDivElement>(null); //스크롤 될 두번째 위치요소
   const thirdElement = useRef<null | HTMLDivElement>(null); //스크롤 될 세번째 위치요소
-  const fourthElement = useRef<null | HTMLDivElement>(null); //스크롤 될 네번째 위치요소
+  const handleTopButtonClick = () => {
+    setCurrentTopIndex((prevIndex) => (prevIndex + 1) % topMenuImages.length);
+  };
+
+  const handleTopButtonPrevClick = () => {
+    setCurrentTopIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + topMenuImages.length) % topMenuImages.length
+    );
+  };
+
+  const handleMiddleButtonClick = () => {
+    setCurrentMiddleIndex(
+      (prevIndex) => (prevIndex + 1) % middleMenuImages.length
+    );
+  };
+
+  const handleMiddleButtonPrevClick = () => {
+    setCurrentMiddleIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + middleMenuImages.length) % middleMenuImages.length
+    );
+  };
+
+  const handleBottomButtonClick = () => {
+    setCurrentBottomIndex(
+      (prevIndex) => (prevIndex + 1) % bottomMenuImages.length
+    );
+  };
+
+  const handleBottomButtonPrevClick = () => {
+    setCurrentBottomIndex(
+      (prevIndex) =>
+        (prevIndex - 1 + bottomMenuImages.length) % bottomMenuImages.length
+    );
+  };
 
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
     if (ref.current) {
       const elementTop =
         ref.current.getBoundingClientRect().top + window.scrollY;
-      window.scrollTo({ top: elementTop - 120, behavior: "smooth" });
+      window.scrollTo({ top: elementTop - 185, behavior: "smooth" });
     }
   };
 
@@ -36,12 +103,32 @@ const SiteIntroduce = () => {
           </div>
         </div>
         <ul className="SiteIntroduce__boxes">
-          <li className="SiteIntroduce__box">상단 메뉴 소개로 이동</li>
-          <li className="SiteIntroduce__box">게시판 소개로 이동</li>
-          <li className="SiteIntroduce__box">하단 메뉴 소개로 이동</li>
+          <li className="SiteIntroduce__box">
+            <span
+              title="상단 메뉴 소개로 이동"
+              onClick={() => onMoveBox(firstElement)}
+            >
+              상단 메뉴 소개로 이동
+            </span>
+          </li>
+          <li className="SiteIntroduce__box">
+            <span
+              title="게시판 소개로 이동"
+              onClick={() => onMoveBox(secondElement)}
+            >
+              게시판 소개로 이동
+            </span>
+          </li>
+          <li className="SiteIntroduce__box">
+            <span
+              title="하단 메뉴 소개로 이동"
+              onClick={() => onMoveBox(thirdElement)}
+            >
+              하단 메뉴 소개로 이동
+            </span>
+          </li>
         </ul>
         <div className="SiteIntroduce__IntroLevelTierContainer">
-          {" "}
           <div className="SiteIntroduce__IntroLevelTier">
             레벨 및 경험치 시스템 소개
           </div>
@@ -55,11 +142,16 @@ const SiteIntroduce = () => {
           <div className="SiteIntroduce__Intro">티어를 상승시키는 방법 </div>
           <div className="SiteIntroduce__Intro">
             1. 멘토멘티, 프로젝트 개발, 코딩문제 게시판 활동에서 경험치를 획득할
-            수 있습니다. 위와 같은 활동은 관리자의 인증을 받게 될 경우
-            최종적으로 경험치를 획득하게 됩니다.
+            수 있습니다. 관리자의 채택을 받게 될 경우 최종적으로 경험치를
+            획득하게 됩니다.
           </div>
           <div className="SiteIntroduce__Intro">
-            2. 특정 게시글에 작성한 댓글이 관리자가 아닌 다른 사용자에게
+            2. 코딩문제 게시판의 경우 관리자만 게시글을 작성하게 되고 문제를 잘
+            푼 회원들에게 채택을 남기게 되면 해당 회원은 티어 경험치를 획득하게
+            됩니다.
+          </div>
+          <div className="SiteIntroduce__Intro">
+            3. 특정 게시글에 작성한 댓글이 관리자가 아닌 다른 사용자에게
             채택되는 경우에 경험치를 획득합니다.
           </div>
           <div className="SiteIntroduce__Intro"></div>
@@ -70,9 +162,67 @@ const SiteIntroduce = () => {
             </div>
           </div>
         </div>
-        <div className="SiteIntroduce__imageContainer">
-          <img className="SiteIntroduce__img" src={IntroImg} />
+
+        <div className="SiteIntroduce__imageContainer" ref={firstElement}>
+          <button
+            className="SiteIntroduce__leftbutton"
+            onClick={handleTopButtonPrevClick}
+          >
+            <img src={left}></img>
+          </button>
+          <img
+            className="SiteIntroduce__img"
+            src={topMenuImages[currentTopIndex]}
+          />
+          <button
+            className="SiteIntroduce__rigthbutton"
+            onClick={handleTopButtonClick}
+          >
+            <img src={right}></img>
+          </button>
         </div>
+        <div className="SiteIntroduce__imageContainer" ref={secondElement}>
+          <button
+            className="SiteIntroduce__leftbutton"
+            onClick={handleMiddleButtonPrevClick}
+          >
+            <img src={left}></img>
+          </button>
+          <img
+            className="SiteIntroduce__img"
+            src={middleMenuImages[currentMiddleIndex]}
+          />
+          <button
+            className="SiteIntroduce__rigthbutton"
+            onClick={handleMiddleButtonClick}
+          >
+            <img src={right}></img>
+          </button>
+        </div>
+        <div className="SiteIntroduce__imageContainer" ref={thirdElement}>
+          <button
+            className="SiteIntroduce__leftbutton"
+            onClick={handleBottomButtonPrevClick}
+          >
+            <img src={left}></img>
+          </button>
+          <img
+            className="SiteIntroduce__img"
+            src={bottomMenuImages[currentBottomIndex]}
+          />
+          <button
+            className="SiteIntroduce__rigthbutton"
+            onClick={handleBottomButtonClick}
+          >
+            <img src={right}></img>
+          </button>
+        </div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
       </div>
     </div>
   );

@@ -8,15 +8,15 @@
 .SiteIntroduce__intros {
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
+  margin-top: 150px;
   align-items: center; /* 수평 중앙 정렬 */
   text-align: center;
   font-size: 25px;
 }
 
 .SiteIntroduce__firstIntro {
-  margin: 20px 0px 10px 20px;
-  font-size: 30px;
+  margin: 0px 0px 20px 20px;
+  font-size: 40px;
 }
 
 .SiteIntroduce__Intro {
@@ -38,6 +38,7 @@
   display: flex; /* Flexbox를 사용하여 중앙 정렬 */
   justify-content: center; /* 수평 중앙 정렬 */
   width: 100%; /* 부모 요소의 너비를 100%로 설정 */
+  margin-top: 200px;
 }
 .SiteIntroduce__IntroLevelTier {
   text-align: center;
@@ -64,4 +65,33 @@
   text-align: center; /* 텍스트 중앙 정렬 */
   border-radius: 1.25rem;
   font-size: 20px;
+}
+
+.SiteIntroduce__leftbutton,
+.SiteIntroduce__rigthbutton {
+  background: none; /* 배경 제거 */
+  border: none; /* 테두리 제거 */
+  padding: 0; /* 패딩 제거 */
+  height: 60px;
+  margin: 290px 20px;
+  -webkit-transition: 0.3s ease-in-out;
+  transition: 0.3s ease-in-out;
+}
+
+.SiteIntroduce__leftbutton img,
+.SiteIntroduce__rigthbutton img {
+  width: 30px; /* 이미지 크기 조정 */
+  height: auto; /* 비율 유지 */
+}
+
+.SiteIntroduce__leftbutton:hover,
+.SiteIntroduce__rigthbutton:hover {
+  background: none; /* 배경색 제거 */
+  outline: none; /* 아웃라인 제거 */
+  -webkit-transform: scale(1.2);
+  transform: scale(1.2);
+}
+
+.SiteIntroduce__topMenu {
+  bottom: 30px;
 }
