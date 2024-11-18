@@ -23,22 +23,26 @@
   margin-bottom:80px;
   background-color: white;
   display:grid;
-  grid-template-columns: 300px 400px;
+  grid-template-columns: 300px 550px;
   box-shadow:0px 6px 15px rgba(36, 37, 38, 0.12);
   /* font-family: SCDream7; */
 }
 
 .Information__userImage{
-  margin-right:20px;
   align-content: center;
   padding:30px;
-  
+  margin:auto;
+}
+
+.Information__tierImage{
+  width: 200px;
+  height: 200px;
 }
 
 .Information__user{
   border-left:solid 0.667px #ABABAB;
   padding:40px;
-  
+  /* background-color: aqua; */
 }
 
 .Information__userInfo, .Information__userName{
@@ -61,6 +65,10 @@
 
 .Information__userInfo, .Information__userTL {
   font-family: "SCDream3";
+}
+
+.Information__logo{
+  float: right;
 }
 
 .Information__postbox{
