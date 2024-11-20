@@ -149,6 +149,7 @@ const Certificate = () => {
           </div>
         </div>
 
+        {/* 게시판 줄 */}
         <div className="Certificate_postline">
           {loading ? (
             <div>Loading...</div>
