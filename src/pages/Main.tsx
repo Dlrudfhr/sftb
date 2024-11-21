@@ -43,7 +43,7 @@ function Main() {
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
 
 
-  const text: string ="Hello, World!\nWe're potential person";
+  const text: string ="Heello, World!\nAming for the top!";
     //\nWe're in\n the Department of\n Information & Communication
   const [displayedText, setDisplayedText] = useState<string>("");
   const typingSpeed: number = 50; // 타이핑 속도 (밀리초)
