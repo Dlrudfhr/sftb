@@ -1,4 +1,53 @@
+@import url('./Font.css');
+
 .Inquiry__container {
+  margin-top:100px;
   background-image: url(../images/Inquiry.png);
   height: 930px;
+}
+
+.Inquiry__innerbox{
+  height: 930px;
+  /* background-color: aqua; */
+}
+
+.Inquiry__phoneNum{
+  font-family: "malgunbd";
+  font-size:20px;
+}
+
+.Num1{
+  position:fixed;
+  top:325px;
+  left:1070px;
+}
+
+.Num2{
+  position: fixed;
+  left:400px;
+  top:890px;
+}
+
+.Num3{
+  position: fixed;
+  left:845px;
+  top:890px;
+}
+
+.Num4{
+  position: fixed;
+  left:1290px;
+  top:890px;
+}
+
+.Num5{
+  position: fixed;
+  left:1290px;
+  top:460px;
+}
+
+.Num6{
+  position: fixed;
+  left:1290px;
+  top:600px;
 }
