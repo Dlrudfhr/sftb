@@ -206,7 +206,7 @@
 .Certificate_card_innerbox .Certificate_card_icons {
   font-size: 12px;
   display: grid;
-  grid-template-columns: 65px 1fr 70px 60px;
+  grid-template-columns: 65px 1fr 50px 40px;
   align-items: flex-end; /* 요소를 하단 정렬 */
   height: 30px;
 }
@@ -222,27 +222,12 @@
   margin-right:8px;
 }
 
+
 /**/
-.Certificate_icons_right{
-  /* width:40%; */
-  display: flex;
+.Certificate_heart, .Certificate_viewCount{
   margin:auto;
-  /* background-color: lightblue; */
 }
 
-/**/
-.Certificate_heart{
-  float : right;
-  margin-left:8px;
-  min-width: 30px;
-}
-
-/**/
-.Certificate_viewCount{
-  float : right;
-  margin-left:8px;
-  min-width: 35px;
-}
 
 
 /*맨위로 button*/

@@ -29,23 +29,25 @@ const QnA = () => {
   const typingSpeed: number = 170; // 타이핑 속도
   const text = "질 문과 답 게시판"; // 타이핑할 텍스트
   const navigate = useNavigate();
+  const indexRef = useRef<number>(0);
 
   
   // 타이핑 효과 처리
   useEffect(() => {
-    let index = 0;
     const type = () => {
-      if (index < text.length) {
-        setDisplayedTitle((prev) => prev + text.charAt(index)); // 한 글자씩 추가
-        index++;
+      if (indexRef.current < text.length) {
+        setDisplayedTitle((prev) => prev + text.charAt(indexRef.current)); // 한 글자씩 추가
+        indexRef.current++;
         setTimeout(type, typingSpeed); // 일정 시간마다 타이핑
       }
     };
+    setDisplayedTitle(""); // 초기화
+    indexRef.current = -1;
     type(); // 타이핑 시작
 
     // Cleanup 함수로 메모리 누수 방지
     return () => {
-      index = text.length; // 타이핑 완료 후 인덱스 종료
+      indexRef.current = text.length; // 타이핑 완료 후 인덱스 종료
     };
   }, [text]);
 
@@ -193,13 +195,12 @@ const QnA = () => {
                         <div className="Certificate_writer">
                           {post.userName}
                         </div>
-                        <div className="Certificate_icons_right">
-                          <div className="Certificate_viewCount">
-                            <IoEyeSharp /> {post.viewCount}
-                          </div>
-                          <div className="Certificate_heart">
-                            <FaRegHeart /> {post.heart}
-                          </div>
+                        <div></div>
+                        <div className="Certificate_viewCount">
+                          <IoEyeSharp /> {post.viewCount}
+                        </div>
+                        <div className="Certificate_heart">
+                          <FaRegHeart /> {post.heart}
                         </div>
                       </div>
                     </div>
