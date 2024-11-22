@@ -53,7 +53,6 @@ const SignUpPage: React.FC = () => {
       } else {
         setAlertMessage("회원가입 실패: 서버 오류"); // 서버 오류 처리
       }
-      setIsModalOpen(true); // 에러 발생 시에도 모달 열기
     }
   };
 
