@@ -249,7 +249,11 @@ function PostWrite() {
           />
           <br />
 
-          <input type="file" accept="image/*,video/*" onChange={handleFileChange} />
+          <input
+            type="file"
+            accept="image/*,video/*"
+            onChange={handleFileChange}
+          />
           {/* 파일 미리보기와 삭제 버튼 */}
           {filePath && (
             <div className="file-preview">
@@ -266,14 +270,12 @@ function PostWrite() {
               {errorMessage}
             </div>
           )}
-          <div className="PostWrite_btns">
-            <button className="PostWrite_golist" onClick={handleGoToList}>
-              목록
-            </button>
-            <button className="post_button" type="submit">
-              {state && state.postId ? "수정하기" : "작성하기"}
-            </button>
-          </div>
+          <button className="PostWrite_golist" onClick={handleGoToList}>
+            목록
+          </button>
+          <button className="post_button" type="submit">
+            {state && state.postId ? "수정하기" : "작성하기"}
+          </button>
         </form>
       </div>
     </>
