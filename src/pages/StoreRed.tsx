@@ -99,8 +99,8 @@ const StoreRed: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               </div>
           </div>
         </div>
-        <button className="StoreRed__PrevBtn" onClick={goToPrevStore}><img src={left}></img></button>
-        <button className="StoreRed__NextBtn" onClick={goToNextStore}><img src={right}></img></button>
+        <button className="StoreRed__PrevBtn" onClick={goToPrevStore}><img src={left} className="StoreGreen__leftBtn"></img></button>
+        <button className="StoreRed__NextBtn" onClick={goToNextStore}><img src={right} className="StoreGreen__rightBtn"></img></button>
         <div className="StoreRed__middle">
           <div className="StoreRed__innerFrame">
             <div className="StoreRed__productLine1">

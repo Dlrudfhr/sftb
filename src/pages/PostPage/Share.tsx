@@ -1,47 +1,60 @@
-import React, { useEffect, useState, useRef } from "react"; /* 바로가기 참조 */
-import { Routes, Route, Link, useNavigate } from "react-router-dom";
-import Header from "../Header"; /* Header 참조 */
-import Footer from "../Footer"; /* footer 참조 */
-import "../../assets/css/Coding.css";
-import { FaRegStar, FaSearch, FaRegBookmark, FaBookmark } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Header from "../Header";
+import Footer from "../Footer";
+import "../../assets/css/PostPage/Certificate.css";
 import { FaRegHeart } from "react-icons/fa6";
-import axios from "axios";
-import { CiCircleRemove } from "react-icons/ci";
 import { IoEyeSharp } from "react-icons/io5";
+import axios from "axios";
 
 // 게시물 타입 정의
 interface Post {
-  postId: number; // 게시물 ID
-  title: string; // 제목
-  userName: string; // 사용자명
-  content: string; // 내용
-  createAt: string; // 생성 시간 (ISO 8601 형식)
+  postId: number;
+  title: string;
+  userName: string;
+  content: string;
+  createAt: string;
   updateAt: string;
   userId: string;
   filePath: string;
-  viewCount : number;
-  heart : number;
+  viewCount: number;
+  heart: number;
 }
 
 const Share = () => {
-  const highElement = useRef<null | HTMLDivElement>(null); // 상단으로 돌아가기 버튼
   const [posts, setPosts] = useState<Post[]>([]); // 게시물 목록 상태
   const [loading, setLoading] = useState(true); // 로딩 상태
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
   const [searchKey, setSearchKey] = useState("제목"); // 검색 기준 상태
-  const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
+  const [displayedTitle, setDisplayedTitle] = useState<string>(""); // 타이핑 애니메이션용 상태
+  const typingSpeed: number = 170; // 타이핑 속도
+  const text = "과 목별 정보 공유 게시판"; // 타이핑할 텍스트
+  const navigate = useNavigate();
 
-  const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
-    window.scrollTo({ behavior: "smooth", top:0 });
-  };
+  // 타이핑 효과 처리
+  useEffect(() => {
+    let index = 0;
+    const type = () => {
+      if (index < text.length) {
+        setDisplayedTitle((prev) => prev + text.charAt(index)); // 한 글자씩 추가
+        index++;
+        setTimeout(type, typingSpeed); // 일정 시간마다 타이핑
+      }
+    };
+    type(); // 타이핑 시작
 
-  // 백엔드에서 게시물 데이터 가져오기
+    // Cleanup 함수로 메모리 누수 방지
+    return () => {
+      index = text.length; // 타이핑 완료 후 인덱스 종료
+    };
+  }, [text]);
+
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         // Board_ID가 2인 게시물만 가져오기
         const response = await axios.get("http://localhost:8080/api/posts", {
-          params: { boardId: 3 }, // 여기서 Board_ID를 쿼리 파라미터로 전달
+          params: { boardId: 3 },
         });
         setPosts(response.data); // 게시물 데이터 상태에 저장
         setLoading(false); // 로딩 완료
@@ -54,34 +67,29 @@ const Share = () => {
   }, []);
 
   // 글자수 제한
-  interface PostProps {
-    content: string;
-  }
-
-  // 게시글 내용 글자수 제한 컴포넌트
-  const Post: React.FC<PostProps> = ({ content }) => {
+  const Post: React.FC<{ content: string }> = ({ content }) => {
     const truncatedContent =
       content.length > 33 ? content.substring(0, 33) + "..." : content;
     return <p>{truncatedContent}</p>;
   };
 
   // 게시글 제목 글자수 제한 컴포넌트
-  const PostTitle: React.FC<PostProps> = ({ content }) => {
+  const PostTitle: React.FC<{ content: string }> = ({ content }) => {
     const truncatedContent =
       content.length > 11 ? content.substring(0, 11) + "..." : content;
     return <p>{truncatedContent}</p>;
   };
 
-  //검색어와 게시글 비교할때 띄워쓰기 제거
+  // 검색어와 게시글 비교할 때 띄워쓰기 제거
   const removeSpaces = (str: string) => {
-    return str.replace(/\s+/g, ""); // 모든 공백 제거
+    return str.replace(/\s+/g, "");
   };
 
   const filteredPosts = posts.filter((post) => {
-    const lowerCaseSearchTerm = removeSpaces(searchTerm.toLowerCase()); // 검색어에서 띄어쓰기 제거, 소문자로 변환
-    const lowerCaseTitle = removeSpaces(post.title.toLowerCase()); // 게시물 제목에서 띄어쓰기 제거, 소문자로 변환
-    const lowerCaseContent = removeSpaces(post.content.toLowerCase()); // 게시물 내용에서 띄어쓰기 제거, 소문자로 변환
-    const lowerCaseUserName = removeSpaces(post.userName.toLowerCase()); // 작성자 이름에서 띄어쓰기 제거, 소문자로 변환
+    const lowerCaseSearchTerm = removeSpaces(searchTerm.toLowerCase());
+    const lowerCaseTitle = removeSpaces(post.title.toLowerCase());
+    const lowerCaseContent = removeSpaces(post.content.toLowerCase());
+    const lowerCaseUserName = removeSpaces(post.userName.toLowerCase());
     if (searchKey === "제목") {
       return lowerCaseTitle.includes(lowerCaseSearchTerm);
     } else if (searchKey === "내용") {
@@ -89,23 +97,25 @@ const Share = () => {
     } else if (searchKey === "등록자명") {
       return lowerCaseUserName.includes(lowerCaseSearchTerm);
     }
-    return true; // 기본적으로 모든 게시물을 반환
+    return true;
   });
+
   return (
     <>
       <Header />
 
       <div className="post_layout">
-        <h1 className="post_title">과목별 정보공유 게시판</h1>
+        {/* 타이핑 애니메이션 제목 */}
+        <h1 className="Main_box_visual_QnA">{displayedTitle}</h1>
 
-        {/* 위로이동 버튼 */}
+        {/* 위로 이동 버튼 */}
         <div className="Certificate_high">
-          <button type="button" onClick={() => onMoveBox(highElement)}>
+          <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
             top
           </button>
         </div>
 
-        {/*검색창 */}
+        {/* 검색창 */}
         <div className="Certificate_Search">
           <div className="Certificate_Search_form">
             <div className="Certificate_filter">
@@ -136,12 +146,11 @@ const Share = () => {
         <div className="Certificate_Number">
           <div className="Certificate_postNumber">
             <span>
-              총 게시물 <strong>{filteredPosts.length}</strong>{" "}
-              {/* 필터링된 게시물 수 */}
+              총 게시물 <strong>{filteredPosts.length}</strong>
             </span>
           </div>
 
-          {/*게시글 작성 페이지로 이동 */}
+          {/* 게시글 작성 페이지로 이동 */}
           <div className="Coding_write">
             <Link to="/PostWrite" state={{ boardId: 3 }}>
               <button type="submit" className="Coding_toWrite">
@@ -167,10 +176,10 @@ const Share = () => {
                           title: post.title,
                           content: post.content,
                           userName: post.userName,
-                          time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
+                          time: post.createAt,
                           newTime: post.updateAt,
                           userId: post.userId,
-                          fileName :post.filePath,
+                          fileName: post.filePath,
                           boardId: 3,
                         },
                       })
@@ -192,9 +201,6 @@ const Share = () => {
                         <div className="Certificate_icons_right">
                           <div className="Certificate_viewCount"><IoEyeSharp /> {post.viewCount}</div>
                           <div className="Certificate_heart"><FaRegHeart /> {post.heart}</div>
-                          {/* <div className="Certificate_scrap">
-                            <FaRegBookmark />
-                          </div> */}
                         </div>
                       </div>
                     </div>
@@ -210,4 +216,5 @@ const Share = () => {
     </>
   );
 };
+
 export default Share;

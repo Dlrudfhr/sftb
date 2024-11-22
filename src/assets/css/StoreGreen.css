@@ -288,6 +288,9 @@
   position:fixed;
   left:350px;
 }
+.StoreGreen__leftBtn, .StoreGreen__rightBtn{
+  width: 100px;
+}
 .StoreGreen__NextBtn{
   position:fixed;
   left:1450px;

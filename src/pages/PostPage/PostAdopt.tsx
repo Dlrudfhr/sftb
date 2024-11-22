@@ -705,7 +705,7 @@ const handleDeletePost = async () => {
                   {state.userId === getCurrentUserId() && ( // 현재 사용자 ID와 작성자 ID 비교
                     <>
                       {showDropdown && (
-                        <ul className="PostDetail_dropdown">
+                        <ul className="PostDetail__dropdown">
                           {/* 수정하기 버튼 추가 */}
 
                           <li
@@ -798,7 +798,7 @@ const handleDeletePost = async () => {
                     {comment.userId === getCurrentUserId() && ( // 사용자 ID로 비교
                       <>
                         {visibleCommentDropdown[comment.commentId]  && (
-                          <ul className="PostDetail_comdropdown">
+                          <ul className="PostDetail__comdropdown">
                             {/* 수정하기 버튼 추가 */}
                             <li
                               className="PostDetail_editButton"
@@ -827,99 +827,100 @@ const handleDeletePost = async () => {
                 >
                   {comment.content}
                 </div>
+                {/*대댓글 출력 영역*/}
+                {comment.replies &&
+                  comment.replies.map((reply) => (
+                    <div className="PostDetail__recommentBox" key={reply.commentId}>
+                      <div className="PostDetail_recommWrittenLine">
+                        <div className="PostDetail_recommProImage">
+                          {" "}
+                          <img src={getTierImage(reply.authorTier)} alt={`${reply.memberId}`} />
+                        </div>
+                        <div className="PostDeatil__recommMiddle">  
+                          <div className="PostDetail_recommwrittenName">
+                            {reply.memberId}
+                          </div>
+                          <div className="PostDetail__recommTime">
+                            {formatDate(reply.updatedAt || reply.createdAt)}
+                          </div>
+                        </div>
+                        <div></div>
+                        <div></div>
+                        <div onClick={() => toggleCommentDropdown(reply.commentId)}>
+                          <FiMoreHorizontal />
+                        </div>
+                        {reply.userId === getCurrentUserId() && (
+                          <>
+                            {visibleCommentDropdown[reply.commentId] && (
+                              <ul className="PostDetail__recomdropdown">
+                                <li
+                                  className="PostDetail_editButton"
+                                  onClick={() => handleEditReply(reply.commentId)}
+                                >
+                                  수정
+                                </li>
+                                <li
+                                  onClick={() => handleDeleteReply(reply.commentId)}
+                                >
+                                  삭제
+                                </li>
+                              </ul>
+                            )}
+                          </>
+                        )}
+                      </div>
+                      <div
+                        className={`PostDetail_content PostDetail_comm_cont ${
+                          reply ? "adopted" : ""
+                        }`}
+                      >
+                        {reply.content}
+                      </div>
+                      
+                    </div>
+                  ))}
+
+                {/*대댓글 숨기기/보여지기 */}
+                {isReplyVisible[comment.commentId] && (
+                  <div className="reply">
+                    {/* 대댓글 작성 영역 */}
+                    <div className="PostDetail__recommWriteBox">
+                      <div></div>
+                      <div className="PostDetail__recommWriteInnerBox">
+                        <div className="PostDetail__recommProfileLine">
+                          <div className="PostDetail__commproImage">
+                            <img src={getTierImage(UserTier)} alt={`${UserTier}`} />
+                          </div>
+                          {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
+                          <div className="PostDetail__commWriter">
+                            {localStorage.getItem("userName") || "작성자"}
+                          </div>
+                          <input
+                            className="PostDetail__commWriteInput"
+                            placeholder="대댓글을 입력하세요."
+                            value={replyInput[comment.commentId] || ""}
+                            onChange={(e) =>
+                              setReplyInput({
+                                ...replyInput,
+                                [comment.commentId]: e.target.value,
+                              })
+                            }
+                          />
+                          <button className="PostDetail__commSubmitBtn"
+                              onClick={(e) => handleReplySubmit(e, comment.commentId)}
+                            >
+                              <FaPaperPlane />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
               
 
-              {/*대댓글 출력 영역*/}
-              {comment.replies &&
-                comment.replies.map((reply) => (
-                  <div className="PostDetail__recommentBox" key={reply.commentId}>
-                    <div className="PostDetail_recommWrittenLine">
-                      <div className="PostDetail_recommProImage">
-                        {" "}
-                        <img src={getTierImage(reply.authorTier)} alt={`${reply.memberId}`} />
-                      </div>
-                      <div className="PostDeatil__recommMiddle">  
-                        <div className="PostDetail_recommwrittenName">
-                          {reply.memberId}
-                        </div>
-                        <div className="PostDetail__recommTime">
-                          {formatDate(reply.updatedAt || reply.createdAt)}
-                        </div>
-                      </div>
-                      <div></div>
-                      <div></div>
-                      <div onClick={() => toggleCommentDropdown(reply.commentId)}>
-                        <FiMoreHorizontal />
-                      </div>
-                      {reply.userId === getCurrentUserId() && (
-                        <>
-                          {visibleCommentDropdown[reply.commentId] && (
-                            <ul className="PostDetail_comdropdown">
-                              <li
-                                className="PostDetail_editButton"
-                                onClick={() => handleEditReply(reply.commentId)}
-                              >
-                                수정
-                              </li>
-                              <li
-                                onClick={() => handleDeleteReply(reply.commentId)}
-                              >
-                                삭제
-                              </li>
-                            </ul>
-                          )}
-                        </>
-                      )}
-                    </div>
-                    <div
-                      className={`PostDetail_content PostDetail_comm_cont ${
-                        reply ? "adopted" : ""
-                      }`}
-                    >
-                      {reply.content}
-                    </div>
-                    
-                  </div>
-                ))}
-
-              {/*대댓글 숨기기/보여지기 */}
-              {isReplyVisible[comment.commentId] && (
-                <div className="reply">
-                  {/* 대댓글 작성 영역 */}
-                  <div className="PostDetail__recommWriteBox">
-                    <div></div>
-                    <div className="PostDetail__recommWriteInnerBox">
-                      <div className="PostDetail__recommProfileLine">
-                        <div className="PostDetail__commproImage">
-                          <img src={getTierImage(UserTier)} alt={`${UserTier}`} />
-                        </div>
-                        {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
-                        <div className="PostDetail__commWriter">
-                          {localStorage.getItem("userName") || "작성자"}
-                        </div>
-                        <input
-                          className="PostDetail__commWriteInput"
-                          placeholder="대댓글을 입력하세요."
-                          value={replyInput[comment.commentId] || ""}
-                          onChange={(e) =>
-                            setReplyInput({
-                              ...replyInput,
-                              [comment.commentId]: e.target.value,
-                            })
-                          }
-                        />
-                        <button className="PostDetail__commSubmitBtn"
-                            onClick={(e) => handleReplySubmit(e, comment.commentId)}
-                          >
-                            <FaPaperPlane />
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              )}
+              
             </div>
           ))}
         </div>

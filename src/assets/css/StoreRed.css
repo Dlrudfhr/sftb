@@ -238,6 +238,9 @@
   position:fixed;
   left:1450px;
 }
+.StoreGreen__leftBtn, .StoreGreen__rightBtn{
+  width: 100px;
+}
 
 .StoreRed__NextBtn:hover, .StoreRed__PrevBtn:hover{
   background-color: transparent;
