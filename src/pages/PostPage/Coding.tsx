@@ -31,10 +31,30 @@ const Coding = () => {
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
   const [searchKey, setSearchKey] = useState("제목"); // 검색 기준 상태
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
-
+  const [displayedTitle, setDisplayedTitle] = useState<string>(""); // 타이핑 애니메이션용 상태
+  const typingSpeed: number = 170; // 타이핑 속도
+  const text = "코 딩 문제 게시판"; // 타이핑할 텍스트
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
     window.scrollTo({ behavior: "smooth", top:0 });
   };
+
+ // 타이핑 효과 처리
+ useEffect(() => {
+  let index = 0;
+  const type = () => {
+    if (index < text.length) {
+      setDisplayedTitle((prev) => prev + text.charAt(index)); // 한 글자씩 추가
+      index++;
+      setTimeout(type, typingSpeed); // 일정 시간마다 타이핑
+    }
+  };
+  type(); // 타이핑 시작
+
+  // Cleanup 함수로 메모리 누수 방지
+  return () => {
+    index = text.length; // 타이핑 완료 후 인덱스 종료
+  };
+}, [text]);
 
   // 백엔드에서 게시물 데이터 가져오기
   useEffect(() => {
@@ -112,8 +132,9 @@ const Coding = () => {
     <>
       <Header />
 
-      <div className="post_layout">
-        <h1 className="post_title">코딩 문제 게시판</h1>
+       <div className="post_layout">
+        {/* 타이핑 애니메이션 제목 */}
+        <h1 className="Main_box_visual_QnA">{displayedTitle}</h1>
 
         {/* 위로이동 버튼 */}
         <div className="Certificate_high">
@@ -208,13 +229,10 @@ const Coding = () => {
                         <div className="Certificate_writer">
                           {post.userName}
                         </div>
-                        <div className="Certificate_icons_right">
-                          <div className="Certificate_viewCount"><IoEyeSharp /> {post.viewCount}</div>
-                          <div className="Certificate_heart"><FaRegHeart /> {post.heart}</div>
-                          {/* <div className="Certificate_scrap">
-                            <FaRegBookmark />
-                          </div> */}
-                        </div>
+                        <div></div>
+                        <div className="Certificate_viewCount"><IoEyeSharp /> {post.viewCount}</div>
+                        <div className="Certificate_heart"><FaRegHeart /> {post.heart}</div>
+                        
                       </div>
                     </div>
                   </div>

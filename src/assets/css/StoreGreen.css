@@ -5,7 +5,7 @@
   z-index: 0;
   position: relative;
   margin-top: 100px;
-  height: 89vh; /* 전체 뷰포트 높이에 맞춤 */
+  height: 90vh; /* 전체 뷰포트 높이에 맞춤 */
 }
 
 .StoreGreen__background Header {
@@ -57,7 +57,7 @@
 }
 
 .Store__movebox {
-  margin-top: 600px;
+  margin-top: 550px;
 }
 /**/
 .Store__move {
@@ -284,6 +284,10 @@
 .StoreGreen__PrevBtn {
   position: fixed;
   left: 350px;
+}
+.StoreGreen__leftBtn,
+.StoreGreen__rightBtn {
+  width: 100px;
 }
 .StoreGreen__NextBtn {
   position: fixed;

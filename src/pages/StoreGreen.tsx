@@ -105,10 +105,10 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <Footer />
             <div className="Store__area">
                   <button className="StoreGreen__PrevBtn" onClick={goToPrevStore}>
-                    <img src={left}></img>
+                    <img src={left} className="StoreGreen__leftBtn"></img>
                   </button>
                   <button className="StoreGreen__NextBtn" onClick={goToNextStore}>
-                    <img src={right}></img>
+                    <img src={right} className="StoreGreen__rightBtn"></img>
                   </button>
               <div className="Store__left">
 
@@ -121,23 +121,23 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 <div className="StoreGreen__innerFrame">
                   <div className="StoreGreen__productLine1">
                     <div className="StoreGreen__productContainer">
-                      <img src={starAA} className="StoreGreen__product" />
-                      <div className="StoreGreen_priceLabel">10000</div>
+                      <img src={starAA} className="StoreGreen__product" title="스타벅스 아메리카노" />
+                      <div className="StoreGreen_priceLabel">4,500</div>
                     </div>
 
                     <div className="StoreGreen__productContainer">
-                      <img src={starLatte} className="StoreGreen__product" />
-                      <div className="StoreGreen_priceLabel">10001</div>
+                      <img src={starLatte} className="StoreGreen__product" title="스타벅스 카페라떼" />
+                      <div className="StoreGreen_priceLabel">5,000</div>
                     </div>
 
                     <div className="StoreGreen__productContainer">
-                      <img src={megaAA} className="StoreGreen__product" />
-                      <div className="StoreGreen_priceLabel">9999</div>
+                      <img src={megaAA} className="StoreGreen__product" title="메가커피 아메리카노"/>
+                      <div className="StoreGreen_priceLabel">2,000</div>
                     </div>
 
                     <div className="StoreGreen__productContainer">
-                      <img src={megaAshot} className="StoreGreen__product" />
-                      <div className="StoreGreen_priceLabel">10002</div>
+                      <img src={megaAshot} className="StoreGreen__product" title="메가커피 아이스티" />
+                      <div className="StoreGreen_priceLabel">3,000</div>
                     </div>
                   </div>
                   <div className="StoreGreen__selectBtnLine1">
@@ -167,23 +167,23 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                   </div>
                   <div className="StoreGreen__productLine2">
                     <div className="StoreGreen__productContainer">
-                      <img src={megaChoco} className="StoreGreen__product" />
-                      <div className="StoreGreen_priceLabel">10000</div>
+                      <img src={megaChoco} className="StoreGreen__product" title="이디야 아이스 초코"/>
+                      <div className="StoreGreen_priceLabel">3,900</div>
                     </div>
 
                     <div className="StoreGreen__productContainer">
-                      <img src={megaCookie} className="StoreGreen__product" />
-                      <div className="StoreGreen_priceLabel">10001</div>
+                      <img src={megaCookie} className="StoreGreen__product" title="메가커피 쿠키프라페"/>
+                      <div className="StoreGreen_priceLabel">3,900</div>
                     </div>
 
                     <div className="StoreGreen__productContainer">
-                      <img src={twoChoco} className="StoreGreen__product" />
-                      <div className="StoreGreen_priceLabel">9999</div>
+                      <img src={twoChoco} className="StoreGreen__product" title="투썸플레이스 스트로베리 초콜릿 생크림"/>
+                      <div className="StoreGreen_priceLabel">6,700</div>
                     </div>
 
                     <div className="StoreGreen__productContainer">
-                      <img src={twoIcebox} className="StoreGreen__product" />
-                      <div className="StoreGreen_priceLabel">10002</div>
+                      <img src={twoIcebox} className="StoreGreen__product" title="투썸플레이스 떠벅는 아이스박스"/>
+                      <div className="StoreGreen_priceLabel">6,500</div>
                     </div>
                   </div>
                   <div className="StoreGreen__selectBtnLine2">

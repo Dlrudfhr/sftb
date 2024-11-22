@@ -48,26 +48,29 @@ function Main() {
   const [loading, setLoading] = useState(true); // 로딩 상태
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
 
-  const text: string = "Heello, World!";
+  const text: string = "Heello, World!\nAming for the top!";
   //\nWe're in\n the Department of\n Information & Communication
   const [displayedText, setDisplayedText] = useState<string>("");
   const typingSpeed: number = 50; // 타이핑 속도 (밀리초)
+  const indexRef = useRef<number>(0);
+
   useEffect(() => {
-    let index: number = 0;
+    // let index: number = 0;
 
     const type = () => {
-      if (index < text.length) {
-        setDisplayedText((prev) => prev + text.charAt(index));
-        index++;
+      if (indexRef.current < text.length) {
+        setDisplayedText((prev) => prev + text.charAt(indexRef.current));
+        indexRef.current += 1;
         setTimeout(type, typingSpeed);
       }
     };
-
+    setDisplayedText(""); // 초기화
+    indexRef.current = 0;
     type();
 
     // Cleanup function to avoid memory leaks
     return () => {
-      index = text.length; // 타이핑이 끝나면 인덱스를 마지막으로 설정
+      indexRef.current = text.length; // 타이핑이 끝나면 인덱스를 마지막으로 설정
     };
   }, [text]);
 
@@ -167,7 +170,7 @@ function Main() {
                 type="button"
                 onClick={() => onMoveBox(firstElement)}
               >
-                함께 소통해요!
+                소통해요!
               </button>
             </li>
             <li className="">
@@ -177,7 +180,7 @@ function Main() {
                 type="button"
                 onClick={() => onMoveBox(secondElement)}
               >
-                같이 공부해요!
+                공부해요!
               </button>
             </li>
             <li className="">

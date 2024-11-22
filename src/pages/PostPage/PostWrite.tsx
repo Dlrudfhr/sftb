@@ -16,6 +16,7 @@ function PostWrite() {
   const { state } = useLocation(); // 이전 페이지에서 전달된 상태
   const [file, setFile] = useState<File | null>(null); // 첨부할 사진 파일
   const [filePath, setFilePath] = useState<string | null>(null); // 기존 파일 경로 상태 추가
+  const [fileName, setFileName] = useState<string | null>(null); // 선택된 파일 이름 저장 상태 추가
 
   // 로그인된 사용자 UserName을 localStorage에서 가져옴
   const userName = localStorage.getItem("userName");
@@ -30,13 +31,16 @@ function PostWrite() {
       setContent(content); // 내용 설정
       setPostID(postId); // 게시물 고유 번호 설정
       setFilePath(fileName); // 수정 시 기존 파일 경로 설정
+      setFileName(fileName); // 수정 시 기존 파일 이름 설정
     }
   }, [state]);
 
   // 파일 선택 시 호출되는 함수
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(event.target.files?.[0] || null); // 선택한 파일을 상태에 저장
-    if (event.target.files?.[0]) {
+    const selectedFile = event.target.files?.[0];
+    setFile(selectedFile || null); // 선택한 파일을 상태에 저장
+    setFileName(selectedFile ? selectedFile.name : null); // 파일 이름 저장
+    if (selectedFile) {
       setFilePath(null); // 새 파일 선택 시 기존 파일 경로 제거
     }
   };
@@ -52,6 +56,7 @@ function PostWrite() {
         });
         setFilePath(null); // 삭제 후 경로 초기화
         setFile(null); // 선택된 파일 상태 초기화
+        setFileName(null); // 파일 이름 초기화
         alert("파일이 삭제되었습니다.");
       } catch (error) {
         console.error("파일 삭제 중 오류 발생:", error);
@@ -248,21 +253,37 @@ function PostWrite() {
             required
           />
           <br />
+          <br />
 
           <input
             type="file"
             accept="image/*,video/*"
             onChange={handleFileChange}
+            id="file-upload"
+            className="file-input" // 숨김 처리된 input
           />
+          <label htmlFor="file-upload" className="PostWrite_filebutton">
+            파일 선택
+          </label>
+
           {/* 파일 미리보기와 삭제 버튼 */}
-          {filePath && (
+          {fileName && (
             <div className="file-preview">
-              <p>현재 파일: {filePath}</p>
-              <button type="button" onClick={handleDeleteFile}>
-                파일 삭제
-              </button>
+              {filePath && (
+                <button
+                  type="button"
+                  onClick={handleDeleteFile}
+                  className="delete-button"
+                >
+                  파일 삭제
+                </button>
+              )}
+              <div className="file-selected">
+                <p>선택된 파일: {fileName}</p>
+              </div>
             </div>
           )}
+
           <br />
 
           {errorMessage && (

@@ -17,6 +17,7 @@ body{
 .Main_layout .Main_box_tab ul {
   display: flex; /**/
   list-style: none;
+  padding-inline-start:0px;
 }
 
 /**************************배너 스타일******************************/
@@ -34,7 +35,8 @@ body{
 /*메인 배너 글자 있는 부분*/
 .Main_box_visual, .Main_box_visual2 {
   margin-top:100px;
-  margin-left: 20px; margin-right: 20px;
+  /* margin-left: 20px;  */
+  margin-right: 20px;
   width:526px;
   height: 200px;
   border: solid 0.889px #e6e6e6;
@@ -63,6 +65,38 @@ body{
   font-size: 13px;
   overflow-y: scroll;
 }
+.Main_box_visual_QnA {
+  margin-top: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 1300px;
+  height: 40px;
+  border: solid 0.889px #e6e6e6;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  padding: 30px 30px;
+  font-family: "DungGeunMo";
+  background-color: black;
+  font-size: 30px;
+  color: #20DE07;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Flexbox에서 세로 중앙 정렬 */
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  overflow: hidden;
+  border-right: 2px solid #20DE07; /* 깜빡이는 커서 */
+  animation: blink 0.7s step-end infinite; /* 커서 깜빡임 */
+}
+
+@keyframes blink {
+  from {
+    border-right-color: #20DE07;
+  }
+  to {
+    border-right-color: transparent;
+  }
+}
 
 .Main_Info{
   width: 468px;
@@ -76,11 +110,12 @@ body{
 
 /*카테고리 이동 버튼*/
 .Main_button {
+  width: 135px;
   height: 48px;
   line-height: 46px;
   cursor: pointer;
   color: #898989;
-  background-color: rgba(255, 255, 192, 0.1);
+  background-color: white;
   backdrop-filter: blur(10px);
   /* letter-spacing: -0.6px; */
   padding: 0 25px;
