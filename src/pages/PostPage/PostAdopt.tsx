@@ -666,7 +666,7 @@ const handleDeletePost = async () => {
                 </div>
               </div>
               <div className="PostAdopt_adoptButton">
-                    {isAdmin && !newAdopt && (
+                    {isAdmin && !newAdopt && state.userId != getCurrentUserId() && (
                       <button
                         onClick={openModal} // 클릭 시 openModal 호출
                       >
