@@ -105,10 +105,10 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <Footer />
             <div className="Store__area">
                   <button className="StoreGreen__PrevBtn" onClick={goToPrevStore}>
-                    <img src={left}></img>
+                    <img src={left} className="StoreGreen__leftBtn"></img>
                   </button>
                   <button className="StoreGreen__NextBtn" onClick={goToNextStore}>
-                    <img src={right}></img>
+                    <img src={right} className="StoreGreen__rightBtn"></img>
                   </button>
               <div className="Store__left">
 

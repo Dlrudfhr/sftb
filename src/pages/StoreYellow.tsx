@@ -92,8 +92,8 @@ const StoreYellow: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <Header />
       <Footer />
       <div className="StoreYellow__background">
-        <button className="StoreYellow__PrevBtn" onClick={goToPrevStore}><img src={left}></img></button>
-        <button className="StoreYellow__NextBtn" onClick={goToNextStore}><img src={right}></img></button>
+        <button className="StoreYellow__PrevBtn" onClick={goToPrevStore}><img src={left} className="StoreGreen__leftBtn"></img></button>
+        <button className="StoreYellow__NextBtn" onClick={goToNextStore}><img src={right} className="StoreGreen__rightBtn"></img></button>
         <div className="Store__left">
           <div className="Store__movebox">
               <img src={cafe9} className="Store__move"></img>

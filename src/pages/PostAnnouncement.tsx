@@ -279,7 +279,7 @@ const handleDeletePost = async () => {
                 {state.userId === getCurrentUserId() && ( // 현재 사용자 ID와 작성자 ID 비교
                   <>
                     {showDropdown && (
-                      <ul className="PostDetail_dropdown">
+                      <ul className="PostDetail__dropdown">
                         {/* 수정하기 버튼 추가 */}
 
                         <li
