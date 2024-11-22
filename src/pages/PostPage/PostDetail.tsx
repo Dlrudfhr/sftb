@@ -956,6 +956,8 @@ const PostDetail: React.FC = () => {
                               </div>
                             )}
                         </div>
+                        <div className="PostDetail__more">
+
                           <div onClick={() => toggleCommentDropdown(reply.commentId)} className="PostDetail__more">
                             <FiMoreHorizontal />
                           </div>
@@ -978,6 +980,7 @@ const PostDetail: React.FC = () => {
                               )}
                             </>
                           )}
+                        </div>
                         
                       </div>
                       <div
