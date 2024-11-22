@@ -21,7 +21,6 @@ interface Post {
 }
 
 const QnA = () => {
-  const highElement = useRef<null | HTMLDivElement>(null);
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -30,9 +29,7 @@ const QnA = () => {
   const typingSpeed: number = 170; // 타이핑 속도
   const text = "질 문과 답 게시판"; // 타이핑할 텍스트
   const navigate = useNavigate();
-  const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
-    window.scrollTo({ behavior: "smooth", top:0 });
-  };
+
   
   // 타이핑 효과 처리
   useEffect(() => {
@@ -67,6 +64,20 @@ const QnA = () => {
     };
     fetchPosts();
   }, []);
+
+  // 글자수 제한
+  const Post: React.FC<{ content: string }> = ({ content }) => {
+    const truncatedContent =
+      content.length > 33 ? content.substring(0, 33) + "..." : content;
+    return <p>{truncatedContent}</p>;
+  };
+
+  // 게시글 제목 글자수 제한 컴포넌트
+  const PostTitle: React.FC<{ content: string }> = ({ content }) => {
+    const truncatedContent =
+      content.length > 11 ? content.substring(0, 11) + "..." : content;
+    return <p>{truncatedContent}</p>;
+  };
 
   const removeSpaces = (str: string) => {
     return str.replace(/\s+/g, "");
@@ -157,16 +168,26 @@ const QnA = () => {
                     className="Certificate_card"
                     onClick={() =>
                       navigate(`/PostDetail/${post.postId}`, {
-                        state: { ...post, boardId: 1 },
+                        state :{
+                        postId: post.postId,
+                          title: post.title,
+                          content: post.content,
+                          userName: post.userName,
+                          time: post.createAt,
+                          newTime: post.updateAt,
+                          userId: post.userId,
+                          fileName :post.filePath,
+                          boardId: 1,
+                        },
                       })
                     }
                   >
                     <div className="Certificate_card_innerbox">
                       <div className="Certificate_card_title">
-                        {post.title}
+                        <PostTitle content={post.title} />
                       </div>
                       <div className="Certificate_card_info">
-                        {post.content}
+                        <Post content={post.content} />
                       </div>
                       <div className="Certificate_card_icons">
                         <div className="Certificate_writer">
