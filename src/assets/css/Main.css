@@ -17,6 +17,7 @@ body{
 .Main_layout .Main_box_tab ul {
   display: flex; /**/
   list-style: none;
+  padding-inline-start:0px;
 }
 
 /**************************배너 스타일******************************/
@@ -34,7 +35,8 @@ body{
 /*메인 배너 글자 있는 부분*/
 .Main_box_visual, .Main_box_visual2 {
   margin-top:100px;
-  margin-left: 20px; margin-right: 20px;
+  /* margin-left: 20px;  */
+  margin-right: 20px;
   width:526px;
   height: 200px;
   border: solid 0.889px #e6e6e6;
@@ -108,11 +110,12 @@ body{
 
 /*카테고리 이동 버튼*/
 .Main_button {
+  width: 135px;
   height: 48px;
   line-height: 46px;
   cursor: pointer;
   color: #898989;
-  background-color: rgba(255, 255, 192, 0.1);
+  background-color: white;
   backdrop-filter: blur(10px);
   /* letter-spacing: -0.6px; */
   padding: 0 25px;
