@@ -808,42 +808,52 @@ const PostDetail: React.FC = () => {
             comment.replies
               ?.filter((reply) => reply.adopt)
               .map((reply) => (
-                <div className="PostDetail_comment" key={reply.commentId}>
-                  <div className="PostDetail_writer">
-                    <div className="PostDetail_commproImage">
-                    <img src={getTierImage(reply.authorTier)} alt={`${reply.memberId}`} />
+                <div className="PostDetail__commInnerBox" key={reply.commentId}>
+                  <div className="PostDetail__commWrittenLine">
+                    <div className="PostDetail__commProImage">
+                      <img src={getTierImage(reply.authorTier)} alt={`${reply.memberId}`} />
                     </div>
-                    <div className="PostDetail_commwriter">
-                      {reply.memberId}
+                    <div className="PostDetail__commMiddle">
+                      <div className="PostDetail__commWriterName">
+                        {reply.memberId}
+                      </div>
+                      <div className="PostDetail__time">
+                        {formatDate(reply.updatedAt || reply.createdAt)}
+                      </div>
                     </div>
-                    <div onClick={() => toggleCommentDropdown(reply.commentId)}>
-                      <FiMoreHorizontal />
-                    </div>
-                    {reply.userId === getCurrentUserId() && (
-                      <>
-                      {visibleCommentDropdown[reply.commentId] && (
-                        <ul className="PostDetail__recomdropdown">
-                          <li
-                            className="PostDetail_editButton"
-                            onClick={() => handleEditReply(reply.commentId)}
-                          >
-                            수정
-                          </li>
-                          <li
-                            onClick={() => handleDeleteReply(reply.commentId)}
-                          >
-                            삭제
-                          </li>
-                        </ul>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div className="PostDatil__more">
+                      
+                      <div onClick={() => toggleCommentDropdown(reply.commentId)}>
+                        <FiMoreHorizontal />
+                      </div>
+                      {reply.userId === getCurrentUserId() && (
+                        <>
+                        {visibleCommentDropdown[reply.commentId] && (
+                          <ul className="PostDetail__recomdropdown">
+                            <li
+                              className="PostDetail_editButton"
+                              onClick={() => handleEditReply(reply.commentId)}
+                            >
+                              수정
+                            </li>
+                            <li
+                              onClick={() => handleDeleteReply(reply.commentId)}
+                            >
+                              삭제
+                            </li>
+                          </ul>
+                        )}
+                      </>
                       )}
-                    </>
-                    )}
+                    </div>
                   </div>
+                  
                   <div className="PostDetail_content PostDetail_comm_cont adopted">
+                    <div></div>
                     채택된 대댓글입니다 : {reply.content}
-                  </div>
-                  <div className="PostDetail_time">
-                    {formatDate(reply.updatedAt || reply.createdAt)}
                   </div>
                 </div>
               ))

@@ -205,11 +205,11 @@
 /*게시글 카드 안 좋아요, 즐겨찾기 아이콘*/
 .Certificate_card_innerbox .Certificate_card_icons {
   font-size: 12px;
-  display: flex;
+  display: grid;
+  grid-template-columns: 65px 1fr 70px 60px;
   align-items: flex-end; /* 요소를 하단 정렬 */
   height: 30px;
 }
-
 /**/
 .Certificate_writer{
   width: 80%;
