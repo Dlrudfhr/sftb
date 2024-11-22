@@ -82,17 +82,6 @@ const Information: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                 >
                   <div className="Information_mypostBtn">작성한 댓글</div>
                 </div>
-                <div className="Information__userName">{user?.userName}</div>
-                <div className="Information__userInfo">
-                  <b>학번</b> : {user?.studentID}
-                </div>
-                <div className="Information__userInfo">
-                  <b>성과금</b> :{user?.token} COIN
-                </div>
-                <div className="Information__userInfo">
-                  <b>EMAIL</b> : {user?.email}
-                </div>
-                <div className="Information__logo">SFTB</div>
               </div>
             </div>
           </div>

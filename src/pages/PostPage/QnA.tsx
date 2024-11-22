@@ -27,11 +27,10 @@ const QnA = () => {
   const [searchKey, setSearchKey] = useState("제목");
   const [displayedTitle, setDisplayedTitle] = useState<string>(""); // 타이핑 애니메이션용 상태
   const typingSpeed: number = 170; // 타이핑 속도
-  const text = "질 문과 답 게시판"; // 타이핑할 텍스트
+  const text = " 질문과 답 게시판"; // 타이핑할 텍스트
   const navigate = useNavigate();
   const indexRef = useRef<number>(0);
 
-  
   // 타이핑 효과 처리
   useEffect(() => {
     const type = () => {
@@ -110,7 +109,10 @@ const QnA = () => {
 
         {/* 위로 이동 버튼 */}
         <div className="Certificate_high">
-          <button type="button" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
             top
           </button>
         </div>
@@ -170,15 +172,15 @@ const QnA = () => {
                     className="Certificate_card"
                     onClick={() =>
                       navigate(`/PostDetail/${post.postId}`, {
-                        state :{
-                        postId: post.postId,
+                        state: {
+                          postId: post.postId,
                           title: post.title,
                           content: post.content,
                           userName: post.userName,
                           time: post.createAt,
                           newTime: post.updateAt,
                           userId: post.userId,
-                          fileName :post.filePath,
+                          fileName: post.filePath,
                           boardId: 1,
                         },
                       })

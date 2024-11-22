@@ -1,7 +1,6 @@
 @import url("Font.css");
 
-body{
-
+body {
   background-color: #f6f6f6;
 }
 
@@ -17,7 +16,7 @@ body{
 .Main_layout .Main_box_tab ul {
   display: flex; /**/
   list-style: none;
-  padding-inline-start:0px;
+  padding-inline-start: 0px;
 }
 
 /**************************배너 스타일******************************/
@@ -25,41 +24,42 @@ body{
 /*메인화면 배너(visual+button)*/
 .Main_layout .Main_banner {
   width: 1280px;
-  margin:auto;
+  margin: auto;
 }
 
-.Main_bannerBox{
+.Main_bannerBox {
   display: flex;
 }
 
 /*메인 배너 글자 있는 부분*/
-.Main_box_visual, .Main_box_visual2 {
-  margin-top:100px;
+.Main_box_visual,
+.Main_box_visual2 {
+  margin-top: 100px;
   /* margin-left: 20px;  */
   margin-right: 20px;
-  width:526px;
+  width: 526px;
   height: 200px;
   border: solid 0.889px #e6e6e6;
-  border-radius:20px;
+  border-radius: 20px;
   overflow: hidden;
   position: relative;
   padding: 9px 30px;
 }
 
-.Main_box_visual{
+.Main_box_visual {
   font-family: "DungGeunMo";
   background-color: black;
   font-size: 40px;
-  color: #20DE07;
+  color: #20de07;
   align-content: center;
   /* padding: 40px; */
   /* transition: all .3s ease-out; */
 }
 
-.Main_box_visual2{
+.Main_box_visual2 {
   display: grid;
   grid-template-rows: 1fr 1fr;
-  color:#1A1A1A;
+  color: #1a1a1a;
   background-color: #fff;
   font-family: "malgunbd";
   font-size: 13px;
@@ -79,30 +79,30 @@ body{
   font-family: "DungGeunMo";
   background-color: black;
   font-size: 30px;
-  color: #20DE07;
+  color: #20de07;
   display: flex;
   justify-content: center;
   align-items: center; /* Flexbox에서 세로 중앙 정렬 */
   white-space: nowrap; /* 텍스트 줄바꿈 방지 */
   overflow: hidden;
-  border-right: 2px solid #20DE07; /* 깜빡이는 커서 */
+  border-right: 2px solid #20de07; /* 깜빡이는 커서 */
   animation: blink 0.7s step-end infinite; /* 커서 깜빡임 */
 }
 
 @keyframes blink {
   from {
-    border-right-color: #20DE07;
+    border-right-color: #20de07;
   }
   to {
     border-right-color: transparent;
   }
 }
 
-.Main_Info{
+.Main_Info {
   width: 468px;
-  margin-bottom:5px;
+  margin-bottom: 5px;
   padding: 17px 0 18px;
-  border-bottom: 1px solid #E6E6E6;
+  border-bottom: 1px solid #e6e6e6;
   align-content: center;
 }
 
@@ -121,25 +121,25 @@ body{
   padding: 0 25px;
   box-sizing: border-box;
 
-  border: solid 0.667px #ABABAB;
+  border: solid 0.667px #ababab;
   border-radius: 100px;
-  
-  margin:15px 0 0 10px;
+
+  margin: 15px 0 0 10px;
   font-size: 13px;
-  font-family:"malgunbd";
+  font-family: "malgunbd";
   /* box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08); */
 }
 
-.Main_button:hover{
+.Main_button:hover {
   background: black;
-  color:white;
+  color: white;
 }
 
 /************게시판 카드 스타일*************/
 
 /**/
 .Main_categoryLayout {
-  margin:auto;
+  margin: auto;
   width: 1280px;
 }
 
@@ -155,7 +155,6 @@ body{
 .Main_info_cate li {
   margin-bottom: 32px;
   margin: auto;
-  
 }
 
 /*게시판 카테고리 설명 ex)소통해요!*/
@@ -166,7 +165,6 @@ body{
   font-family: "SCDream7";
 }
 
-
 /**/
 .Main__line {
   /* background-color: #004fa8; */
@@ -174,9 +172,6 @@ body{
   grid-template-columns: repeat(4, 1fr);
   width: 90%;
 }
-
-
-
 
 /*게시판 블럭 스타일*/
 .Main_card {
@@ -189,7 +184,7 @@ body{
   -webkit-transition: 0.5s ease-in-out;
   transition: 0.5s ease-in-out;
   border-radius: 5%;
-  padding:10px;
+  padding: 10px;
 }
 
 /**/
@@ -211,7 +206,7 @@ body{
   font-size: 20px;
   font-weight: bold;
   letter-spacing: -0.5px;
-  margin:15px 0 10px 0;
+  margin: 15px 0 10px 0;
   /* padding-bottom: 20px; */
   /*position: relative;*/
 }
@@ -221,7 +216,7 @@ body{
   font-size: 14px;
   color: grey;
   /* padding-bottom: 100px; */
-  margin-bottom:80px;
+  margin-bottom: 80px;
 }
 
 /*게시판 카드에 들어가는 아이콘 스타일*/
@@ -249,24 +244,24 @@ body{
   padding: 90px 0;
   text-align: center;
   margin: 120px 0 100px 0;
-  font-family:  sans-serif;
+  font-family: sans-serif;
 }
 
 /******상단으로 돌아가는 버튼 스타일******/
 .Main_high button {
   position: fixed; /*요소 페이지에서 고정*/
   right: 0; /*오른쪽 배치*/
-  margin-right:10px;
+  margin-right: 10px;
   bottom: 80px; /*하단에서 부터 80px 떨어진 곳에 위치*/
   z-index: 1000; /*다른 요소위에 노출*/
   color: black;
   width: 50px;
   height: 50px;
   background-color: white;
-  box-shadow:0 1px 3px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16);
   border: none;
 }
 
-.Main_high button:hover{
+.Main_high button:hover {
   background-color: transparent;
 }
