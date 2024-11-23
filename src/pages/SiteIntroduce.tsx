@@ -167,9 +167,21 @@ const SiteIntroduce = () => {
             3. 특정 게시글에 작성한 댓글이 관리자가 아닌 다른 사용자에게
             채택되는 경우에 경험치를 획득합니다.
           </div>
-          <div className="SiteIntroduce__Intro"></div>
+          <br />
+          <div className="SiteIntroduce__Intro">주의사항</div>
+          <div className="SiteIntroduce__Intro">
+            1. 자신이 작성한 게시글에 한해서는 댓글을 작성해도 경험치지급이
+            불가능합니다.
+          </div>
+          <div className="SiteIntroduce__Intro">
+            2. 자신의 댓글, 게시글에는 채택을 할 수 없습니다.
+          </div>
+          <div className="SiteIntroduce__Intro">
+            3. 각 게시글마다 채택될수있는 댓글은 한개로 제한되고, 작성자는 채택
+            후 취소할 수없습니다.
+          </div>
           <div className="SiteIntroduce__iamgeContainer">
-            <img src={TierUp} />
+            <img className="SiteIntroduce__tierUP" src={TierUp} />
             <div className="SiteIntroduce__fighting">
               사장이 되는 그날까지 화이팅!{" "}
             </div>
