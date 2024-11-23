@@ -196,10 +196,9 @@ const MyWrittenComm = () => {
                         <div className="Certificate_writer">
                           {post.userName}
                         </div>
-                        <div className="Certificate_icons_right">
-                          <div className="Certificate_viewCount"><IoEyeSharp /> {post.viewCount}</div>
-                          <div className="Certificate_heart"><FaRegHeart /> {post.heart}</div>
-                        </div>
+                        <div></div>
+                        <div className="Certificate_viewCount"><IoEyeSharp /> {post.viewCount}</div>
+                        <div className="Certificate_heart"><FaRegHeart /> {post.heart}</div> 
                       </div>
                     </div>
                   </div>

@@ -18,16 +18,12 @@ const Inquiry = () => {
     <div>
       <Header />
       <div className="Inquiry__container">
-        <div className="Inquiry__innerbox">
-          <div className="Inquiry__phoneNum Num1">이경록: 010-2440-6484</div>
-          <div className="Inquiry__phoneNum Num2">이정이: 010-8598-9305</div>
-          <div className="Inquiry__phoneNum Num3">이찬회: 010-4793-5754</div>
-          <div className="Inquiry__phoneNum Num4">김태영: 010-7356-5675</div>
-          <div className="Inquiry__phoneNum Num5">서수진: 010-6412-2683</div>
-          <div className="Inquiry__phoneNum Num6">신성원: 010-3926-9025</div>
-        </div>
-
-
+        <div className="Inquiry__phoneNum Num1">010-2440-6484</div>
+        <div className="Inquiry__phoneNum Num2">010-8598-9305</div>
+        <div className="Inquiry__phoneNum Num3">010-4793-5754</div>
+        <div className="Inquiry__phoneNum Num4">010-7356-5675</div>
+        <div className="Inquiry__phoneNum Num5">010-6412-2683</div>
+        <div className="Inquiry__phoneNum Num6">010-3926-9025</div>
       </div>
       <Footer />
     </div>

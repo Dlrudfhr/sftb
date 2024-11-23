@@ -1,5 +1,11 @@
 import { useState, useRef, useEffect } from "react"; //useRef 버튼 클릭 시 스크롤 이벤트
-import { Routes, Route, Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  Routes,
+  Route,
+  Link,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import "../assets/css/Main.css";
 import React, { Children } from "react";
 import axios from "axios";
@@ -26,8 +32,8 @@ interface Post {
   updateAt: string;
   userId: string;
   filePath: string;
-  viewCount : number;
-  heart : number;
+  viewCount: number;
+  heart: number;
 }
 
 function Main() {
@@ -42,16 +48,15 @@ function Main() {
   const [loading, setLoading] = useState(true); // 로딩 상태
   const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
 
-
-  const text: string ="Heello, World!\nAming for the top!";
-    //\nWe're in\n the Department of\n Information & Communication
+  const text: string = "Heello, World!\nAming for the top!";
+  //\nWe're in\n the Department of\n Information & Communication
   const [displayedText, setDisplayedText] = useState<string>("");
   const typingSpeed: number = 50; // 타이핑 속도 (밀리초)
   const indexRef = useRef<number>(0);
 
   useEffect(() => {
     // let index: number = 0;
-    
+
     const type = () => {
       if (indexRef.current < text.length) {
         setDisplayedText((prev) => prev + text.charAt(indexRef.current));
@@ -65,7 +70,7 @@ function Main() {
 
     // Cleanup function to avoid memory leaks
     return () => {
-      indexRef.current = text.length // 타이핑이 끝나면 인덱스를 마지막으로 설정
+      indexRef.current = text.length; // 타이핑이 끝나면 인덱스를 마지막으로 설정
     };
   }, [text]);
 
@@ -110,11 +115,7 @@ function Main() {
       }
     };
     fetchPosts();
-  },[]);
-
-
-
-
+  }, []);
 
   return (
     <article className="Main_layout">
@@ -133,25 +134,29 @@ function Main() {
               <ul>
                 {posts.map((post) => (
                   <li key={post.postId}>
-                    <div className="Main_Info" onClick={() =>
-                      navigate(`/PostAnnouncement/${post.postId}`,{
-                        state: {
-                          postId: post.postId,
-                          title: post.title,
-                          content: post.content,
-                          userName: post.userName,
-                          time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
-                          newTime: post.updateAt,
-                          userId: post.userId,
-                          fileName: post.filePath,
-                          boardId: 10,
-                        },
-                      })}>{post.title}</div>
+                    <div
+                      className="Main_Info"
+                      onClick={() =>
+                        navigate(`/PostAnnouncement/${post.postId}`, {
+                          state: {
+                            postId: post.postId,
+                            title: post.title,
+                            content: post.content,
+                            userName: post.userName,
+                            time: post.createAt, // 생성 시간을 상태로 전달 (표시는 하지 않음)
+                            newTime: post.updateAt,
+                            userId: post.userId,
+                            fileName: post.filePath,
+                            boardId: 10,
+                          },
+                        })
+                      }
+                    >
+                      {post.title}
+                    </div>
                   </li>
-
                 ))}
               </ul>
-            
             )}
           </div>
         </div>
@@ -464,10 +469,7 @@ function Main() {
       </div>
 
       {/*스크롤 시 필요한 footer공간 */}
-      <div className="Main_last_div">
-        소통하고, 성장하자
-      </div>
-
+      <div className="Main_last_div">소통하고, 성장하자</div>
 
       {/* CongratulationsModal 추가 */}
       <CongratulationsModal isOpen={isModalOpen} onClose={handleCloseModal} />

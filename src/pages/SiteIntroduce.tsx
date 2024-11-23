@@ -11,11 +11,16 @@ import topMenu_Ranking1 from "../assets/images/사이트 소개/상단메뉴_랭
 import topMenu_Ranking2 from "../assets/images/사이트 소개/상단메뉴_랭킹(2).png";
 import topMenu_announcement from "../assets/images/사이트 소개/상단메뉴_공지사항.png";
 import topMenu_inquiry from "../assets/images/사이트 소개/상단메뉴_문의.png";
+import topMenu_inquiry2 from "../assets/images/사이트 소개/상단메뉴_문의(2).png";
 import middleMenu_level from "../assets/images/사이트 소개/게시판소개_레벨.png";
 import middleMenu_tier from "../assets/images/사이트 소개/게시판소개_티어.png";
 import middleMenu_warning from "../assets/images/사이트 소개/게시판소개_주의사항.png";
 import bottomMenu_intro1 from "../assets/images/사이트 소개/하단메뉴소개(1).png";
 import bottomMenu_intro2 from "../assets/images/사이트 소개/하단메뉴소개(2).png";
+import bottomMenu_mypage from "../assets/images/사이트 소개/게시판소개_내정보.png";
+import bottomMenu_mypage2 from "../assets/images/사이트 소개/게시판소개_내정보이동.png";
+import bottomMenu_store from "../assets/images/사이트 소개/게시판소개_상점.png";
+import bottomMenu_store2 from "../assets/images/사이트 소개/게시판소개_상점이동.png";
 
 const topMenuImages = [
   topMenu_homepage,
@@ -23,6 +28,7 @@ const topMenuImages = [
   topMenu_Ranking2,
   topMenu_announcement,
   topMenu_inquiry,
+  topMenu_inquiry2,
 ];
 
 const middleMenuImages = [
@@ -31,7 +37,14 @@ const middleMenuImages = [
   middleMenu_warning,
 ];
 
-const bottomMenuImages = [bottomMenu_intro1, bottomMenu_intro2];
+const bottomMenuImages = [
+  bottomMenu_intro1,
+  bottomMenu_intro2,
+  bottomMenu_mypage,
+  bottomMenu_mypage2,
+  bottomMenu_store,
+  bottomMenu_store2,
+];
 
 const SiteIntroduce = () => {
   const [currentTopIndex, setCurrentTopIndex] = useState(0); // 상단 메뉴 이미지 인덱스
