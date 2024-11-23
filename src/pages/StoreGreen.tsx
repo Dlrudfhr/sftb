@@ -146,7 +146,7 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     5 6 7 8 상품순
                     */}
                     {/*첫번째 상품 가격, 두번째 상품 가격, 세번째 상품가격, 네번째 상품가격 */}
-                    {[10000, 10001, 9999, 10002].map((value, index) => (
+                    {[4500, 5000, 2000, 3000].map((value, index) => (
                       <button
                         key={index}
                         className={`StoreGreen__selectBtn${index + 1}`}
@@ -187,7 +187,7 @@ const StoreGreen: React.FC<{ children: React.ReactNode }> = ({ children }) => {
                     </div>
                   </div>
                   <div className="StoreGreen__selectBtnLine2">
-                    {[10000, 10001, 9999, 10002].map((value, index) => (
+                    {[3900, 3900, 6700, 6500].map((value, index) => (
                       <button
                       key={index}
                       className={`StoreGreen__selectBtn${index + 5}`}
