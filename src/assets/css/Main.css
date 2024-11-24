@@ -239,12 +239,14 @@ body {
 
 /*페이지 밑 부분 연장으로 footer로 가려지는 부분 해결*/
 .Main_last_div {
-  height: 115px;
+  height: 200px;
   background-color: #e6f2fe;
   padding: 90px 0;
   text-align: center;
-  margin: 120px 0 100px 0;
-  font-family: sans-serif;
+  margin: 120px 0 0px 0;
+  font-family: "DungGeunMo";
+  font-size:38px;
+
 }
 
 /******상단으로 돌아가는 버튼 스타일******/
@@ -264,4 +266,26 @@ body {
 
 .Main_high button:hover {
   background-color: transparent;
+}
+
+.Main__lastInner{
+  display: grid;
+  grid-template-rows: 60px 1fr;
+  margin:auto;
+}
+
+.Main__2row{
+  display: grid;
+  grid-template-columns: 200px 200px;
+  margin:auto;
+  line-height: 1.5;
+  font-size: 18px;
+}
+
+.Main__SFTBLogo{
+  width: 200px;
+}
+
+.Main__Name{
+  margin:auto;
 }
