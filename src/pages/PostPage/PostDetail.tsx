@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNavigate, useLocation, useParams } from "react-router-dom";
 import Header from "../Header";
-import CommentAdoptModal from "./Comment_Adopt_Modal"; // 모달 컴포넌트 import
 import "../../assets/css/PostPage/PostDetail.css";
 import "../../assets/css/ConfirmLogoutModal.css"
 import {
@@ -37,11 +36,10 @@ const PostDetail: React.FC = () => {
   const [comments, setComments] = useState<Comment[]>([]);
   const [commentInput, setCommentInput] = useState("");
   const [replyInput, setReplyInput] = useState<{ [key: number]: string }>({});
-  const commentElement = useRef<null | HTMLInputElement>(null);
   const [showDropdown, setShowDropdown] = useState(false);
   const [comDropdown, setcomDropdown] = useState(false);
   const [mediaSrc, setMediaSrc] = useState(""); // 이미지 또는 동영상 URL 저장
-  const [isVideo, setIsVideo] = useState(false); // 동영상 여부를 판단
+  const [isVideo, setIsVideo] = useState(false); // 동영상 여부
 
   
   const [viewCount, setViewCount] = useState(0); // 조회수 상태
@@ -610,7 +608,8 @@ const PostDetail: React.FC = () => {
       }
     };
   }, [postId, fileName, mediaSrc]); // imageSrc는 의존성 배열에서 제외
-
+  
+  
  useEffect(() => {
     const incrementViewCount = async () => {
       try {
@@ -716,7 +715,6 @@ const PostDetail: React.FC = () => {
             <div className="PostDetail_postTitle">{title || "제목"}</div>
             <div className="PostDetail_content">{content || "내용"}</div>
 
-             {/* 글 내용 아래에 이미지 표시 */}
             {mediaSrc && (
               <div className="PostDetail_image">
                 {isVideo ? ( //ture면 동영상, false면 이미지 태그를 렌더링
@@ -728,27 +726,36 @@ const PostDetail: React.FC = () => {
                     동영상을 재생할 수 없습니다.
                   </video>
                 ) : (
+                  !fileName || fileName.match(/\.(jpg|jpeg|png|gif|mp4|webm)$/i) ? ( // 첨부파일이 없거나 이미지/동영상일 때만 표시
                   <img
                     src={mediaSrc}
                     alt="게시글 미디어"
                     style={{ width: "70%", height: "auto" }}
                   />
+                ) : null // 파일이 이미지/동영상이 아니면 렌더링 안 함
               )}
               </div>
             )}
+            {/* 이미지나 동영상이 아닌 경우 다운로드 링크 표시 */}
+              {fileName && !fileName.match(/\.(jpg|jpeg|png|gif|mp4|webm)$/i) && (
+                <div className="PostDetail_file">
+                  <a
+                    href={`http://localhost:8080/api/files/download/${postId}`}
+                    download
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                첨부된 파일 다운로드: {decodeURIComponent(fileName.split('/').pop()?.replace(/^\d{8}_\d{6}_/, "") || '')}
+                </a>
             </div>
+            )}
+          </div>
 
             {/*게시글 좋아요,댓글 수, 스크랩 수 */}
             <div className="PostDetail_total">
               <div className="PostDetail_totallike" onClick={handleHeart}>
                 {heart ? <FaHeart color="red" /> : <FaRegHeart />}
                 <span> {heartCount}</span> {/* 하트 수 표시 */}
-              </div>
-              <div
-                className="PostDetail_totalcomm"
-                onClick={() => onMoveBox(commentElement)}
-              >
-                <FaRegComment />
               </div>
               <div className="PostDetail_totalscrap" onClick={handleBookmark}>
                 {bookmark ? <FaBookmark color="gold" /> : <FaRegBookmark />}

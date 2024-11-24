@@ -14,8 +14,8 @@ function PostWrite() {
   const location = useLocation(); // location 훅 사용하여 전달된 상태 가져오기
   const boardId = location.state?.boardId || 2; // boardId를 location 상태에서 가져오고 기본값은 2로 설정
   const { state } = useLocation(); // 이전 페이지에서 전달된 상태
-  const [file, setFile] = useState<File | null>(null); // 첨부할 사진 파일
-  const [filePath, setFilePath] = useState<string | null>(null); // 기존 파일 경로 상태 추가
+  const [file, setFile] = useState<File | null>(null); // 첨부 파일
+  const [filePath, setFilePath] = useState<string | null>(null); // 기존 파일 경로
 
   // 로그인된 사용자 UserName을 localStorage에서 가져옴
   const userName = localStorage.getItem("userName");
@@ -33,32 +33,33 @@ function PostWrite() {
     }
   }, [state]);
 
-  // 파일 선택 시 호출되는 함수
+  // 파일 변경 핸들러
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(event.target.files?.[0] || null); // 선택한 파일을 상태에 저장
+    setFile(event.target.files?.[0] || null); // 새 파일 상태로 설정
     if (event.target.files?.[0]) {
       setFilePath(null); // 새 파일 선택 시 기존 파일 경로 제거
     }
   };
 
-  // **추가된 파일 삭제 핸들러**
+  // 파일 삭제 핸들러
   const handleDeleteFile = async () => {
-    if (filePath) {
+    if (filePath && postId) {
       try {
         await axios.delete(`http://localhost:8080/api/files/${postId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        setFilePath(null); // 삭제 후 경로 초기화
-        setFile(null); // 선택된 파일 상태 초기화
+        setFilePath(null);
+        setFile(null);
         alert("파일이 삭제되었습니다.");
       } catch (error) {
-        console.error("파일 삭제 중 오류 발생:", error);
+        console.error("파일 삭제 중 오류:", error);
         setErrorMessage("파일 삭제에 실패했습니다.");
       }
     }
   };
+
 
   // boardId에 따라 해당 게시판 URL로 이동하도록 수정
   const handleGoToList = () => {
@@ -115,11 +116,10 @@ function PostWrite() {
         formData.append("userId", userID || "");
 
         if (file) {
-          formData.append("file", file); // 새로 선택한 파일을 추가
+          formData.append("file", file); // 새 파일 추가
         } else if (filePath) {
           formData.append("filePath", filePath); // 기존 파일 경로 유지
         }
-
         try {
           const response = await axios.put(
             `http://localhost:8080/api/posts/${state.postId}`, // 수정할 게시물의 ID를 포함한 URL
@@ -150,7 +150,7 @@ function PostWrite() {
                 postId: state.postId, // 게시물 ID 추가
                 boardId: state.boardId,
                 userId: state.userId,
-                fileName: state.fileName,
+                filePath: state.fileName,
               },
             });
           } else {
@@ -169,10 +169,11 @@ function PostWrite() {
         formData.append("time", updatedTime);
         formData.append("boardId", String(boardId));
         formData.append("userId", userID || "");
-        if (file) {
-          formData.append("file", file); // 파일 추가
-        }
 
+        // 새로 선택된 파일 추가
+        if (file) {
+          formData.append("file", file); // 새 파일 추가
+        }
         const response = await axios.post(
           "http://localhost:8080/api/posts",
           formData,
@@ -249,17 +250,41 @@ function PostWrite() {
           />
           <br />
 
-          <input type="file" accept="image/*,video/*" onChange={handleFileChange} />
-          {/* 파일 미리보기와 삭제 버튼 */}
+          {/* 기존 파일 미리보기 */}
           {filePath && (
             <div className="file-preview">
-              <p>현재 파일: {filePath}</p>
+              <p>
+                첨부된 파일:{" "}
+                <a
+                  href={`http://localhost:8080/api/files/download/${postId}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {decodeURIComponent(filePath.split("/").pop() || "")}
+                </a>
+              </p>
               <button type="button" onClick={handleDeleteFile}>
-                파일 삭제
+                삭제
               </button>
             </div>
           )}
-          <br />
+
+          {/* 새로 선택된 파일 미리보기 */}
+          {file && (
+            <div className="file-preview">
+              <p>새 파일: {file.name}</p>
+              <button type="button" onClick={() => setFile(null)}>
+                삭제
+              </button>
+            </div>
+          )}
+
+          {/* 파일 선택 */}
+          <div className="file-upload">
+            <label htmlFor="fileInput">파일 첨부</label>
+            <input type="file" id="fileInput" onChange={handleFileChange} />
+          </div>
+          <br/>
 
           {errorMessage && (
             <div style={{ color: "red", marginBottom: "10px" }}>
