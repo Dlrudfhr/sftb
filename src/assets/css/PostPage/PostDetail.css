@@ -1,361 +1,356 @@
 /*페이지 레이아웃*/
-.PostDetail_layout{
-    width:900px;
-    margin: auto;
-    padding: 15px 30px;
-    margin-top:100px;
+.PostDetail_layout {
+  width: 900px;
+  margin: auto;
+  padding: 15px 30px;
+  margin-top: 100px;
 }
 
 /*************************************게시판 이름*********************************/
 
 /*게시판 이름 innerbox*/
-.PostDetail_titleinnerbox{
-    padding: 15px 30px;
-    cursor: pointer;
+.PostDetail_titleinnerbox {
+  padding: 15px 30px;
+  cursor: pointer;
 }
 
 /**/
-.PostDetail__postBox, .postpage_title{
-    border:solid 0.667px lightgray;
-    border-radius:10px;
+.PostDetail__postBox,
+.postpage_title {
+  border: solid 0.667px lightgray;
+  border-radius: 10px;
 }
 /*********************************게시물 출력 박스********************************/
 
-.PostDetail__postBox{
-    margin-bottom:30px;
-    background-color: white;
+.PostDetail__postBox {
+  margin-bottom: 30px;
+  background-color: white;
 }
 
 /*게시글 작성자 출력 라인(사진, 이름, dropdown*/
-.PostDetail__postProfileLine{
-    display:grid;
-    grid-template-columns: 60px 1fr 40px 40px;
-    padding:10px;
+.PostDetail__postProfileLine {
+  display: grid;
+  grid-template-columns: 60px 1fr 40px 40px;
+  padding: 10px;
 }
 
-    /*작성자 프로필 영역*/
-    .PostDetail__postProfile{
-        margin-bottom: 20px;
-        display: flex;
-        width: 100%;
-    }
-
-    /*글 작성자 이름, 작성시간*/
-    .PostDetail__postMiddle{
-        align-content: center;
-    }
-        .PostDetail__postProImage{
-            width: 40px;
-            height: 42px;
-        }
-
-        /*작성시간 출력*/
-        .PostDetail__postTime{
-            font-size:12px;
-            margin-bottom:10px;
-            color: #6a6a6a;
-        }
-
-    /*수정,삭제 더보기 버튼*/
-    .PostDetail__postMore{
-        position:relative;
-    }
-    
-        /**/
-        .PostDetail__dropdown{
-            width: 65px;
-            position: absolute;
-            background: white;
-            border: 1px solid gray;
-            border-radius:10px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            /* float:right; */
-        }
-
-        /**/
-        .PostDetail__comdropdown{
-            width: 35px;
-            position: absolute;
-            background: white;
-            border: 1px solid gray;
-            border-radius:10px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            
-        }
-        /**/
-        .PostDetail__recomdropdown{
-            width: 35px;
-            position: absolute;
-            
-            background: white;
-            border: 1px solid gray;
-            border-radius:10px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            
-        }
-
-/*게시글 제목 영역*/
-.PostDetail__postTitle{
-    font-family: "malgunbd";
-    font-size:23px;
-    padding:30px;
-    line-height:1.6;
-}
-        
-    /*게시글 내용 영역*/
-.PostDetail__postContent{
-    font-size:16px;
-    padding: 0 30px;
-    line-height:1.7;
+/*작성자 프로필 영역*/
+.PostDetail__postProfile {
+  margin-bottom: 20px;
+  display: flex;
+  width: 100%;
 }
 
-/*게시글 좋아요수, 댓글수, 스크랩수*/
-.PostDetail__postBtnLine{
-    display: grid;
-    grid-template-columns: 50px 30px 50px 1fr;
-    padding:30px;
+/*글 작성자 이름, 작성시간*/
+.PostDetail__postMiddle {
+  align-content: center;
+}
+.PostDetail__postProImage {
+  width: 40px;
+  height: 42px;
+}
+
+/*작성시간 출력*/
+.PostDetail__postTime {
+  font-size: 12px;
+  margin-bottom: 10px;
+  color: #6a6a6a;
+}
+
+/*수정,삭제 더보기 버튼*/
+.PostDetail__postMore {
+  position: relative;
 }
 
 /**/
-.PostDetail__postInnerbox, .PostDetail_commentinnerbox, .PostDetail_rereinnerbox{
-    padding: 15px 30px;
+.PostDetail__dropdown {
+  width: 65px;
+  position: absolute;
+  background: white;
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  /* float:right; */
 }
 
+/**/
+.PostDetail__comdropdown {
+  width: 35px;
+  position: absolute;
+  background: white;
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/**/
+.PostDetail__recomdropdown {
+  width: 35px;
+  position: absolute;
 
+  background: white;
+  border: 1px solid gray;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/*게시글 제목 영역*/
+.PostDetail__postTitle {
+  font-family: "malgunbd";
+  font-size: 23px;
+  padding: 30px;
+  line-height: 1.6;
+}
+
+/*게시글 내용 영역*/
+.PostDetail__postContent {
+  font-size: 16px;
+  padding: 0 30px;
+  line-height: 1.7;
+}
+
+/*게시글 좋아요수, 댓글수, 스크랩수*/
+.PostDetail__postBtnLine {
+  display: grid;
+  grid-template-columns: 50px 30px 50px 1fr;
+  padding: 30px;
+}
+
+/**/
+.PostDetail__postInnerbox,
+.PostDetail_commentinnerbox,
+.PostDetail_rereinnerbox {
+  padding: 15px 30px;
+}
 
 /********************************** 댓글 ******************************************/
 
 /*댓글 하나 당 outline*/
-.PostDetail__commInnerBox{
-    border: solid 1px lightgray;
-    border-radius:10px;
-    margin-bottom:5px;
-    padding: 15px;
+
+.PostDetail__commInnerBox {
+  border: solid 1px lightgray;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  padding: 15px;
 }
 
 /*댓글 출력 라인(사진, 이름, 시간, 대댓글버튼, dropdown*/
-.PostDetail__commWrittenLine{
-    display:grid;
-    grid-template-columns:60px 140px 1fr 20px 40px 40px;
-    padding: 10px;
+.PostDetail__commWrittenLine {
+  display: grid;
+  grid-template-columns: 60px 140px 1fr 20px 40px 40px;
+  padding: 10px;
 }
 
-    .PostDetail__time{
-        font-size:12px;
-        color: #6a6a6a;
-    }
-
+.PostDetail__time {
+  font-size: 12px;
+  color: #6a6a6a;
+}
 
 /*글쓴이 영역*/
-.PostDetail_postwriter{
-    align-content: center;
-    margin-left:10px;
-    visibility: hidden;
-    color:red;
+.PostDetail_postwriter {
+  align-content: center;
+  margin-left: 10px;
+  visibility: hidden;
+  color: red;
 }
-
 
 /*댓글 버튼들*/
-.PostDetail_combtn{
-    display:flex;
-    margin-left:auto;
+.PostDetail_combtn {
+  display: flex;
+  margin-left: auto;
 }
 /*댓글 작성칸 보기 버튼*/
-.PostDetail_viewwrite, .PostDetail_heart, .PostDetail_adopt{
-    cursor: pointer;
-    margin-right:10px;
+.PostDetail_viewwrite,
+.PostDetail_heart,
+.PostDetail_adopt {
+  cursor: pointer;
+  margin-right: 10px;
 }
 
-
-.PostDetail_viewwrite{
-    margin-left:auto;
+.PostDetail_viewwrite {
+  margin-left: auto;
 }
 
-.PostDetail_content{
-    display: grid;
-    grid-template-columns:60px 1fr;
-    padding:15px;
+.PostDetail_content {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  padding: 15px;
 }
-
-
 
 /*게시글 좋아요 버튼, 게시글 스크랩 버튼*/
-.PostDetail_likebutton, .PostDetail_scrapbutton{
-    width: 50px;
-    height: 50px;
-    border:none;
-    background-color: transparent;
-    border-radius: 10%;
+.PostDetail_likebutton,
+.PostDetail_scrapbutton {
+  width: 50px;
+  height: 50px;
+  border: none;
+  background-color: transparent;
+  border-radius: 10%;
 }
 
 /* 채택된 댓글 표시하는 영역 */
 .PostDetail_adopted_comments {
-    margin-top: 20px; /* 적절한 여백 */
-    padding: 10px;
-    border: 1px solid #ccc; /* 경계선 추가 */
-    background-color: #f9f9f9; /* 배경색 추가 */
+  margin-top: 20px; /* 적절한 여백 */
+  padding: 10px;
+  border: 1px solid #ccc; /* 경계선 추가 */
+  background-color: #f9f9f9; /* 배경색 추가 */
 }
 
 /******************대댓글*******************/
 
 /*대댓글 출력 영역*/
-.PostDetail__recommentBox{
-    border:solid 0.667px lightgray;
-    border-radius: 10px;
-    padding: 15px;
-    margin: 0 0 5px 30px;
-    /* box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08); */
-
+.PostDetail__recommentBox {
+  border: solid 0.667px lightgray;
+  border-radius: 10px;
+  padding: 15px;
+  margin: 0 0 5px 30px;
+  /* box-shadow: 0 6px 15px rgba(36, 37, 38, 0.08); */
 }
 
-.PostDetail_recommWrittenLine{
-    display:grid;
-    grid-template-columns: 60px 140px 1fr 40px 40px;
-    padding:10px;
+.PostDetail_recommWrittenLine {
+  display: grid;
+  grid-template-columns: 60px 140px 1fr 40px 40px;
+  padding: 10px;
 }
 
-    .PostDetail_recommProImage{
-        width: 40px;
-        height: 42px;
-    }
+.PostDetail_recommProImage {
+  width: 40px;
+  height: 42px;
+}
 
-    .PostDetail__recommTime{
-        font-size:12px;
-        color: #6a6a6a;
-    }
+.PostDetail__recommTime {
+  font-size: 12px;
+  color: #6a6a6a;
+}
 /***********************대댓글 작성 박스***************************/
 /*게시글 대댓글 작성 박스*/
-.PostDetail__recommWriteBox{
-    display: grid;
-    grid-template-columns:30px 1fr;
+.PostDetail__recommWriteBox {
+  display: grid;
+  grid-template-columns: 30px 1fr;
 }
 
-.PostDetail__recommWriteInnerBox{
-    background-color: white;
-    padding: 0 10px;
-    border: solid 0.667px lightgray;
-    border-radius:10px;
-
+.PostDetail__recommWriteInnerBox {
+  background-color: white;
+  padding: 0 10px;
+  border: solid 0.667px lightgray;
+  border-radius: 10px;
 }
 
-.PostDetail__recommProfileLine{
-    display:grid;
-    grid-template-columns:60px 100px 1fr 50px;
-    padding:10px;
+.PostDetail__recommProfileLine {
+  display: grid;
+  grid-template-columns: 60px 100px 1fr 50px;
+  padding: 10px;
 }
 
-.PostDetail__commproImage{
-    width: 40px;
-    height: 42px;
+.PostDetail__commproImage {
+  width: 40px;
+  height: 42px;
 }
 
 /*************댓글 작성 라인****************/
 
 /*게시글 댓글 작성박스*/
-.PostDetail__commWriteBox{
-    border: solid 0.667px lightgray;
-    border-radius:10px;
-    display:grid;
-    background-color: white;
-    padding: 0 15px;
-    margin:20px 0;
+.PostDetail__commWriteBox {
+  border: solid 0.667px lightgray;
+  border-radius: 10px;
+  display: grid;
+  background-color: white;
+  padding: 0 15px;
+  margin: 20px 0;
 }
-
 
 /*댓글 작성자 프로필*/
-.PostDetail__commWriter{
-    /* margin: 10px 0 20px 0; */
-    display:grid;
-    grid-template-columns:60px 70px 1fr 40px;
-    padding: 10px;
+.PostDetail__commWriter {
+  /* margin: 10px 0 20px 0; */
+  display: grid;
+  grid-template-columns: 60px 70px 1fr 40px;
+  padding: 10px;
 }
 /* 댓글 작성란 이미지*/
-.PostDetail__commProImage{
-    width: 40px;
-    height: 42px;
-    border-radius: 10%;
+.PostDetail__commProImage {
+  width: 40px;
+  height: 42px;
+  border-radius: 10%;
 }
 /*댓글 작성자 이름*/
-.PostDetail__commWriterName{
-    align-content: center;
+.PostDetail__commWriterName {
+  align-content: center;
 }
 
-.PostDetail__commWriteInput{
-    border:none;
+.PostDetail__commWriteInput {
+  border: none;
 }
 /**/
-.PostDetail__commWriteInput:focus{
-    outline: none;
+.PostDetail__commWriteInput:focus {
+  outline: none;
 }
 /*게시글 댓글 작성 완료 버튼*/
-.PostDetail__commSubmitBtn{
-    border:none;
-    background-color: rgba(0, 0, 0, 0);
+.PostDetail__commSubmitBtn {
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
 }
 
-.PostDetail__commSubmitBtn:hover{
-    background-color: rgba(0, 0, 0, 0);
+.PostDetail__commSubmitBtn:hover {
+  background-color: rgba(0, 0, 0, 0);
 }
 /*목록 버튼*/
-.PostDetail__BackTList{
-    border: solid 0.667px red;
-    border-radius:10%;
-    width: 55px;
-    padding:10px;
-    color: red;
-    font-weight:bold;
-    margin-bottom: 50px;
+.PostDetail__BackTList {
+  border: solid 0.667px red;
+  border-radius: 10%;
+  width: 55px;
+  padding: 10px;
+  color: red;
+  font-weight: bold;
+  margin-bottom: 50px;
 }
 
 /* 채택된 댓글 표시하는 영역 */
 .PostDetail_adopted_comments {
-    margin-top: 20px; /* 적절한 여백 */
-    padding: 10px;
-    border: 1px solid #ccc; /* 경계선 추가 */
-    background-color: #f9f9f9; /* 배경색 추가 */
-  }
+  margin-top: 20px; /* 적절한 여백 */
+  padding: 10px;
+  border: 1px solid #ccc; /* 경계선 추가 */
+  background-color: #f9f9f9; /* 배경색 추가 */
+}
 
-  /* 파일 다운로드 영역 스타일 */
+/* 파일 다운로드 영역 스타일 */
 .PostDetail_file {
-    margin: 10px 0; /* 위아래 여백 줄이기 */
-    padding: 5px; /* 내부 여백 줄이기 */
-    background-color: #f9f9f9; /* 배경색 */
-    border: 1px solid #ddd; /* 테두리 */
-    border-radius: 5px; /* 둥근 테두리 */
-    text-align: center; /* 중앙 정렬 */
-    width: auto; /* 너비 자동 조정 */
-    display: inline-block; /* 크기 조정에 적합한 인라인 블록 설정 */
-  }
-  
-  /* 다운로드 링크 스타일 */
-  .PostDetail_file a {
-    color: #007bff; /* 링크 색상 */
-    text-decoration: none; /* 기본 밑줄 제거 */
-    font-size: 14px; /* 글씨 크기 줄이기 */
-    font-weight: 500; /* 글씨 두께 */
-    padding: 5px 10px; /* 버튼 내부 여백 줄이기 */
-    border: 1px solid #007bff; /* 버튼 테두리 */
-    border-radius: 4px; /* 버튼 둥근 모서리 */
-    background-color: #ffffff; /* 버튼 배경색 */
-    transition: all 0.2s ease-in-out; /* 호버 시 부드러운 애니메이션 */
-  }
-  
-  .PostDetail_file a:hover {
-    text-decoration: underline; /* 호버 시 밑줄 */
-    background-color: #e7f3ff; /* 호버 시 배경색 변경 */
-    color: #0056b3; /* 호버 시 텍스트 색상 변경 */
-  }
-    
-.PostDetail_layout img{
-    width: 100%;
-    height: 100%;
+  margin: 10px 0; /* 위아래 여백 줄이기 */
+  padding: 5px; /* 내부 여백 줄이기 */
+  background-color: #f9f9f9; /* 배경색 */
+  border: 1px solid #ddd; /* 테두리 */
+  border-radius: 5px; /* 둥근 테두리 */
+  text-align: center; /* 중앙 정렬 */
+  width: auto; /* 너비 자동 조정 */
+  display: inline-block; /* 크기 조정에 적합한 인라인 블록 설정 */
+}
+
+/* 다운로드 링크 스타일 */
+.PostDetail_file a {
+  color: #007bff; /* 링크 색상 */
+  text-decoration: none; /* 기본 밑줄 제거 */
+  font-size: 14px; /* 글씨 크기 줄이기 */
+  font-weight: 500; /* 글씨 두께 */
+  padding: 5px 10px; /* 버튼 내부 여백 줄이기 */
+  border: 1px solid #007bff; /* 버튼 테두리 */
+  border-radius: 4px; /* 버튼 둥근 모서리 */
+  background-color: #ffffff; /* 버튼 배경색 */
+  transition: all 0.2s ease-in-out; /* 호버 시 부드러운 애니메이션 */
+}
+
+.PostDetail_file a:hover {
+  text-decoration: underline; /* 호버 시 밑줄 */
+  background-color: #e7f3ff; /* 호버 시 배경색 변경 */
+  color: #0056b3; /* 호버 시 텍스트 색상 변경 */
+}
+
+.PostDetail_layout img {
+  width: 100%;
+  height: 100%;
 }
