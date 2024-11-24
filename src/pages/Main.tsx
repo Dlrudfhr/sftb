@@ -476,12 +476,12 @@ function Main() {
           <div className="Main__2row">
             <img src={logo} className="Main__SFTBLogo"/>
             <div className="Main__Name">
-              <div>이경록</div>
-              <div>이찬회</div>
-              <div>서수진</div>
-              <div>이정이</div>
-              <div>신성원</div>
-              <div>김태영</div>
+              <div>이경록 2019143037</div>
+              <div>이찬회 2019143040</div>
+              <div>서수진 2021143023</div>
+              <div>이정이 2020143043</div>
+              <div>신성원 2020143032</div>
+              <div>김태영 2020143010</div>
             </div>
           </div>
         </div>

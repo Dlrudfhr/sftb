@@ -358,4 +358,5 @@
 .comadopted{
     border:solid 2px red;
     box-shadow: 0 6px 15px rgba(199, 36, 36, 0.12);
+    margin-bottom: 30px;
 }
