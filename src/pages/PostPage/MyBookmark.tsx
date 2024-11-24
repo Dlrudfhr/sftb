@@ -148,7 +148,7 @@ const MyBookmark = () => {
         <div className="Certificate_Number">
           <div className="Certificate_postNumber">
             <span>
-              총 게시물 {filteredPosts.length}{" "}
+              총 북마크 한 글 {filteredPosts.length}{" "}
               {/* 필터링된 게시물 수 */}
             </span>
           </div>
