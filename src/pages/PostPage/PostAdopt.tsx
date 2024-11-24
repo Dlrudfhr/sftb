@@ -651,7 +651,7 @@ const PostAdopt: React.FC = () => {
         {/*게시판 타이틀 */}
         <h3
           className="postpage_title"
-          onClick={() => (window.location.href = "/Certificate")}
+          onClick={() => navigate(boardUrlMap[boardId])}
         >
           <div className="PostDetail_titleinnerbox">
             {boardTitleMap[boardId] || "게시판"}{" "}
@@ -853,7 +853,7 @@ const PostAdopt: React.FC = () => {
                     comment ? "adopted" : ""
                   }`}
                 >
-                  {comment.content}
+                  <div></div>{comment.content}
                 </div>
                 {/*대댓글 출력 영역*/}
                 {comment.replies &&
@@ -914,7 +914,7 @@ const PostAdopt: React.FC = () => {
                           reply ? "adopted" : ""
                         }`}
                       >
-                        {reply.content}
+                        <div></div>{reply.content}
                       </div>
                     </div>
                   ))}
