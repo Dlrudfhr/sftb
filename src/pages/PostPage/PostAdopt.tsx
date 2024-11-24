@@ -825,7 +825,7 @@ const handleDeletePost = async () => {
                     comment ? "adopted" : ""
                   }`}
                 >
-                  {comment.content}
+                  <div></div>{comment.content}
                 </div>
                 {/*대댓글 출력 영역*/}
                 {comment.replies &&
@@ -874,7 +874,7 @@ const handleDeletePost = async () => {
                           reply ? "adopted" : ""
                         }`}
                       >
-                        {reply.content}
+                        <div></div>{reply.content}
                       </div>
                       
                     </div>
