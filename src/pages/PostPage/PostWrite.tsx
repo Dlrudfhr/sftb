@@ -295,12 +295,6 @@ function PostWrite() {
               </button>
             </div>
           )}
-
-          {/* 파일 선택 */}
-          <div className="PostWrite_filebutton">
-            <label htmlFor="fileInput">파일 선택</label>
-            <input type="file" id="fileInput" onChange={handleFileChange} />
-          </div>
           <br/>
 
           {errorMessage && (

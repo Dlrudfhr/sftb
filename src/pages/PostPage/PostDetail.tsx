@@ -211,7 +211,8 @@ const PostDetail: React.FC = () => {
           userLevelExperience,
         });
         alert("게시물이 삭제되었습니다.");
-        navigate("/Certificate"); // 삭제 후 목록으로 이동
+        const targetUrl = boardUrlMap[boardId] || "/main"; // boardId에 맞는 URL, 기본값으로 메인 페이지('/')
+        navigate(targetUrl);
       } else {
         alert("게시물 삭제에 실패했습니다.");
       }
