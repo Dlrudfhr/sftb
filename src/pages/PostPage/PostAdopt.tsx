@@ -637,7 +637,7 @@ const handleDeletePost = async () => {
         {/*게시판 타이틀 */}
         <h3
           className="postpage_title"
-          onClick={() => (window.location.href = "/Certificate")}
+          onClick={() => navigate(boardUrlMap[boardId])}
         >
           <div className="PostDetail_titleinnerbox">
             {boardTitleMap[boardId] || "게시판"}{" "}
