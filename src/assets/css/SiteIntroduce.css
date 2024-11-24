@@ -8,7 +8,7 @@
 .SiteIntroduce__intros {
   display: flex;
   flex-direction: column;
-  margin-top: 150px;
+  margin-top: 125px;
   align-items: center; /* 수평 중앙 정렬 */
   text-align: center;
   font-size: 25px;
@@ -42,6 +42,7 @@
 }
 .SiteIntroduce__IntroLevelTier {
   text-align: center;
+  font-size: 30px;
 }
 .SiteIntroduce__fighting {
   text-align: center;
@@ -94,4 +95,8 @@
 
 .SiteIntroduce__topMenu {
   bottom: 30px;
+}
+
+.SiteIntroduce__tierUP {
+  width: 1178px;
 }

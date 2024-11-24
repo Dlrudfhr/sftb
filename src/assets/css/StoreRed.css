@@ -5,7 +5,7 @@
   z-index: 0;
   position: relative;
   margin-top: 100px;
-  height: 89vh; /* 전체 뷰포트 높이에 맞춤 */
+  height: 90vh; /* 전체 뷰포트 높이에 맞춤 */
 }
 
 .StoreRed__section {
@@ -237,6 +237,9 @@
 .StoreRed__NextBtn{
   position:fixed;
   left:1450px;
+}
+.StoreGreen__leftBtn, .StoreGreen__rightBtn{
+  width: 100px;
 }
 
 .StoreRed__NextBtn:hover, .StoreRed__PrevBtn:hover{

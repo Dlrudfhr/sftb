@@ -252,57 +252,58 @@ const handleDeletePost = async () => {
         </h3>
 
         {/*게시글 출력 박스 */}
-        <div className="PostDetail_box">
-          <div className="PostDetail_innerbox">
+        <div className="PostDetail__postBox">
+          <div className="PostDetail__postInnerbox">
             {/* 게시글 작성자 목록 출력 */}
-            <div className="PostDetail_profile">
-              <div className="PostDetail_proImage">
+            <div className="PostDetail__postProfileLine">
+              <div className="PostDetail__postProImage">
                 <img src = {getTierImage(postwriterTier)} 
                  alt={`${postwriterTier}`}
                 />
               </div>
-              <div className="PostDetail_middle">
-                <div className="PostDetail_writer">{userName || "작성자"}</div>
-                <div className="PostDetail_time">
+              <div className="PostDetail__postMiddle">
+                <div className="PostDetail__postWriter">{userName || "작성자"}</div>
+                <div className="PostDetail__postTime">
                   {newTime
                     ? formatDate(newTime)
                     : time
                     ? formatDate(time)
                     : "몇 분전"}
                 </div>
-                <div className="PostDetail_more">
-                  <div onClick={handleMoreClick}>
-                    <FiMoreHorizontal />
-                  </div>
-                  {state.userId === getCurrentUserId() && ( // 현재 사용자 ID와 작성자 ID 비교
-                    <>
-                      {showDropdown && (
-                        <ul className="PostDetail_dropdown">
-                          {/* 수정하기 버튼 추가 */}
-
-                          <li
-                            className="PostDetail_editButton"
-                            onClick={handleEdit} // postId를 사용하여 수정
-                          >
-                            수정하기
-                          </li>
-                          <li
-                            className="PostDetail_editButton"
-                            onClick={handleDeletePost}
-                          >
-                            삭제하기
-                          </li>
-                        </ul>
-                      )}
-                    </>
-                  )}
+              </div>
+              <div></div>
+              <div className="PostDetail_postMore">
+                <div onClick={handleMoreClick}>
+                  <FiMoreHorizontal />
                 </div>
+                {state.userId === getCurrentUserId() && ( // 현재 사용자 ID와 작성자 ID 비교
+                  <>
+                    {showDropdown && (
+                      <ul className="PostDetail__dropdown">
+                        {/* 수정하기 버튼 추가 */}
+
+                        <li
+                          className="PostDetail_editButton"
+                          onClick={handleEdit} // postId를 사용하여 수정
+                        >
+                          수정하기
+                        </li>
+                        <li
+                          className="PostDetail_editButton"
+                          onClick={handleDeletePost}
+                        >
+                          삭제하기
+                        </li>
+                      </ul>
+                    )}
+                  </>
+                )}
               </div>
             </div>
 
             {/*게시글 제목&내용 */}
-            <div className="PostDetail_postTitle">{title || "제목"}</div>
-            <div className="PostDetail_content">{content || "내용"}</div>
+            <div className="PostDetail__postTitle">{title || "제목"}</div>
+            <div className="PostDetail__postContent">{content || "내용"}</div>
 
             {/* 글 내용 아래에 이미지 표시 */}
             {imageSrc && (
@@ -312,22 +313,22 @@ const handleDeletePost = async () => {
              )}
 
             {/*게시글 좋아요,댓글 수, 스크랩 수 */}
-            <div className="PostDetail_total">
-              <div className="PostDetail_totallike" onClick={handleHeart}>
+            <div className="PostDetail__postBtnLine">
+              <div className="PostDetail__postLike" onClick={handleHeart}>
                 {heart ? <FaHeart color="red" /> : <FaRegHeart />}
                 <span> {heartCount}</span> {/* 하트 수 표시 */}
               </div>
-              <div className="PostDetail_totalscrap" onClick={handleBookmark}>
+              <div className="PostDetail__postScrap" onClick={handleBookmark}>
                 {bookmark ? <FaBookmark color="gold" /> : <FaRegBookmark />}
               </div>
               {/* 조회수 표시 */}
-              <div className="PostDetail_viewCount"> <IoEyeSharp /> {viewCount || 0}</div>
+              <div className="PostDetail__postViewCount"> <IoEyeSharp /> {viewCount || 0}</div>
             </div>
           </div>
         </div>
         {/* 게시판 목록 버튼 */}
         <div
-          className="PostDetail_postlistbtn"
+          className="PostDetail__BackTList"
           onClick={() => navigate(boardUrlMap[boardId])}
         >
           글 목록

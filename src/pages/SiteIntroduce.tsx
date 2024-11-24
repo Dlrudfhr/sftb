@@ -11,11 +11,16 @@ import topMenu_Ranking1 from "../assets/images/사이트 소개/상단메뉴_랭
 import topMenu_Ranking2 from "../assets/images/사이트 소개/상단메뉴_랭킹(2).png";
 import topMenu_announcement from "../assets/images/사이트 소개/상단메뉴_공지사항.png";
 import topMenu_inquiry from "../assets/images/사이트 소개/상단메뉴_문의.png";
+import topMenu_inquiry2 from "../assets/images/사이트 소개/상단메뉴_문의(2).png";
 import middleMenu_level from "../assets/images/사이트 소개/게시판소개_레벨.png";
 import middleMenu_tier from "../assets/images/사이트 소개/게시판소개_티어.png";
 import middleMenu_warning from "../assets/images/사이트 소개/게시판소개_주의사항.png";
 import bottomMenu_intro1 from "../assets/images/사이트 소개/하단메뉴소개(1).png";
 import bottomMenu_intro2 from "../assets/images/사이트 소개/하단메뉴소개(2).png";
+import bottomMenu_mypage from "../assets/images/사이트 소개/게시판소개_내정보.png";
+import bottomMenu_mypage2 from "../assets/images/사이트 소개/게시판소개_내정보이동.png";
+import bottomMenu_store from "../assets/images/사이트 소개/게시판소개_상점.png";
+import bottomMenu_store2 from "../assets/images/사이트 소개/게시판소개_상점이동.png";
 
 const topMenuImages = [
   topMenu_homepage,
@@ -23,6 +28,7 @@ const topMenuImages = [
   topMenu_Ranking2,
   topMenu_announcement,
   topMenu_inquiry,
+  topMenu_inquiry2,
 ];
 
 const middleMenuImages = [
@@ -31,7 +37,14 @@ const middleMenuImages = [
   middleMenu_warning,
 ];
 
-const bottomMenuImages = [bottomMenu_intro1, bottomMenu_intro2];
+const bottomMenuImages = [
+  bottomMenu_intro1,
+  bottomMenu_intro2,
+  bottomMenu_mypage,
+  bottomMenu_mypage2,
+  bottomMenu_store,
+  bottomMenu_store2,
+];
 
 const SiteIntroduce = () => {
   const [currentTopIndex, setCurrentTopIndex] = useState(0); // 상단 메뉴 이미지 인덱스
@@ -154,9 +167,21 @@ const SiteIntroduce = () => {
             3. 특정 게시글에 작성한 댓글이 관리자가 아닌 다른 사용자에게
             채택되는 경우에 경험치를 획득합니다.
           </div>
-          <div className="SiteIntroduce__Intro"></div>
+          <br />
+          <div className="SiteIntroduce__Intro">주의사항</div>
+          <div className="SiteIntroduce__Intro">
+            1. 자신이 작성한 게시글에 한해서는 댓글을 작성해도 경험치지급이
+            불가능합니다.
+          </div>
+          <div className="SiteIntroduce__Intro">
+            2. 자신의 댓글, 게시글에는 채택을 할 수 없습니다.
+          </div>
+          <div className="SiteIntroduce__Intro">
+            3. 각 게시글마다 채택될수있는 댓글은 한개로 제한되고, 작성자는 채택
+            후 취소할 수없습니다.
+          </div>
           <div className="SiteIntroduce__iamgeContainer">
-            <img src={TierUp} />
+            <img className="SiteIntroduce__tierUP" src={TierUp} />
             <div className="SiteIntroduce__fighting">
               사장이 되는 그날까지 화이팅!{" "}
             </div>

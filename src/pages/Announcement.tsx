@@ -17,8 +17,8 @@ interface Post {
   updateAt: string;
   userId: string;
   filePath: string;
-  viewCount : number;
-  heart : number;
+  viewCount: number;
+  heart: number;
 }
 
 const Announcement = () => {
@@ -28,7 +28,28 @@ const Announcement = () => {
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
   const [searchKey, setSearchKey] = useState("제목"); // 검색 기준 상태
   const [isAdmin, setIsAdmin] = useState(false);
-  const navigate = useNavigate(); // 페이지 이동을 위한 navigate 훅
+  const [displayedTitle, setDisplayedTitle] = useState<string>(""); // 타이핑 애니메이션용 상태
+  const typingSpeed: number = 170; // 타이핑 속도
+  const text = "공 지사항 게시판"; // 타이핑할 텍스트
+  const navigate = useNavigate();
+
+  // 타이핑 효과 처리
+  useEffect(() => {
+    let index = 0;
+    const type = () => {
+      if (index < text.length) {
+        setDisplayedTitle((prev) => prev + text.charAt(index)); // 한 글자씩 추가
+        index++;
+        setTimeout(type, typingSpeed); // 일정 시간마다 타이핑
+      }
+    };
+    type(); // 타이핑 시작
+
+    // Cleanup 함수로 메모리 누수 방지
+    return () => {
+      index = text.length; // 타이핑 완료 후 인덱스 종료
+    };
+  }, [text]);
 
   const onMoveBox = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -50,19 +71,19 @@ const Announcement = () => {
       }
     };
     // 관리자 여부 확인 함수
-      const checkAdminStatus = async () => {
-        try {
-          const userID = localStorage.getItem("memberId"); // 로컬 스토리지에서 userID 가져오기
-          if (userID) {
-            const response = await axios.get(
-              `http://localhost:8080/api/auth/users/${userID}/isAdmin`
-            );
-            setIsAdmin(response.data.isAdmin); // true면 관리자
-          }
-        } catch (error) {
-          console.error("Error checking admin status:", error);
+    const checkAdminStatus = async () => {
+      try {
+        const userID = localStorage.getItem("memberId"); // 로컬 스토리지에서 userID 가져오기
+        if (userID) {
+          const response = await axios.get(
+            `http://localhost:8080/api/auth/users/${userID}/isAdmin`
+          );
+          setIsAdmin(response.data.isAdmin); // true면 관리자
         }
-      };
+      } catch (error) {
+        console.error("Error checking admin status:", error);
+      }
+    };
     checkAdminStatus();
     fetchPosts();
   }, []);
@@ -111,7 +132,7 @@ const Announcement = () => {
       <Header />
 
       <div className="post_layout">
-        <h1 className="post_title">공지사항 게시판</h1>
+        <h1 className="Main_box_visual_QnA">{displayedTitle}</h1>
 
         {/* 위로이동 버튼 */}
         <div className="Certificate_high">
@@ -206,13 +227,13 @@ const Announcement = () => {
                         <div className="Certificate_writer">
                           {post.userName}
                         </div>
-                        <div className="Certificate_icons_right">
-                          <div className="Certificate_viewCount"><IoEyeSharp /> {post.viewCount}</div>
-                          <div className="Certificate_heart"><FaRegHeart /> {post.heart}</div>
-                          {/* <div className="Certificate_scrap">
-                            <FaRegBookmark />
-                          </div> */}
-                        </div>
+                        <div></div>    
+                          <div className="Certificate_viewCount">
+                            <IoEyeSharp /> {post.viewCount}
+                          </div>
+                          <div className="Certificate_heart">
+                            <FaRegHeart /> {post.heart}
+                          </div>
                       </div>
                     </div>
                   </div>

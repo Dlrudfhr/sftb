@@ -169,12 +169,13 @@ const PostDetail: React.FC = () => {
 
   // 하트 클릭 이벤트
   const handleHeart = async () => {
-    setHeart(!heart);
-    const newHeartCount = heart ? heartCount - 1 : heartCount + 1; // 하트 클릭 시 하트 수 업데이트
-
+    const newHeartState = !heart; // 새로운 하트 상태
+    const newHeartCount = heart ? heartCount - 1 : heartCount + 1;
+    const userId = getCurrentUserId();
     try {
-      await axios.post(`/api/posts/${postId}/hearts`, { heart: !heart }); // 하트 상태 업데이트 API 호출
-      setHeartCount(newHeartCount); // 상태 업데이트
+      await axios.post(`/api/posts/${postId}/hearts/toggle`, { userId : userId }); // 하트 상태 업데이트 API 호출
+      setHeart(newHeartState); // 하트 상태 업데이트
+      setHeartCount(newHeartCount);
     } catch (error) {
       console.error("하트 수를 업데이트하는 데 실패했습니다.", error);
     }
@@ -621,7 +622,19 @@ const PostDetail: React.FC = () => {
         console.error("Error incrementing view count:", error);
       }
     };
-  
+    
+    const fetchHeartStatus = async () => {
+      const userId = getCurrentUserId();
+      try {
+        const response = await axios.get(`/api/posts/${postId}/hearts`,{
+          params: { userId }
+        });
+        setHeart(response.data); // 하트 상태 설정
+      } catch (error) {
+          console.error("하트 상태를 가져오는 데 실패했습니다.", error);  
+      }
+    };
+
     const fetchHeartCount = async () => {
       try {
         const response = await axios.get(`/api/posts/${postId}`); // 하트 수를 가져오는 API 호출
@@ -645,6 +658,7 @@ const PostDetail: React.FC = () => {
     fetchHeartCount();
     incrementViewCount();
     fetchComments();
+    fetchHeartStatus();
   }, [postId]);
 
   return (
@@ -663,18 +677,18 @@ const PostDetail: React.FC = () => {
         </h3>
 
         {/*게시글 출력 박스 */}
-        <div className="PostDetail_box">
-          <div className="PostDetail_innerbox">
+        <div className="PostDetail__postBox">
+          <div className="PostDetail__postInnerbox">
             {/* 게시글 작성자 목록 출력 */}
-            <div className="PostDetail_profile">
-              <div className="PostDetail_proImage">
+            <div className="PostDetail__postProfileLine">
+              <div className="PostDetail__postProImage">
                 <img src = {getTierImage(postwriterTier)} 
                  alt={`${postwriterTier}`}
                 />
               </div>
-              <div className="PostDetail_middle">
-                <div className="PostDetail_writer">{userName || "작성자"}</div>
-                <div className="PostDetail_time">
+              <div className="PostDetail__postMiddle">
+                <div className="PostDetail__postWriter">{userName || "작성자"}</div>
+                <div className="PostDetail__postTime">
                   {newTime
                     ? formatDate(newTime)
                     : time
@@ -682,14 +696,15 @@ const PostDetail: React.FC = () => {
                     : "몇 분전"}
                 </div>
               </div>
-              <div className="PostDetail_more">
+              <div></div>
+              <div className="PostDetail_postMore">
                   <div onClick={handleMoreClick}>
                     <FiMoreHorizontal />
                   </div>
                   {state.userId === getCurrentUserId() && ( // 현재 사용자 ID와 작성자 ID 비교
                     <>
                       {showDropdown && (
-                        <ul className="PostDetail_dropdown">
+                        <ul className="PostDetail__dropdown">
                           {/* 수정하기 버튼 추가 */}
 
                           <li
@@ -712,8 +727,8 @@ const PostDetail: React.FC = () => {
             </div>
 
             {/*게시글 제목&내용 */}
-            <div className="PostDetail_postTitle">{title || "제목"}</div>
-            <div className="PostDetail_content">{content || "내용"}</div>
+            <div className="PostDetail__postTitle">{title || "제목"}</div>
+            <div className="PostDetail__postContent">{content || "내용"}</div>
 
             {mediaSrc && (
               <div className="PostDetail_image">
@@ -752,39 +767,47 @@ const PostDetail: React.FC = () => {
           </div>
 
             {/*게시글 좋아요,댓글 수, 스크랩 수 */}
-            <div className="PostDetail_total">
-              <div className="PostDetail_totallike" onClick={handleHeart}>
+            <div className="PostDetail__postBtnLine">
+              <div className="PostDetail__postLike" onClick={handleHeart}>
                 {heart ? <FaHeart color="red" /> : <FaRegHeart />}
                 <span> {heartCount}</span> {/* 하트 수 표시 */}
               </div>
-              <div className="PostDetail_totalscrap" onClick={handleBookmark}>
+              <div className="PostDetail__postScrap" onClick={handleBookmark}>
                 {bookmark ? <FaBookmark color="gold" /> : <FaRegBookmark />}
               </div>
               {/* 조회수 표시 */}
-              <div className="PostDetail_viewCount"> <IoEyeSharp /> {viewCount || 0}</div>
+              <div className="PostDetail__postViewCount"> <IoEyeSharp /> {viewCount || 0}</div>
             </div>
           </div>
 
         {/* 채택된 댓글 출력 */}
-        <div className="PostDetail_commentbox">
+        <div className="PostDetail__commentbox">
           {comments
             .filter((comment) => comment.adopt)
             .map((comment) => (
-              <div className="PostDetail_comment" key={comment.commentId}>
-                <div className="PostDetail_writer">
-                  <div className="PostDetail_commproImage">
+              <div className="PostDetail__commInnerBox" key={comment.commentId}>
+                <div className="PostDetail__commWrittenLine">
+                  <div className="PostDetail__commproImage">
                     <img src={getTierImage(comment.authorTier)} alt={`${comment.memberId}`} />
                   </div>
-                  <div className="PostDetail_commwriter">
-                    {comment.memberId}
+                  <div className="PostDetail__commMiddle">
+                    <div className="PostDetail__commWriterName">
+                      {comment.memberId}
+                    </div>
+                    <div className="PostDetail__time">
+                      {formatDate(comment.updatedAt || comment.createdAt)}
+                    </div>
                   </div>
+                  <div></div>
+                  <div></div>
+                  <div></div>
                   <div onClick={() => toggleCommentDropdown(comment.commentId)}>
                     <FiMoreHorizontal />
                   </div>
                   {comment.userId === getCurrentUserId() && (
                     <>
                       {visibleCommentDropdown[comment.commentId] && (
-                        <ul className="PostDetail_comdropdown">
+                        <ul className="PostDetail__comdropdown">
                           <li
                             className="PostDetail_editButton"
                             onClick={() => handleEditComment(comment.commentId)}
@@ -802,11 +825,11 @@ const PostDetail: React.FC = () => {
                   )}
                 </div>
                 <div className="PostDetail_content PostDetail_comm_cont adopted">
+                  <div></div>
                   채택된 댓글입니다 : {comment.content}
                 </div>
-                <div className="PostDetail_time">
-                  {formatDate(comment.updatedAt || comment.createdAt)}
-                </div>
+                
+                
               </div>
             ))}
           {/* 채택된 대댓글 출력 */}
@@ -814,42 +837,52 @@ const PostDetail: React.FC = () => {
             comment.replies
               ?.filter((reply) => reply.adopt)
               .map((reply) => (
-                <div className="PostDetail_comment" key={reply.commentId}>
-                  <div className="PostDetail_writer">
-                    <div className="PostDetail_commproImage">
-                    <img src={getTierImage(reply.authorTier)} alt={`${reply.memberId}`} />
+                <div className="PostDetail__commInnerBox" key={reply.commentId}>
+                  <div className="PostDetail__commWrittenLine">
+                    <div className="PostDetail__commProImage">
+                      <img src={getTierImage(reply.authorTier)} alt={`${reply.memberId}`} />
                     </div>
-                    <div className="PostDetail_commwriter">
-                      {reply.memberId}
+                    <div className="PostDetail__commMiddle">
+                      <div className="PostDetail__commWriterName">
+                        {reply.memberId}
+                      </div>
+                      <div className="PostDetail__time">
+                        {formatDate(reply.updatedAt || reply.createdAt)}
+                      </div>
                     </div>
-                    <div onClick={() => toggleCommentDropdown(reply.commentId)}>
-                      <FiMoreHorizontal />
-                    </div>
-                    {reply.userId === getCurrentUserId() && (
-                      <>
-                      {visibleCommentDropdown[reply.commentId] && (
-                        <ul className="PostDetail_comdropdown">
-                          <li
-                            className="PostDetail_editButton"
-                            onClick={() => handleEditReply(reply.commentId)}
-                          >
-                            수정
-                          </li>
-                          <li
-                            onClick={() => handleDeleteReply(reply.commentId)}
-                          >
-                            삭제
-                          </li>
-                        </ul>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div className="PostDatil__more">
+                      
+                      <div onClick={() => toggleCommentDropdown(reply.commentId)}>
+                        <FiMoreHorizontal />
+                      </div>
+                      {reply.userId === getCurrentUserId() && (
+                        <>
+                        {visibleCommentDropdown[reply.commentId] && (
+                          <ul className="PostDetail__recomdropdown">
+                            <li
+                              className="PostDetail_editButton"
+                              onClick={() => handleEditReply(reply.commentId)}
+                            >
+                              수정
+                            </li>
+                            <li
+                              onClick={() => handleDeleteReply(reply.commentId)}
+                            >
+                              삭제
+                            </li>
+                          </ul>
+                        )}
+                      </>
                       )}
-                    </>
-                    )}
+                    </div>
                   </div>
+                  
                   <div className="PostDetail_content PostDetail_comm_cont adopted">
+                    <div></div>
                     채택된 대댓글입니다 : {reply.content}
-                  </div>
-                  <div className="PostDetail_time">
-                    {formatDate(reply.updatedAt || reply.createdAt)}
                   </div>
                 </div>
               ))
@@ -857,100 +890,58 @@ const PostDetail: React.FC = () => {
         </div>
 
         {/*댓글 출력 영역 */}
-        <div className="PostDetail_commentbox">
+        <div className="PostDetail__commBox">
           {comments.map((comment) => (
-            <div className="PostDetail_comment" key={comment.commentId}>
-              <div className="PostDetail_writer">
-                <div className="PostDetail_commproImage">
-                <img src={getTierImage(comment.authorTier)} alt={`${comment.memberId}`} />
-                </div>
-                <div className="PostDetail_commwriter">{comment.memberId}</div>
-                <div
-                  className="PostDetail_viewwrite"
-                  onClick={() => toggleReplyVisibility(comment.commentId)}
-                >
-                  <FaRegComment />
-                </div>
-                <div className="">
-                <div onClick={() => toggleCommentDropdown(comment.commentId)}>
-                  <FiMoreHorizontal />
-                </div>
-                  {comment.userId === getCurrentUserId() && ( // 사용자 ID로 비교
-                    <>
-                      {visibleCommentDropdown[comment.commentId]  && (
-                        <ul className="PostDetail_comdropdown">
-                          {/* 수정하기 버튼 추가 */}
-                          <li
-                            className="PostDetail_editButton"
-                            onClick={() => handleEditComment(comment.commentId)}
-                          >
-                            수정
-                          </li>
-                          <li
-                            onClick={() =>
-                              handleDeleteComment(comment.commentId)
-                            }
-                          >
-                            삭제
-                          </li>
-                        </ul>
-                      )}
-                    </>
-                  )}
-                </div>
-                {/* 댓글 채택 버튼 조건*/}
-                {userId === getCurrentUserId() &&
-                  !comment.adopt &&
-                  comment.userId !== getCurrentUserId() &&
-                  !hasAdoptedComment && (
-                    <div
-                      className="PostDetail_adopt"
-                      onClick={() => openModal(comment.commentId)}
-                    >
-                      <AiOutlineLike />
+            <div className="PostDetail__comment" key={comment.commentId}>
+              <div className="PostDetail__commInnerBox">
+                <div className="PostDetail__commWrittenLine">
+                  <div className="PostDetail__commProImage">
+                    <img src={getTierImage(comment.authorTier)} alt={`${comment.memberId}`} />
+                  </div>
+                  <div className="PostDetail_commWrittenMiddle">
+                    <div className="PostDetail__commWrittenName">{comment.memberId}</div>
+                    <div className="PostDetail__time">
+                      {formatDate(comment.updatedAt || comment.createdAt)}
                     </div>
-                  )}
-              </div>
-
-              <div
-                className={`PostDetail_content PostDetail_comm_cont ${
-                  comment.adopt ? "adopted" : ""
-                }`}
-              >
-                {comment.content}
-              </div>
-
-              <div className="PostDetail_time">
-                {formatDate(comment.updatedAt || comment.createdAt)}
-              </div>
-
-              {/*대댓글 출력 영역*/}
-              {comment.replies &&
-                comment.replies.map((reply) => (
-                  <div className="PostDetail_recomment" key={reply.commentId}>
-                    <div className="PostDetail_writer">
-                      <div className="PostDetail_commproImage">
-                        {" "}
-                        <img src={getTierImage(reply.authorTier)} alt={`${reply.memberId}`} />
+                  </div>
+                  
+                  <div></div>
+                  <div>
+                  {/* 댓글 채택 버튼 조건*/}
+                  {userId === getCurrentUserId() &&
+                    !comment.adopt &&
+                    comment.userId !== getCurrentUserId() &&
+                    !hasAdoptedComment && (
+                      <div
+                        className="PostDetail_adopt"
+                        onClick={() => openModal(comment.commentId)}
+                      >
+                        <AiOutlineLike />
                       </div>
-                      <div className="PostDetail_commwriter">
-                        {reply.memberId}
-                      </div>
-                      <div onClick={() => toggleCommentDropdown(reply.commentId)}>
+                    )}
+                  </div>
+                  <div className="PostDetail_viewwrite" onClick={() => toggleReplyVisibility(comment.commentId)}>
+                      <FaRegComment />
+                  </div>
+                  <div className="PostDetail__more">
+                      <div onClick={() => toggleCommentDropdown(comment.commentId)}>
                         <FiMoreHorizontal />
                       </div>
-                      {reply.userId === getCurrentUserId() && (
+                      {comment.userId === getCurrentUserId() && ( // 사용자 ID로 비교
                         <>
-                          {visibleCommentDropdown[reply.commentId] && (
-                            <ul className="PostDetail_comdropdown">
+                          {visibleCommentDropdown[comment.commentId]  && (
+                            <ul className="PostDetail__comdropdown">
+                              {/* 수정하기 버튼 추가 */}
                               <li
                                 className="PostDetail_editButton"
-                                onClick={() => handleEditReply(reply.commentId)}
+                                onClick={() => handleEditComment(comment.commentId)}
                               >
                                 수정
                               </li>
                               <li
-                                onClick={() => handleDeleteReply(reply.commentId)}
+                                onClick={() =>
+                                  handleDeleteComment(comment.commentId)
+                                }
                               >
                                 삭제
                               </li>
@@ -958,66 +949,133 @@ const PostDetail: React.FC = () => {
                           )}
                         </>
                       )}
-                      {/* 대댓글 채택 버튼 조건*/}
-                      {userId === getCurrentUserId() &&
-                        !reply.adopt &&
-                        reply.userId !== getCurrentUserId() &&
-                        !hasAdoptedComment && (
-                          <div
-                            className="PostDetail_adopt"
-                            onClick={() => openModal(reply.commentId)}
-                          >
-                            <AiOutlineLike />
-                          </div>
-                        )}
+                      
                     </div>
-                    <div
-                      className={`PostDetail_content PostDetail_comm_cont ${
-                        reply.adopt ? "adopted" : ""
-                      }`}
-                    >
-                      {reply.content}
-                    </div>
-                    <div className="PostDetail_time">
-                      {formatDate(reply.updatedAt || reply.createdAt)}
-                    </div>
-                  </div>
-                ))}
-
-              {/*대댓글 숨기기/보여지기 */}
-              {isReplyVisible[comment.commentId] && (
-                <div className="reply">
-                  {/* 대댓글 작성 영역 */}
-                  <div className="PostDetail_rerecomm">
-                    <div className="PostDetail_writer">
-                      <div className="PostDetail_commproImage">
-                      <img src={getTierImage(UserTier)} alt={`${UserTier}`} />
-                      </div>
-                      {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
-                      <div className="PostDetail_commwriter">
-                        {localStorage.getItem("userName") || "작성자"}
-                      </div>
-                    </div>
-
-                    <input
-                      className="PostDetail_commWrite"
-                      placeholder="대댓글을 입력하세요."
-                      value={replyInput[comment.commentId] || ""}
-                      onChange={(e) =>
-                        setReplyInput({
-                          ...replyInput,
-                          [comment.commentId]: e.target.value,
-                        })
-                      }
-                    />
-                    <button
-                      onClick={(e) => handleReplySubmit(e, comment.commentId)}
-                    >
-                      작성
-                    </button>
-                  </div>
+                    
                 </div>
-              )}
+                {/*댓글 내용 영역 */}
+                <div
+                  className={`PostDetail_content PostDetail_comm_cont ${
+                    comment.adopt ? "adopted" : ""
+                  }`}
+                >
+                  <div></div>
+                  {comment.content}
+                </div>
+                {/*대댓글 출력 영역*/}
+                {comment.replies &&
+                  comment.replies.map((reply) => (
+                    <div className="PostDetail__recommentBox" key={reply.commentId}>
+                      <div className="PostDetail_recommWrittenLine">
+                        {/*대댓글 작성자 이미지/작성자 이름/ more버튼 */}
+                        <div className="PostDetail_recommProImage">
+                          {" "}
+                          <img src={getTierImage(reply.authorTier)} alt={`${reply.memberId}`} />
+                        </div>
+                        <div className="PostDeatil__recommMiddle">                      
+                          <div className="PostDetail_recommwrittenName">
+                            {reply.memberId}
+                          </div>
+                          <div className="PostDetail__recommTime">
+                            {formatDate(reply.updatedAt || reply.createdAt)}
+                          </div>
+                        </div>
+                        <div></div>
+                        <div>
+                          {/* 대댓글 채택 버튼 조건*/}
+                          {userId === getCurrentUserId() &&
+                            !reply.adopt &&
+                            reply.userId !== getCurrentUserId() &&
+                            !hasAdoptedComment && (
+                              <div
+                                className="PostDetail_adopt"
+                                onClick={() => openModal(reply.commentId)}
+                              >
+                                <AiOutlineLike />
+                              </div>
+                            )}
+                        </div>
+                        <div className="PostDetail__more">
+
+                          <div onClick={() => toggleCommentDropdown(reply.commentId)} className="PostDetail__more">
+                            <FiMoreHorizontal />
+                          </div>
+                          {reply.userId === getCurrentUserId() && (
+                            <>
+                              {visibleCommentDropdown[reply.commentId] && (
+                                <ul className="PostDetail__recomdropdown">
+                                  <li
+                                    className="PostDetail_editButton"
+                                    onClick={() => handleEditReply(reply.commentId)}
+                                  >
+                                    수정
+                                  </li>
+                                  <li
+                                    onClick={() => handleDeleteReply(reply.commentId)}
+                                  >
+                                    삭제
+                                  </li>
+                                </ul>
+                              )}
+                            </>
+                          )}
+                        </div>
+                        
+                      </div>
+                      <div
+                        className={`PostDetail_content PostDetail_comm_cont ${
+                          reply.adopt ? "adopted" : ""
+                        }`}
+                      >
+                        <div></div>
+                        {reply.content}
+                      </div>
+                      
+                    </div>
+                  ))}
+                  {/*대댓글 숨기기/보여지기 */}
+                  {isReplyVisible[comment.commentId] && (
+                    <div className="reply">
+                      {/* 대댓글 작성 영역 */}
+                      <div className="PostDetail__recommWriteBox">
+                          <div></div>
+                          <div className="PostDetail__recommWriteInnerBox">
+                            <div className="PostDetail__recommProfileLine">
+                              <div className="PostDetail__commproImage">
+                                <img src={getTierImage(UserTier)} alt={`${UserTier}`} />
+                              </div>
+                              {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
+                              <div className="PostDetail__commWriter">
+                                {localStorage.getItem("userName") || "작성자"}
+                              </div>
+                              <input
+                                className="PostDetail__commWrite"
+                                placeholder="대댓글을 입력하세요."
+                                value={replyInput[comment.commentId] || ""}
+                                onChange={(e) =>
+                                  setReplyInput({
+                                    ...replyInput,
+                                    [comment.commentId]: e.target.value,
+                                  })
+                                }
+                              />
+                              <button
+                                onClick={(e) => handleReplySubmit(e, comment.commentId)}
+                              >
+                                <FaPaperPlane />
+                              </button>
+                            </div>
+                          </div>
+                          <div></div>
+                      </div>
+                    </div>
+                  )}
+              </div>
+
+              
+
+              
+    
             </div>
           ))}
         </div>
@@ -1036,30 +1094,30 @@ const PostDetail: React.FC = () => {
         )}
 
         {/* 댓글 작성 영역 */}
-        <div className="PostDetail_commWritebox">
-          <div className="PostDetail_writer">
-            <div className="PostDetail_commproImage2">
+        <div className="PostDetail__commWriteBox">
+          <div className="PostDetail__commWriter">
+            <div className="PostDetail__commProImage">
               <img src={getTierImage(UserTier)} alt={`${UserTier}`} />
             </div>
           {/* 기본값을 설정하여 memberId가 null일 경우 "작성자"로 표시 */}
-            <div className="PostDetail_commwriter">
+            <div className="PostDetail__commWriterName">
               {localStorage.getItem("userName") || "작성자"}
             </div>
+            <input
+              className="PostDetail__commWriteInput"
+              placeholder="댓글을 입력하세요."
+              value={commentInput}
+              onChange={(e) => setCommentInput(e.target.value)}
+            />
+            <button className="PostDetail__commSubmitBtn" onClick={handleCommentSubmit}>
+              <FaPaperPlane />
+            </button>
           </div>
-          <input
-            className="PostDetail_commWrite"
-            placeholder="댓글을 입력하세요."
-            value={commentInput}
-            onChange={(e) => setCommentInput(e.target.value)}
-          />
-          <button className="PostDetail_button" onClick={handleCommentSubmit}>
-            <FaPaperPlane />
-          </button>
         </div>
 
         {/* 게시판 목록 버튼 */}
         <div
-          className="PostDetail_postlistbtn"
+          className="PostDetail__BackTList"
           onClick={() => navigate(boardUrlMap[boardId])}
         >
           글 목록

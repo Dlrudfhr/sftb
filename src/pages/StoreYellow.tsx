@@ -12,6 +12,15 @@ import cafe15 from "../assets/images/상점사진/자산 15.png";
 import cafe16 from "../assets/images/상점사진/자산 16.png";
 import left from "../assets/images/상점사진/left.png";
 import right from "../assets/images/상점사진/right.png";
+import yellow1 from "../assets/images/상점사진/편의점1.jpg";
+import yellow2 from "../assets/images/상점사진/편의점2.jpg";
+import yellow3 from "../assets/images/상점사진/편의점3.jpg";
+import yellow4 from "../assets/images/상점사진/편의점4.jpg";
+import yellow5 from "../assets/images/상점사진/편의점5.jpg";
+import yellow6 from "../assets/images/상점사진/편의점6.jpg";
+import yellow7 from "../assets/images/상점사진/편의점7.jpg";
+import yellow8 from "../assets/images/상점사진/편의점8.jpg";
+
 
 import greenBtn from "../assets/images/greenBtn.png"; // 빨간 버튼 이미지
 import redBtn from "../assets/images/redBtn.png"; // 빨간 버튼 이미지
@@ -83,8 +92,8 @@ const StoreYellow: React.FC<{ children: React.ReactNode }> = ({ children }) => {
       <Header />
       <Footer />
       <div className="StoreYellow__background">
-        <button className="StoreYellow__PrevBtn" onClick={goToPrevStore}><img src={left}></img></button>
-        <button className="StoreYellow__NextBtn" onClick={goToNextStore}><img src={right}></img></button>
+        <button className="StoreYellow__PrevBtn" onClick={goToPrevStore}><img src={left} className="StoreGreen__leftBtn"></img></button>
+        <button className="StoreYellow__NextBtn" onClick={goToNextStore}><img src={right} className="StoreGreen__rightBtn"></img></button>
         <div className="Store__left">
           <div className="Store__movebox">
               <img src={cafe9} className="Store__move"></img>
@@ -96,27 +105,27 @@ const StoreYellow: React.FC<{ children: React.ReactNode }> = ({ children }) => {
           <div className="StoreYellow__innerFrame">
             <div className="StoreYellow__productLine1">
               <div className="StoreGreen__productContainer">
-                <img src={starAA} className="StoreYellow__product" />
-                <div className="StoreYellow_priceLabel">10000</div>
+                <img src={yellow1} className="StoreYellow__product" title="초코에몽"/>
+                <div className="StoreYellow_priceLabel">1,400</div>
               </div>
 
               <div className="StoreGreen__productContainer">
-                <img src={starLatte} className="StoreYellow__product" />
-                <div className="StoreYellow_priceLabel">10001</div>
+                <img src={yellow2} className="StoreYellow__product" title="몬스터 망고로코 355ML"/>
+                <div className="StoreYellow_priceLabel">2,300</div>
               </div>
 
               <div className="StoreGreen__productContainer">
-                <img src={megaAA} className="StoreYellow__product" />
-                <div className="StoreYellow_priceLabel">9999</div>
+                <img src={yellow3} className="StoreYellow__product" title="마이쮸(딸기)"/>
+                <div className="StoreYellow_priceLabel">800</div>
               </div>
 
               <div className="StoreGreen__productContainer">
-                <img src={megaAshot} className="StoreYellow__product" />
-                <div className="StoreYellow_priceLabel">10002</div>
+                <img src={yellow4} className="StoreYellow__product" title="페레로)로쉐T-3"/>
+                <div className="StoreYellow_priceLabel">3,000</div>
               </div>
             </div>
             <div className="StoreYellow__selectBtnLine1">
-              {[10000, 10001, 9999, 10002].map((value, index) => (
+              {[1400, 2300, 800, 3000].map((value, index) => (
                 <button
                   key={index}
                   className={`StoreYellow__selectBtn${index + 1}`}
@@ -137,27 +146,27 @@ const StoreYellow: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </div>
             <div className="StoreYellow__productLine2">
               <div className="StoreGreen__productContainer">
-                <img src={megaChoco} className="StoreYellow__product" />
-                <div className="StoreYellow_priceLabel">10000</div>
+                <img src={yellow5} className="StoreYellow__product" title="컨디션100ML"/>
+                <div className="StoreYellow_priceLabel">5,000</div>
               </div>
 
               <div className="StoreGreen__productContainer">
-                <img src={megaCookie} className="StoreYellow__product" />
-                <div className="StoreYellow_priceLabel">10001</div>
+                <img src={yellow6} className="StoreYellow__product" title="코카콜라PET500ML"/>
+                <div className="StoreYellow_priceLabel">2,400</div>
               </div>
 
               <div className="StoreGreen__productContainer">
-                <img src={twoChoco} className="StoreYellow__product" />
-                <div className="StoreYellow_priceLabel">9999</div>
+                <img src={yellow7} className="StoreYellow__product" title="ABC초코72G+핫식스250ML"/>
+                <div className="StoreYellow_priceLabel">4,400</div>
               </div>
 
               <div className="StoreGreen__productContainer">
-                <img src={twoIcebox} className="StoreYellow__product" />
-                <div className="StoreYellow_priceLabel">10002</div>
+                <img src={yellow8} className="StoreYellow__product" title="바나나 우유240ML+불닭볶음면(대컵)"/>
+                <div className="StoreYellow_priceLabel">3,600</div>
               </div>
             </div>
             <div className="StoreYellow__selectBtnLine2">
-              {[10000, 10001, 9999, 10002].map((value, index) => (
+              {[5000, 2400, 4400, 3600].map((value, index) => (
                 <button
                   key={index}
                   className={`StoreYellow__selectBtn${index + 5}`}

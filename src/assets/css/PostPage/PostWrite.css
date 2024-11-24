@@ -1,76 +1,134 @@
 /*페이지 양식 가운데 정렬(건드리지 말 것)*/
-.PostWrite_layout{
-    width: 1000px;
-    margin:auto;
-    margin-top:100px;
-    padding:15px 30px;
-    /* border: solid 0.667px lightgray; */
+.PostWrite_layout {
+  width: 1000px;
+  margin: auto;
+  margin-top: 100px;
+  padding: 15px 30px;
+  /* border: solid 0.667px lightgray; */
 }
 
 /*게시판 표시*/
-.PostWrite_title{
-    width: 100%;
-    text-align: center;
-    font-size:30px;
-    margin-bottom:50px;
+.PostWrite_title {
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 50px;
+  /* padding: 15px 30px; */
 }
 
 /***********************************************************/
 
 /*게시글 작성자 출력영역*/
-.PostDetail_profile{
-    width:100%;
+.PostDetail_profile {
+  width: 100%;
 }
 
 /**/
-.PostDetail_writer{
-    
+.PostDetail_writer {
 }
 
 /***********************************************************/
 /*게시글 제목, 게시글 내용 폼*/
-.post_title, .post_textarea{
-    width: 100%;
-    border:solid 0.667px lightgray;
-    padding:15px 30px;
-    font-size: 18px;
+.post_title,
+.post_textarea {
+  width: 100%;
+  border: solid 0.667px lightgray;
+  padding: 15px 15px;
+  font-size: 18px;
 }
 
 /**/
-.post_title{
-    height: 40px;
+.post_title {
+  height: 40px;
 }
 
 /*게시글 제목, 내용 포커스 지움*/
-.post_title:focus, .post_textarea:focus{
-    outline:none;
+.post_title:focus,
+.post_textarea:focus {
+  outline: none;
 }
 
 /*게시글 내용 input*/
-.post_textarea{ 
-    height: 500px;
-    resize: none;
-    border-top: none;
+.post_textarea {
+  height: 500px;
+  resize: none;
+  border-top: none;
 }
 
 /**************************** 버튼 **************************/
 
 /**/
-.PostWrite_btns{
-    width: 100%;
-    margin: 15px 60px;
-    /* border:solid; */
+.PostWrite_btns {
+  width: 100%;
+  margin: 15px 60px;
+  /* border:solid; */
 }
 
 /*목록, 제출 버튼*/
-.PostWrite_golist, .post_button{
-    min-width: 80px;
-    height: 40px;
-    float: right;
-    font-size:14px;
-    margin-bottom:80px;
-    margin-left:5px;
-    border: solid 0.667px lightgray;
-    background-color: #004fa8;
-    color:white;
+.PostWrite_golist,
+.post_button {
+  width: 101px;
+  height: 38px;
+  float: right;
+  font-size: 14px;
+  margin-bottom: 80px;
+  margin-left: 5px;
+  padding: 0;
+  border-radius: 9px;
+  background-color: #004fa8;
+  color: white;
+  border-color: #ff000000;
+  border: 0px;
+}
+
+/* 첨부파일 버튼 스타일 */
+.PostWrite_filebutton {
+  background-color: #004fa8;
+  color: white;
+  font-size: 14px;
+  padding: 10px 20px;
+  border-radius: 9px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.PostWrite_filebutton:hover {
+  background-color: #003b8c;
+}
+
+/* 파일 미리보기와 삭제 버튼 스타일 */
+.file-preview {
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+/* 파일 삭제 버튼 스타일 */
+.file-preview button {
+  background-color: #ff4d4d;
+  color: white;
+  width: 101px;
+  height: 38px;
+  font-size: 14px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+}
+
+/* 파일 삭제 버튼 hover 효과 */
+.file-preview button:hover {
+  background-color: #e60000;
+}
+
+/* 선택된 파일 정보 표시 스타일 */
+.file-selected p {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+}
+
+/* 숨겨진 파일 input */
+.file-input {
+  display: none;
 }

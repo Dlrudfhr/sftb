@@ -14,8 +14,9 @@ function PostWrite() {
   const location = useLocation(); // location 훅 사용하여 전달된 상태 가져오기
   const boardId = location.state?.boardId || 2; // boardId를 location 상태에서 가져오고 기본값은 2로 설정
   const { state } = useLocation(); // 이전 페이지에서 전달된 상태
-  const [file, setFile] = useState<File | null>(null); // 첨부 파일
-  const [filePath, setFilePath] = useState<string | null>(null); // 기존 파일 경로
+  const [file, setFile] = useState<File | null>(null); // 첨부할 사진 파일
+  const [filePath, setFilePath] = useState<string | null>(null); // 기존 파일 경로 상태 추가
+  const [fileName, setFileName] = useState<string | null>(null); // 선택된 파일 이름 저장 상태 추가
 
   // 로그인된 사용자 UserName을 localStorage에서 가져옴
   const userName = localStorage.getItem("userName");
@@ -30,13 +31,16 @@ function PostWrite() {
       setContent(content); // 내용 설정
       setPostID(postId); // 게시물 고유 번호 설정
       setFilePath(fileName); // 수정 시 기존 파일 경로 설정
+      setFileName(fileName); // 수정 시 기존 파일 이름 설정
     }
   }, [state]);
 
   // 파일 변경 핸들러
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFile(event.target.files?.[0] || null); // 새 파일 상태로 설정
-    if (event.target.files?.[0]) {
+    const selectedFile = event.target.files?.[0];
+    setFile(selectedFile || null); // 선택한 파일을 상태에 저장
+    setFileName(selectedFile ? selectedFile.name : null); // 파일 이름 저장
+    if (selectedFile) {
       setFilePath(null); // 새 파일 선택 시 기존 파일 경로 제거
     }
   };
@@ -50,8 +54,9 @@ function PostWrite() {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
-        setFilePath(null);
-        setFile(null);
+        setFilePath(null); // 삭제 후 경로 초기화
+        setFile(null); // 선택된 파일 상태 초기화
+        setFileName(null); // 파일 이름 초기화
         alert("파일이 삭제되었습니다.");
       } catch (error) {
         console.error("파일 삭제 중 오류:", error);
@@ -249,6 +254,18 @@ function PostWrite() {
             required
           />
           <br />
+          <br />
+
+          <input
+            type="file"
+            accept="image/*,video/*"
+            onChange={handleFileChange}
+            id="file-upload"
+            className="file-input" // 숨김 처리된 input
+          />
+          <label htmlFor="file-upload" className="PostWrite_filebutton">
+            파일 선택
+          </label>
 
           {/* 기존 파일 미리보기 */}
           {filePath && (
@@ -280,8 +297,8 @@ function PostWrite() {
           )}
 
           {/* 파일 선택 */}
-          <div className="file-upload">
-            <label htmlFor="fileInput">파일 첨부</label>
+          <div className="PostWrite_filebutton">
+            <label htmlFor="fileInput">파일 선택</label>
             <input type="file" id="fileInput" onChange={handleFileChange} />
           </div>
           <br/>
@@ -291,14 +308,12 @@ function PostWrite() {
               {errorMessage}
             </div>
           )}
-          <div className="PostWrite_btns">
-            <button className="PostWrite_golist" onClick={handleGoToList}>
-              목록
-            </button>
-            <button className="post_button" type="submit">
-              {state && state.postId ? "수정하기" : "작성하기"}
-            </button>
-          </div>
+          <button className="PostWrite_golist" onClick={handleGoToList}>
+            목록
+          </button>
+          <button className="post_button" type="submit">
+            {state && state.postId ? "수정하기" : "작성하기"}
+          </button>
         </form>
       </div>
     </>

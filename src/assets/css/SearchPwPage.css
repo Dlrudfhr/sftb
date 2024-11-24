@@ -53,11 +53,11 @@
   color: #000; /* 텍스트 색상 */
 }
 
-.form-control input:focus,
+/* .form-control input:focus,
 .form-control input:valid {
   outline: 0;
   border-bottom-color: rgb(0, 0, 0);
-}
+} */
 
 .form-control label {
   position: absolute;

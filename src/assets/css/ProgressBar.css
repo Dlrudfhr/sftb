@@ -13,18 +13,23 @@
 }
 
 .ProgressBar__circleBg {
-  stroke: #ff000000;
-  fill: transparent;
-  stroke-width: 10;
+  stroke: #e6e6e6; /* 배경 원 색상 */
+  fill: transparent; /* 내부를 채우지 않음 */
+  stroke-width: 15; /* 배경 원 두께 */
+  stroke-linecap: round; /* 선 끝 모양을 둥글게 설정 */
+  stroke-linejoin: round; /* 선 교차점 둥글게 설정 */
 }
 
 .ProgressBar__circle {
-  stroke: #3b5998;
-  fill: transparent;
-  stroke-width: 10;
-  transition: stroke-dashoffset 0.35s;
-  animation: progress-animation 1s ease-out forwards;
+  stroke: #3b5998; /* 진행 원 색상 */
+  fill: transparent; /* 내부를 채우지 않음 */
+  stroke-width: 10; /* 진행 원의 두께 */
+  stroke-linecap: round; /* 선 끝 모양을 둥글게 설정 */
+  stroke-linejoin: round; /* 선 교차점 둥글게 설정 */
+  transition: stroke-dashoffset 0.35s ease-out; /* 진행 애니메이션 */
 }
+
+
 
 @keyframes progress-animation {
   from {

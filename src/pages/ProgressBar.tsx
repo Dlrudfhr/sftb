@@ -94,20 +94,25 @@ const ProgressBar: React.FC<ProgressBarProps> = ({ icon }) => {
     <div className="ProgressBar__container">
       {!expanded && (
         <svg className="ProgressBar__svg">
-          <circle
-            className="ProgressBar__circleBg"
-            r={radius}
-            cx="60"
-            cy="60"
-          />
-          <circle
-            className="ProgressBar__circle"
-            r={radius}
-            cx="60"
-            cy="60"
-            strokeDasharray={circumference}
-            strokeDashoffset={offset}
-          />
+         {/* 배경 원 */}
+         <circle
+          className="ProgressBar__circleBg"
+          r={radius}
+          cx="60"
+          cy="60"
+        />
+        
+        {/* 진행 원 */}
+        <circle
+          className="ProgressBar__circle"
+          r={radius}  /* 두 번째 원을 조금 작게 설정하여 진행선 겹침 방지 */
+          cx="60"
+          cy="60"
+          strokeDasharray={circumference}
+          strokeDashoffset={offset}
+        />
+        
+  
         </svg>
       )}
       <img

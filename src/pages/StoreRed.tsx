@@ -12,6 +12,14 @@ import cafe12 from "../assets/images/상점사진/자산 12.png";
 import cafe14 from "../assets/images/상점사진/자산 14.png";
 import left from "../assets/images/상점사진/left.png";
 import right from "../assets/images/상점사진/right.png";
+import red1 from "../assets/images/상점사진/패스트푸드1.jpg";
+import red2 from "../assets/images/상점사진/패스트푸드2.jpg";
+import red3 from "../assets/images/상점사진/패스트푸드3.png";
+import red4 from "../assets/images/상점사진/패스트푸드4.jpg";
+import red5 from "../assets/images/상점사진/패스트푸드5.jpg";
+import red6 from "../assets/images/상점사진/패스트푸드6.jpg";
+import red7 from "../assets/images/상점사진/패스트푸드7.jpg";
+import red8 from "../assets/images/상점사진/패스트푸드8.jpg";
 
 import greenBtn from "../assets/images/greenBtn.png"; // 빨간 버튼 이미지
 import redBtn from "../assets/images/redBtn.png"; // 빨간 버튼 이미지
@@ -91,33 +99,33 @@ const StoreRed: React.FC<{ children: React.ReactNode }> = ({ children }) => {
               </div>
           </div>
         </div>
-        <button className="StoreRed__PrevBtn" onClick={goToPrevStore}><img src={left}></img></button>
-        <button className="StoreRed__NextBtn" onClick={goToNextStore}><img src={right}></img></button>
+        <button className="StoreRed__PrevBtn" onClick={goToPrevStore}><img src={left} className="StoreGreen__leftBtn"></img></button>
+        <button className="StoreRed__NextBtn" onClick={goToNextStore}><img src={right} className="StoreGreen__rightBtn"></img></button>
         <div className="StoreRed__middle">
           <div className="StoreRed__innerFrame">
             <div className="StoreRed__productLine1">
               <div className="StoreGreen__productContainer">
-                <img src={starAA} className="StoreRed__product" />
-                <div className="StoreRed_priceLabel">10000</div>
+                <img src={red1} className="StoreRed__product" title="롯데리아 불고기버거"/>
+                <div className="StoreRed_priceLabel">4,800</div>
               </div>
 
               <div className="StoreGreen__productContainer">
-                <img src={starLatte} className="StoreRed__product" />
-                <div className="StoreRed_priceLabel">10001</div>
+                <img src={red2} className="StoreRed__product" title="맥도날드 상하이 치킨 스낵랩" />
+                <div className="StoreRed_priceLabel">3,200</div>
               </div>
 
               <div className="StoreGreen__productContainer">
-                <img src={megaAA} className="StoreRed__product" />
-                <div className="StoreRed_priceLabel">9999</div>
+                <img src={red3} className="StoreRed__product" title="롯데리아 토네이도 초코쿠키" />
+                <div className="StoreRed_priceLabel">3,000</div>
               </div>
 
               <div className="StoreGreen__productContainer">
-                <img src={megaAshot} className="StoreRed__product" />
-                <div className="StoreRed_priceLabel">10002</div>
+                <img src={red4} className="StoreRed__product" title="롯데리아 양념감자" />
+                <div className="StoreRed_priceLabel">2,500</div>
               </div>
             </div>
             <div className="StoreRed__selectBtnLine1">
-              {[10000, 10001, 9999, 10002].map((value, index) => (
+              {[4800, 3200, 3000, 2500].map((value, index) => (
                 <button
                   key={index}
                   className={`StoreRed__selectBtn${index + 1}`}
@@ -138,27 +146,27 @@ const StoreRed: React.FC<{ children: React.ReactNode }> = ({ children }) => {
             </div>
             <div className="StoreRed__productLine2">
               <div className="StoreGreen__productContainer">
-                <img src={megaChoco} className="StoreRed__product" />
-                <div className="StoreRed_priceLabel">10000</div>
+                <img src={red5} className="StoreRed__product" title="롯데리아 치즈스틱"/>
+                <div className="StoreRed_priceLabel">2,600</div>
               </div>
 
               <div className="StoreGreen__productContainer">
-                <img src={megaCookie} className="StoreRed__product" />
-                <div className="StoreRed_priceLabel">10001</div>
+                <img src={red6} className="StoreRed__product" title="맘스터치 싸이버거 단품"/>
+                <div className="StoreRed_priceLabel">4,900</div>
               </div>
 
               <div className="StoreGreen__productContainer">
-                <img src={twoChoco} className="StoreRed__product" />
-                <div className="StoreRed_priceLabel">9999</div>
+                <img src={red7} className="StoreRed__product" title="이삭 토스트 5000원 상품권"/>
+                <div className="StoreRed_priceLabel">5,000</div>
               </div>
 
               <div className="StoreGreen__productContainer">
-                <img src={twoIcebox} className="StoreRed__product" />
-                <div className="StoreRed_priceLabel">10002</div>
+                <img src={red8} className="StoreRed__product" title="맥도날드 에그 맥머핀 콤보"/>
+                <div className="StoreRed_priceLabel">3,500</div>
               </div>
             </div>
             <div className="StoreRed__selectBtnLine2">
-              {[10000, 10001, 9999, 10002].map((value, index) => (
+              {[2600, 4900, 5000, 3500].map((value, index) => (
                 <button
                   key={index}
                   className={`StoreRed__selectBtn${index + 5}`}
