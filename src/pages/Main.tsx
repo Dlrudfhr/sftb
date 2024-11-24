@@ -22,6 +22,7 @@ import {
   FcDiploma1,
   FcDocument,
 } from "react-icons/fc";
+import logo from "../assets/images/SFTBlogo.png";
 
 interface Post {
   postId: number; // 게시물 ID
@@ -469,7 +470,22 @@ function Main() {
       </div>
 
       {/*스크롤 시 필요한 footer공간 */}
-      <div className="Main_last_div">소통하고, 성장하자</div>
+      <div className="Main_last_div">
+        <div className="Main__lastInner">
+          <div>Started From The Bottom</div>
+          <div className="Main__2row">
+            <img src={logo} className="Main__SFTBLogo"/>
+            <div className="Main__Name">
+              <div>이경록</div>
+              <div>이찬회</div>
+              <div>서수진</div>
+              <div>이정이</div>
+              <div>신성원</div>
+              <div>김태영</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* CongratulationsModal 추가 */}
       <CongratulationsModal isOpen={isModalOpen} onClose={handleCloseModal} />
