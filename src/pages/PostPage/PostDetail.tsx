@@ -782,11 +782,11 @@ const PostDetail: React.FC = () => {
           </div>
 
         {/* 채택된 댓글 출력 */}
-        <div className="PostDetail__commentbox">
+        <div className="PostDetail__commentbox ">
           {comments
             .filter((comment) => comment.adopt)
             .map((comment) => (
-              <div className="PostDetail__commInnerBox" key={comment.commentId}>
+              <div className="PostDetail__commInnerBox comadopted" key={comment.commentId}>
                 <div className="PostDetail__commWrittenLine">
                   <div className="PostDetail__commproImage">
                     <img src={getTierImage(comment.authorTier)} alt={`${comment.memberId}`} />
@@ -838,7 +838,7 @@ const PostDetail: React.FC = () => {
             comment.replies
               ?.filter((reply) => reply.adopt)
               .map((reply) => (
-                <div className="PostDetail__commInnerBox" key={reply.commentId}>
+                <div className="PostDetail__commInnerBox comadopted" key={reply.commentId}>
                   <div className="PostDetail__commWrittenLine">
                     <div className="PostDetail__commProImage">
                       <img src={getTierImage(reply.authorTier)} alt={`${reply.memberId}`} />
@@ -1050,7 +1050,7 @@ const PostDetail: React.FC = () => {
                                 {localStorage.getItem("userName") || "작성자"}
                               </div>
                               <input
-                                className="PostDetail__commWrite"
+                                className="PostDetail__commWriteInput"
                                 placeholder="대댓글을 입력하세요."
                                 value={replyInput[comment.commentId] || ""}
                                 onChange={(e) =>
@@ -1060,7 +1060,7 @@ const PostDetail: React.FC = () => {
                                   })
                                 }
                               />
-                              <button
+                              <button className="PostDetail__commSubmitBtn"
                                 onClick={(e) => handleReplySubmit(e, comment.commentId)}
                               >
                                 <FaPaperPlane />
