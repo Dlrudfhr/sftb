@@ -184,6 +184,7 @@
   display: grid;
   grid-template-columns: 60px 1fr;
   padding: 15px;
+  white-space: pre-line;
 }
 
 /*게시글 좋아요 버튼, 게시글 스크랩 버튼*/
@@ -287,6 +288,11 @@
 
 .PostDetail__commWriteInput {
   border: none;
+  resize: none;
+  align-content: center;
+  min-height: 1.2em;
+  overflow:hidden;
+  line-height: 1.5;
 }
 /**/
 .PostDetail__commWriteInput:focus {

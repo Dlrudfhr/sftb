@@ -681,6 +681,9 @@ const PostDetail: React.FC = () => {
     fetchHeartStatus();
   }, [postId]);
 
+
+  
+
   return (
     <>
       <Header />
@@ -1115,7 +1118,7 @@ const PostDetail: React.FC = () => {
                           <div className="PostDetail__commWriter">
                             {localStorage.getItem("userName") || "작성자"}
                           </div>
-                          <input
+                          <textarea
                             className="PostDetail__commWriteInput"
                             placeholder="대댓글을 입력하세요."
                             value={replyInput[comment.commentId] || ""}
@@ -1167,7 +1170,7 @@ const PostDetail: React.FC = () => {
             <div className="PostDetail__commWriterName">
               {localStorage.getItem("userName") || "작성자"}
             </div>
-            <input
+            <textarea
               className="PostDetail__commWriteInput"
               placeholder="댓글을 입력하세요."
               value={commentInput}
