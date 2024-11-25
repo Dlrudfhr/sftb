@@ -115,6 +115,7 @@
   font-size: 16px;
   padding: 0 30px;
   line-height: 1.7;
+  white-space: pre-line;
 }
 
 /*게시글 좋아요수, 댓글수, 스크랩수*/
