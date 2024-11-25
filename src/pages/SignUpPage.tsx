@@ -154,6 +154,7 @@ const SignUpPage: React.FC = () => {
             </span>
           </div>
         </form>
+        {alertMessage && <div className="SignUpModal__message">{alertMessage}</div>}
       </div>
       {/* 모달에 alertMessage 전달 */}
       <SignUpModal
