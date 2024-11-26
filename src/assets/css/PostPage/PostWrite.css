@@ -4,6 +4,7 @@
   margin: auto;
   margin-top: 100px;
   padding: 15px 30px;
+  /* font-family: 'SCDream3'; */
   /* border: solid 0.667px lightgray; */
 }
 
@@ -35,6 +36,8 @@
   border: solid 0.667px lightgray;
   padding: 15px 15px;
   font-size: 18px;
+  line-height: 1.5;
+  font-family: 'malgun';
 }
 
 /**/

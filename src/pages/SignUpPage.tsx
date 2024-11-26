@@ -42,11 +42,11 @@ const SignUpPage: React.FC = () => {
         const { message } = error.response.data;
 
         if (message.includes("Student ID")) {
-          setAlertMessage("해당 학번은 이미 존재합니다."); // 학번 중복
+          setAlertMessage("⚠️해당 학번은 이미 존재합니다."); // 학번 중복
         } else if (message.includes("User ID")) {
-          setAlertMessage("해당 아이디는 이미 존재합니다."); // 아이디 중복
+          setAlertMessage("⚠️해당 아이디는 이미 존재합니다."); // 아이디 중복
         } else if (message.includes("Email")) {
-          setAlertMessage("해당 이메일은 이미 존재합니다."); // 이메일 중복
+          setAlertMessage("⚠️해당 이메일은 이미 존재합니다."); // 이메일 중복
         } else {
           setAlertMessage(message || "회원가입 실패"); // 일반적인 에러 처리
         }
@@ -154,6 +154,7 @@ const SignUpPage: React.FC = () => {
             </span>
           </div>
         </form>
+        {alertMessage && <div className="SignUpModal__message">{alertMessage}</div>}
       </div>
       {/* 모달에 alertMessage 전달 */}
       <SignUpModal
