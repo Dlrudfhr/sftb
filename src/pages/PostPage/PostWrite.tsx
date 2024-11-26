@@ -16,7 +16,8 @@ function PostWrite() {
   const { state } = useLocation(); // 이전 페이지에서 전달된 상태
   const [file, setFile] = useState<File | null>(null); // 첨부할 사진 파일
   const [filePath, setFilePath] = useState<string | null>(null); // 기존 파일 경로 상태 추가
-  const [fileName, setFileName] = useState<string | null>(null); // 선택된 파일 이름 저장 상태 추가
+  
+
 
   // 로그인된 사용자 UserName을 localStorage에서 가져옴
   const userName = localStorage.getItem("userName");
@@ -31,16 +32,13 @@ function PostWrite() {
       setContent(content); // 내용 설정
       setPostID(postId); // 게시물 고유 번호 설정
       setFilePath(fileName); // 수정 시 기존 파일 경로 설정
-      setFileName(fileName); // 수정 시 기존 파일 이름 설정
     }
   }, [state]);
 
   // 파일 변경 핸들러
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = event.target.files?.[0];
-    setFile(selectedFile || null); // 선택한 파일을 상태에 저장
-    setFileName(selectedFile ? selectedFile.name : null); // 파일 이름 저장
-    if (selectedFile) {
+    setFile(event.target.files?.[0] || null); // 새 파일 상태로 설정
+    if (event.target.files?.[0]) {
       setFilePath(null); // 새 파일 선택 시 기존 파일 경로 제거
     }
   };
@@ -56,7 +54,6 @@ function PostWrite() {
         });
         setFilePath(null); // 삭제 후 경로 초기화
         setFile(null); // 선택된 파일 상태 초기화
-        setFileName(null); // 파일 이름 초기화
         alert("파일이 삭제되었습니다.");
       } catch (error) {
         console.error("파일 삭제 중 오류:", error);
@@ -138,6 +135,10 @@ function PostWrite() {
           );
 
           if (response.status === 200) {
+
+            const updatedPost = response.data; // 서버에서 반환된 수정된 게시물 정보
+            console.log("Updated Post:", updatedPost); // 디버깅용
+
             // 수정 후 해당 게시물 페이지로 이동
             const destinationPath =
               boardId === 5 || boardId === 6
@@ -146,6 +147,7 @@ function PostWrite() {
                 ? `/PostAnnouncement/${state.postId}`
                 : `/PostDetail/${state.postId}`;
 
+            console.log("Navigating to destinationPath with state.fileName:", updatedPost.filePath);
             navigate(destinationPath, {
               state: {
                 title: title,
@@ -155,7 +157,7 @@ function PostWrite() {
                 postId: state.postId, // 게시물 ID 추가
                 boardId: state.boardId,
                 userId: state.userId,
-                filePath: state.fileName,
+                fileName: updatedPost.filePath, // 수정
               },
             });
           } else {
