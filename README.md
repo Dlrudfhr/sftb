@@ -1,46 +1,29 @@
-# Getting Started with Create React App
+### **🖥️ 1)로그인 및 인증 시스템**
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- **세션 기반 로그인**: 동일 정보로 중복 계정 생성 방지
+- **비밀번호 찾기 및 초기화 기능** 제공
+- Spring Security 적용으로 **보안 강화**
 
-## Available Scripts
+### **📢 2) 커뮤니티 기능**
 
-In the project directory, you can run:
+- **다양한 게시판 제공**: 질문 & 답변, 자유게시판, 자격증 정보 공유, 프로젝트 모집 등
+- **게시글 검색 기능**: 제목, 내용, 작성자명 기준으로 필터링
+- **좋아요 및 북마크 기능**
+- **댓글 및 대댓글 지원**
+    - 댓글 채택 기능: 질문자가 가장 유용한 답변을 상단 고정
+    - 관리자가 선택하는 ‘멘토링 게시글’ 기능
 
-### `npm start`
+### **🆙 3) 티어 & 레벨 시스템**
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+- **활동 기반 경험치 부여**:
+    - 질문 답변, 프로젝트 협업, 코딩 문제 풀이 등을 통해 경험치 획득
+- **티어 승급 시스템**
+    - 특정 경험치 및 레벨 조건 만족 시 티어 상승
+- **성과금 지급 시스템**
+    - 티어 상승 시 가상 포인트(성과금) 지급
+    - 지급된 성과금으로 온라인 상점에서 아이템 구매 가능
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### **🛒 4) 학과 커뮤니티 전용 상점**
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- **성과금(가상 포인트) 사용 가능**
+- **아이템 구매 UI를 자판기 형태로 디자인**하여 직관성 향상
